@@ -1,0 +1,6 @@
+# Asset có giấy phép không cho phân phối lại: không đưa lên git
+game/assets/
+cong_cu/kiem_nam/*.png
+demo/**/*.mp4
+demo/**/*.png
+demo/**/*.jpg
