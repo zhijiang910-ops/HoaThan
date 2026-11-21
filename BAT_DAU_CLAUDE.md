@@ -33,3 +33,16 @@ Bản nền vẫn là `game/index.html` + `game/assets/` (bản có yêu cầu x
 **Kiểm thử đã chạy trên bản này** (Playwright + Chrome, 844×390): vào sảnh → ải bằng hồ sơ nam, không lỗi JS; chạm liên tục vào nhân vật không đổi `visualViewport.scale`; joystick cảm ứng di chuyển được; nút Tạm dừng bấm được. Chưa chạy lại toàn bộ luồng solo trên bản nền này.
 
 **Lưu ý giấy phép:** không công khai gói hay link game (asset cấm phân phối lại). Artifact game cũ đang để công khai, nên chuyển về riêng tư.
+
+
+## Cập nhật 21/11 · Nhát C Lướt Trảm ĐÃ GHÉP vào game
+
+Theo yêu cầu chủ game, nhát C Kiếm +6 trong `game/index.html` đã đổi từ chém quét sang Lướt Trảm theo demo `demo/nhat_c/`.
+
+- Nhịp: Lấy đà 0,18 s (co người, ngả sau, lùi 8, ánh lóe kiếm) → Lướt chém 0,15 s (ease-out, tầm 160, skew .30, dư ảnh 3 lớp, vệt chém) → Trượt dừng 0,14 s (thêm 11, bụi) → Thu thế 0,30 s. Số chỉnh trong `CUT_C`.
+- Frame lấy từ sheet gốc trước `setSwordPoses` (anim `cutC`): nữ `attack1 → attack3 → attack5 → attack6, attack7, idle0`; nam `run0 → run3 → attack2[6] → attack2[7], attack[7], idle0`.
+- Công dụng: xuyên hàng, mỗi mục tiêu (kể cả vật phá được) trúng đúng 1 lần, 15 sát thương, gắn Phá Thế 3 s (có dấu hình thoi + vòng đếm trên đầu quái), đổi vị trí. Dừng khi chạm địa hình/mép ải, không miễn thương.
+- Hủy: Lướt hủy được lúc lấy đà và lúc thu thế; trong pha lướt + trượt thì khóa. Chạy hoặc chiêu bấm tay cắt được thu thế. Truy Phong (`lunge`) giữ nguyên; +9 bắn kiếm khí khi vào pha trượt.
+- Code: `startCutC`, `updCutC`, `drawCutC`, `endCutC`, `cutCPose`, `cutCDist` (ngay trên `VAN_KIEM`); fx `ctrail`, `ccut` trong `drawFx`.
+- Lỗi "B nữ là chưởng" ghi ở trên thực ra đã được `setSwordPoses` xử lý trong game (B nữ dùng frame kiếm), nên không sửa thêm.
+- Kiểm thử (Playwright, 1280×720): nam và nữ, 3 quái thẳng hàng → trúng 3/3, mỗi con ~15–16, dấu Phá Thế 3 s, chuỗi quay về A; Lướt lúc lấy đà hủy được, lúc lướt chém bị khóa; không lỗi JS.

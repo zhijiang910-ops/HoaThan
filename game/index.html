@@ -1509,6 +1509,11 @@ const LOOK={
 
 /* sprite mẫu M1: người phàm nam cầm Kiếm (pixel art, ghép bộ phận, 26 khung) */
 const CHM={"hero_nam":{"w":131,"h":138,"ax":57,"ay":119,"anims":{"idle":{"fps":4.0,"f":[[0,0],[131,0],[262,0],[393,0]]},"run":{"fps":14.29,"f":[[524,0],[655,0],[786,0],[917,0],[1048,0],[1179,0],[1310,0],[1441,0]]},"attack":{"fps":10.0,"f":[[1572,0],[1703,0],[1834,0],[1965,0],[0,138],[131,138],[262,138],[393,138]]},"attack2":{"fps":10.53,"f":[[524,138],[655,138],[786,138],[917,138],[1048,138],[1179,138],[1310,138],[1441,138]]},"hit":{"fps":8.7,"f":[[1572,138],[1703,138],[1834,138],[1965,138]]},"death":{"fps":2.38,"f":[[0,276],[131,276],[262,276],[393,276]]}},"src":"assets/hero_nam.png","realRun":true,"pad":12},"hero_nu":{"w":165,"h":111,"ax":77,"ay":106,"anims":{"idle":{"f":[[0,0],[165,0],[330,0],[495,0]],"fps":4.0},"run":{"f":[[660,0],[825,0],[990,0],[1155,0],[1320,0],[1485,0],[1650,0],[1815,0]],"fps":11.11},"attack":{"f":[[0,111],[165,111],[330,111],[495,111],[660,111],[825,111],[990,111],[1155,111]],"fps":10.0},"attack2":{"f":[[1320,111],[1485,111],[1650,111],[1815,111],[0,222],[165,222],[330,222],[495,222]],"fps":10.53},"hit":{"f":[[660,222],[825,222],[990,222],[1155,222]],"fps":8.7},"death":{"f":[[1320,222],[1485,222],[1650,222],[1815,222]],"fps":2.38}},"src":"assets/hero_nu.png"},"bachhoa":{"w":198,"h":117,"ax":94,"ay":109,"anims":{"idle":{"f":[[0,0],[198,0],[396,0],[594,0]],"fps":4.0},"run":{"f":[[792,0],[990,0],[1188,0],[1386,0],[1584,0],[1782,0],[0,117],[198,117]],"fps":11.11},"attack":{"f":[[396,117],[594,117],[792,117],[990,117],[1188,117],[1386,117],[1584,117],[1782,117]],"fps":10.0},"attack2":{"f":[[0,234],[198,234],[396,234],[594,234],[792,234],[990,234],[1188,234],[1386,234]],"fps":10.53},"hit":{"f":[[1584,234],[1782,234],[0,351],[198,351]],"fps":8.7},"death":{"f":[[396,351],[594,351],[792,351],[990,351]],"fps":2.38}},"src":"assets/bachhoa.png"},"hacphong":{"w":187,"h":146,"ax":95,"ay":139,"anims":{"idle":{"f":[[0,0],[187,0],[374,0],[561,0]],"fps":4.0},"run":{"f":[[748,0],[935,0],[1122,0],[1309,0],[1496,0],[1683,0],[0,146],[187,146]],"fps":8.0},"attack":{"f":[[374,146],[561,146],[748,146],[935,146],[1122,146],[1309,146],[1496,146],[1683,146]],"fps":10.0},"attack2":{"f":[[0,292],[187,292],[374,292],[561,292],[748,292],[935,292],[1122,292],[1309,292]],"fps":10.53},"hit":{"f":[[1496,292],[1683,292],[0,438],[187,438]],"fps":8.7},"death":{"f":[[374,438],[561,438],[748,438],[935,438]],"fps":2.38}},"src":"assets/hacphong.png"},"ho":{"w":175,"h":121,"ax":89,"ay":116,"anims":{"idle":{"f":[[0,0],[175,0],[350,0],[525,0]],"fps":4.0},"run":{"f":[[700,0],[875,0],[1050,0],[1225,0],[1400,0],[1575,0],[1750,0],[0,121]],"fps":8.0},"attack":{"f":[[175,121],[350,121],[525,121],[700,121],[875,121],[1050,121],[1225,121],[1400,121]],"fps":10.0},"attack2":{"f":[[1575,121],[1750,121],[0,242],[175,242],[350,242],[525,242],[700,242],[875,242]],"fps":10.53},"hit":{"f":[[1050,242],[1225,242],[1400,242],[1575,242]],"fps":8.7},"death":{"f":[[1750,242],[0,363],[175,363],[350,363]],"fps":2.38}},"src":"assets/ho.png"},"daulap":{"w":133,"h":122,"ax":65,"ay":114,"anims":{"idle":{"f":[[0,0],[133,0],[266,0],[399,0],[532,0]],"fps":6.02},"run":{"f":[[665,0],[798,0],[931,0],[1064,0],[1197,0],[1330,0],[1463,0],[1596,0],[1729,0]],"fps":10.0},"attack":{"f":[[1862,0],[0,122],[133,122],[266,122],[399,122],[532,122],[665,122],[798,122]],"fps":8.0},"death":{"f":[[931,122],[1064,122],[1197,122],[1330,122],[1463,122],[1596,122],[1729,122],[1862,122]],"fps":8.0}},"src":"assets/daulap.png"}};
+// Nhát C Kiếm +6 · Lướt Trảm: frame lấy từ sheet gốc (trước khi setSwordPoses đổi attack/attack2).
+// Thứ tự: lấy đà, lướt chém, trượt dừng, thu thế 1-2-3.
+{const C_POSE={hero_nu:[['attack',1],['attack',3],['attack',5],['attack',6],['attack',7],['idle',0]],
+ hero_nam:[['run',0],['run',3],['attack2',6],['attack2',7],['attack',7],['idle',0]]};
+ for(const id in C_POSE){const A=CHM[id].anims;A.cutC={fps:1,f:C_POSE[id].map(([a,i])=>A[a].f[i].slice())}}}
 // Pick only frames where the same visible hand grips one sword.
 function setSwordPoses(meta,cutDown,cutUp){
  const {attack,attack2}=meta.anims;
@@ -1529,7 +1534,7 @@ setSwordPoses(CHM.hero_nu,
 for(const hero of [CHM.hero_nam,CHM.hero_nu])hero.anims.idle.f=hero.anims.idle.f.slice(0,1);
 const CH={};
 for(const id in CHM){const m=CHM[id];m.ay-=2;if(!m.anims.dash&&m.anims.run){const r=m.anims.run.f;m.anims.dash={fps:15,f:[r[1],r[3],r[5]]}}if(!m.anims.brake&&m.anims.run)m.anims.brake={fps:1,f:[m.anims.run.f[0]]};const h={id,meta:m,img:new Image(),flash:null,ok:false,SC:0.98,AV:0.4};
- h.img.onload=()=>{const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
+ h.img.onload=()=>{const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;{const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const q=t.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-atop';q.fillStyle='rgba(134,224,240,.62)';q.fillRect(0,0,t.width,t.height);h.tint=t}h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
  h.img.src=m.src;CH[id]=h;setTimeout(()=>preDecode(h.img),0)}
 let HERO=CH.hero_nam;
 const useHero=(gender,weapon)=>{const h=CH['hero_'+gender];if(weapon==='kiem'&&h&&h.ok){HERO=h;return true}return false};
@@ -1612,6 +1617,7 @@ function swingProgress(){
 function heroFrame(){
  const M=HERO.meta.anims;
  if(P.deadAt){const f=Math.min(M.death.f.length-1,Math.floor((performance.now()-P.deadAt)/1000*M.death.fps));return['death',f]}
+ if(P.cutC&&HERO.meta.anims.cutC)return['cutC',cutCPose(P.cutC.t).fi];
  if(P.hurt>0&&!(P.av>0)&&HERO.meta.anims.hit)return['hit',Math.min(HERO.meta.anims.hit.f.length-1,Math.floor((1-P.hurt/0.2)*4))];
  if(P.dashT>0)return['dash',Math.floor(P.t*15)%3];
  if(P.av>0){
@@ -1630,12 +1636,13 @@ function heroFrame(){
  }
  return['idle',Math.floor(P.t*4)%HERO.meta.anims.idle.f.length];
 }
-function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha){
+function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
  const M=HERO.meta,A=M.anims[an],fr=A.f[fi];c.save();c.imageSmoothingEnabled=false;
  /* chạy = động tác đi bộ của gói + ngả người, nhún theo bước (không vẽ lại pixel) */
  let k=0,bob=0;if(c===X){if(an==='run'&&!M.realRun){k=0.17;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*3)}else if(an==='dash')k=0.3;else if(an==='brake')k=-0.16}
- c.translate(Math.round(x),Math.round(y)+bob);c.scale(f*sc,sc);if(k)c.transform(1,0,-k,1,0,0);if(alpha!=null)c.globalAlpha=alpha;
- c.drawImage(flash?HERO.flash:HERO.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore();
+ if(tf)k=tf.k;
+ c.translate(Math.round(x),Math.round(y)+bob);c.scale(f*sc*(tf?tf.sx:1),sc*(tf?tf.sy:1));if(k)c.transform(1,0,-k,1,0,0);if(alpha!=null)c.globalAlpha=alpha;
+ c.drawImage(flash?HERO.flash:tf&&tf.tint&&HERO.tint?HERO.tint:HERO.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore();
 }
 const lv=l=>1+0.25*(l-1);
 function swing(a,d){sfx('sword_slash',0.32,0.08);P.atkT=0.22;P.atkAng=a;P.swingDir=d||1;P.av=P.avTotal=HERO.AV;P.avAlt=!P.avAlt;P.runSwing=false;P.swordGuard=null}
@@ -1648,6 +1655,7 @@ function startSwordCut(target,basic){
  const lunge=!!(secOn('truyphong')&&P.truyPhongT>0&&!target.isBrk);
  const step=lunge?0:Math.min(basic.step||0,upgrade>=6?2:1);
  const heavy=step===2,dir=step===1?-1:1;
+ if(heavy&&!target.isBrk){startCutC(angle,upgrade,basic);return}
  if(lunge)P.truyPhongT=0;
  swing(angle,dir);
  P.avAlt=dir===-1||heavy;P.runSwing=!heavy&&!lunge;
@@ -1675,6 +1683,102 @@ function finishSwordCut(dt){
   shoot(x,y,angle,370,{dmg:damage*.35,pierce:3,r:18,life:.26,kind:'crescent',c:color,o:H({pierceArmor:SWORD_FORGE_PIERCE})});
  }
  if(lunge&&!LOWFX)fx({k:'ring',x:P.x,y:P.y,r0:22,r1:50,c:color,T:.17});
+}
+/* ===== Nhát C Kiếm +6 · Lướt Trảm =====
+ Lấy đà (hạ người, kéo lùi) → lướt chém xuyên hàng → trượt dừng → thu thế.
+ Mỗi mục tiêu trúng đúng 1 lần, gắn Phá Thế 3 giây, dừng khi gặp địa hình, vẫn nhận sát thương.
+ Lướt (dash) hủy được lúc lấy đà và lúc thu thế; chạy hoặc dùng chiêu cũng cắt được thu thế. */
+const CUT_C={wind:0.18,dash:0.15,slide:0.14,fin:0.30,range:160,back:8,over:11,dmg:15,width:26};
+const CUT_C_T1=CUT_C.wind,CUT_C_T2=CUT_C_T1+CUT_C.dash,CUT_C_T3=CUT_C_T2+CUT_C.slide,CUT_C_T4=CUT_C_T3+CUT_C.fin;
+const smooth01=x=>{x=clamp(x,0,1);return x*x*(3-2*x)},eout01=x=>{x=clamp(x,0,1);return 1-(1-x)**3};
+function cutCPose(t){
+ const C=CUT_C;
+ if(t<CUT_C_T1){const k=smooth01(t/C.wind);return{fi:0,sx:1+0.07*k,sy:1-0.14*k,k:-0.10*k}}
+ if(t<CUT_C_T2)return{fi:1,sx:1.12,sy:0.90,k:0.30};
+ if(t<CUT_C_T3){const k=eout01((t-CUT_C_T2)/C.slide);return{fi:2,sx:1.12-0.12*k,sy:0.90+0.10*k,k:0.30-0.28*k}}
+ return{fi:3+Math.min(2,Math.floor((t-CUT_C_T3)/C.fin*3)),sx:1,sy:1,k:0};
+}
+function cutCDist(t){
+ const C=CUT_C;
+ if(t<CUT_C_T1)return -C.back*smooth01(t/C.wind);
+ if(t<CUT_C_T2)return -C.back+(C.range+C.back)*eout01((t-CUT_C_T1)/C.dash);
+ if(t<CUT_C_T3)return C.range+C.over*eout01((t-CUT_C_T2)/C.slide);
+ return C.range+C.over;
+}
+function startCutC(angle,upgrade,basic){
+ P.swordCut=null;P.swordGuard=null;P.runSwing=false;P.avAlt=false;
+ P.atkT=0.22;P.atkAng=angle;P.av=P.avTotal=CUT_C_T4;
+ if(Math.abs(Math.cos(angle))>0.15)P.facing=Math.cos(angle)>=0?1:-1;
+ sfx('sword_slash',0.18,0.05);
+ P.cutC={t:0,ang:angle,upgrade,basic,d:0,stop:false,hits:new Set(),trail:null,ghosts:[],phase:0};
+}
+function endCutC(){
+ const c=P.cutC;if(!c)return;
+ P.cutC=null;P.av=0;P.atkT=0;
+ if(c.trail)c.trail.T=Math.min(c.trail.T,c.trail.t+0.2);
+ if(c.phase<2){c.basic.step=0}
+}
+// Lướt / chiêu chủ động chỉ cắt được nhát C ngoài pha lướt + trượt.
+const cutCLocked=()=>!!(P.cutC&&P.cutC.t>=CUT_C_T1&&P.cutC.t<CUT_C_T3);
+function segDist(px,py,x0,y0,x1,y1){const dx=x1-x0,dy=y1-y0,L=dx*dx+dy*dy;const u=L?clamp(((px-x0)*dx+(py-y0)*dy)/L,0,1):0;return Math.hypot(px-x0-dx*u,py-y0-dy*u)}
+function updCutC(dt){
+ const c=P.cutC,C=CUT_C,ca=Math.cos(c.ang),sa=Math.sin(c.ang);
+ c.t+=dt;const t=c.t;
+ if(t>=CUT_C_T4||(t>=CUT_C_T3&&P.moving)){endCutC();return}
+ // vào pha lướt
+ if(c.phase===0&&t>=CUT_C_T1){c.phase=1;sfx('sword_slash',0.42,0.06);
+  if(!LOWFX){c.trail={k:'ctrail',x0:P.x,y0:P.y,x1:P.x,y1:P.y,T:C.dash+C.slide+0.5};fx(c.trail)}}
+ const x0=P.x,y0=P.y,nd=c.stop?c.d:cutCDist(t),step=nd-c.d;
+ if(step){
+  P.x=clamp(P.x+ca*step,24,AW-24);P.y=clamp(P.y+sa*step,24,AH-24);solidPush(P,P.r);
+  if(step>1.5&&Math.hypot(P.x-x0,P.y-y0)<step*0.45)c.stop=true; // chạm địa hình / mép ải
+  c.d=nd;
+ }
+ if(c.trail){c.trail.x1=P.x;c.trail.y1=P.y;if(c.phase>=1&&t<CUT_C_T3)c.trail.T=Math.max(c.trail.T,c.trail.t+0.3)}
+ if(c.phase>=1&&t<CUT_C_T3+0.02){
+  // Chém mọi mục tiêu thân người lướt qua, mỗi mục tiêu đúng 1 lần
+  const mx=(x0+P.x)/2,my=(y0+P.y)/2,half=Math.hypot(P.x-x0,P.y-y0)/2;
+  for(const e of enemiesIn(mx,my,half+C.width+40)){
+   if(e.dead||c.hits.has(e))continue;
+   if(segDist(e.x,e.y,x0,y0,P.x,P.y)>e.r+C.width)continue;
+   c.hits.add(e);
+   hit(e,C.dmg*pw(),H({kb:45,stun:0.12,swordBasic:true,mark:true,pierceArmor:c.upgrade>=3?SWORD_FORGE_PIERCE:0}),e.x-ca*40,e.y-sa*40);
+   if(!LOWFX)fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:c.ang,T:0.16});
+   G.shake=Math.max(G.shake||0,3);
+  }
+  for(const b of G.brk||[]){if(b.dead||c.hits.has(b))continue;if(segDist(b.x,b.y-10,x0,y0,P.x,P.y)<C.width+10){c.hits.add(b);hitBrk(b)}}
+ }
+ // vào pha trượt: bụi, kiếm khí +9, reset chuỗi
+ if(c.phase===1&&t>=CUT_C_T2){c.phase=2;
+  c.basic.step=0;tutHook('cut',2);
+  for(let i=0;i<(LOWFX?4:9);i++)part(P.x+ca*10+rnd(-8,8),P.y-2,-ca*rnd(20,70)+rnd(-25,25),rnd(-40,-10),rnd(0.3,0.5),rnd(5,10),'rgba(205,220,226,.55)',0);
+  if(c.upgrade>=9){const x=P.x+ca*30,y=P.y+sa*30-8;
+   shoot(x,y,c.ang,370,{dmg:C.dmg*pw()*.35,pierce:3,r:18,life:.26,kind:'crescent',c:'#8cecff',o:H({pierceArmor:SWORD_FORGE_PIERCE})})}
+ }
+ if(c.phase===2&&t>=CUT_C_T3)c.phase=3;
+ if(!LOWFX&&t>CUT_C_T1-0.03&&t<CUT_C_T2+0.08){c.ghosts.push({t,x:P.x,y:P.y});if(c.ghosts.length>12)c.ghosts.shift()}
+}
+function drawCutC(facing){
+ const c=P.cutC,t=c.t,an='cutC';
+ // dư ảnh 3 lớp
+ if(!LOWFX&&c.ghosts.length&&t>CUT_C_T1-0.02&&t<CUT_C_T2+0.06){
+  for(const [lag,al] of [[0.075,0.10],[0.05,0.16],[0.025,0.26]]){
+   let g=null;for(const q of c.ghosts)if(q.t<=t-lag)g=q;
+   if(!g)continue;const ps=cutCPose(Math.max(CUT_C_T1,g.t));
+   drawHeroFrame(X,an,ps.fi,g.x,g.y,facing,HERO.SC,false,al,{sx:ps.sx,sy:ps.sy,k:ps.k,tint:1});
+  }
+ }
+ const ps=cutCPose(t);
+ X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,15*ps.sx,5);
+ const flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
+ drawHeroFrame(X,an,ps.fi,P.x,P.y,facing,HERO.SC,P.hurt>0.12,flick?0.55:1,{sx:ps.sx,sy:ps.sy,k:ps.k});
+ // ánh lóe kiếm lúc lấy đà
+ if(!LOWFX&&t>0.10&&t<CUT_C_T1+0.02){
+  const k=(t-0.10)/(CUT_C_T1+0.02-0.10),r=3+6*Math.sin(Math.PI*k);
+  const cx=P.x-24*facing,cy=P.y-(HERO.id==='hero_nu'?62:27);
+  X.save();X.globalCompositeOperation='lighter';X.strokeStyle='rgba(240,255,255,.9)';X.lineWidth=1.6;
+  X.beginPath();X.moveTo(cx-r,cy);X.lineTo(cx+r,cy);X.moveTo(cx,cy-r);X.lineTo(cx,cy+r);X.stroke();X.restore();
+ }
 }
 const VAN_KIEM={range:420,radius:180,impact:58};
 const WEAPONS={
@@ -1893,7 +1997,7 @@ function gp(){const h=1+(Math.max(S.dmgW,S.dmgM)+S.wDmg)/100;return P.god.def.mu
 
 /* ================= WAVES ================= */
 function startWave(sw){
- cancelSkillAim();P.manualQueue=null;P.swordGuard=null;
+ cancelSkillAim();P.manualQueue=null;P.swordGuard=null;if(P.cutC)endCutC();
  if(G.nextStage){G.stage++;G.nextStage=false;sw=1}
  G.sw=sw;const n=sw===5?10:Math.min(9,(G.stage-1)*2+sw);
  G.wave=n;G.waveT=0;G.waveDur=n<10?WAVE_DUR[n-1]:Infinity;G.wTarget=n<10?Math.round(WAVE_DUR[n-1]*((0.9+n*0.5)*G.diff.spawn+(5+n)/9.5)*0.62):Infinity;G.spawnAcc=0;G.packT=6;G.wK=0;G.wGear=0;G.wC=0;G.wD=0;G.wT=0;G.lvWave=0;
@@ -2076,7 +2180,7 @@ function tryTransform(){
  if(!G||G.state!=='play'||G.paused)return;
  if(P.form==='god'){revert();return}
  if(P.rage<100||P.godCd>0||P.transT>0)return;
- cancelSkillAim();P.manualQueue=null;P.swordCut=null;P.swordGuard=null;P.transT=0.7;G.freeze=0.7;sfx('taiji_open',0.6,0.2);fx({k:'pillar',x:P.x,y:P.y,T:0.9});G.flash=0.5;notice('Hóa Thân',P.god.def.name);
+ cancelSkillAim();P.manualQueue=null;P.swordCut=null;P.swordGuard=null;P.cutC=null;P.transT=0.7;G.freeze=0.7;sfx('taiji_open',0.6,0.2);fx({k:'pillar',x:P.x,y:P.y,T:0.9});G.flash=0.5;notice('Hóa Thân',P.god.def.name);
 }
 function enterGod(){
  cancelSkillAim();P.manualQueue=null;
@@ -2128,6 +2232,7 @@ function updPlayer(dt,frozen){
  if(P.moving&&!(P.dashT>0)&&!LOWFX&&Math.random()<dt*(MOBILE?4:7))part(P.x-Math.cos(P.moveAng)*8+rnd(-4,4),P.y-1,-Math.cos(P.moveAng)*rnd(10,30),rnd(-18,-6),rnd(0.25,0.4),rnd(3,6),'rgba(210,200,185,.35)',0);
  let spd=210*(1+S.speed/100);if(P.form==='god')spd*=1+P.god.def.spd;if(P.buffSpd>0){spd*=1.6;P.buffSpd-=dt}if(P.hidden>0){spd*=1.3;P.hidden-=dt}if(stOn('cham'))spd*=1-clamp(P.st.cham.v||0.4,0,0.8);
  if(P.dashT>0){P.dashT-=dt;P.x+=Math.cos(P.dashAng)*780*dt;P.y+=Math.sin(P.dashAng)*780*dt;if(Math.random()<.7)part(P.x,P.y-20,0,0,0.25,9,P.form==='god'?'rgba(255,210,110,.5)':'rgba(180,220,255,.45)',1);if(!LOWFX&&G.decals.length<(MOBILE?12:40)&&Math.random()<(MOBILE?.25:.5))G.decals.push({img:'ink_trail',x:P.x-Math.cos(P.dashAng)*30,y:P.y,ang:P.dashAng+Math.PI,w:90,h:45,t:0,T:0.6,a:0.7})}
+ else if(P.cutC){if(!stun&&G.state==='play')updCutC(dt);else endCutC()}
  else{P.x+=ix*spd*dt;P.y+=iy*spd*dt}
  P.x+=P.kx*dt;P.y+=P.ky*dt;const dk=Math.max(0,1-8*dt);P.kx*=dk;P.ky*=dk;
  P.x=clamp(P.x,24,AW-24);P.y=clamp(P.y,24,AH-24);solidPush(P,P.r);
@@ -2137,7 +2242,7 @@ function updPlayer(dt,frozen){
  const tg=nearest(P.x,P.y,560);P.aimAng=tg?angTo(tg):P.moveAng;
  const fa=(P.atkT>0||P.av>0)?P.atkAng:P.moving?P.moveAng:P.aimAng;if(Math.abs(Math.cos(fa))>0.15)P.facing=Math.cos(fa)>=0?1:-1;
  if(P.truyPhongT>0)P.truyPhongT-=dt;
- if(stun||G.state!=='play'){P.swordCut=null;P.swordGuard=null}
+ if(stun||G.state!=='play'){P.swordCut=null;P.swordGuard=null;if(P.cutC)endCutC()}
  else if(P.dashT<=0)finishSwordCut(dt);
  if(P.form==='god'){P.rage-=100/P.godDur*dt;if(P.rage<=0){P.rage=0;revert();return}if(!stun)castGod(dt)}
  else{if(P.godCd>0)P.godCd-=dt;if(!stun&&G.state==='play')castHuman(dt)}
@@ -2219,7 +2324,8 @@ function castQueuedHumanSkill(){
  const queued=P.manualQueue;
  if(!queued)return false;
  if(G.t>queued.until||G.clearing){P.manualQueue=null;return false}
- if(P.dashT>0||P.swordCut||G.t<(P.manualLock||0))return false;
+ if(P.dashT>0||P.swordCut||cutCLocked()||G.t<(P.manualLock||0))return false;
+ if(P.cutC)endCutC();
  P.manualQueue=null;
  const sk=hudSkill(queued.key);
  if(!sk?.lvl||sk.cd>0||P.mp<(sk.def.mp||0))return false;
@@ -2261,7 +2367,8 @@ function castGod(dt){
  if(g.ult){g.ult.cd-=dt;if(g.ult.cd<=0){const tg=nearest(P.x,P.y,g.ult.def.range);if(tg){g.ult.def.cast(tg);g.ult.cd=g.ult.def.cd;notice(g.ult.def.name)}}}
 }
 function dash(){
- if(!G||G.state!=='play'||G.paused||P.dashCd>0||P.transT>0||stOn('choang'))return;
+ if(!G||G.state!=='play'||G.paused||P.dashCd>0||P.transT>0||stOn('choang')||cutCLocked())return;
+ if(P.cutC)endCutC();
  P.manualQueue=null;P.swordCut=null;P.swordGuard=null;P.av=0;P.atkT=0;P.truyPhongT=secOn('truyphong')?.65:0;P.dashAng=P.moving?P.moveAng:P.aimAng;P.dashT=0.17;if(secOn('hoiphong'))P.hoiPhong=2.5;sfx('suodi_cast',0.35,0.2);P.inv=Math.max(P.inv,0.3);P.dashCd=1.4*(1-S.dashCdr/100);tutHook('dash');
 }
 function updEnemy(e,dt){
@@ -2551,6 +2658,13 @@ function drawFx(f){
   case'imp':{if(!vok('arc_sheet'))break;c.globalCompositeOperation='source-over';c.translate(f.x,f.y);arcCell(c,f.row,Math.floor(k*8),f.sc);break}
   case'ink':{if(!vok('ink_impact'))break;c.globalCompositeOperation='source-over';c.globalAlpha=a;c.translate(f.x,f.y);const s2=0.5+k*0.6;c.drawImage(VFX.ink_impact,-96*s2,-96*s2,192*s2,192*s2);break}
   case'arc':{if(f.spr&&vok('arc_sheet')){c.globalCompositeOperation='source-over';c.translate(f.x+Math.cos(f.ang)*f.r*0.5,f.y-10+Math.sin(f.ang)*f.r*0.5);c.rotate(f.ang);if(f.dir<0)c.scale(1,-1);arcCell(c,0,Math.floor(k*8),f.r/52);break}const sw=Math.min(1,k*4),s0=f.ang-f.sp/2*f.dir,s1=s0+f.sp*sw*f.dir;const lo=Math.min(s0,s1),hi=Math.max(s0,s1);c.globalAlpha=a*0.75;c.strokeStyle=f.c;c.lineWidth=f.r*0.24*(1-k*0.5);c.beginPath();c.arc(f.x,f.y,f.r*0.78,lo,hi);c.stroke();c.globalAlpha=a;c.strokeStyle='#fff';c.lineWidth=2.2;c.beginPath();c.arc(f.x,f.y,f.r*0.92,lo,hi);c.stroke();break}
+  case'ctrail':{const fa=Math.min(1,(f.T-f.t)/0.25),dx=f.x1-f.x0,dy=f.y1-f.y0,L=Math.hypot(dx,dy);if(L<4)break;
+   c.globalAlpha=fa*0.45;c.strokeStyle='rgb(150,225,240)';c.lineWidth=2;c.beginPath();c.moveTo(f.x0+dx*0.12,f.y0+dy*0.12);c.lineTo(f.x1,f.y1);c.stroke();
+   c.translate(f.x0,f.y0-34);c.rotate(Math.atan2(dy,dx));
+   c.globalAlpha=fa*0.5;c.fillStyle='#50c8e6';c.beginPath();c.moveTo(L*0.15,-2);c.lineTo(L+12,-5);c.lineTo(L+22,0);c.lineTo(L+12,5);c.lineTo(L*0.15,2);c.closePath();c.fill();
+   c.globalAlpha=fa;c.strokeStyle='#ebffff';c.lineWidth=2;c.beginPath();c.moveTo(L*0.15,0);c.lineTo(L+16,0);c.stroke();break}
+  case'ccut':{c.translate(f.x,f.y);c.rotate(f.ang-0.13);c.globalAlpha=a*0.55;c.strokeStyle='#5ad2f0';c.lineWidth=9;c.beginPath();c.moveTo(-35,0);c.lineTo(35,0);c.stroke();
+   c.globalAlpha=a;c.strokeStyle='#ebffff';c.lineWidth=Math.max(1,5*a);c.beginPath();c.moveTo(-31,0);c.lineTo(31,0);c.stroke();break}
   case'ring':{const r=f.r0+(f.r1-f.r0)*(1-(1-k)*(1-k));c.globalAlpha=a;c.strokeStyle=f.c;c.lineWidth=8*a+1;c.beginPath();c.ellipse(f.x,f.y,r,r*0.8,0,0,TAU);c.stroke();break}
   case'line':{c.translate(f.x,f.y);c.rotate(f.ang);if(f.len>=500&&vok('ink_slash')){c.globalCompositeOperation='source-over';c.globalAlpha=a;c.drawImage(VFX.ink_slash,0,-f.w*2.2,f.len,f.w*4.4);break}const g=c.createLinearGradient(0,0,f.len,0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(0.6,f.c);g.addColorStop(1,'#fff');c.globalAlpha=a;c.fillStyle=g;const w=f.w*(0.4+a*0.6);c.beginPath();c.moveTo(0,-w/2);c.lineTo(f.len*0.9,-w/3);c.lineTo(f.len,0);c.lineTo(f.len*0.9,w/3);c.lineTo(0,w/2);c.fill();break}
   case'bolt':{c.globalAlpha=a;c.strokeStyle='#bfe0ff';c.lineWidth=5;c.beginPath();f.pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();c.strokeStyle='#fff';c.lineWidth=1.8;c.stroke();break}
@@ -2671,6 +2785,7 @@ function runSwingTurn(runFacing){
 }
 function drawPlayer(){
  if(P.form!=='god'&&useHero(G.cfg.gender,G.cfg.weapon)){
+  if(P.cutC&&HERO.meta.anims.cutC&&!P.deadAt){drawCutC(P.facing);return}
   const[an,fi]=heroFrame();X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,15,5);
   const flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
   const runX=Math.cos(P.moveAng);
@@ -2714,6 +2829,7 @@ function render(){
   if(G.ev&&G.ev.on&&G.ev.target&&!G.ev.target.dead&&G.ev.target.bounty){const t=G.ev.target,y=t.y-t.r*3.6-10+Math.sin(G.t*6)*2;c.fillStyle='#b3261e';c.beginPath();c.moveTo(t.x,y+10);c.lineTo(t.x-7,y);c.lineTo(t.x+7,y);c.fill();c.font='700 11px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText('Truy nã',t.x,y-4);c.fillStyle='#ff8a70';c.fillText('Truy nã',t.x,y-4)}
   if(G.lowTag&&G.state==='play'){const y=P.y-122+Math.sin(G.t*6)*2;c.font='800 13px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=4;c.strokeStyle='rgba(0,0,0,.85)';c.strokeText('Máu thấp',P.x,y);c.fillStyle='#ff6a5a';c.fillText('Máu thấp',P.x,y)}
   for(const t of G.enemies)if(t.nm&&!t.dead){const y=t.y-t.r*3.4-8;c.font='700 12px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText(t.nm,t.x,y);c.fillStyle='#ff8a70';c.fillText(t.nm,t.x,y);const w=60;c.fillStyle='#1a0806';c.fillRect(t.x-w/2-1,y+4,w+2,6);c.fillStyle='#d8382a';c.fillRect(t.x-w/2,y+5,w*Math.max(0,t.hp/t.mhp),4)}
+  for(const t of G.enemies)if(!t.dead&&t.swordMarkUntil>G.t){const left=(t.swordMarkUntil-G.t)/3,x=t.x,y=t.y-t.r*3.4-(t.nm?26:10);c.save();c.fillStyle='#f2c562';c.strokeStyle='#5a3a12';c.lineWidth=1.5;c.beginPath();c.moveTo(x,y-7);c.lineTo(x+5.5,y);c.lineTo(x,y+7);c.lineTo(x-5.5,y);c.closePath();c.fill();c.stroke();c.strokeStyle='#ffe3a0';c.lineWidth=2;c.beginPath();c.arc(x,y,10,-Math.PI/2,-Math.PI/2+TAU*left);c.stroke();c.restore()}
   for(const z of G.zones)if(z.kind==='whirl'||z.kind==='blades'||z.kind==='staff')drawZone(z);
   for(const p of G.pproj)drawProj(p);
   for(const p of G.eproj){if(p.pt&&vok('petal')){c.save();c.translate(p.x,p.y);c.rotate(G.t*9+p.x*0.01);c.drawImage(VFX.petal,-14,-14,28,28);c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,140,180,.25)';circle(0,0,12);c.restore();continue}c.save();c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,90,20,.45)';circle(p.x,p.y,p.r+5);c.fillStyle='#ffd07a';circle(p.x,p.y,p.r*0.6);c.restore()}
@@ -3626,7 +3742,7 @@ function forgeItem(id,repair){
  const outcomes=FORGE_ODDS[forgeLevel(it)];
  let roll=Math.random()*100;
  const result=outcomes.findIndex(chance=>(roll-=chance)<0);
- if(result===0){it.forge=forgeLevel(it)+1;if(it.slot==='vk'&&(it.forge===6||it.forge===9)&&!forgeSeen(it.forge)){(save.forgeSeen=save.forgeSeen||{})[it.forge]=1;persist();if(G&&P)recalc();return 'Thành công · +'+it.forge+' · '+(it.forge===6?'Lĩnh ngộ nhát Phá Thế: thế chém thứ ba quét rộng, đánh dấu kẻ địch':'Lĩnh ngộ kiếm khí: nhát Phá Thế phóng thêm kiếm khí')}}
+ if(result===0){it.forge=forgeLevel(it)+1;if(it.slot==='vk'&&(it.forge===6||it.forge===9)&&!forgeSeen(it.forge)){(save.forgeSeen=save.forgeSeen||{})[it.forge]=1;persist();if(G&&P)recalc();return 'Thành công · +'+it.forge+' · '+(it.forge===6?'Lĩnh ngộ nhát Phá Thế: thế thứ ba lướt chém xuyên hàng, đánh dấu kẻ địch':'Lĩnh ngộ kiếm khí: nhát Phá Thế phóng thêm kiếm khí')}}
  if(result===2)it.forge=forgeLevel(it)-1;
  if(result===3){
   if(eqMap()[it.slot]===id)delete eqMap()[it.slot];
