@@ -1534,7 +1534,7 @@ setSwordPoses(CHM.hero_nu,
 for(const hero of [CHM.hero_nam,CHM.hero_nu])hero.anims.idle.f=hero.anims.idle.f.slice(0,1);
 const CH={};
 for(const id in CHM){const m=CHM[id];m.ay-=2;if(!m.anims.dash&&m.anims.run){const r=m.anims.run.f;m.anims.dash={fps:15,f:[r[1],r[3],r[5]]}}if(!m.anims.brake&&m.anims.run)m.anims.brake={fps:1,f:[m.anims.run.f[0]]};const h={id,meta:m,img:new Image(),flash:null,ok:false,SC:0.98,AV:0.4};
- h.img.onload=()=>{const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;{const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const q=t.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-atop';q.fillStyle='rgba(134,224,240,.62)';q.fillRect(0,0,t.width,t.height);h.tint=t}h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
+ h.img.onload=()=>{const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;{const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const q=t.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-atop';q.fillStyle='rgba(255,214,120,.62)';q.fillRect(0,0,t.width,t.height);h.tint=t}h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
  h.img.src=m.src;CH[id]=h;setTimeout(()=>preDecode(h.img),0)}
 let HERO=CH.hero_nam;
 const useHero=(gender,weapon)=>{const h=CH['hero_'+gender];if(weapon==='kiem'&&h&&h.ok){HERO=h;return true}return false};
@@ -1688,14 +1688,14 @@ function finishSwordCut(dt){
  Lấy đà (hạ người, kéo lùi) → lướt chém xuyên hàng → trượt dừng → thu thế.
  Mỗi mục tiêu trúng đúng 1 lần, gắn Phá Thế 3 giây, dừng khi gặp địa hình, vẫn nhận sát thương.
  Lướt (dash) hủy được lúc lấy đà và lúc thu thế; chạy hoặc dùng chiêu cũng cắt được thu thế. */
-const CUT_C={wind:0.18,dash:0.15,slide:0.14,fin:0.30,range:160,back:8,over:11,dmg:15,width:26};
+const CUT_C={wind:0.13,dash:0.13,slide:0.12,fin:0.26,range:170,back:6,over:14,dmg:15,width:26};
 const CUT_C_T1=CUT_C.wind,CUT_C_T2=CUT_C_T1+CUT_C.dash,CUT_C_T3=CUT_C_T2+CUT_C.slide,CUT_C_T4=CUT_C_T3+CUT_C.fin;
 const smooth01=x=>{x=clamp(x,0,1);return x*x*(3-2*x)},eout01=x=>{x=clamp(x,0,1);return 1-(1-x)**3};
 function cutCPose(t){
  const C=CUT_C;
- if(t<CUT_C_T1){const k=smooth01(t/C.wind);return{fi:0,sx:1+0.07*k,sy:1-0.14*k,k:-0.10*k}}
- if(t<CUT_C_T2)return{fi:1,sx:1.12,sy:0.90,k:0.30};
- if(t<CUT_C_T3){const k=eout01((t-CUT_C_T2)/C.slide);return{fi:2,sx:1.12-0.12*k,sy:0.90+0.10*k,k:0.30-0.28*k}}
+ if(t<CUT_C_T1){const k=smooth01(t/C.wind);return{fi:0,sx:1+0.05*k,sy:1-0.10*k,k:-0.06*k}}
+ if(t<CUT_C_T2)return{fi:1,sx:1.16,sy:0.86,k:0.36};
+ if(t<CUT_C_T3){const k=eout01((t-CUT_C_T2)/C.slide);return{fi:2,sx:1.16-0.16*k,sy:0.86+0.14*k,k:0.36-0.34*k}}
  return{fi:3+Math.min(2,Math.floor((t-CUT_C_T3)/C.fin*3)),sx:1,sy:1,k:0};
 }
 function cutCDist(t){
@@ -1727,6 +1727,7 @@ function updCutC(dt){
  if(t>=CUT_C_T4||(t>=CUT_C_T3&&P.moving)){endCutC();return}
  // vào pha lướt
  if(c.phase===0&&t>=CUT_C_T1){c.phase=1;sfx('sword_slash',0.42,0.06);
+  fx({k:'cbeam',x:P.x+ca*14,y:P.y-30,ang:c.ang,len:C.range+70,T:0.24});
   if(!LOWFX){c.trail={k:'ctrail',x0:P.x,y0:P.y,x1:P.x,y1:P.y,T:C.dash+C.slide+0.5};fx(c.trail)}}
  const x0=P.x,y0=P.y,nd=c.stop?c.d:cutCDist(t),step=nd-c.d;
  if(step){
@@ -1742,9 +1743,11 @@ function updCutC(dt){
    if(e.dead||c.hits.has(e))continue;
    if(segDist(e.x,e.y,x0,y0,P.x,P.y)>e.r+C.width)continue;
    c.hits.add(e);
-   hit(e,C.dmg*pw(),H({kb:45,stun:0.12,swordBasic:true,mark:true,pierceArmor:c.upgrade>=3?SWORD_FORGE_PIERCE:0}),e.x-ca*40,e.y-sa*40);
+   hit(e,C.dmg*pw(),H({kb:12,stun:0.12,swordBasic:true,mark:true,pierceArmor:c.upgrade>=3?SWORD_FORGE_PIERCE:0}),e.x-ca*40,e.y-sa*40);
+   e.flash=Math.max(e.flash,0.14);
+   fx({k:'cburst',x:e.x+ca*e.r*0.6,y:e.y-e.r*1.5,ang:c.ang,s:(c.hits.size===1?1:0.65)*(0.8+Math.min(0.6,e.r/40)),T:0.26});
    if(!LOWFX)fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:c.ang,T:0.16});
-   G.shake=Math.max(G.shake||0,3);
+   G.shake=Math.max(G.shake||0,4);
   }
   for(const b of G.brk||[]){if(b.dead||c.hits.has(b))continue;if(segDist(b.x,b.y-10,x0,y0,P.x,P.y)<C.width+10){c.hits.add(b);hitBrk(b)}}
  }
@@ -1762,7 +1765,7 @@ function drawCutC(facing){
  const c=P.cutC,t=c.t,an='cutC';
  // dư ảnh 3 lớp
  if(!LOWFX&&c.ghosts.length&&t>CUT_C_T1-0.02&&t<CUT_C_T2+0.06){
-  for(const [lag,al] of [[0.075,0.10],[0.05,0.16],[0.025,0.26]]){
+  for(const [lag,al] of [[0.06,0.12],[0.04,0.18],[0.02,0.28]]){
    let g=null;for(const q of c.ghosts)if(q.t<=t-lag)g=q;
    if(!g)continue;const ps=cutCPose(Math.max(CUT_C_T1,g.t));
    drawHeroFrame(X,an,ps.fi,g.x,g.y,facing,HERO.SC,false,al,{sx:ps.sx,sy:ps.sy,k:ps.k,tint:1});
@@ -1773,11 +1776,14 @@ function drawCutC(facing){
  const flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
  drawHeroFrame(X,an,ps.fi,P.x,P.y,facing,HERO.SC,P.hurt>0.12,flick?0.55:1,{sx:ps.sx,sy:ps.sy,k:ps.k});
  // ánh lóe kiếm lúc lấy đà
- if(!LOWFX&&t>0.10&&t<CUT_C_T1+0.02){
-  const k=(t-0.10)/(CUT_C_T1+0.02-0.10),r=3+6*Math.sin(Math.PI*k);
-  const cx=P.x-24*facing,cy=P.y-(HERO.id==='hero_nu'?62:27);
-  X.save();X.globalCompositeOperation='lighter';X.strokeStyle='rgba(240,255,255,.9)';X.lineWidth=1.6;
-  X.beginPath();X.moveTo(cx-r,cy);X.lineTo(cx+r,cy);X.moveTo(cx,cy-r);X.lineTo(cx,cy+r);X.stroke();X.restore();
+ if(!LOWFX&&t>0.03&&t<CUT_C_T1+0.02){
+  const k=(t-0.03)/(CUT_C_T1+0.02-0.03),r=4+10*Math.sin(Math.PI*k);
+  const cx=P.x+14*facing,cy=P.y-30;
+  X.save();X.globalCompositeOperation='lighter';
+  const g=X.createRadialGradient(cx,cy,0,cx,cy,r*1.6);g.addColorStop(0,'rgba(255,255,235,.95)');g.addColorStop(0.4,'rgba(255,220,130,.55)');g.addColorStop(1,'rgba(255,200,90,0)');
+  X.fillStyle=g;X.beginPath();X.arc(cx,cy,r*1.6,0,TAU);X.fill();
+  X.strokeStyle='rgba(255,255,240,.95)';X.lineWidth=1.6;
+  X.beginPath();X.moveTo(cx-r*1.8,cy);X.lineTo(cx+r*1.8,cy);X.moveTo(cx,cy-r);X.lineTo(cx,cy+r);X.stroke();X.restore();
  }
 }
 const VAN_KIEM={range:420,radius:180,impact:58};
@@ -2658,11 +2664,23 @@ function drawFx(f){
   case'imp':{if(!vok('arc_sheet'))break;c.globalCompositeOperation='source-over';c.translate(f.x,f.y);arcCell(c,f.row,Math.floor(k*8),f.sc);break}
   case'ink':{if(!vok('ink_impact'))break;c.globalCompositeOperation='source-over';c.globalAlpha=a;c.translate(f.x,f.y);const s2=0.5+k*0.6;c.drawImage(VFX.ink_impact,-96*s2,-96*s2,192*s2,192*s2);break}
   case'arc':{if(f.spr&&vok('arc_sheet')){c.globalCompositeOperation='source-over';c.translate(f.x+Math.cos(f.ang)*f.r*0.5,f.y-10+Math.sin(f.ang)*f.r*0.5);c.rotate(f.ang);if(f.dir<0)c.scale(1,-1);arcCell(c,0,Math.floor(k*8),f.r/52);break}const sw=Math.min(1,k*4),s0=f.ang-f.sp/2*f.dir,s1=s0+f.sp*sw*f.dir;const lo=Math.min(s0,s1),hi=Math.max(s0,s1);c.globalAlpha=a*0.75;c.strokeStyle=f.c;c.lineWidth=f.r*0.24*(1-k*0.5);c.beginPath();c.arc(f.x,f.y,f.r*0.78,lo,hi);c.stroke();c.globalAlpha=a;c.strokeStyle='#fff';c.lineWidth=2.2;c.beginPath();c.arc(f.x,f.y,f.r*0.92,lo,hi);c.stroke();break}
-  case'ctrail':{const fa=Math.min(1,(f.T-f.t)/0.25),dx=f.x1-f.x0,dy=f.y1-f.y0,L=Math.hypot(dx,dy);if(L<4)break;
-   c.globalAlpha=fa*0.45;c.strokeStyle='rgb(150,225,240)';c.lineWidth=2;c.beginPath();c.moveTo(f.x0+dx*0.12,f.y0+dy*0.12);c.lineTo(f.x1,f.y1);c.stroke();
-   c.translate(f.x0,f.y0-34);c.rotate(Math.atan2(dy,dx));
-   c.globalAlpha=fa*0.5;c.fillStyle='#50c8e6';c.beginPath();c.moveTo(L*0.15,-2);c.lineTo(L+12,-5);c.lineTo(L+22,0);c.lineTo(L+12,5);c.lineTo(L*0.15,2);c.closePath();c.fill();
-   c.globalAlpha=fa;c.strokeStyle='#ebffff';c.lineWidth=2;c.beginPath();c.moveTo(L*0.15,0);c.lineTo(L+16,0);c.stroke();break}
+  case'ctrail':{const fa=Math.min(1,(f.T-f.t)/0.35),dx=f.x1-f.x0,dy=f.y1-f.y0,L=Math.hypot(dx,dy);if(L<4)break;
+   c.translate(f.x0,f.y0-26);c.rotate(Math.atan2(dy,dx));
+   const g=c.createLinearGradient(0,0,L,0);g.addColorStop(0,'rgba(230,170,60,0)');g.addColorStop(0.35,'rgba(235,180,70,.38)');g.addColorStop(1,'rgba(255,225,130,.75)');
+   c.globalAlpha=fa;c.fillStyle=g;c.beginPath();c.moveTo(0,-4);c.lineTo(L,-13);c.quadraticCurveTo(L+10,0,L,13);c.lineTo(0,4);c.closePath();c.fill();
+   c.globalAlpha=fa*0.55;c.fillStyle='rgba(255,245,200,.9)';c.fillRect(L*0.3,-1.5,L*0.7,3);
+   c.globalAlpha=fa*0.35;c.strokeStyle='rgba(220,170,90,1)';c.lineWidth=3;c.beginPath();c.moveTo(L*0.2,24);c.lineTo(L,26);c.stroke();break}
+  case'cbeam':{const grow=Math.min(1,f.t/0.05),fa=f.t<0.07?1:Math.max(0,1-(f.t-0.07)/(f.T-0.07)),L=f.len*grow;
+   c.translate(f.x,f.y);c.rotate(f.ang);
+   const g=c.createLinearGradient(0,0,L,0);g.addColorStop(0,'rgba(200,240,255,.2)');g.addColorStop(0.7,'rgba(220,250,255,.85)');g.addColorStop(1,'rgba(255,255,255,0)');
+   c.globalAlpha=fa*0.6;c.fillStyle=g;c.beginPath();c.moveTo(0,-5);c.lineTo(L*0.85,-3);c.lineTo(L,0);c.lineTo(L*0.85,3);c.lineTo(0,5);c.closePath();c.fill();
+   c.globalAlpha=fa;c.strokeStyle='#fff';c.lineWidth=1.8;c.beginPath();c.moveTo(4,0);c.lineTo(L*0.95,0);c.stroke();break}
+  case'cburst':{const sc=f.s*(0.75+0.45*Math.min(1,k*4)),fa=k<0.55?1:1-(k-0.55)/0.45;
+   c.globalCompositeOperation='source-over';c.translate(f.x,f.y);c.rotate(f.ang+0.4);c.scale(sc,sc);c.globalAlpha=fa;
+   const N=11,star=(R,r)=>{c.beginPath();for(let i=0;i<N*2;i++){const q=i/(N*2)*TAU,rr=i%2?r:R*(i%4===0?1.15:0.85);c.lineTo(Math.cos(q)*rr,Math.sin(q)*rr*0.8)}c.closePath()};
+   star(42,17);c.fillStyle='#ff8a1e';c.fill();c.lineWidth=3;c.strokeStyle='#c2410c';c.stroke();
+   star(30,12);c.fillStyle='#ffc857';c.fill();
+   star(17,7);c.fillStyle='#fff7d6';c.fill();break}
   case'ccut':{c.translate(f.x,f.y);c.rotate(f.ang-0.13);c.globalAlpha=a*0.55;c.strokeStyle='#5ad2f0';c.lineWidth=9;c.beginPath();c.moveTo(-35,0);c.lineTo(35,0);c.stroke();
    c.globalAlpha=a;c.strokeStyle='#ebffff';c.lineWidth=Math.max(1,5*a);c.beginPath();c.moveTo(-31,0);c.lineTo(31,0);c.stroke();break}
   case'ring':{const r=f.r0+(f.r1-f.r0)*(1-(1-k)*(1-k));c.globalAlpha=a;c.strokeStyle=f.c;c.lineWidth=8*a+1;c.beginPath();c.ellipse(f.x,f.y,r,r*0.8,0,0,TAU);c.stroke();break}

@@ -46,3 +46,13 @@ Theo yêu cầu chủ game, nhát C Kiếm +6 trong `game/index.html` đã đổ
 - Code: `startCutC`, `updCutC`, `drawCutC`, `endCutC`, `cutCPose`, `cutCDist` (ngay trên `VAN_KIEM`); fx `ctrail`, `ccut` trong `drawFx`.
 - Lỗi "B nữ là chưởng" ghi ở trên thực ra đã được `setSwordPoses` xử lý trong game (B nữ dùng frame kiếm), nên không sửa thêm.
 - Kiểm thử (Playwright, 1280×720): nam và nữ, 3 quái thẳng hàng → trúng 3/3, mỗi con ~15–16, dấu Phá Thế 3 s, chuỗi quay về A; Lướt lúc lấy đà hủy được, lúc lướt chém bị khóa; không lỗi JS.
+
+
+## Cập nhật 22/11 · Nhát C đổi theo clip tham chiếu của chủ game
+
+Chủ game gửi clip quay màn hình (đòn đâm lướt xuyên mục tiêu) và yêu cầu nhát C làm giống. Đã đổi phần cảm giác, giữ nguyên công dụng:
+- Nhịp nhanh, gắt hơn: lóe kiếm 0,13 s → đâm lướt 0,13 s → trượt 0,12 s → thu thế 0,26 s (`CUT_C`, tầm 170, trượt thêm 14). Tư thế lướt ngả mạnh hơn (skew .36).
+- Lóe kiếm: quầng sáng vàng trắng ở mũi kiếm phía trước, có tia ngang.
+- Lúc bắt đầu lướt phóng **tia kiếm trắng** đâm thẳng dài hơn tầm lướt (fx `cbeam`).
+- **Vệt lướt vàng** dày, mờ dần về phía sau (fx `ctrail`), dư ảnh nhuộm vàng.
+- Trúng: quái **trắng xóa** 0,14 s, **nổ răng cưa cam** (fx `cburst`, mục tiêu đầu to nhất), rung màn hình 4. Đẩy lùi giảm còn 12 để nhân vật xuyên hẳn qua.
