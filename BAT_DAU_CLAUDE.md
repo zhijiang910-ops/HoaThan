@@ -67,3 +67,7 @@ Chủ game gửi clip quay màn hình (đòn đâm lướt xuyên mục tiêu) v
 - **Sảnh:** ẩn Bang Hội, Chiêu Mộ (`hide:1`); ẩn "Tiếp tục ải" khi không có; `giveStarterSword()` tặng Thanh Phong Kiếm +0 (cả hồ sơ cũ chưa có vũ khí). Vượt Ải bỏ dòng ghi nguồn ở tiêu đề. Nút màn nghỉ ghi "Chọn thêm N thẻ"/"Chọn đường đi".
 - **Nhịp ải:** ải 1 có thêm Yêu binh cận chiến (đường đâm đỏ), ải 2 thêm Lang yêu (đường lao). Mỗi ải thường có "Phục kích!" hai phía ở 55% mục tiêu hạ gục. Giữ Lướt ≥0,3 s khi kiếm +6 → nối Lướt Trảm vào mục tiêu gần nhất (hồi 3 s).
 - **Chờ frame:** prompt trong `frame_moi/PROMPT_ChatGPT.md` (chạy nữ, nhát C, chém A/B, tranh sảnh).
+
+## Cập nhật 22/11 (đợt 3)
+- **A/B chọn lại frame theo logic ra đòn** (`setSwordPoses`): nam A `2,3,3,4,5,5,5,7` (giơ cao → khụy bổ xuống → dứt đòn → thủ), B `6,6,6,14,14,12,13,13` (kéo sau hông → chém ngang → hất lên); nữ A `1,0,0,3,4,5,5,5` (vung qua đầu → bổ chéo xuống), B `5,5,4,6,7,7,7,6` (từ thấp hất lên). Frame chạm địch là ô thứ 4. Thêm chuyển động thân khi đánh (`tf` trong `drawPlayer`): 0–35% ngả sau co người, 35–55% đổ người về trước, sau đó trả về.
+- **Nữ cắt bớt dải lụa** (giữ màu gốc): `cong_cu/nu_lua/nu_edit.py <hero_nu_goc_lua.png> <out.png> goc 5`. Bản gốc còn lụa lưu ở `game/assets/hero_nu_goc_lua.png`. Script chỉ cắt điểm xanh lụa (b−r ≥ 38) nằm xa thân váy quá 5 px, vá lỗ tóc, xóa cụm vụn < 40 điểm. Bảng master nữ cần dựng lại theo sheet mới.

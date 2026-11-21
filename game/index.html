@@ -1554,13 +1554,18 @@ function setSwordPoses(meta,cutDown,cutUp){
  attack2.f=up;
 }
 // Male: frames 8 onward are the original second attack row.
+// A: giơ kiếm cao (3) → bổ xuống khụy gối (4) → dứt đòn thấp (5) → về thủ (7)
+// B: kéo kiếm ra sau hông (6) → chém ngang ra trước (14) → hất chéo lên (12,13)
+// Frame chạm địch rơi vào ô thứ 4 (≈42% thời lượng đòn).
 setSwordPoses(CHM.hero_nam,
- [13,13,11,6,6,14,14,14],
- [14,14,13,12,11,11,13,13]);
+ [2,3,3,4,5,5,5,7],
+ [6,6,6,14,14,12,13,13]);
 // Female: the original second attack row is an open-palm technique.
+// A: vung kiếm qua đầu ra sau (1,0) → bổ chéo xuống trước (3,4,5)
+// B: từ thấp (5,4) → hất kiếm lên trước mặt (6) → dựng đứng (7)
 setSwordPoses(CHM.hero_nu,
- [6,6,6,2,3,4,5,5],
- [5,4,3,6,7,7,6,6]);
+ [1,0,0,3,4,5,5,5],
+ [5,5,4,6,7,7,7,6]);
 // Keep a planted stance when idle; movement and attack poses use their own frames.
 for(const hero of [CHM.hero_nam,CHM.hero_nu])hero.anims.idle.f=hero.anims.idle.f.slice(0,1);
 const CH={};
@@ -2871,7 +2876,12 @@ function drawPlayer(){
   const runFacing=Math.abs(runX)>0.15?Math.sign(runX):P.facing;
   const facing=an==='run'?runFacing:P.facing;
   const turn=an==='run'||an==='attack'||an==='attack2'?runSwingTurn(runFacing):1;
-  drawHeroFrame(X,an,fi,P.x,P.y,facing*turn,HERO.SC,P.hurt>0.12&&!P.deadAt,flick?0.55:1);return;
+  let tf=null;
+  if((an==='attack'||an==='attack2')&&P.av>0){const p=swingProgress(),B=an==='attack2';
+   // 0–35%: lấy đà (ngả sau, co người) · 35–55%: ra đòn (đổ người, duỗi) · sau đó trả về
+   const wind=p<0.35?smooth01(p/0.35):p<0.5?1-(p-0.35)/0.15:0,hitp=p<0.35?0:p<0.55?(p-0.35)/0.2:1-smooth01((p-0.55)/0.45);
+   tf={k:-0.10*wind+(B?0.16:0.2)*hitp,sx:1+0.04*wind+0.07*hitp,sy:1-0.07*wind+0.02*hitp}}
+  drawHeroFrame(X,an,fi,P.x,P.y,facing*turn,HERO.SC,P.hurt>0.12&&!P.deadAt,flick?0.55:1,tf);return;
  }
  if(P.hidden>0){X.fillStyle='#4a3020';ell(P.x,P.y,18,7);X.fillStyle='#6a4a30';ell(P.x,P.y-3,12,5);if(Math.random()<.4)part(P.x+rnd(-10,10),P.y,rnd(-30,30),-40,0.4,3,'#8a6a4a',0,100);return}
  const god=P.form==='god',g=P.god.def;
