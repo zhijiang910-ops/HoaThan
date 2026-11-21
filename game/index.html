@@ -1676,7 +1676,7 @@ function heroFrame(){
 function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
  const M=HERO.meta,A=M.anims[an],fr=A.f[fi];c.save();c.imageSmoothingEnabled=false;
  /* chạy = động tác đi bộ của gói + ngả người, nhún theo bước (không vẽ lại pixel) */
- let k=0,bob=0;if(c===X){if(an==='run'&&!M.realRun){k=0.17;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*3)}else if(an==='dash')k=0.3;else if(an==='brake')k=-0.16}
+ let k=0,bob=0;if(c===X){if(an==='run'&&!M.realRun){k=0.08;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='dash')k=0.12;else if(an==='brake')k=-0.06}
  if(tf)k=tf.k;
  c.translate(Math.round(x),Math.round(y)+bob);c.scale(f*sc*(tf?tf.sx:1),sc*(tf?tf.sy:1));if(k)c.transform(1,0,-k,1,0,0);if(alpha!=null)c.globalAlpha=alpha;
  if(c===X&&!flash&&!(tf&&tf.tint)&&HERO.dark&&!LOWFX){const ga=c.globalAlpha;c.globalAlpha=ga*0.9;for(const[ox,oy]of[[-1,0],[1,0],[0,-1],[0,1]])c.drawImage(HERO.dark,fr[0],fr[1],M.w,M.h,-M.ax+ox,-M.ay+oy,M.w,M.h);c.globalAlpha=ga}
@@ -1735,9 +1735,9 @@ const CUT_C_T1=CUT_C.wind,CUT_C_T2=CUT_C_T1+CUT_C.dash,CUT_C_T3=CUT_C_T2+CUT_C.s
 const smooth01=x=>{x=clamp(x,0,1);return x*x*(3-2*x)},eout01=x=>{x=clamp(x,0,1);return 1-(1-x)**3};
 function cutCPose(t){
  const C=CUT_C;
- if(t<CUT_C_T1){const k=smooth01(t/C.wind);return{fi:0,sx:1+0.05*k,sy:1-0.10*k,k:-0.06*k}}
- if(t<CUT_C_T2)return{fi:1,sx:1.16,sy:0.86,k:0.36};
- if(t<CUT_C_T3){const k=eout01((t-CUT_C_T2)/C.slide);return{fi:2,sx:1.16-0.16*k,sy:0.86+0.14*k,k:0.36-0.34*k}}
+ if(t<CUT_C_T1)return{fi:0,sx:1,sy:1,k:0};
+ if(t<CUT_C_T2)return{fi:1,sx:1,sy:1,k:0.12};
+ if(t<CUT_C_T3)return{fi:2,sx:1,sy:1,k:0.12*(1-eout01((t-CUT_C_T2)/C.slide))};
  return{fi:3+Math.min(2,Math.floor((t-CUT_C_T3)/C.fin*3)),sx:1,sy:1,k:0};
 }
 function cutCDist(t){
@@ -1811,7 +1811,7 @@ function drawCutC(facing){
   for(const [lag,al] of [[0.06,0.12],[0.04,0.18],[0.02,0.28]]){
    let g=null;for(const q of c.ghosts)if(q.t<=t-lag)g=q;
    if(!g)continue;const ps=cutCPose(Math.max(CUT_C_T1,g.t));
-   drawHeroFrame(X,an,ps.fi,g.x,g.y,facing,HERO.SC,false,al,{sx:ps.sx,sy:ps.sy,k:ps.k,tint:1});
+   drawHeroFrame(X,an,ps.fi,g.x,g.y,facing,HERO.SC,false,al*0.7,{sx:ps.sx,sy:ps.sy,k:ps.k,tint:0});
   }
  }
  const ps=cutCPose(t);
@@ -2876,12 +2876,7 @@ function drawPlayer(){
   const runFacing=Math.abs(runX)>0.15?Math.sign(runX):P.facing;
   const facing=an==='run'?runFacing:P.facing;
   const turn=an==='run'||an==='attack'||an==='attack2'?runSwingTurn(runFacing):1;
-  let tf=null;
-  if((an==='attack'||an==='attack2')&&P.av>0){const p=swingProgress(),B=an==='attack2';
-   // 0–35%: lấy đà (ngả sau, co người) · 35–55%: ra đòn (đổ người, duỗi) · sau đó trả về
-   const wind=p<0.35?smooth01(p/0.35):p<0.5?1-(p-0.35)/0.15:0,hitp=p<0.35?0:p<0.55?(p-0.35)/0.2:1-smooth01((p-0.55)/0.45);
-   tf={k:-0.10*wind+(B?0.16:0.2)*hitp,sx:1+0.04*wind+0.07*hitp,sy:1-0.07*wind+0.02*hitp}}
-  drawHeroFrame(X,an,fi,P.x,P.y,facing*turn,HERO.SC,P.hurt>0.12&&!P.deadAt,flick?0.55:1,tf);return;
+  drawHeroFrame(X,an,fi,P.x,P.y,facing*turn,HERO.SC,P.hurt>0.12&&!P.deadAt,flick?0.55:1);return;
  }
  if(P.hidden>0){X.fillStyle='#4a3020';ell(P.x,P.y,18,7);X.fillStyle='#6a4a30';ell(P.x,P.y-3,12,5);if(Math.random()<.4)part(P.x+rnd(-10,10),P.y,rnd(-30,30),-40,0.4,3,'#8a6a4a',0,100);return}
  const god=P.form==='god',g=P.god.def;
@@ -4175,7 +4170,7 @@ function frame(now){
  try{
   const tutorial=tutControl(), waiting=tutorial||G?.inspect;
   if(tutorial&&$('#tutShade').hidden||G?.tut&&G.tut.step!==2)tutRender();
-  if(G&&G.state==='play'&&!G.paused&&!waiting){if(G.hitstop>0){G.hitstop-=dt;update(dt*0.08)}else update(dt)}
+  if(G&&G.state==='play'&&!G.paused&&!waiting)update(dt);
   if((!waiting||waiting!==lastTutControl)&&(G||!coverOn()))render();
   lastTutControl=waiting;
   hud(waiting?0:dt);
