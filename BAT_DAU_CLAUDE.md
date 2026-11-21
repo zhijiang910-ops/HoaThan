@@ -56,3 +56,14 @@ Chủ game gửi clip quay màn hình (đòn đâm lướt xuyên mục tiêu) v
 - Lúc bắt đầu lướt phóng **tia kiếm trắng** đâm thẳng dài hơn tầm lướt (fx `cbeam`).
 - **Vệt lướt vàng** dày, mờ dần về phía sau (fx `ctrail`), dư ảnh nhuộm vàng.
 - Trúng: quái **trắng xóa** 0,14 s, **nổ răng cưa cam** (fx `cburst`, mục tiêu đầu to nhất), rung màn hình 4. Đẩy lùi giảm còn 12 để nhân vật xuyên hẳn qua.
+
+
+## Cập nhật 22/11 (đợt 2) · Trải nghiệm, chủ game duyệt mục 1–17 (trừ 18 Trúc Cơ Đan)
+
+- **Chạy lùi:** sheet nam xếp frame chạy ngược (chân trụ trượt về trước). Đảo lại khi nạp (`A.run.f.reverse()`), giữ frame phanh cũ. Nhịp chân theo quãng đường (`P.runPh`, `runStride` nam 10,5 / nữ 8,5). Nữ vẫn là động tác đi bộ → chờ frame chạy mới.
+- **A/B:** khựng hình (`G.hitstop`, A 35 ms, B 55 ms, C 60 ms), vệt chém vẽ tay `sarc` (trắng, viền tối, B có viền vàng), vết cắt + tia lửa trên 3 mục tiêu đầu, số sát thương to dần theo liên kích (`num(...,sc)`), dồn bước khi đứng yên, B rung nhẹ. Bỏ tia xanh `imp` cho đòn thường kiếm.
+- **HUD điện thoại** (khối CSS "Điện thoại ngang (22/11)"): chiêu 54–58 px, Lướt 70 px, bỏ nhãn BẤM/TỰ/NỘI/phím, Hóa Thân bên trái cụm chiêu, chữ ≥10 px. Camera điện thoại 390/470 (trước 390/600). Viền tối 1 px + vòng sáng chân nhân vật (`HERO.dark`, `heroRing`). Nền tuyết phủ tối 16%. Nhiệm vụ thu gọn mặc định trên điện thoại, tiêu đề hiện "Nhiệm vụ x/y".
+- **Hướng dẫn:** bước 1, 2, 4 là dải gợi ý không dừng game (`#tut.hint`), chỉ bước Lướt còn dừng.
+- **Sảnh:** ẩn Bang Hội, Chiêu Mộ (`hide:1`); ẩn "Tiếp tục ải" khi không có; `giveStarterSword()` tặng Thanh Phong Kiếm +0 (cả hồ sơ cũ chưa có vũ khí). Vượt Ải bỏ dòng ghi nguồn ở tiêu đề. Nút màn nghỉ ghi "Chọn thêm N thẻ"/"Chọn đường đi".
+- **Nhịp ải:** ải 1 có thêm Yêu binh cận chiến (đường đâm đỏ), ải 2 thêm Lang yêu (đường lao). Mỗi ải thường có "Phục kích!" hai phía ở 55% mục tiêu hạ gục. Giữ Lướt ≥0,3 s khi kiếm +6 → nối Lướt Trảm vào mục tiêu gần nhất (hồi 3 s).
+- **Chờ frame:** prompt trong `frame_moi/PROMPT_ChatGPT.md` (chạy nữ, nhát C, chém A/B, tranh sảnh).
