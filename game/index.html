@@ -1642,7 +1642,7 @@ const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_sl
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
 const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
- sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},k5a_front:{w:82,h:103,c:3,n:6,px:-36,py:106},k5b_front:{w:124,h:163,c:3,n:6,px:22,py:151},k5c_behind:{w:334,h:125,c:4,n:15,px:167,py:107},k5c_front:{w:334,h:121,c:4,n:15,px:167,py:99},zs1:{w:101,h:87,c:3,n:9,px:44,py:102},zs2:{w:108,h:122,c:3,n:7,px:32,py:117},zs3:{w:87,h:88,c:3,n:9,px:30,py:90},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
+ sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},k5a_front:{w:82,h:103,c:3,n:6,px:-36,py:106},k5b_front:{w:124,h:163,c:3,n:6,px:22,py:151},k5c_behind:{w:334,h:125,c:4,n:15,px:167,py:107},k5c_front:{w:334,h:121,c:4,n:15,px:167,py:99},hv_mark:{w:128,h:66,c:5,n:17,px:64,py:33},hv_vortex_b:{w:191,h:92,c:4,n:14,px:96,py:98},hv_vortex_f:{w:209,h:100,c:6,n:28,px:106,py:100},hv_ring:{w:137,h:131,c:5,n:19,px:69,py:83},zs1:{w:101,h:87,c:3,n:9,px:44,py:102},zs2:{w:108,h:122,c:3,n:7,px:32,py:117},zs3:{w:87,h:88,c:3,n:9,px:30,py:90},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
  cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
 const isWk=()=>P.god&&P.god.def.look==='wukong';
 // Gậy Như Ý do PixelLab vẽ riêng ở độ phân giải gốc (không phóng to): đầu bịt trên + 1 hàng thân + đầu bịt dưới. Kéo dài chỉ lặp hàng thân. Vẽ dọc từ y=0 xuống y=len.
@@ -1805,18 +1805,18 @@ function cutCPose(t){
  return{fi:3+Math.min(2,Math.floor((t-CUT_C_T3)/C.fin*3)),sx:1,sy:1,k:0};
 }
 function cutCDist(t){
- const C=CUT_C;
+ const C=Object.assign({},CUT_C,P.cutC&&P.cutC.rng?{range:P.cutC.rng}:{});
  if(t<CUT_C_T1)return -C.back*smooth01(t/C.wind);
  if(t<CUT_C_T2)return -C.back+(C.range+C.back)*eout01((t-CUT_C_T1)/C.dash);
  if(t<CUT_C_T3)return C.range+C.over*eout01((t-CUT_C_T2)/C.slide);
  return C.range+C.over;
 }
-function startCutC(angle,upgrade,basic){
+function startCutC(angle,upgrade,basic,rng){
  P.swordCut=null;P.swordGuard=null;P.runSwing=false;P.avAlt=false;
  P.atkT=0.22;P.atkAng=angle;P.av=P.avTotal=CUT_C_T4;
  if(Math.abs(Math.cos(angle))>0.15)P.facing=Math.cos(angle)>=0?1:-1;
  sfx('sword_slash',0.18,0.05);
- P.cutC={t:0,ang:angle,upgrade,basic,d:0,stop:false,hits:new Set(),trail:null,ghosts:[],phase:0};
+ P.cutC={t:0,ang:angle,upgrade,basic,d:0,stop:false,hits:new Set(),trail:null,ghosts:[],phase:0,rng:rng||0};
 }
 function endCutC(){
  const c=P.cutC;if(!c)return;
@@ -1833,8 +1833,8 @@ function updCutC(dt){
  if(t>=CUT_C_T4||(t>=CUT_C_T3&&P.moving)){endCutC();return}
  // vào pha lướt
  if(c.phase===0&&t>=CUT_C_T1){c.phase=1;sfx('sword_slash',0.42,0.06);
-  fx({k:'cbeam',x:P.x+ca*14,y:P.y-30,ang:c.ang,len:C.range+70,T:0.24});
-  if(!LOWFX){c.trail={k:'ctrail',x0:P.x,y0:P.y,x1:P.x,y1:P.y,T:C.dash+C.slide+0.5};fx(c.trail)}}
+  if(!c.rng)fx({k:'cbeam',x:P.x+ca*14,y:P.y-30,ang:c.ang,len:C.range+70,T:0.24});
+  if(!LOWFX&&!c.rng){c.trail={k:'ctrail',x0:P.x,y0:P.y,x1:P.x,y1:P.y,T:C.dash+C.slide+0.5};fx(c.trail)}}
  const x0=P.x,y0=P.y,nd=c.stop?c.d:cutCDist(t),step=nd-c.d;
  if(step){
   P.x=clamp(P.x+ca*step,24,AW-24);P.y=clamp(P.y+sa*step,24,AH-24);solidPush(P,P.r);
@@ -1851,8 +1851,8 @@ function updCutC(dt){
    c.hits.add(e);
    hit(e,C.dmg*pw(),H({kb:12,stun:0.12,swordBasic:true,mark:true,pierceArmor:c.upgrade>=3?SWORD_FORGE_PIERCE:0}),e.x-ca*40,e.y-sa*40);
    e.flash=Math.max(e.flash,0.14);
-   fx({k:'cburst',x:e.x+ca*e.r*0.6,y:e.y-e.r*1.5,ang:c.ang,s:(c.hits.size===1?1:0.65)*(0.8+Math.min(0.6,e.r/40)),T:0.26});
-   if(!LOWFX)fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:c.ang,T:0.16,wh:1});
+   if(!c.rng)fx({k:'cburst',x:e.x+ca*e.r*0.6,y:e.y-e.r*1.5,ang:c.ang,s:(c.hits.size===1?1:0.65)*(0.8+Math.min(0.6,e.r/40)),T:0.26});
+   if(!LOWFX&&!c.rng)fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:c.ang,T:0.16,wh:1});
    G.shake=Math.max(G.shake||0,4);G.hitstop=Math.max(G.hitstop||0,c.hits.size===1?0.06:0.02);
   }
   for(const b of G.brk||[]){if(b.dead||c.hits.has(b))continue;if(segDist(b.x,b.y-10,x0,y0,P.x,P.y)<C.width+10){c.hits.add(b);hitBrk(b)}}
@@ -1898,8 +1898,15 @@ const WEAPONS={
  kiem:{name:'Kiếm',g:'劍',role:'DPS linh hoạt',tr:'Liên kích, kiếm khí, chí mạng',kit:[
   {id:'k0',name:'Liên Hoàn Kiếm',g:'劍',kind:'basic',cd:0.5,range:95,get desc(){return 'Combo Khởi Kiếm → Hồi Kiếm, mỗi nhát lao tới. Kiếm +6 mở nhát C Phá Thế Trảm: quét xoay 360°, trúng mọi phía. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
    cast(tg,s){startSwordCut(tg,s)}},
-  {id:'k1',hotkey:'Q',power:22,name:'Kiếm Khí Trảm',g:'氣',kind:'active',cd:2.4,mp:10,range:440,desc:'Phóng kiếm khí trăng khuyết xuyên qua quái.',up:'+1 mục tiêu xuyên, +25% sát thương',
-   cast(tg,l){const a=angTo(tg);swing(a,1);shoot(P.x,P.y-14,a,560,{dmg:this.power*lv(l)*pw(),pierce:3+(l-1),r:20*Ar(),life:0.85,kind:'crescent',c:'#9fd8ff',o:H({kb:30})})}},
+  {id:'k1',hotkey:'Q',power:22,name:'Huyết Ảnh Trảm',g:'血',kind:'active',cd:5,mp:18,range:320,desc:'Khóa mục tiêu, lướt xuyên qua để lại bóng mờ, rồi huyết kiếm xoáy chém 6 nhát quanh mục tiêu, kết thúc bằng vòng huyết quang.',up:'+25% sát thương, -6% hồi chiêu',
+   /* VFX: PixelLab (vòng ngắm, xoáy huyết kiếm tách lớp trước/sau, vòng kết). Lướt dùng lại pha lướt + bóng mờ của Lướt Trảm */
+   cast(tg,l){if(P.cutC)return;const x=tg.x,y=tg.y,a=angTo(tg),d=Math.hypot(x-P.x,y-P.y),dmg=this.power*lv(l)*pw(),sc=HERO.SC;
+    if(vok('hv_mark'))fx({k:'sp',s:'hv_mark',x,y,sc:sc*1.5,T:0.85,gr:1});
+    startCutC(a,Math.max(6,weaponForge()),P.kit.basic,clamp(d+60,120,380));
+    later(CUT_C_T2,()=>{sfx('sword_slash',0.5,0.08);
+     if(vok('hv_vortex_b')){fx({k:'sp',s:'hv_vortex_b',x,y,sc:sc*1.35,T:0.6,gr:1});fx({k:'sp',s:'hv_vortex_f',x,y,sc:sc*1.35,T:1.17})}
+     for(let i=0;i<6;i++)later(0.06+i*0.12,()=>{if(i%2==0)sfx('sword_slash',0.25,0.1);for(const e of enemiesIn(x,y,100)){if(e.dead)continue;hit(e,dmg*0.38,H({kb:i==5?90:6,stun:0.12,swordBasic:true}),x,y);e.flash=Math.max(e.flash,0.1)}G.shake=Math.max(G.shake||0,i==5?5:2)},'h')},'h');
+    later(CUT_C_T3+0.02,()=>{if(vok('hv_ring'))fx({k:'sp',s:'hv_ring',x:P.x,y:P.y,sc:sc*1.3,T:0.8,follow:1})},'h')}},
   {id:'k2',hotkey:'F',power:26,name:'Lướt Trảm',g:'掃',kind:'active',cd:4,mp:15,range:200,desc:'Lấy đà rồi lướt chém xuyên cả hàng quái, mỗi kẻ trúng một lần, gắn Phá Thế 3 giây.',up:'+25% sát thương, -6% hồi chiêu',
    cast(tg,l){if(P.cutC)return;startCutC(angTo(tg),Math.max(6,weaponForge()),P.kit.basic)}},
   {id:'k3',power:9,name:'Kiếm Ảnh',g:'影',kind:'auto',cd:9,mp:25,range:260,desc:'Ba kiếm ảnh xoay quanh người, chém quái chạm phải.',up:'+0.5 giây, cấp 3 và 5 thêm 1 kiếm',
