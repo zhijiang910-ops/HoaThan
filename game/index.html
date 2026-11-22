@@ -918,6 +918,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #lbBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.42) saturate(.8)}
 .lb{position:relative;z-index:1;height:100%;display:grid;grid-template-columns:minmax(280px,1fr) minmax(0,1.35fr);grid-template-rows:1fr auto;gap:14px 22px;padding:22px 26px 12px;box-sizing:border-box;max-width:1180px;margin:0 auto}
 .lbl{display:flex;flex-direction:column;gap:14px;min-height:0}
+.lbswap{margin-left:8px;padding:2px 8px;font:700 11px 'Be Vietnam Pro',sans-serif;color:#ffe1a4;background:#2a1d12;border:1px solid #987240;border-radius:6px;cursor:pointer;vertical-align:middle;pointer-events:auto}
+.lbswap:hover{background:#3a2818}
 .lbprof{display:flex;gap:12px;align-items:center;padding:10px 12px;background:linear-gradient(#1c1610ee,#0e0a07ee);box-shadow:inset 0 0 0 1px #0a0806,inset 0 0 0 3px #c9a45e,0 8px 24px rgba(0,0,0,.5)}
 #lbAva{width:84px;height:84px;flex:none;image-rendering:pixelated;border-radius:50%;box-shadow:0 0 0 2px #0e201d,0 0 0 4px #c9a45e}
 .lbinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
@@ -1381,7 +1383,7 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
  <canvas id="lbBg" width="640" height="400"></canvas>
  <div class="lb">
   <div class="lbl">
-   <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i></span>
+   <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i><button id="lbSwap" class="lbswap" type="button" title="Đổi giới tính, tên, kiểu tóc">⇄ Đổi nhân vật</button></span>
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
    <canvas id="lbHero" width="240" height="200"></canvas><div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
@@ -3417,7 +3419,9 @@ function showOnly(id){for(const k of['menu','lobby','create','inv','end'])$('#'+
 const WICON={kiem:{g:0},phu:{g:10},dao:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADGElEQVR4Xu2bPWsVQRSGV7GyUAsL0cIPLOSWFiGEEPwBgh/4A1KnChb5CRYpxEos7w8QFQtbQwjBWFjpJUXQpFCCBBRB28i74Vxmz87szOyc3Z0Z7tOEGNjL854zZ3YmsSgy5vKFs8cfPu8f46tJ83Su/pD+/uuvVS/bAFyZBeCaVErw9n+1NSn/TeeQZQA+ZBeAbvi9fbdhzCSrALj8zpcDazNkE0AbeZBFAG3lswggRD75AFzkmwZg0gG4yBPjJyvFj9//TmXzHuAjbyO5ISgpn9wS8JW3rf+kAvCVdyWJJdCVfBIdYJLf3P7UWGSX9o8+AJu8KQRVvmkLjDoAmzxYWrhd6wIf+WgD6EsenHGdln1AtzbqZSYdadV2t1XeB+3r4RDoLjLaytvWvUoU22CIPMdHPooZECrvO/Q4g3bA0PKDdkAM8oMFICkfSu9LQFred+gNOgNik+91CcQoD3p5EQqR153qQttepfMAJOUhDkwXnG3oNABpeUlxorMA2sp33fIckQAgq1ZHSr6LlhffBkvZ/efTo6ykPELtou3FhiDJE1eurVTO8sB2pO275TmiFyL8r7J85ftoebEZwKt/sDEun3313nunyqugCyT3dh+ChiCFQPIUAP/LDFxn6a6xwMPFkfje7kNQAAAhbI/nap95ePOkI5qAfNdDzobIaXB9fbf2OZf2lo2fDfEY5EFQAKj+00c3yge5hkDiQ1eeaL0EVHlic3JUrK3d0i6Hode6iVYBQP7+6Nz0mUuji5Xnz9+tfg8Wlj8Ovt51eC8BU+VRffD45ddSloNBSb/4iAmvDjDJE28mf6ZV5rtDrB3gHICt7VF5PtgohFjlgVMAVHlqcxWsf508wU+KsWEMQF2vtNWp017X9imiDQDyr5/NFd+2jipV59O+qfKpUAuA5AmEANT2t7V9SlQC4PKmENRpnzqV9wBM8Qer9T38+uLJiw0qz5dB6jTOAA6FE8t7vAS1N8Hd+VF5wXn+xc/a8zEYc6PxPYDPBHRATtXXgg7AD+grQtgZ32n876fZE+MhZsaMGSL8B07LqUJFTemzAAAAAElFTkSuQmCC'},thuong:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACcUlEQVR4Xu2bLU8DQRCGr4SQBnWKEAwNQZBgGhISLBUIDPyEaiSK8AsIJEgEmCokeAS1BEFKFQKBoZAazkBwJbNkyHbZvdtr725n5/qaI8dXn2d2drq0BAHzLISzA1OOz68GU5z5Af7141OLeHJxLe6zFmAKwrMWYKq+DL+1ucFzBdjCs1wBaeBZCQBwm56HZS+HxSYI8LcrNW311Z6Xs72+HFR8H4MID6kezInr4k5bXB+f38T1pn03VHkAh/Sir4rXAnTwKADh1QA8gON9LwVgv8Oyl4MrABOtXv59LFdd/h7vBAD8aRgG9flQ2706CWrVWWyCnfdIK+D7qP9vo5OXvBqvpgBWH5MkAWTgdNDa4nAWSJLQeHqJXQHe7AFq9XVR94UkeK9WAPTxfqTve11L2MB7JQBT3R0efWqgJWzhvRIALXDWrIsH3V2aMe1pIjAm484GcqZjfxKRyPD33V7so8I2iRt9csiPQRO8bj+AewBuCw8hPQVM8K2HvgDFyZC26nLICkiCRwj4ujQVV0NSgC18FiG3BxQJT24MFg1PSoALeDICXMGTEOAS3rkA1/BOBVCAdyaACnzhT4XxhIanOvlgg09vs3hykyaF/UK56hAK8IW1AFX4QgRQhs9dQBw8leR2GEqCd7XpqclFgC/wubSAT/CZC/ANPlMBPsJnJsBX+EwE+Aw/tgDf4ccSwAF+ZAFc4EcSwAk+tQBu8KkEcIS3FsAV3koAZ/hEAdzhYwWUAd4ooCzwWgFlgtcKgHdb7LU64pPqG5Ko/BkryxhfF4CV0Fz7/QcECEf4xICEw0ZtgK/olDKlhp9kkknY5wdYw0BHqJ6/PgAAAABJRU5ErkJggg=='},con:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACdUlEQVR4Xu2br04DQRDGWyQKScAgkchqXoA3IKiG8BR9ioZUERQWxzMgEFXgMDQEhUJS8l0yZG+7f653s3M7e/2ZOpLvm9m53W/CeDQgjg721x/v83/Fj7PFaDwE/RAOnbb45+WqfAPsqr893dZqvld6B6y+f8bHJzeVTFs8KP4IoAPmV2eV2NPJ70a9i+4AUzy4X3zWDDi/XpZrgC0eA880AeJxPIo8Aj7x4O7lq/qF+CJnQEw8CSeKmgHbigfFGNBGfDEGtBVfhAFdxKs3oKt41QZwiFdrAJd4lQZwildnALd4FQZQmJFCfPYGUJiRSnzWBphJjhll0auOHjb23X5bsnwN+mIs8z2PV11X8Vl2QCjDu5weslU+y9dgLMAEZAIX2bwGIT4WYAJKcrgMYPtDXaDKI70NBZjc4rOYAb5p7wowOYaeTa8d0GTa48ynqDzRmwGxgYcOsAPMFPQ6BLGcBK6NDU37FG1v0ksH2Fdb18YmZdubiHeA614vNfBciBoQetSQCVKVFx+CIfFAYuC5EJkBTcSnHnY+kh+BnMUnvwnmLj6pARrEJzNAi/gkBmgSz26ANvGsBmgUz2aAVvEsBmgWD1rfBGljQxEWMDN7ut72dcNrSqubIIUZ2sW3OgJmknMxm6qtPLFVB7hiLDvM4NrYSNHYAOmNjRSNDIgFmIB7YyNF1ACa9qEAE0gnOVwEP4NUeRIP+gwwU+A0gKru+hcTu921Vp7YMMA+74ByezO9Tb2xkaJmQEg8IbWxkaI2BM31tA+pjY0UG1+B2I5e+5m3cX4GfZ1QmnjgvQfABAgePBiMrw+TNX0aB8mgxe/YUTZ/sWBSRI5S+3QAAAAASUVORK5CYII='}};
 const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hairC:'den',sk:0};
 function wIconHTML(k){const w=WICON[k]||{};if(w.src)return `<img src="${w.src}" alt="">`;const ci=w.g||0;return `<span class="gi" style="background-position:${-(ci%10)*100}% ${-((ci/10)|0)*100}%"></span>`}
-function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=save.gender==='nu'?'nu':'nam';cr.hairI=0;cr.hair=HAIR[cr.gender][0].k;cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
+function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=P0?P0.gender:save.gender==='nu'?'nu':'nam';cr.hairI=Math.max(0,P0?HAIR[cr.gender].findIndex(h=>h.k===P0.hair):0);cr.hair=HAIR[cr.gender][cr.hairI].k;
+ {const ed=!!P0;$('#crGo').textContent=ed?'Lưu và về sảnh':'Bước vào giang hồ';const n=document.querySelector('#create .cxbar .dim');if(n)n.textContent=ed?'Đổi nhân vật: giữ nguyên cấp, kho đồ, bí tịch, thuốc và tiến độ ải.':'Chỉ tạo một lần. Kho đồ, bí tịch, thuốc và cài đặt cũ được giữ nguyên.'}
+cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
  const crBgP=()=>{try{const cn=$('#crBg');paintMapPack(cn,cn.getContext('2d'),640,400,MAPS.tuyet,1);dimCanvas(cn)}catch(e){}};crBgP();setTimeout(crBgP,400);setTimeout(crBgP,1500);
  clearInterval(window.__crh);let t=0;window.__crh=setInterval(()=>{if($('#create').hidden){clearInterval(window.__crh);return}crHero(t);t+=0.125},125)}
 function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);g.imageSmoothingEnabled=false;
@@ -3449,7 +3453,7 @@ $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replac
  if(cr.view!=='kiem'){$('#crErr').textContent='Bản đầu chỉ chơi được Kiếm';return}
  if(!HAIR[cr.gender][cr.hairI].on){$('#crErr').textContent='Kiểu tóc này chưa mở';return}
  if(n.length<2){$('#crErr').textContent='Tên cần ít nhất 2 ký tự';$('#crName').focus();return}if(n.length>14){$('#crErr').textContent='Tên tối đa 14 ký tự';return}
- if(save.prof){clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
+ if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.hair=cr.hair;P0.hairC=cr.hairC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
  save.prof={name:n,gender:cr.gender,weapon:'kiem',hair:cr.hair,hairC:cr.hairC,lv:1,exp:0,created:Date.now()};
  sel.gender=cr.gender;sel.weapon='kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
 /* --- sảnh --- */
@@ -3487,6 +3491,7 @@ $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)
  if(['diemtam','luyendan','luyenvk','chieumo'].includes(k)){openLbm(k);return}
  const T=LBT.find(x=>x.k===k);lobbyToast(T.n+(T.off?': cần máy chủ trực tuyến, sẽ mở khi có máy chủ.':': đang xây dựng, sẽ mở ở bản sau.'))});
 let lbToastT=0;function lobbyToast(t){let d=$('#lbToast');if(!d){d=document.createElement('div');d.id='lbToast';$('#lobby').appendChild(d)}d.textContent=t;d.classList.add('on');clearTimeout(lbToastT);lbToastT=setTimeout(()=>d.classList.remove('on'),2200)}
+$('#lbSwap').addEventListener('click',e=>{e.stopPropagation();openCreate()});
 $('#lbGo').addEventListener('click',()=>{showOnly('menu');buildMenu();paintMap()});
 $('#lbCont').addEventListener('click',()=>{if(save.cp)resumeCP()});
 $('#backLobby').addEventListener('click',showLobby);

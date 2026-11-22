@@ -86,3 +86,6 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 - **Icon trang bị**: `gear.png` thêm 2 hàng icon Items_64 của Wuxia cho phẩm Phàm/Linh/Bảo và ô Đai/Găng (`cong_cu/gear_build.py`), phẩm Tiên trở lên giữ icon pháp bảo cũ. `GCELL` cập nhật, `.cxwb .gi` background-size 1000% 500%.
 - Vật phá được, vệt chém, hiệu ứng Như Lai/Thái Cực/Vạn Kiếm, nền đất và 13 âm thanh vốn đã là Wuxia (đối chiếu hash), giữ nguyên.
 - Giữ asset ngoài Wuxia: 14 NPC HOANTDZ (chân dung hội thoại), bình thuốc, tranh núi mực, nét mực, hào quang Hóa Thân, Google Fonts.
+
+## Cập nhật 22/11 (đợt 5)
+- Sảnh có nút **⇄ Đổi nhân vật** (`#lbSwap`): mở lại màn tạo nhân vật ở chế độ sửa, đổi giới tính, tên, kiểu tóc; giữ cấp, kho, bí tịch, thuốc, tiến độ ải. Nút cuối đổi thành "Lưu và về sảnh".
