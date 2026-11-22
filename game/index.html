@@ -1396,7 +1396,7 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
    <div class="lbgrid" id="lbGrid"></div>
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
-  <footer class="lbfoot"><span class="dim sm" id="lbRes"></span><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY)</small></footer>
+  <footer class="lbfoot"><span class="dim sm" id="lbRes"></span><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
  </div>
 </section>
 <section id="menu" class="screen" hidden>
@@ -1601,6 +1601,8 @@ const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3
 const isWk=()=>P.god&&P.god.def.look==='wukong';
 // Gậy Như Ý do PixelLab vẽ riêng ở độ phân giải gốc (không phóng to): đầu bịt trên + 1 hàng thân + đầu bịt dưới. Kéo dài chỉ lặp hàng thân. Vẽ dọc từ y=0 xuống y=len.
 function drawWkStaff(c,len,k){const I=VFX[k],m=STF[k],w=m.w,x0=-Math.floor(w/2);c.drawImage(I,0,0,w,m.t,x0,0,w,m.t);c.drawImage(I,0,m.t,w,1,x0,m.t,w,Math.max(0,len-m.t-m.b));c.drawImage(I,0,m.t+1,w,m.b,x0,len-m.b,w,m.b)}
+// Hào quang lửa khi Ngộ Không hóa thân: fire_aura_01 của KanaWorks_AI (giấy phép KanaWorks_AI VFX Asset License 1.0, phải ghi công), đã chuyển pixel 0.6x, 20 khung 134x240, chân ở tâm vòng lửa (67,212)
+const AURAF={w:134,h:240,c:10,n:20,ax:67,ay:212,fps:15};{const i=new Image();i.src='assets/vfx/wk_aura_fire.png';preDecode(i);VFX.wk_aura_fire=i}
 const STF={wk_staff:{w:20,t:65,b:65},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
@@ -2993,7 +2995,7 @@ function drawGodSprite(){
  // Đang di chuyển thì luôn chạy (động tác đánh đứng chân, phát khi đang trượt nhìn như khựng lại); đánh chỉ phát lúc đứng yên.
  else if(P.moving){an='run';fi=Math.floor((P.runPh||0)/18)%A.run.f.length}
  else if(P._gAtk&&G.t-P._gAtk.t<DUR){an=P._gAtk.an;fi=Math.min(A[an].f.length-1,Math.floor((G.t-P._gAtk.t)/DUR*A[an].f.length))}
- drawAura(P.x,P.y);X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,22,7);
+ if(P.god.def.look==='wukong'&&vok('wk_aura_fire')){const A2=AURAF,i=Math.floor(G.t*A2.fps)%A2.n;X.save();X.imageSmoothingEnabled=false;X.drawImage(VFX.wk_aura_fire,(i%A2.c)*A2.w,Math.floor(i/A2.c)*A2.h,A2.w,A2.h,Math.round(P.x-A2.ax),Math.round(P.y-A2.ay),A2.w,A2.h);X.restore()}else drawAura(P.x,P.y);X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,22,7);
  const M=h.meta,fr=A[an].f[fi],sc=0.98,flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
  X.save();X.imageSmoothingEnabled=false;X.translate(Math.round(P.x),Math.round(P.y));X.scale(P.facing*sc,sc);if(flick)X.globalAlpha=0.55;
  X.drawImage(P.hurt>0.12&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);X.restore();
