@@ -89,3 +89,7 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 
 ## Cập nhật 22/11 (đợt 5)
 - Sảnh có nút **⇄ Đổi nhân vật** (`#lbSwap`): mở lại màn tạo nhân vật ở chế độ sửa, đổi giới tính, tên, kiểu tóc; giữ cấp, kho, bí tịch, thuốc, tiến độ ải. Nút cuối đổi thành "Lưu và về sảnh".
+
+## Cập nhật 22/11 (đợt 6)
+- Đòn A/B chạy theo nhịp gốc của gói (~0,5 s/đòn, trước bị nén còn 0,4 s và bị cắt ở 60% khi di chuyển nên chỉ thấy đoạn giơ kiếm). Dòng thời gian từng frame + frame chạm địch trong `TL` (cạnh `runStride`), `heroFrame` đọc `A.tl`, sát thương gây ra đúng lúc frame chạm (`A.hit`). Khi di chuyển giữ đòn tới 88% (`RUN_SWING_RETURN`).
+- Đi/chạy: nhún 2 px theo bước (chỉ dịch chuyển, không co giãn sprite). Gói không có động tác chạy thật → cần frame PixelLab.

@@ -1551,6 +1551,13 @@ Object.assign(CHM,{hero_nam:{"w": 111, "h": 116, "ax": 47, "ay": 109, "anims": {
 // Nữ chỉ có 1 bộ đòn: A = chém xéo (đủ 8 frame), B = đâm thẳng (lấy đà thấp → đâm → thu).
 {const A=CHM.hero_nu.anims,f=A.attack.f;A.attack2={fps:A.attack.fps,f:[2,2,1,6,6,6,7,7].map(i=>f[i].slice())}}
 CHM.hero_nam.runStride=13;CHM.hero_nu.runStride=13;
+// Nhịp đòn theo thời lượng gốc của gói (rút gọn ~0,5 s), bỏ frame 0 trùng tư thế đứng. hit = frame kiếm chạm địch.
+// Nam A: vung kiếm lên → dựng cao → bổ khụy gối (chạm) → dứt đòn thấp → thu. Nam B: kéo sau → vung → đâm ngang (chạm) → thu.
+// Nữ A: lấy đà → chém hất (chạm) → hạ kiếm → thu. Nữ B: lùi kiếm → đâm thẳng (chạm) → thu.
+{const TL={hero_nam:{attack:[[1,60],[2,60],[3,70],[4,110,1],[5,90],[6,60],[7,60]],attack2:[[2,50],[3,70],[4,60],[5,50],[6,120,1],[7,90],[0,60]]},
+ hero_nu:{attack:[[1,80],[2,80],[3,120,1],[4,80],[5,70],[7,90]],attack2:[[2,90],[0,60],[3,140,1],[5,70],[6,100]]}};
+ for(const id in TL)for(const an in TL[id]){const A=CHM[id].anims[an],seq=TL[id][an],tot=seq.reduce((t,x)=>t+x[1],0);let acc=0,hit=0.42;
+  A.tl=seq.map(([fi,ms,h])=>{const st=acc/tot;if(h)hit=st;acc+=ms;return[fi,acc/tot]});A.hit=hit;A.dur=tot/1000}}
 const CH={};
 for(const id in CHM){const m=CHM[id];m.ay-=2;if(!m.anims.dash&&m.anims.run){const r=m.anims.run.f;m.anims.dash={fps:15,f:[r[1],r[3],r[5]]}}if(!m.anims.brake&&m.anims.run)m.anims.brake={fps:1,f:[m.anims.run.f[0]]};const h={id,meta:m,img:new Image(),flash:null,ok:false,SC:0.98,AV:0.4};
  h.img.onload=()=>{const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;{const d=document.createElement('canvas');d.width=c.width;d.height=c.height;const q=d.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgba(14,20,30,.85)';q.fillRect(0,0,d.width,d.height);h.dark=d}{const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const q=t.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-atop';q.fillStyle='rgba(255,214,120,.62)';q.fillRect(0,0,t.width,t.height);h.tint=t}h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
@@ -1630,7 +1637,7 @@ function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;c.save();c.globalAlpha=Math.min(1,(1-k)*2)*(d.a||1);c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w/2,-d.h/2,d.w,d.h);c.restore()}
  c.fillStyle='rgba(0,0,0,.42)';c.fillRect(cx-hw,cy-hh,hw*2,-(cy-hh));c.fillRect(cx-hw,AH,hw*2,cy+hh-AH);c.fillRect(cx-hw,0,-(cx-hw),AH);c.fillRect(AW,0,cx+hw-AW,AH)}
 
-const RUN_SWING_RETURN=0.60;
+const RUN_SWING_RETURN=0.88;
 function swingProgress(){
  return clamp(1-P.av/(P.avTotal||HERO.AV),0,1);
 }
@@ -1644,7 +1651,8 @@ function heroFrame(){
   const progress=swingProgress();
   // Keep the impact pose, then let running take over the recovery.
   if(!P.moving||!P.runSwing||progress<RUN_SWING_RETURN){
-   const a=P.avAlt&&M.attack2?'attack2':'attack', frames=M[a].f.length;
+   const a=P.avAlt&&M.attack2?'attack2':'attack', A=M[a], frames=A.f.length;
+   if(A.tl){for(const [fi,end] of A.tl)if(progress<end)return [a,fi];return [a,A.tl[A.tl.length-1][0]]}
    return [a,Math.min(frames-1,Math.floor(progress*frames))];
   }
  }
@@ -1659,7 +1667,7 @@ function heroFrame(){
 function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
  const M=HERO.meta,A=M.anims[an],fr=A.f[fi];c.save();c.imageSmoothingEnabled=false;
  /* chạy = động tác đi bộ của gói + ngả người, nhún theo bước (không vẽ lại pixel) */
- let k=0,bob=0;if(c===X){if(an==='run'&&!M.realRun){k=0.08;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='dash')k=0.12;else if(an==='brake')k=-0.06}
+ let k=0,bob=0;if(c===X){if(an==='run'&&M.realRun){bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='run'&&!M.realRun){k=0.08;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='dash')k=0.12;else if(an==='brake')k=-0.06}
  if(tf)k=tf.k;
  c.translate(Math.round(x),Math.round(y)+bob);c.scale(f*sc*(tf?tf.sx:1),sc*(tf?tf.sy:1));if(k)c.transform(1,0,-k,1,0,0);if(alpha!=null)c.globalAlpha=alpha;
  if(c===X&&!flash&&!(tf&&tf.tint)&&HERO.dark&&!LOWFX){const ga=c.globalAlpha;c.globalAlpha=ga*0.9;for(const[ox,oy]of[[-1,0],[1,0],[0,-1],[0,1]])c.drawImage(HERO.dark,fr[0],fr[1],M.w,M.h,-M.ax+ox,-M.ay+oy,M.w,M.h);c.globalAlpha=ga}
@@ -1681,8 +1689,10 @@ function startSwordCut(target,basic){
  swing(angle,dir);
  P.avAlt=dir===-1||heavy;P.runSwing=!heavy&&!lunge;
  if(heavy)P.av=P.avTotal=HERO.AV*1.15;
+ const Aw=HERO.meta.anims[P.avAlt&&HERO.meta.anims.attack2?'attack2':'attack'];
+ if(Aw&&Aw.dur&&!heavy)P.av=P.avTotal=Aw.dur;
  if(Math.abs(Math.cos(angle))>0.15)P.facing=Math.cos(angle)>=0?1:-1;
- const delay=P.av*(heavy?0.60:0.42);
+ const delay=P.av*(heavy?0.60:Aw&&Aw.hit!=null?Aw.hit+0.03:0.42);
  P.swordCut={upgrade,angle,step,heavy,dir,lunge,delay,basic};
 }
 function finishSwordCut(dt){
