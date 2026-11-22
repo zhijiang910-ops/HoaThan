@@ -2906,8 +2906,9 @@ function drawGodSprite(){
  if(P.atkT>(P._gLast||0)+0.01){P._gAlt=!P._gAlt;P._gAtk={t:G.t,an:P._gAlt?'attack2':'attack'}}P._gLast=P.atkT;
  let an='idle',fi=Math.floor(G.t*6)%A.idle.f.length;const DUR=0.45;
  if(P.hurt>0.05&&A.hit){an='hit';fi=Math.min(A.hit.f.length-1,Math.floor((1-P.hurt/0.2)*A.hit.f.length))}
+ // Đang di chuyển thì luôn chạy (động tác đánh đứng chân, phát khi đang trượt nhìn như khựng lại); đánh chỉ phát lúc đứng yên.
+ else if(P.moving){an='run';fi=Math.floor((P.runPh||0)/18)%A.run.f.length}
  else if(P._gAtk&&G.t-P._gAtk.t<DUR){an=P._gAtk.an;fi=Math.min(A[an].f.length-1,Math.floor((G.t-P._gAtk.t)/DUR*A[an].f.length))}
- else if(P.moving)fi=Math.floor((P.runPh||0)/18)%A.run.f.length,an='run';
  drawAura(P.x,P.y);X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,22,7);
  const M=h.meta,fr=A[an].f[fi],sc=0.98,flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
  X.save();X.imageSmoothingEnabled=false;X.translate(Math.round(P.x),Math.round(P.y));X.scale(P.facing*sc,sc);if(flick)X.globalAlpha=0.55;
@@ -2915,7 +2916,7 @@ function drawGodSprite(){
 }
 function drawCloneSprite(e){const h=CH.god_wukong;if(!h||!h.ok)return false;const A=h.meta.anims,M=h.meta;
  let an='idle',fi=Math.floor((G.t+e.T)*6)%A.idle.f.length;
- if(e.atk>0){an=e.alt?'attack2':'attack';fi=Math.min(A[an].f.length-1,Math.floor((1-e.atk/0.22)*A[an].f.length))}else if(e.mv){an='run';fi=Math.floor((G.t+e.T)*12)%A.run.f.length}
+ if(e.mv){an='run';fi=Math.floor((G.t+e.T)*12)%A.run.f.length}else if(e.atk>0){an=e.alt?'attack2':'attack';fi=Math.min(A[an].f.length-1,Math.floor((1-e.atk/0.22)*A[an].f.length))}
  const fr=A[an].f[fi],sc=0.85;X.save();X.imageSmoothingEnabled=false;X.globalAlpha=0.6+0.15*Math.sin(G.t*8);X.translate(Math.round(e.x),Math.round(e.y));X.scale((e.f||1)*sc,sc);
  X.drawImage(h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);X.restore();return true}
 /* ===== Luyện Công: cọc gỗ không mất máu, bảng chỉnh nhanh để thử đòn ===== */

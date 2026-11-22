@@ -124,3 +124,6 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 ## Cập nhật 22/11 (đợt 12)
 - Ngộ Không: làm lại 2 đòn từ thế dựng gậy, gậy luôn ở trước người (bỏ thế kéo gậy ra sau hông làm thân xoay ngang, đuôi quấn gậy). Đòn A bổ chéo (`A3`: nghiêng ra sau → qua đầu → bổ ngang → thu), 4 frame từ seed 41 (0–2) + seed 23 (frame thu). Đòn B đâm thẳng (`B3`, seed 23), bỏ frame kéo tay về. Loại: seed 41 frame 3 có 2 cây gậy; các frame có vệt xám mờ.
 - `qc_wk.py` thêm kiểm **vệt mờ** (số điểm ảnh xám > 1,6 lần master). Kiểm gậy thừa bằng màu không dùng được (gậy trùng màu giáp), phải soát mắt.
+
+## Cập nhật 22/11 (đợt 13)
+- Ngộ Không chạy: bộ cũ (`run2`) chân gần như không đổi (váy giáp che), làm lại `RUN4` biên độ chân x1,5, có pha bay, seed 23. Khi đang di chuyển luôn phát động tác chạy (cả phân thân); động tác đánh chỉ phát khi đứng yên, tránh cảnh chân đứng yên mà người trượt đi.

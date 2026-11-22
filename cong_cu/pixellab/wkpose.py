@@ -119,3 +119,12 @@ for r,k in enumerate(['A3','B3']):
         for n in names:
             if par[n]:d3.line([M[par[n]],M[n]],fill='#ffcc33' if n.startswith('staff') else ('#f84' if 'near' in n else ('#4cf' if 'far' in n else '#aaa')),width=3 if n.startswith('staff') else 2)
 o3.save(dbg.replace('.png','_3.png'))
+
+# ---- Bản 4: chạy biên độ lớn (chân thò ra khỏi váy giáp), có pha bay ----
+LEG4=[((10,13),(16,33)),((5,16),(2,36)),((-3,16),(-11,34)),((-8,13),(-21,24)),((-6,9),(-19,14)),((4,6),(-8,16)),((13,4),(8,17)),((15,8),(19,26))]
+BOB4=[2,3,1,-4,2,3,1,-4]
+RUN4=[]
+for i in range(8):
+    nl=LEG4[i];fl=LEG4[(i+4)%8];s_=nl[1][0]/18
+    RUN4.append(pose(lean=6,sink=BOB4[i],nleg=nl,fleg=fl,narm=((8,6),(12,2)),th=40,farm=((-3+9*s_,16),(4+14*s_,26)),tail=-10+8*math.sin(i/8*6.28),plume=.22))
+res.update(run4=RUN4);json.dump(res,open(out,'w'))
