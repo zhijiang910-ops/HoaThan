@@ -17,7 +17,7 @@ def cover(bm,w,ang,L,t0,t1,rad=2):
     return hit/n
 def best_line(bm,w,ang,L):
     best=(-1,w,ang)
-    for da in range(-20,21,4):
+    for da in range(-32,33,2):
         for dx in(-3,0,3):
             for dy in(-3,0,3):
                 ww=(w[0]+dx,w[1]+dy);c=cover(bm,ww,ang+da,L,0.2,1.0)
@@ -64,3 +64,30 @@ def check(master,mw,mang,L,frames):
         ok=c>=0.8 and tip>=0.5 and over<=0.5 and cs>=0.95
         out.append({'f':f.split('/')[-1],'pass':ok,'sword_cov':round(c,2),'tip':round(tip,2),'over':round(over,2),'angle_off':aa-ang,'extra':ex,'costume%':round(cs*100,1)})
     return out
+
+# ---- Bàn tay & điểm ảnh rác ----
+def skin(a):
+    r,g,b,al=a[...,0],a[...,1],a[...,2],a[...,3]
+    return (al>128)&(r>=200)&(g>=150)&(g<=215)&(b>=100)&(b<=175)&(r-b>=60)
+def hand_ok(a,wrist,rad=7,need=4):
+    m=skin(a);H,W=m.shape;x,y=int(wrist[0]),int(wrist[1])
+    return int(m[max(0,y-rad):y+rad+1,max(0,x-rad):x+rad+1].sum())>=need
+def stray(a,minsize=8,gap=3):
+    """Cụm điểm ảnh nhỏ nằm tách khỏi thân chính."""
+    al=a[...,3]>40;H,W=al.shape;seen=np.zeros_like(al);comps=[]
+    for y,x in zip(*np.nonzero(al)):
+        if seen[y,x]:continue
+        q=deque([(y,x)]);seen[y,x]=1;n=0
+        while q:
+            cy,cx=q.popleft();n+=1
+            for dy in range(-gap,gap+1):
+                for dx in range(-gap,gap+1):
+                    yy,xx=cy+dy,cx+dx
+                    if 0<=yy<H and 0<=xx<W and al[yy,xx] and not seen[yy,xx]:seen[yy,xx]=1;q.append((yy,xx))
+        comps.append(n)
+    comps.sort(reverse=True);return [c for c in comps[1:] if c<minsize*4]
+
+def costume12(a,pal):
+    px=a[a[...,3]>128][:,:3].astype(float)
+    d=np.min(np.linalg.norm(px[:,None,:]-pal[None,:,:],axis=2),axis=1)
+    return float((d<=12).mean())

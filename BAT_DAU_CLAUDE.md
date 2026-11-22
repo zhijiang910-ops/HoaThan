@@ -101,3 +101,9 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 - **Kiểm tra từng frame** trước khi duyệt: `qc.py`/`qc_run.py` (kiếm đúng vị trí tay trước, độ dài so master ±10%, màu trang phục ≥95% bảng màu master) + soi mắt cạnh master (kiếm thừa). Lỗi lần 1: A1 và B4 mất kiếm → chỉnh góc A1, bỏ B4.
 - Ghép sheet: `cong_cu/ghep_anim.py` (ô 160×128, chân (80,118)); đứng/trúng đòn/gục giữ của gói. Nhịp đòn `TA`/`TB`, nhát C dùng B0→A2→A3→A4→đứng.
 - Tốn khoảng 45 lượt tạo PixelLab.
+
+## Cập nhật 22/11 (đợt 8) · Quy trình kiểm lỗi animation
+- Sửa đòn B nam (tay gần bị vùi vào thân, "cụt tay") và nữ (cùng lỗi + kiếm ngắn 25%): chỉnh khớp tay gần buông xuôi như master (`atkskel.py`), nữ B nối kiếm về đúng độ dài bằng `noikiem.py`. Thay chạy nam bằng bản s37 (bản cũ frame 3 kiếm lơ lửng).
+- **Bộ kiểm** `cong_cu/pixellab/qc_all.py`: mỗi frame phải có 1 kiếm đúng vị trí tay trước, độ dài ±5% master, đủ bàn tay (màu da tại khớp cổ tay), màu trang phục ≥97% trước khóa màu, không đốm lẻ; xuất ảnh soát có khung đỏ frame lỗi. Sau đó soát mắt bắt buộc.
+- `ghep_anim.py` nhận ảnh master để **khóa bảng màu** (mọi điểm ảnh về màu master gần nhất).
+- Trang soát trong game: mở `index.html#xem-hoat-anh` (chọn nhân vật/động tác, chậm ×0,25, đi từng frame, cạnh master).

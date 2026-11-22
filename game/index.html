@@ -4184,6 +4184,27 @@ function frame(now){
  }catch(err){console.error(err)}
  requestAnimationFrame(frame);
 }
+/* ===== Trang soát hoạt ảnh: mở bằng địa chỉ ...#xem-hoat-anh =====
+   Xem từng động tác của nhân vật chính, phát chậm, đi từng frame, đặt cạnh tư thế master (đứng frame 0). */
+function animViewer(){
+ const ids=Object.keys(CH).filter(k=>k.startsWith('hero_')).concat(Object.keys(CH).filter(k=>!k.startsWith('hero_')));
+ const box=document.createElement('div');box.id='av';box.innerHTML=`<style>#av{position:fixed;inset:0;z-index:99;background:#1b1e24;color:#eee;font:14px system-ui;display:flex;flex-direction:column;gap:8px;padding:10px;overflow:auto}
+ #av .r{display:flex;gap:6px;flex-wrap:wrap;align-items:center}#av button,#av select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid #556;background:#2a3040;color:#eee}
+ #av .st{display:flex;gap:16px;flex-wrap:wrap}#av canvas{background:repeating-conic-gradient(#3a404c 0 25%,#323844 0 50%) 0 0/16px 16px;border-radius:8px;image-rendering:pixelated}#av b{color:#ffd987}</style>
+ <div class="r"><b>Soát hoạt ảnh</b><select id="avC"></select><select id="avA"></select><button data-s="1">Tốc độ thật</button><button data-s="0.25">Chậm ×0,25</button><button id="avP">⏸ Dừng</button><button id="avB">◀ Frame</button><button id="avN">Frame ▶</button><span id="avI"></span></div>
+ <div class="st"><div><div>Master (đứng)</div><canvas id="avM" width="240" height="240"></canvas></div><div><div>Động tác</div><canvas id="avV" width="240" height="240"></canvas></div></div>
+ <div class="r" id="avS"></div><div style="color:#aab">Kiểm: đúng 1 thanh kiếm · cầm cùng một tay · kiếm dài bằng master · đủ hai bàn tay · trang phục, tóc, màu không đổi · không có đốm lẻ.</div>`;
+ document.body.appendChild(box);const $c=box.querySelector('#avC'),$a=box.querySelector('#avA');let sp=1,play=true,fi=0,acc=0,last=performance.now();
+ $c.innerHTML=ids.map(k=>`<option>${k}</option>`).join('');
+ const fill=()=>{const A=CH[$c.value].meta.anims;$a.innerHTML=Object.keys(A).map(k=>`<option>${k}</option>`).join('');fi=0;strip()};
+ const draw=(cv,h,an,i,sc)=>{const g=cv.getContext('2d'),M=h.meta,fr=M.anims[an].f[i];g.clearRect(0,0,cv.width,cv.height);g.imageSmoothingEnabled=false;const s=sc||Math.min(cv.width/M.w,cv.height/M.h);g.drawImage(h.img,fr[0],fr[1],M.w,M.h,(cv.width-M.w*s)/2,(cv.height-M.h*s)/2,M.w*s,M.h*s)};
+ const strip=()=>{const h=CH[$c.value],A=h.meta.anims[$a.value];box.querySelector('#avS').innerHTML='';A.f.forEach((_,i)=>{const cv=document.createElement('canvas');cv.width=96;cv.height=96;cv.title='frame '+i;draw(cv,h,$a.value,i);cv.onclick=()=>{play=false;fi=i};box.querySelector('#avS').appendChild(cv)})};
+ $c.onchange=fill;$a.onchange=()=>{fi=0;strip()};box.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{sp=+b.dataset.s;play=true});
+ box.querySelector('#avP').onclick=()=>play=!play;box.querySelector('#avB').onclick=()=>{play=false;fi--};box.querySelector('#avN').onclick=()=>{play=false;fi++};
+ fill();(function loop(now){const h=CH[$c.value],A=h.meta.anims[$a.value],n=A.f.length;acc+=(now-last)*sp;last=now;const ms=1000/(A.fps||10);if(play&&acc>=ms){acc=0;fi++}fi=(fi%n+n)%n;
+  if(h.ok){draw(box.querySelector('#avM'),h,'idle',0);draw(box.querySelector('#avV'),h,$a.value,fi)}box.querySelector('#avI').textContent=`frame ${fi+1}/${n}`;requestAnimationFrame(loop)})(last);
+}
+if(location.hash==='#xem-hoat-anh')setTimeout(animViewer,600);
 buildMenu();paintMap();if(prof()&&location.hash!=='#tao-nhan-vat')showLobby();else openCreate();
 if(document.fonts)document.fonts.ready.then(()=>{paintMap()});
 requestAnimationFrame(frame);
