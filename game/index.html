@@ -191,6 +191,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #notice{position:absolute;left:50%;top:24%;transform:translateX(-50%);font:800 clamp(26px,calc(4.6*var(--vw)),46px)/1.1 "Noto Serif",serif;color:#ffe2a0;text-shadow:0 0 18px rgba(255,120,30,.8),0 3px 0 #3a1406;text-align:center;opacity:0;transition:opacity .3s;white-space:nowrap}
 #notice.on{opacity:1}
 #notice small{display:block;font:600 16px "Be Vietnam Pro";color:#f0d8b0}
+#joy.base[hidden]{display:block!important;opacity:.55}
 #joy{position:fixed;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:2px solid rgba(245,217,149,.35);background:rgba(20,10,5,.25);pointer-events:none;z-index:11}
 #joy i{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:50%;background:radial-gradient(#f5d995,#8a6a2c);opacity:.75}
 @media(max-width:700px){
@@ -1320,14 +1321,15 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
  html body #dashBtn{width:54px!important;height:54px!important}
  html body #dashBtn svg{width:20px!important;height:14px!important}
  html body #dashBtn span{font-size:10px!important}
- html body #skills .skr:not(.s2) .sk{width:40px!important;height:40px!important}
- html body #skills .skr:not(.s2) .sk b{font-size:19px!important}
- html body #skills .sk.manual.ult{width:44px!important;height:44px!important}
- html body #skills .skr.s2 .sk{width:28px!important;height:28px!important}
+ html body #skills .skr:not(.s2) .sk{width:35px!important;height:35px!important}
+ html body #skills .skr:not(.s2) .sk b{font-size:17px!important}
+ html body #skills .sk.manual.ult{width:38px!important;height:38px!important}
+ html body #skills .skr.s2 .sk{width:25px!important;height:25px!important}
  html body #skills .skr{gap:4px!important}
  html body #skills .sk-info{width:14px!important;height:14px!important;font-size:9px!important}
- html body #godBtn{width:44px!important;height:44px!important}
- html body #godBtn #godTxt{font-size:10px!important;padding:0 5px!important;bottom:-6px!important}
+ html body #godBtn{width:38px!important;height:38px!important}
+ html body #godBtn #godTxt{font-size:8px!important;padding:0 4px!important;bottom:-7px!important;letter-spacing:0}
+ html body #godBtn #godMeter{font-size:8px!important}
  html body #vbars{width:auto!important;transform:none!important;gap:3px!important}
  html body .vr.hp .vt{height:18px!important}html body .vr.mp .vt{height:13px!important}
  html body .vr.hp .ve{width:22px!important;height:22px!important}html body .vr.mp .ve{width:18px!important;height:18px!important}
@@ -4281,7 +4283,9 @@ function lootMsg(t){const d=document.createElement('div');d.innerHTML=t;$('#loot
 
 /* ================= MENU ================= */
 /* Chân dung Hóa Thân cắt từ chính sprite (đứng khung 0): vùng đầu + mũ lông vũ + vai, phóng đúng 2x để giữ nét pixel */
-function godBust(g,look){const k=GOD_SPR[look],h=k&&CH[k];if(!h||!h.ok)return false;const fr=h.meta.anims.idle.f[0];g.save();g.imageSmoothingEnabled=false;g.drawImage(h.img,fr[0]+26,fr[1]+22,80,80,0,0,160,160);g.restore();return true}
+/* Chân dung Hóa Thân: vẽ riêng bằng PixelLab (mặt cận cảnh, theo phong cách sprite) */
+const GOD_AVA={wukong:'assets/ui/ava_wukong.png'},GAVA={};for(const k in GOD_AVA){const i=new Image();i.onload=()=>{try{paintGodIcon();if(!$('#menu').hidden)buildMenu()}catch(e){}};i.src=GOD_AVA[k];GAVA[k]=i}
+function godBust(g,look){const i=GAVA[look];if(!i||!i.complete||!i.naturalWidth)return false;g.save();g.imageSmoothingEnabled=false;g.drawImage(i,0,0,160,160);g.restore();return true}
 function portrait(cn,look,wpn,bg){const g=cn.getContext('2d');cn.width=cn.height=160;const gr=g.createRadialGradient(80,70,10,80,80,90);gr.addColorStop(0,bg||'#3a2410');gr.addColorStop(1,'#120a06');g.fillStyle=gr;g.fillRect(0,0,160,160);if(godBust(g,look))return;if(useHero(look,wpn)){drawHeroFrame(g,'idle',0,80,150,1,1.2,false);return}X=g;drawChar(80,140,LOOK[look],{f:1,t:1.2,w:wpn,atk:-1,aa:0,sc:2.2});X=ctx}
 function buildMenu(){
  $('#genders').innerHTML=[['nam','Nam'],['nu','Nữ']].map(g=>`<button class="opt${sel.gender===g[0]?' on':''}" data-g="${g[0]}"><canvas></canvas><b>${g[1]}</b></button>`).join('');
@@ -4337,6 +4341,11 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{keys[e.code]=false});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;if(!rotationBlocked()&&G&&G.state==='play'&&!G.paused&&!G.inspect)togglePause()});
 const joyEl=$('#joy');
+const JOY_R=95;/* bán kính vùng nhận chạm của cần */
+function joyCenter(){const W=VIEW.on?(VIEW.rot?VIEW.H:VIEW.W):innerWidth,H=VIEW.on?(VIEW.rot?VIEW.W:VIEW.H):innerHeight,d=$('#dashBtn');let x=82,y=H-92;
+ if(d&&!$('#hud').hidden){const r=lrect(d);if(r.width){x=Math.max(70,r.left-82);y=Math.min(H-68,r.top+r.height/2-18)}}return [Math.round(x),Math.round(y)]}
+/* luôn hiện đế cần (mờ) ở chỗ cố định khi đang chơi trên điện thoại */
+setInterval(()=>{const show=MOBILE&&G&&G.state==='play'&&!G.paused&&!$('#hud').hidden;joyEl.classList.toggle('base',!!show);if(show&&!joy.on){const c=joyCenter();joyEl.style.left=c[0]+'px';joyEl.style.top=c[1]+'px'}},250);
 function updateRotation(){
  const blocked=rotationBlocked();
  for(const element of document.body.children){
@@ -4354,9 +4363,11 @@ updateRotation();
 $('#aimCancel').addEventListener('click',cancelSkillAim);
 cv.addEventListener('pointerdown',e=>{
  if(G?.state==='play'&&!G.paused&&P.skillAim&&!tutControl()){if(e.button===0){e.preventDefault();confirmSkillAim(e.clientX,e.clientY)}return}
- if(!G||G.state!=='play'||e.pointerType==='mouse')return;if(joy.on)return;joy.on=true;joy.id=e.pointerId;[joy.x,joy.y]=toLocal(e.clientX,e.clientY);joy.dx=joy.dy=0;joyEl.hidden=false;joyEl.style.left=joy.x+'px';joyEl.style.top=joy.y+'px';joyEl.firstChild.style.transform='';cv.setPointerCapture(e.pointerId)});
+ if(!G||G.state!=='play'||e.pointerType==='mouse')return;if(joy.on)return;
+ /* cần điều khiển cố định góc trái dưới: chỉ nhận chạm trong vùng quanh đế cần, chạm chỗ khác không hiện cần */const [tx_,ty_]=toLocal(e.clientX,e.clientY),jc=joyCenter();if(Math.hypot(tx_-jc[0],ty_-jc[1])>JOY_R)return;
+ joy.on=true;joy.id=e.pointerId;joy.x=jc[0];joy.y=jc[1];joy.dx=joy.dy=0;joyEl.hidden=false;joyEl.style.left=joy.x+'px';joyEl.style.top=joy.y+'px';{let dx=tx_-joy.x,dy=ty_-joy.y;const d=Math.hypot(dx,dy),m=50;if(d>m){dx=dx/d*m;dy=dy/d*m}if(d>6){joy.dx=dx/m;joy.dy=dy/m}joyEl.firstChild.style.transform=`translate(${dx}px,${dy}px)`}joyEl.firstChild.style.transform='';cv.setPointerCapture(e.pointerId)});
 cv.addEventListener('pointermove',e=>{if(P?.skillAim&&e.pointerType==='mouse')updateSkillAim(e.clientX,e.clientY);if(!joy.on||e.pointerId!==joy.id)return;const [mx_,my_]=toLocal(e.clientX,e.clientY);let dx=mx_-joy.x,dy=my_-joy.y;const d=Math.hypot(dx,dy),m=50;if(d>m){dx=dx/d*m;dy=dy/d*m}joy.dx=dx/m;joy.dy=dy/m;joyEl.firstChild.style.transform=`translate(${dx}px,${dy}px)`});
-const joyEnd=e=>{if(e.pointerId!==joy.id)return;joy.on=false;joy.dx=joy.dy=0;joyEl.hidden=true};
+const joyEnd=e=>{if(e.pointerId!==joy.id)return;joy.on=false;joy.dx=joy.dy=0;joyEl.hidden=true;joyEl.firstChild.style.transform=''};
 cv.addEventListener('pointerup',joyEnd);cv.addEventListener('pointercancel',joyEnd);
 /* iPhone: chặn tự thu phóng (chạm đúp, chụm hai ngón, giữ lâu) */
 (()=>{const stop=e=>{if(e.cancelable)e.preventDefault()};
