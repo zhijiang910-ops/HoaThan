@@ -1594,6 +1594,9 @@ function sfx(n,vol,gap){if(MUTE||!AC||AC.state!=='running'||!SBUF[n])return;cons
 const preDecode=i=>{try{i.decode&&i.decode().catch(()=>{})}catch(e){}};
 /* hiệu ứng gói Wuxia */
 const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_slash','ink_impact','ink_trail'].forEach(n=>{const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i});
+// VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
+const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_slam:{w:270,h:295,c:4,n:14,px:135,py:205},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43}};
+for(const n in SPX){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 const vok=n=>VFX[n]&&VFX[n].complete&&VFX[n].naturalWidth>0;
 function arcCell(c,row,fi,sc){c.drawImage(VFX.arc_sheet,Math.max(0,Math.min(7,fi))*96,row*96,96,96,-48*sc,-48*sc,96*sc,96*sc)}
 /* bản đồ gói Wuxia */
@@ -1914,13 +1917,13 @@ const WEAPONS={
 const GOD=o=>Object.assign({src:'g',t:'w'},o);
 const GODS={
  wukong:{name:'Tôn Ngộ Không',tier:'SSS',mult:3.0,dur:20,cd:60,armor:15,spd:0.2,look:'wukong',wpn:'bong',g:'悟',role:'Sát thương diện rộng, phân thân',wname:'Như Ý Kim Cô Bổng',
-  basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);swing(a,P.sw=-(P.sw||1));arc(P.x,P.y-8,a,138,3.2,14*gp(),GOD({kb:120}),'#ffd36a',P.sw)}},
+  basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);swing(a,P.sw=-(P.sw||1));const sp=vok('wk_slash');arc(P.x,P.y-8,a,138,3.2,14*gp(),GOD({kb:120,nofx:sp}),'#ffd36a',P.sw);if(sp)fx({k:'sp',s:'wk_slash',x:P.x,y:P.y-30,ang:a,sc:1.5,fl:P.sw,f0:1,T:0.42})}},
   skills:[
    {name:'Phân Thân Thuật',g:'分',cd:7,range:420,desc:'Nhổ lông hóa ba phân thân cùng chiến đấu 6 giây.',cast(){for(let i=0;i<3;i++){const a=i*TAU/3;G.allies.push({x:P.x+Math.cos(a)*50,y:P.y+Math.sin(a)*50,t:0,T:6,cd:rnd(0,.4),atk:0,aAng:0,f:1});burst(P.x+Math.cos(a)*50,P.y+Math.sin(a)*50,'#fff',8)}}},
    {name:'Cân Đẩu Vân',g:'雲',cd:5,range:460,desc:'Cưỡi mây lao tới đám quái đông nhất, nện xuống diện rộng.',cast(tg){const t=densest(P.x,P.y,460)||tg;const x0=P.x,y0=P.y;for(let i=0;i<8;i++)fx({k:'cloud',x:x0+(t.x-x0)*i/8,y:y0+(t.y-y0)*i/8,T:0.6+i*0.03});P.x=clamp(t.x,30,AW-30);P.y=clamp(t.y+10,30,AH-30);P.inv=Math.max(P.inv,0.35);circ(P.x,P.y,150,22*gp(),GOD({kb:150}),'#ffe9a0');G.shake=6}},
    {name:'Kim Cô Bổng mở rộng',g:'金',cd:6,range:320,desc:'Gậy dài ra 340 và quét một vòng.',cast(tg){addZone({kind:'staff',follow:1,T:0.7,len:340,a0:angTo(tg),dir:Math.random()<.5?1:-1,dmg:30*gp(),o:GOD({kb:160}),hs:new Set(),src:'g'})}}
   ],
-  ult:{name:'Kim Cô Bổng khổng lồ',g:'天',cd:11,range:420,desc:'Gậy khổng lồ nện xuống, choáng diện rộng.',cast(tg){const t=densest(P.x,P.y,420)||tg;const x=t.x,y=t.y;fx({k:'staff',x,y,T:0.7});addHazVis(x,y,260,0.5);later(0.5,()=>{circ(x,y,260,80*gp(),GOD({stun:1,kb:200}),'#ffd36a');G.shake=18;cracks(x,y,260);burst(x,y,'#ffd36a',30)},'g')}}},
+  ult:{name:'Kim Cô Bổng khổng lồ',g:'天',cd:11,range:420,desc:'Gậy khổng lồ nện xuống, choáng diện rộng.',cast(tg){const t=densest(P.x,P.y,420)||tg;const x=t.x,y=t.y;fx({k:'staff',x,y,T:0.7});addHazVis(x,y,260,0.5);later(0.5,()=>{const sp=vok('wk_slam');circ(x,y,260,80*gp(),GOD({stun:1,kb:200}),sp?null:'#ffd36a');if(sp)fx({k:'sp',s:'wk_slam',x,y,sc:2,f0:2,f1:12,fade:0.25,T:0.85});G.shake=18;cracks(x,y,260);burst(x,y,'#ffd36a',30)},'g')}}},
  nezha:{name:'Na Tra',tier:'SS',mult:2.6,dur:17,cd:50,armor:10,spd:0.3,look:'nezha',wpn:'hoa',g:'哪',role:'Tốc độ, sát thương lửa',wname:'Hỏa Tiêm Thương',
   basic:{name:'Đâm Thương',g:'槍',cd:0.32,range:165,cast(tg){const a=angTo(tg);swing(a,1);P.thrust=1;line(P.x,P.y-8,a,158,28,10*gp(),GOD({kb:20,burn:1*gp(),t:'m'}),'#ffb050')}},
   skills:[
@@ -2118,7 +2121,7 @@ function enemiesIn(x,y,r){const out=[];const c0=Math.floor((x-r-50)/CELL),c1=Mat
 function nearest(x,y,R,ex){let b=null,bd=R*R;for(const e of G.enemies){if(e.dead||(ex&&ex.has(e)))continue;const d=(e.x-x)**2+(e.y-y)**2;if(d<bd){bd=d;b=e}}return b}
 function randEnemy(x,y,R){const l=G.enemies.filter(e=>!e.dead&&(e.x-x)**2+(e.y-y)**2<R*R);return l.length?pick(l):null}
 function densest(x,y,R){let b=null,bn=-1;const l=G.enemies.filter(e=>!e.dead&&(e.x-x)**2+(e.y-y)**2<R*R);for(let i=0;i<Math.min(16,l.length);i++){const e=l[(Math.random()*l.length)|0];const n=enemiesIn(e.x,e.y,90).length+(e.boss?6:e.elite?3:0);if(n>bn){bn=n;b=e}}return b}
-function arc(x,y,ang,r,sp,dmg,o,c,dir){for(const e of enemiesIn(x,y,r)){const a=Math.atan2(e.y-y,e.x-x);if(Math.abs(angDiff(a,ang))<=sp/2+0.2||Math.hypot(e.x-x,e.y-y)<e.r+16)hit(e,dmg,o,x,y)}if(o&&o.sarc&&P.form!=='god')fx({k:'sarc',x,y,ang,r,sp,dir:dir||1,lv:o.sarc,T:0.22});else fx({k:'arc',x,y,ang,r,sp,c,T:0.26,dir:dir||1,spr:P.kit&&P.kit.w==='kiem'&&P.form!=='god'})}
+function arc(x,y,ang,r,sp,dmg,o,c,dir){for(const e of enemiesIn(x,y,r)){const a=Math.atan2(e.y-y,e.x-x);if(Math.abs(angDiff(a,ang))<=sp/2+0.2||Math.hypot(e.x-x,e.y-y)<e.r+16)hit(e,dmg,o,x,y)}if(o&&o.nofx);else if(o&&o.sarc&&P.form!=='god')fx({k:'sarc',x,y,ang,r,sp,dir:dir||1,lv:o.sarc,T:0.22});else fx({k:'arc',x,y,ang,r,sp,c,T:0.26,dir:dir||1,spr:P.kit&&P.kit.w==='kiem'&&P.form!=='god'})}
 function circ(x,y,r,dmg,o,c){for(const e of enemiesIn(x,y,r))hit(e,dmg,o,x,y);if(c)fx({k:'ring',x,y,r0:r*0.3,r1:r,c,T:0.35})}
 function line(x,y,ang,len,w,dmg,o,c){const ca=Math.cos(ang),sa=Math.sin(ang);for(const e of enemiesIn(x+ca*len/2,y+sa*len/2,len/2+w)){const dx=e.x-x,dy=e.y-y,al=dx*ca+dy*sa,pp=Math.abs(-dx*sa+dy*ca);if(al>-e.r&&al<len+e.r&&pp<w/2+e.r)hit(e,dmg,o,x,y)}if(c)fx({k:'line',x,y,ang,len,w,c,T:0.18})}
 function shoot(x,y,ang,spd,o){if(o.kind==='crescent')sfx('sword_wave',0.35,0.12);G.pproj.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,spd,r:o.r||8,dmg:o.dmg,pierce:o.pierce||1,life:o.life||1,L:o.life||1,hit:new Set(),kind:o.kind,home:o.home,c:o.c,o:o.o,src:o.o.src,onEnd:o.onEnd})}
@@ -2178,7 +2181,8 @@ function hit(e,dmg,o,sx,sy){
  d=Math.max(1,d*rnd(0.92,1.08));
  if(e.shield>0){e.shT=0;const sd=d*(o.mark?2:1);e.shield-=sd;if(e.shield>0){e.flash=0.06;num(e.x,e.y-e.r*1.6-14,Math.round(sd),'b');addCombo();return}d=Math.max(1,-e.shield);e.shield=0;e.stun=Math.max(e.stun,1.6);G.shake=Math.max(G.shake,6);burst(e.x,e.y-e.r,'#9fe8ff',18);notice('Phá Cương Khí','Tinh anh choáng 1,6 giây')}
  if(e.boss&&G.route&&G.star>=5&&!e.phase2&&e.hp-d<e.mhp*0.5){e.phase2=true;bossPhase2(e)}
- e.hp-=d;e.flash=0.09;G.dmgDealt+=d;G.wD+=d;if(o.src==='h'){sfx('sword_hit',0.2,0.07);if(!LOWFX&&!o.swordBasic&&P.form!=='god'&&G.fx.length<(MOBILE?50:140)&&Math.random()<(MOBILE?0.25:0.55))fx({k:'imp',x:e.x+rnd(-6,6),y:e.y-e.r*1.5,T:0.3,row:P.kit.w==='kiem'?1:3,sc:0.55+Math.random()*0.2})}
+ e.hp-=d;e.flash=0.09;G.dmgDealt+=d;G.wD+=d;if(o.src==='g'&&P.form==='god'&&P.god.def.look==='wukong'&&!LOWFX&&G.t-(e._wkh||0)>0.18&&G.fx.length<(MOBILE?50:140)&&vok('wk_hit')){e._wkh=G.t;fx({k:'sp',s:'wk_hit',x:e.x+rnd(-5,5),y:e.y-e.r*1.3,sc:e.boss?1.4:0.85,T:0.5})}
+ if(o.src==='h'){sfx('sword_hit',0.2,0.07);if(!LOWFX&&!o.swordBasic&&P.form!=='god'&&G.fx.length<(MOBILE?50:140)&&Math.random()<(MOBILE?0.25:0.55))fx({k:'imp',x:e.x+rnd(-6,6),y:e.y-e.r*1.5,T:0.3,row:P.kit.w==='kiem'?1:3,sc:0.55+Math.random()*0.2})}
  const ct=P.pf.conthe&&o.src==='h';
  if(o.kb&&!e.boss){const a=Math.atan2(e.y-sy,e.x-sx);const k=o.kb*(ct?1.4:1)*(e.elite?0.3:1)*3;e.kx+=Math.cos(a)*k;e.ky+=Math.sin(a)*k}
  if(o.stun&&!e.boss)e.stun=Math.max(e.stun,o.stun*(ct?1.6:1)*(e.elite?0.5:1));
@@ -2512,7 +2516,7 @@ function updAlly(a,dt){
  a.t+=dt;if(a.atk>0)a.atk-=dt;const tg=nearest(a.x,a.y,500);if(!tg)return;
  const an=Math.atan2(tg.y-a.y,tg.x-a.x),d=Math.hypot(tg.x-a.x,tg.y-a.y);a.f=Math.cos(an)>=0?1:-1;
  if(d>80){a.x+=Math.cos(an)*280*dt;a.y+=Math.sin(an)*280*dt;a.mv=1}else a.mv=0;
- a.cd-=dt;if(a.cd<=0&&d<115){arc(a.x,a.y-8,an,104,3,9*gp(),GOD({kb:60}),'#ffd36a');a.cd=0.6;a.atk=0.22;a.alt=!a.alt;a.aAng=an}
+ a.cd-=dt;if(a.cd<=0&&d<115){{const sp=vok('wk_slash');arc(a.x,a.y-8,an,104,3,9*gp(),GOD({kb:60,nofx:sp}),'#ffd36a');if(sp)fx({k:'sp',s:'wk_slash',x:a.x,y:a.y-26,ang:an,sc:1.13,fl:a.alt?-1:1,f0:1,al:0.7,T:0.4})}a.cd=0.6;a.atk=0.22;a.alt=!a.alt;a.aAng=an}
 }
 function updProj(dt){
  for(const p of G.pproj){
@@ -2756,6 +2760,7 @@ function drawFx(f){
   case'bolt':{c.globalAlpha=a;c.strokeStyle='#bfe0ff';c.lineWidth=5;c.beginPath();f.pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();c.strokeStyle='#fff';c.lineWidth=1.8;c.stroke();break}
   case'pillar':{const w=90*(1-k*0.6);const g=c.createLinearGradient(f.x-w,0,f.x+w,0);g.addColorStop(0,'rgba(255,200,80,0)');g.addColorStop(0.5,`rgba(255,240,180,${a})`);g.addColorStop(1,'rgba(255,200,80,0)');c.fillStyle=g;c.fillRect(f.x-w,f.y-700,w*2,720);c.globalAlpha=a;c.strokeStyle='#ffd36a';c.lineWidth=4;c.beginPath();c.ellipse(f.x,f.y,60+k*160,(60+k*160)*0.4,0,0,TAU);c.stroke();break}
   case'sword':{const fall=Math.min(1,k/0.45);const y=f.y-260*(1-fall);c.globalAlpha=fall<1?1:a*2;c.translate(f.x,y);c.fillStyle=f.spear?'rgba(160,200,255,.4)':'rgba(140,210,255,.45)';ell(0,-30,8,40);c.fillStyle='#eaf6ff';if(f.spear){c.fillRect(-1.5,-70,3,60);c.beginPath();c.moveTo(-4,-10);c.lineTo(0,4);c.lineTo(4,-10);c.fill()}else{c.beginPath();c.moveTo(-3,-50);c.lineTo(3,-50);c.lineTo(2.5,-6);c.lineTo(0,4);c.lineTo(-2.5,-6);c.fill();c.fillStyle='#ffd36a';c.fillRect(-7,-52,14,3)}break}
+  case'sp':{const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x),Math.round(f.y));if(f.ang)c.rotate(f.ang);c.scale(f.sc,f.sc*(f.fl||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
   case'staff':{const fall=Math.min(1,k/0.7);c.globalCompositeOperation='source-over';c.globalAlpha=k>0.85?(1-k)/0.15:1;c.translate(f.x,f.y);c.fillStyle='#b5281a';const len=520,top=-len-500*(1-fall);c.fillRect(-18,top,36,len);c.fillStyle='#f0c040';c.fillRect(-22,top,44,60);c.fillRect(-22,top+len-60,44,60);break}
   case'cloud':{c.globalCompositeOperation='source-over';c.globalAlpha=a*0.85;c.fillStyle='#fff7e8';circle(f.x,f.y-20,16*(1+k));circle(f.x+14,f.y-16,12*(1+k));circle(f.x-14,f.y-15,11*(1+k));break}
   case'throw':{const x=f.x0+(f.x-f.x0)*k,y=f.y0+(f.y-f.y0)*k-Math.sin(k*Math.PI)*60;c.fillStyle='#ffe28a';c.translate(x,y);c.rotate(k*12);c.fillRect(-5,-7,10,14);break}
