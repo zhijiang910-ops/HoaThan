@@ -1604,7 +1604,7 @@ CHM.hero_nam.runStride=16;CHM.hero_nu.runStride=16;
 /* Combo kiếm A→B→C theo 3 ảnh chủ game (PixelLab khung xương): A lao đâm thấp; B chém vòng xuống khụy thấp; C (+9) chém lốc xoay tại chỗ.
  C: phần tử thứ 3 của khung = 1 là lật hướng (nhân vật quay người giữa vòng xoay), kiếm luôn chĩa ra trước mặt.
  Khung đầu B = khung cuối A, khung đầu C = khung cuối B. Hoạt ảnh A/B cũ giữ trong sheet cho Lướt Trảm (cutC). */
-{const NC={"nam":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]},"nu":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]}};for(const g of ['nam','nu']){const A=CHM['hero_'+g].anims;A.attack={fps:12,f:NC[g].A};A.attack2={fps:12,f:NC[g].B};A.attack3={fps:12,f:NC[g].C}}}
+{const NC={"nam":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]},"nu":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]}};for(const g of ['nam','nu']){const A=CHM['hero_'+g].anims;A.attack={fps:12,f:NC[g].A};A.attack2={fps:12,f:NC[g].B};A.attack3={fps:12,f:(c=>[c[0],c[2],c[4],c[2],c[0],c[5]].map(x=>x.slice(0,2)))(NC[g].C)}}}
 {const TA=[[0,60],[1,90],[2,120,1],[3,80],[4,90]],TB=[[0,90],[1,80],[2,120,1],[3,110]],TC=[[0,80,1],[1,70],[2,80],[3,70],[4,110],[5,110]];
  const TL={hero_nam:{attack:TA,attack2:TB,attack3:TC},hero_nu:{attack:TA,attack2:TB,attack3:TC}};
  for(const id in TL)for(const an in TL[id]){const A=CHM[id].anims[an],seq=TL[id][an],tot=seq.reduce((t,x)=>t+x[1],0);let acc=0,hit=0.42;
@@ -1644,7 +1644,7 @@ const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_sl
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
 const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
- sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
+ sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
  cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
 const isWk=()=>P.god&&P.god.def.look==='wukong';
 // Gậy Như Ý do PixelLab vẽ riêng ở độ phân giải gốc (không phóng to): đầu bịt trên + 1 hàng thân + đầu bịt dưới. Kéo dài chỉ lặp hàng thân. Vẽ dọc từ y=0 xuống y=len.
@@ -1748,7 +1748,7 @@ function startSwordCut(target,basic){
  const upgrade=weaponForge(),angle=angTo(target);
  const lunge=!!(secOn('truyphong')&&P.truyPhongT>0&&!target.isBrk);
  if(P.t-(basic.lastT||-9)>1.2)basic.step=0;basic.lastT=P.t;   // ngưng quá 1,2 giây thì combo quay về A
- const step=lunge?0:Math.min(basic.step||0,upgrade>=9?2:1);
+ const step=lunge?0:Math.min(basic.step||0,1);   // tạm thời combo chỉ A → B
  const heavy=step===2,dir=step===1?-1:1;
  if(lunge)P.truyPhongT=0;
  swing(angle,dir);
@@ -1760,8 +1760,13 @@ function startSwordCut(target,basic){
  const delay=P.av*(Aw&&Aw.hit!=null?Aw.hit+0.03:0.42);
  P.swordCut={upgrade,angle,step,heavy,dir,lunge,delay,basic};
 }
-function comboFx(step){if(!(P.kit&&P.kit.w==='kiem')||!vok('cA_behind'))return;const f=P.facing||1,k=['cA','cB','cC'][step],sc=HERO.SC*(step===2?1.5:1);   // vòng lốc C to như ảnh mẫu
- for(const [part,s0,T] of {"cA":[["behind",0,0.426],["front",2,0.284]],"cB":[["behind",0,0.426],["front",0,0.426]],"cC":[["behind",0,0.581],["front",0,0.581]]}[k]){const go=()=>fx({k:'sp',s:k+'_'+part,x:P.x,y:P.y,sc,fx:f,T,gr:part==='behind'?1:0,follow:1});if(s0)later(s0*0.071,go,'h');else go()}}
+function comboFx(step){if(!(P.kit&&P.kit.w==='kiem')||!vok('slash_el'))return;const f=P.facing||1,sc=HERO.SC;
+ const el=(o)=>fx(Object.assign({k:'el',x:P.x,y:P.y,follow:1,T:0.5},o));
+ if(step===0){/* A: vệt Slash nằm ngang = cung elip chém ngang trước người ở tầm hông + tia đâm */later(0.16,()=>{el({ox:f*24,oy:-38,sx:2.2*f,sy:0.62,T:0.42});if(vok('cA_front'))fx({k:'sp',s:'cA_front',x:P.x,y:P.y,sc,fx:f,T:0.28,follow:1})},'h')}
+ else if(step===1){for(const part of ['behind','front'])fx({k:'sp',s:'cB_'+part,x:P.x,y:P.y,sc,fx:f,T:0.43,gr:part==='behind'?1:0,follow:1})}
+ else{/* C: mỗi vòng xoay = nửa elip sau người + nửa elip trước người; vòng 2 rộng hơn */
+  const ring=(w,d)=>later(d,()=>{el({oy:-40,sx:w*f,sy:0.38,back:1,gr:1,T:0.36});el({oy:-40,sx:w*f,sy:0.38,T:0.36})},'h');
+  ring(1.9,0.08);ring(2.5,0.30)}}
 function finishSwordCut(dt){
  const cut=P.swordCut;
  if(!cut)return;
@@ -1769,7 +1774,7 @@ function finishSwordCut(dt){
  if(cut.delay>0)return;
  P.swordCut=null;
  const {upgrade,angle,step,heavy,dir,lunge,basic}=cut;
- basic.step=(step+1)%(upgrade>=9?3:2);tutHook('cut',step);
+ basic.step=(step+1)%2;tutHook('cut',step);
  // Hold the recovery pose through the short gap between basic strikes.
  P.swordGuard={anim:heavy?'attack3':step===1?'attack2':'attack',until:P.t+0.42};
  const damage=(heavy?15:lunge?11:9)*pw();
@@ -1893,12 +1898,12 @@ function drawCutC(facing){
 const VAN_KIEM={range:420,radius:180,impact:58};
 const WEAPONS={
  kiem:{name:'Kiếm',g:'劍',role:'DPS linh hoạt',tr:'Liên kích, kiếm khí, chí mạng',kit:[
-  {id:'k0',name:'Liên Hoàn Kiếm',g:'劍',kind:'basic',cd:0.5,range:95,get desc(){return 'Combo quét ngang → bổ xuống, mỗi nhát lao tới. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+(forgeSeen(6)?' Kiếm +6: giữ nút Lướt để tung Lướt Trảm (hồi 3 giây).':'')+(forgeSeen(9)?' Kiếm +9: nhát thứ ba là C, xoay kiếm lao đâm, trúng quanh người.':'')},
+  {id:'k0',name:'Liên Hoàn Kiếm',g:'劍',kind:'basic',cd:0.5,range:95,get desc(){return 'Combo lao đâm → chém vòng xuống, mỗi nhát lao tới. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
    cast(tg,s){startSwordCut(tg,s)}},
   {id:'k1',hotkey:'Q',power:22,name:'Kiếm Khí Trảm',g:'氣',kind:'active',cd:2.4,mp:10,range:440,desc:'Phóng kiếm khí trăng khuyết xuyên qua quái.',up:'+1 mục tiêu xuyên, +25% sát thương',
    cast(tg,l){const a=angTo(tg);swing(a,1);shoot(P.x,P.y-14,a,560,{dmg:this.power*lv(l)*pw(),pierce:3+(l-1),r:20*Ar(),life:0.85,kind:'crescent',c:'#9fd8ff',o:H({kb:30})})}},
-  {id:'k2',hotkey:'F',power:26,name:'Hoành Tảo',g:'掃',kind:'active',cd:4,mp:15,range:120,desc:'Chém quét hình quạt rộng, đẩy lùi.',up:'+25% sát thương, -6% hồi chiêu',
-   cast(tg,l){const a=angTo(tg);swing(a,-1);const hb=hoiPhong();arc(P.x,P.y-8,a,128*Ar()*hb,hb>1?6:4.4,this.power*lv(l)*pw()*(hb>1?1.2:1),H({kb:110}),hb>1?'#9fffe0':'#d8f0ff',-1)}},
+  {id:'k2',hotkey:'F',power:26,name:'Lướt Trảm',g:'掃',kind:'active',cd:4,mp:15,range:200,desc:'Lấy đà rồi lướt chém xuyên cả hàng quái, mỗi kẻ trúng một lần, gắn Phá Thế 3 giây.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){if(P.cutC)return;startCutC(angTo(tg),Math.max(6,weaponForge()),P.kit.basic)}},
   {id:'k3',power:9,name:'Kiếm Ảnh',g:'影',kind:'auto',cd:9,mp:25,range:260,desc:'Ba kiếm ảnh xoay quanh người, chém quái chạm phải.',up:'+0.5 giây, cấp 3 và 5 thêm 1 kiếm',
    cast(tg,l){sfx('wanjian_launch',0.45,0.2);addZone({kind:'blades',follow:1,T:5+0.5*(l-1),n:3+(l>=3)+(l>=5),r:80*Ar(),dmg:this.power*lv(l)*pw(),o:H({kb:20}),hm:new Map(),rot:0})}},
   {id:'kiemtam',name:'Kiếm Tâm',g:'心',kind:'passive',desc:'+12% tỷ lệ chí mạng.'},
@@ -2368,7 +2373,7 @@ function updPlayer(dt,frozen){
  if(P.holdCcd>0)P.holdCcd-=dt;
  if(P.holdT0!=null){if(!(keys.Space||dashHeld))P.holdT0=null;
   else if(G.t-P.holdT0>0.3&&P.dashT<=0&&!P.cutC&&!(P.holdCcd>0)&&!stun&&P.form!=='god'&&P.kit.w==='kiem'){P.holdT0=null;
-   if(weaponForge()>=6){const tg=nearest(P.x,P.y,300);startCutC(tg?angTo(tg):P.facing===-1?Math.PI:0,weaponForge(),P.kit.basic);P.holdCcd=3}}}
+   if(false){const tg=nearest(P.x,P.y,300);startCutC(tg?angTo(tg):P.facing===-1?Math.PI:0,weaponForge(),P.kit.basic);P.holdCcd=3}}}
  if(stun||G.state!=='play'){P.swordCut=null;P.swordGuard=null;if(P.cutC)endCutC()}
  else if(P.dashT<=0)finishSwordCut(dt);
  if(P.form==='god'){P.rage-=100/P.godDur*dt;if(P.rage<=0){P.rage=0;revert();return}if(!stun)castGod(dt)}
@@ -2902,6 +2907,7 @@ function drawFx(f){
   case'pillar':{const w=90*(1-k*0.6);const g=c.createLinearGradient(f.x-w,0,f.x+w,0);g.addColorStop(0,'rgba(255,200,80,0)');g.addColorStop(0.5,`rgba(255,240,180,${a})`);g.addColorStop(1,'rgba(255,200,80,0)');c.fillStyle=g;c.fillRect(f.x-w,f.y-700,w*2,720);c.globalAlpha=a;c.strokeStyle='#ffd36a';c.lineWidth=4;c.beginPath();c.ellipse(f.x,f.y,60+k*160,(60+k*160)*0.4,0,0,TAU);c.stroke();break}
   case'sword':{const fall=Math.min(1,k/0.45);const y=f.y-260*(1-fall);c.globalAlpha=fall<1?1:a*2;c.translate(f.x,y);c.fillStyle=f.spear?'rgba(160,200,255,.4)':'rgba(140,210,255,.45)';ell(0,-30,8,40);c.fillStyle='#eaf6ff';if(f.spear){c.fillRect(-1.5,-70,3,60);c.beginPath();c.moveTo(-4,-10);c.lineTo(0,4);c.lineTo(4,-10);c.fill()}else{c.beginPath();c.moveTo(-3,-50);c.lineTo(3,-50);c.lineTo(2.5,-6);c.lineTo(0,4);c.lineTo(-2.5,-6);c.fill();c.fillStyle='#ffd36a';c.fillRect(-7,-52,14,3)}break}
   case'scorch':{/* vết nện trên đất: sẫm, mờ dần, nằm dưới chân nhân vật */c.globalCompositeOperation='source-over';c.globalAlpha=0.55*Math.min(1,(1-k)*2.2);c.fillStyle='#2a1d14';c.beginPath();c.ellipse(f.x,f.y,f.r,f.r*0.42,0,0,TAU);c.fill();c.globalAlpha*=0.7;c.fillStyle='#120b07';c.beginPath();c.ellipse(f.x,f.y,f.r*0.55,f.r*0.22,0,0,TAU);c.fill();break}
+  case'el':{if(!vok('slash_el'))break;const m=SPX.slash_el,i=Math.min(m.n-1,Math.floor(k*m.n));if(f.follow&&P){f.x=P.x+(f.ox||0);f.y=P.y+(f.oy||0)}c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.translate(Math.round(f.x),Math.round(f.y));c.scale(f.sx,f.sy);c.rotate(f.back?-Math.PI/2:Math.PI/2);c.drawImage(VFX.slash_el,(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
   case'sp':{if(f.follow&&P){f.x=P.x;f.y=P.y}const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x),Math.round(f.y));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
   case'staff':{const fall=Math.min(1,k/0.7);c.globalCompositeOperation='source-over';c.globalAlpha=k>0.85?(1-k)/0.15:1;c.translate(f.x,f.y);if(vok('wk_staff_big')){c.imageSmoothingEnabled=false;const L=600,top=-L-520*(1-fall)*(1-fall)+12;c.translate(0,Math.round(top));drawWkStaff(c,L,'wk_staff_big');break}c.fillStyle='#b5281a';const len=520,top=-len-500*(1-fall);c.fillRect(-18,top,36,len);c.fillStyle='#f0c040';c.fillRect(-22,top,44,60);c.fillRect(-22,top+len-60,44,60);break}
   case'cloud':{c.globalCompositeOperation='source-over';c.globalAlpha=a*0.85;c.fillStyle='#fff7e8';circle(f.x,f.y-20,16*(1+k));circle(f.x+14,f.y-16,12*(1+k));circle(f.x-14,f.y-15,11*(1+k));break}
@@ -4103,7 +4109,7 @@ function forgeMarkup(it){
  const level=forgeLevel(it),cost=it.damaged?REPAIR_COST:FORGE_COST[level];
  const odds=FORGE_ODDS[level]?.map((v,i)=>v?FORGE_RESULT[i]+' '+v+'%':'').filter(Boolean).join(' · ');
  const perk=forgePerk(it);
- const milestones=it.slot==='vk'?' +3 Đòn thường bỏ qua 5% giáp · +6 '+(forgeSeen(6)?'Lướt Trảm (giữ Lướt)':'??? tự khám phá')+' · +9 '+(forgeSeen(9)?'Nhát C nối combo + kiếm khí':'??? tự khám phá'):
+ const milestones=it.slot==='vk'?' +3 Đòn thường bỏ qua 5% giáp · +6 '+(forgeSeen(6)?'Đòn thường mạnh hơn':'??? tự khám phá')+' · +9 '+(forgeSeen(9)?'Kiếm khí':'??? tự khám phá'):
   perk?sn(perk.stat)[0]+' · '+FORGE_MILESTONES.map((m,i)=>'+'+m+': +'+perk.values[i].toLocaleString('vi-VN')+sn(perk.stat)[1]).join(' · '):'';
  const detail=milestones?'<p class="dim sm">'+milestones+'</p>':'';
  return '<div class="forgery"><b>'+(it.damaged?'Hư hỏng':('Cường hóa +'+level))+'</b><span class="dim sm"> · '+MATN.thiet+' '+forgeStones()+'</span>'+detail+
