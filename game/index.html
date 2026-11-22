@@ -1316,19 +1316,22 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
 <style id="hudPhone">
 /* ===== HUD điện thoại ngang (màn thấp): nút gọn lại, thanh máu/năng lượng dài và dày, số dễ đọc ===== */
 @media (max-height:520px){
- html body #acts{left:auto}
- html body #dashBtn{width:60px!important;height:60px!important}
- html body #dashBtn svg{width:22px!important;height:16px!important}
- html body #skills .skr:not(.s2) .sk{width:46px!important;height:46px!important}
- html body #skills .skr:not(.s2) .sk b{font-size:22px!important}
- html body #skills .skr.s2 .sk{width:32px!important;height:32px!important}
- html body #skills .sk.manual.ult{width:50px!important;height:50px!important}
- html body #skills .skr{gap:5px!important}
- html body #godBtn{width:52px!important;height:52px!important;right:calc(max(10px,env(safe-area-inset-right)) + 150px)!important;bottom:calc(max(6px,env(safe-area-inset-bottom)) + 100px)!important}
- html body #vbars{left:calc(max(12px,env(safe-area-inset-left)) + 236px)!important;right:calc(max(10px,env(safe-area-inset-right)) + 216px)!important;width:auto!important;transform:none!important;gap:3px!important}
- html body .vr.hp .vt{height:20px!important}html body .vr.mp .vt{height:15px!important}
- html body .vr.hp .ve{width:24px!important;height:24px!important}html body .vr.mp .ve{width:20px!important;height:20px!important}
- html body .vt span{font-size:12px!important;letter-spacing:.5px}html body .vr.mp .vt span{font-size:10px!important}
+ html body #acts{left:calc(max(12px,env(safe-area-inset-left)) + 150px)!important;right:auto!important;bottom:max(8px,env(safe-area-inset-bottom))!important}
+ html body #dashBtn{width:54px!important;height:54px!important}
+ html body #dashBtn svg{width:20px!important;height:14px!important}
+ html body #dashBtn span{font-size:10px!important}
+ html body #skills .skr:not(.s2) .sk{width:40px!important;height:40px!important}
+ html body #skills .skr:not(.s2) .sk b{font-size:19px!important}
+ html body #skills .sk.manual.ult{width:44px!important;height:44px!important}
+ html body #skills .skr.s2 .sk{width:28px!important;height:28px!important}
+ html body #skills .skr{gap:4px!important}
+ html body #skills .sk-info{width:14px!important;height:14px!important;font-size:9px!important}
+ html body #godBtn{width:44px!important;height:44px!important}
+ html body #godBtn #godTxt{font-size:10px!important;padding:0 5px!important;bottom:-6px!important}
+ html body #vbars{width:auto!important;transform:none!important;gap:3px!important}
+ html body .vr.hp .vt{height:18px!important}html body .vr.mp .vt{height:13px!important}
+ html body .vr.hp .ve{width:22px!important;height:22px!important}html body .vr.mp .ve{width:18px!important;height:18px!important}
+ html body .vt span{font-size:11px!important;letter-spacing:.5px}html body .vr.mp .vt span{font-size:9px!important}
  /* Vượt Ải trên điện thoại ngang: bỏ chữ phụ, thu khoảng trống, ảnh bản đồ thấp lại để thấy được sao và thần tướng */
  html body #menu .mhead p{display:none}
  html body #menu .mhead h1{font-size:22px!important;margin:0 0 4px!important}
@@ -2680,6 +2683,15 @@ try{if(window.top!==window){new IntersectionObserver(es=>{const e=es[es.length-1
 addEventListener('resize',()=>{if(!VIEW._busy){VIEW._busy=1;setTimeout(()=>{VIEW._busy=0;viewApply()},0)}});
 addEventListener('orientationchange',()=>{for(const t of [80,300,700])setTimeout(viewApply,t)});
 setInterval(viewApply,500);
+
+/* HUD điện thoại ngang: đo vị trí thật của nút Lướt và cụm kỹ năng rồi đặt thanh máu nằm giữa, nút Hóa Thân ngồi trên cụm kỹ năng -> không bao giờ đè nhau ở mọi cỡ màn */
+function hudFit(){const hud=$('#hud');if(!hud||hud.hidden)return;const vb=$('#vbars'),gb=$('#godBtn'),sk=$('#skills'),dh=$('#dashBtn');if(!vb||!sk||!dh)return;
+ const low=(VIEW.on?(VIEW.rot?VIEW.W:VIEW.H):innerHeight)<=520;
+ if(!low){vb.style.left=vb.style.right='';if(gb){gb.style.right=gb.style.bottom='';gb.style.left=''}return}
+ const W=VIEW.on?(VIEW.rot?VIEW.H:VIEW.W):innerWidth,H=VIEW.on?(VIEW.rot?VIEW.W:VIEW.H):innerHeight,d=lrect(dh),k=lrect(sk);
+ vb.style.setProperty('left',Math.round(d.right+8)+'px','important');vb.style.setProperty('right',Math.round(W-k.left+10)+'px','important');
+ if(gb){gb.style.setProperty('left','auto','important');gb.style.setProperty('right',Math.round(W-k.left-gb.offsetWidth)+'px','important');gb.style.setProperty('bottom',Math.round(H-k.top+16)+'px','important')}}
+setInterval(hudFit,300);addEventListener('resize',()=>setTimeout(hudFit,50));
 
 function resize(){
  DPR=Math.min(devicePixelRatio||1,MOBILE?1.5:2);VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
