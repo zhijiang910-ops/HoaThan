@@ -117,3 +117,6 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 ## Cập nhật 22/11 (đợt 10)
 - Ngộ Không: bỏ thế kẹp gậy dưới nách (của ảnh gốc). Đứng = dựng gậy thẳng trước người, xa mặt (`IDLE3`, seed 23); chạy = vác gậy chéo qua vai (`RUN2`); trúng đòn = giữ gậy dựng (`HIT2`). Chạy/trúng đòn tạo từ frame đứng mới làm ảnh gốc. Đòn A/B bỏ frame cuối (quay về thế kẹp nách).
 - Chống phóng to khi chạm đúp trong artifact: `touch-action:manipulation` cho mọi phần tử, chặn chạm đúp cả trên nút (gọi click thủ công), ép lại thẻ viewport `maximum-scale=1,user-scalable=no` và ghi lại khi visualViewport bị phóng (iOS tự thu về).
+
+## Cập nhật 22/11 (đợt 11) · Luyện Công
+- Sảnh có ô **Luyện Công** (`startTraining`): 6 cọc gỗ (`ET.coc`, ai dummy, không chết, không đánh), không sinh quái, không lưu checkpoint. Bảng chỉnh `#trP`: Nộ đầy mãi, Hóa Thân ngay, Hồi hết chiêu, Kiếm +0/3/6/9 (`G.trForge` ghi đè `weaponForge`), Nam/Nữ, đổi Hóa Thân (thử được mọi Hóa Thân), Chậm ×0,25 (`G.trScale`), Bất tử, + Quái thật, Đặt lại cọc, ST/giây (5 giây gần nhất), Thu gọn, Ra sảnh. Lựa chọn nhớ trong `localStorage.tdst_tr`.
