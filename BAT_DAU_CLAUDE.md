@@ -93,3 +93,11 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 ## Cập nhật 22/11 (đợt 6)
 - Đòn A/B chạy theo nhịp gốc của gói (~0,5 s/đòn, trước bị nén còn 0,4 s và bị cắt ở 60% khi di chuyển nên chỉ thấy đoạn giơ kiếm). Dòng thời gian từng frame + frame chạm địch trong `TL` (cạnh `runStride`), `heroFrame` đọc `A.tl`, sát thương gây ra đúng lúc frame chạm (`A.hit`). Khi di chuyển giữ đòn tới 88% (`RUN_SWING_RETURN`).
 - Đi/chạy: nhún 2 px theo bước (chỉ dịch chuyển, không co giãn sprite). Gói không có động tác chạy thật → cần frame PixelLab.
+
+## Cập nhật 22/11 (đợt 7) · Animation thật bằng PixelLab API
+- Chủ game cấp PixelLab API key (lưu ở môi trường, proxy tự gắn; không có trong code).
+- **Chạy 8 frame**: `animate-with-skeleton-v3`, khung xương 18 khớp dựng bằng `cong_cu/pixellab/runskel.py` (ngả người, gối cao, pha bay, tay cầm kiếm cố định).
+- **Đòn A 6 frame (giơ cao → đâm/bổ → chém xuống → thu), đòn B 5 frame (kéo sau → vung → chém ngang → thu)**: rig tùy chỉnh có khớp kiếm (`estimate-custom-skeleton`, đổi tên chuỗi "back_sword" nhận nhầm từ đuôi tóc thành hair), góc lưỡi kiếm từng frame trong `rigpose.py` (`ANG`). Bỏ frame B4 (hất kiếm lên) vì PixelLab không vẽ ổn định.
+- **Kiểm tra từng frame** trước khi duyệt: `qc.py`/`qc_run.py` (kiếm đúng vị trí tay trước, độ dài so master ±10%, màu trang phục ≥95% bảng màu master) + soi mắt cạnh master (kiếm thừa). Lỗi lần 1: A1 và B4 mất kiếm → chỉnh góc A1, bỏ B4.
+- Ghép sheet: `cong_cu/ghep_anim.py` (ô 160×128, chân (80,118)); đứng/trúng đòn/gục giữ của gói. Nhịp đòn `TA`/`TB`, nhát C dùng B0→A2→A3→A4→đứng.
+- Tốn khoảng 45 lượt tạo PixelLab.
