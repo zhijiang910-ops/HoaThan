@@ -19,6 +19,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
    LAYOUT: HUD bám mép màn hình; màn khai cục ba cột, xếp chồng dưới 900px */
 :root{--bg:#120a07;--line:#6a5131;--gold:#d9b46b;--gold2:#f5d995;--ink:#ecdfc8;--dim:#a39178;--hp:#c62f2a;--mp:#2b86d3;--rage:#ff9a24;color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
+:root{--vw:1vw;--vh:1vh}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.45 "Be Vietnam Pro",system-ui,sans-serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 #cv{position:fixed;inset:0;display:block;width:100%;height:100%}
 [hidden]{display:none!important}
@@ -26,7 +27,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1
 .screen{position:fixed;inset:0;overflow-y:auto;touch-action:pan-y;background:radial-gradient(ellipse at 50% 30%,rgba(40,14,6,.55),rgba(8,4,2,.9));display:flex;justify-content:center;align-items:flex-start;padding:max(14px,env(safe-area-inset-top)) 12px 14px;z-index:20}
 .wrap{width:min(1240px,100%);margin:auto 0;display:flex;flex-direction:column;gap:12px}
 .panel{background:linear-gradient(180deg,#1e140e,#130c08);border:1px solid var(--line);box-shadow:inset 0 0 0 3px #110a06,inset 0 0 0 4px #3b2b19,0 12px 30px rgba(0,0,0,.55);border-radius:4px;padding:16px}
-h1{font:800 clamp(32px,5.4vw,52px)/1.05 "Noto Serif",serif;color:var(--gold2);margin:0;text-shadow:0 2px 0 #3a1a08,0 0 26px rgba(255,130,40,.35);text-wrap:balance}
+h1{font:800 clamp(32px,calc(5.4*var(--vw)),52px)/1.05 "Noto Serif",serif;color:var(--gold2);margin:0;text-shadow:0 2px 0 #3a1a08,0 0 26px rgba(255,130,40,.35);text-wrap:balance}
 h2{font:700 18px "Noto Serif",serif;color:var(--gold);margin:0 0 12px;display:flex;align-items:center;gap:10px}
 h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
 h3{font:600 14px "Be Vietnam Pro";color:var(--dim);margin:16px 0 8px}
@@ -65,21 +66,21 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(20,12,8,.82);border:1px solid var(--line);border-radius:3px;padding:4px 12px;font:800 18px "Noto Serif",serif;color:var(--gold2)}
 .chip i{font-style:normal;font-size:18px;color:#e9b44c}
 #coins{position:absolute;left:max(12px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top))}
-#top{position:absolute;left:50%;top:max(8px,env(safe-area-inset-top));transform:translateX(-50%);width:min(560px,56vw);text-align:center}
+#top{position:absolute;left:50%;top:max(8px,env(safe-area-inset-top));transform:translateX(-50%);width:min(560px,calc(56*var(--vw)));text-align:center}
 #wlabel{font:800 15px "Noto Serif",serif;color:var(--gold2);text-shadow:0 1px 2px #000}
 #wbar{height:10px;background:rgba(10,6,4,.85);border:1px solid var(--line);border-radius:2px;overflow:hidden;margin:3px 0}
 #wfill{display:block;height:100%;width:0;background:linear-gradient(90deg,#8a5a14,#f2c35a)}
 #wtime{font:800 15px "Noto Serif",serif;color:#fff;text-shadow:0 1px 3px #000}
-#bossbar{position:absolute;left:50%;top:calc(max(8px,env(safe-area-inset-top)) + 64px);transform:translateX(-50%);width:min(620px,80vw);text-align:center}
+#bossbar{position:absolute;left:50%;top:calc(max(8px,env(safe-area-inset-top)) + 64px);transform:translateX(-50%);width:min(620px,calc(80*var(--vw)));text-align:center}
 #bossbar .bn{font:800 16px "Noto Serif",serif;color:#ffb0a0;text-shadow:0 1px 3px #000}
 #bossbar .bb{height:12px;background:rgba(10,4,3,.9);border:1px solid #7a2a1a;border-radius:2px;overflow:hidden}
 #bossfill{display:block;height:100%;width:100%;background:linear-gradient(90deg,#6a0f0a,#e0402a)}
 #pauseBtn{position:absolute;right:max(12px,env(safe-area-inset-right));top:max(10px,env(safe-area-inset-top));width:46px;height:46px;font:800 18px "Noto Serif",serif;color:var(--gold2);background:rgba(20,12,8,.85);border:1px solid var(--line);border-radius:3px;cursor:pointer}
 #killbox{position:absolute;right:max(16px,env(safe-area-inset-right));top:32%;text-align:right;text-shadow:0 2px 4px #000}
-#killv{display:block;font:800 clamp(28px,4.4vw,46px)/1 "Noto Serif",serif;color:#fff2da}
+#killv{display:block;font:800 clamp(28px,calc(4.4*var(--vw)),46px)/1 "Noto Serif",serif;color:#fff2da}
 #killbox>.kl{font-size:13px;color:var(--dim)}
 #combov{display:block;font:800 22px "Noto Serif",serif;color:#ffcf6a;font-style:normal;margin-top:6px;min-height:28px}
-#bars{position:absolute;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(440px,calc(100vw - 300px));display:flex;flex-direction:column;gap:3px}
+#bars{position:absolute;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(440px,calc(calc(100*var(--vw)) - 300px));display:flex;flex-direction:column;gap:3px}
 .bar{position:relative;height:16px;background:rgba(8,5,4,.88);border:1px solid var(--line);border-radius:2px;overflow:hidden}
 .bar i{display:block;height:100%;width:0}
 .bar span{position:absolute;inset:0;display:grid;place-items:center;font:800 11px "Be Vietnam Pro";color:#fff;text-shadow:0 1px 2px #000}
@@ -95,7 +96,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .frm{background:linear-gradient(160deg,#21483e,#0c1d19 70%);border:1px solid var(--jade);box-shadow:inset 0 0 0 2px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18),0 3px 8px rgba(0,0,0,.55);border-radius:12px 3px 12px 3px}
 #coins{display:flex;align-items:center;gap:8px;padding:4px 14px 4px 8px;font:800 19px Silkscreen,"Be Vietnam Pro",sans-serif;color:#eafff4}
 #coins canvas{width:26px;height:26px;image-rendering:pixelated}
-#top{width:min(560px,50vw)}
+#top{width:min(560px,calc(50*var(--vw)))}
 #wlabel{display:none}
 #wbar{position:relative;height:20px;margin:0 14px;border-radius:2px;background:linear-gradient(#efe3c2,#d2bd8f);box-shadow:inset 0 1px 0 #fff6dc,inset 0 -2px 0 rgba(90,60,20,.35),0 2px 6px rgba(0,0,0,.6);overflow:visible;text-shadow:none}
 #wbar:before,#wbar:after{content:"";position:absolute;top:-4px;width:9px;height:28px;border-radius:4px;background:linear-gradient(90deg,#3a2210,#7a4a22 45%,#2a160a);box-shadow:0 2px 4px rgba(0,0,0,.6)}
@@ -110,7 +111,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #killbox>.kl{display:block;margin-top:2px;font:700 13px "Be Vietnam Pro";color:#cfeee0}
 #combov{display:block;margin-top:12px;font:400 26px Silkscreen,"Be Vietnam Pro",sans-serif;font-style:normal;color:#ffd36a;-webkit-text-stroke:1.5px var(--ink2);text-shadow:2px 2px 0 var(--ink2),0 0 12px rgba(255,140,40,.55);text-align:right}
 #combov small{display:block;font:700 12px "Be Vietnam Pro";-webkit-text-stroke:0;color:#ffe9c0}
-#bars{width:min(440px,calc(100vw - 340px));gap:5px}
+#bars{width:min(440px,calc(calc(100*var(--vw)) - 340px));gap:5px}
 #bars .bar{overflow:visible;border:1px solid var(--jade);border-radius:9px;background:linear-gradient(#0b1714,#14251f);box-shadow:inset 0 0 0 1px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.6);margin-left:22px}
 #bars .bar i{border-radius:8px}
 #bars .bar.hp{height:20px}#bars .bar.mp{height:15px}
@@ -187,13 +188,13 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #godBtn.ready canvas,#godBtn.active canvas{filter:none}
 #godBtn.cd canvas{filter:grayscale(1) brightness(.45)}
 @keyframes glow{from{box-shadow:0 0 6px #ff9a24}to{box-shadow:0 0 26px #ffd36a}}
-#notice{position:absolute;left:50%;top:24%;transform:translateX(-50%);font:800 clamp(26px,4.6vw,46px)/1.1 "Noto Serif",serif;color:#ffe2a0;text-shadow:0 0 18px rgba(255,120,30,.8),0 3px 0 #3a1406;text-align:center;opacity:0;transition:opacity .3s;white-space:nowrap}
+#notice{position:absolute;left:50%;top:24%;transform:translateX(-50%);font:800 clamp(26px,calc(4.6*var(--vw)),46px)/1.1 "Noto Serif",serif;color:#ffe2a0;text-shadow:0 0 18px rgba(255,120,30,.8),0 3px 0 #3a1406;text-align:center;opacity:0;transition:opacity .3s;white-space:nowrap}
 #notice.on{opacity:1}
 #notice small{display:block;font:600 16px "Be Vietnam Pro";color:#f0d8b0}
 #joy{position:fixed;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:2px solid rgba(245,217,149,.35);background:rgba(20,10,5,.25);pointer-events:none;z-index:11}
 #joy i{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:50%;background:radial-gradient(#f5d995,#8a6a2c);opacity:.75}
 @media(max-width:700px){
- #top{width:calc(100vw - 150px)}
+ #top{width:calc(calc(100*var(--vw)) - 150px)}
  #bars{left:12px;right:12px;width:auto;transform:none;top:calc(max(8px,env(safe-area-inset-top)) + 56px);bottom:auto}
  #bossbar{top:calc(max(8px,env(safe-area-inset-top)) + 150px)}
  #killbox{top:calc(max(8px,env(safe-area-inset-top)) + 150px)}
@@ -204,7 +205,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* between waves */
 .btop{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between}
 .tabs{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:#140c08}
-.tabs button{font:700 16px "Noto Serif",serif;color:var(--ink);background:none;border:0;border-right:1px solid #3a2a1a;min-height:44px;padding:0 clamp(12px,3vw,30px);cursor:pointer}
+.tabs button{font:700 16px "Noto Serif",serif;color:var(--ink);background:none;border:0;border-right:1px solid #3a2a1a;min-height:44px;padding:0 clamp(12px,calc(3*var(--vw)),30px);cursor:pointer}
 .tabs button:last-child{border:0}
 .tabs button.on{background:linear-gradient(#7a5420,#3e270c);color:#fff4d8}
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -234,7 +235,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .bfoot{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .bfoot #picksLeft{flex:1;text-align:center}
 @media(max-width:760px){.cards{grid-template-columns:minmax(0,1fr)}.card{min-height:0;padding:10px;gap:3px}.card .val{margin-top:2px;padding-top:4px}.card .ico{width:52px;height:52px;font-size:34px}.wu{grid-template-columns:minmax(0,1fr)}}
-.endbig{font:800 clamp(34px,6vw,56px)/1.05 "Noto Serif",serif;text-align:center;margin:6px 0}
+.endbig{font:800 clamp(34px,calc(6*var(--vw)),56px)/1.05 "Noto Serif",serif;text-align:center;margin:6px 0}
 .center{text-align:center}
 .cbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px}
 @media (prefers-reduced-motion:reduce){#godBtn.ready,.bar.rage.full i{animation:none}}
@@ -242,7 +243,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* ===== HUD gọn & đẹp (bản sắp xếp lại) ===== */
 #hud{font-family:"Be Vietnam Pro",sans-serif}
 #coins{font-size:16px;padding:3px 12px 3px 6px}#coins canvas{width:22px;height:22px}
-#top{width:min(520px,44vw)}
+#top{width:min(520px,calc(44*var(--vw)))}
 #wbar{height:16px}#wbar .wl,#wbar .wr{font:800 11px "Be Vietnam Pro",sans-serif}
 #wtime{font:800 13px "Be Vietnam Pro",sans-serif;letter-spacing:1px;padding:1px 10px;margin-top:5px}
 #killbox{top:26%}
@@ -251,7 +252,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #killbox>.kl{font-size:11px;opacity:.85}
 #combov{font-size:22px;margin-top:8px}#combov small{font-size:11px}
 /* cụm thanh dưới: cấp bên trái, máu to, nội lực vừa, nộ mảnh, kinh nghiệm chỉ */
-#bars{width:min(400px,36vw);gap:3px;padding-left:44px}
+#bars{width:min(400px,calc(36*var(--vw)));gap:3px;padding-left:44px}
 #bars .bar{margin-left:0;border-radius:7px}
 #bars .bar:before{display:none!important}
 #bars .bar.hp{height:15px;order:4}#bars .bar.mp{height:10px;order:3}
@@ -265,17 +266,17 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #dashBtn{width:54px;height:54px;font-size:13px}
 #godBtn{width:78px;height:78px}#godBtn canvas{width:68px;height:68px}#godBtn #godTxt{font-size:11px}
 #acts{gap:10px}
-#notice{font-size:clamp(22px,3.6vw,38px)}
+#notice{font-size:clamp(22px,calc(3.6*var(--vw)),38px)}
 /* điện thoại ngang */
 @media (max-height:520px){
  #coins{font-size:13px;padding:2px 9px 2px 4px}#coins canvas{width:16px;height:16px}
- #top{width:min(420px,40vw)}#wbar{height:12px}#wbar:before,#wbar:after{height:20px;top:-4px;width:7px}
+ #top{width:min(420px,calc(40*var(--vw)))}#wbar{height:12px}#wbar:before,#wbar:after{height:20px;top:-4px;width:7px}
  #wbar .wl,#wbar .wr{font-size:9px}#wtime{font-size:10px;padding:0 7px;margin-top:3px;border-width:1px}
  #pauseBtn{width:34px;height:34px;font-size:13px}
  #killbox{top:22%}#killbox:before{width:20px;height:20px;font-size:15px;margin-bottom:2px}
  #killv{font-size:24px;-webkit-text-stroke:1px var(--ink2);text-shadow:1px 2px 0 var(--ink2)}#killbox>.kl{font-size:9px}
  #combov{font-size:16px;margin-top:5px}#combov small{font-size:9px}
- #bars{width:min(330px,calc(100vw - 400px));padding-left:34px;gap:2px}
+ #bars{width:min(330px,calc(calc(100*var(--vw)) - 400px));padding-left:34px;gap:2px}
  #bars .bar.hp{height:11px}#bars .bar.mp{height:8px}#bars .bar.rage{height:5px}
  #bars .bar span{font-size:8px}#bars .bar.mp span{font-size:0}
  #bars .lvl{width:30px;height:30px;font-size:8px}
@@ -297,7 +298,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #coins{top:calc(max(8px,env(safe-area-inset-top)) + 66px)}
 #bars .lvl,#bars .bar.xp{display:none!important}
 /* ===== khung thời gian: thanh đợt + đồng hồ trong một ô ===== */
-#top{display:flex;align-items:center;gap:10px;padding:6px 12px 6px 22px;width:min(560px,48vw);background:linear-gradient(160deg,rgba(33,72,62,.92),rgba(12,29,25,.92));border:1px solid var(--jade);border-radius:12px 3px 12px 3px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.45),0 3px 8px rgba(0,0,0,.55)}
+#top{display:flex;align-items:center;gap:10px;padding:6px 12px 6px 22px;width:min(560px,calc(48*var(--vw)));background:linear-gradient(160deg,rgba(33,72,62,.92),rgba(12,29,25,.92));border:1px solid var(--jade);border-radius:12px 3px 12px 3px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.45),0 3px 8px rgba(0,0,0,.55)}
 #top #wbar{flex:1;margin:0 8px}
 #wtime{margin:0;display:flex;align-items:center;gap:6px;min-width:76px;justify-content:center}
 #wtime .hg{width:10px;height:14px;background:linear-gradient(#ffe9c0,#ffe9c0) top/100% 2px no-repeat,linear-gradient(#ffe9c0,#ffe9c0) bottom/100% 2px no-repeat,conic-gradient(from 135deg at 50% 50%,#ffe9c0 0 90deg,transparent 0 180deg,#ffe9c0 0 270deg,transparent 0)}
@@ -312,7 +313,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 @media (max-height:520px){
  #avaC{width:40px;height:40px}#avaLv{left:26px;top:26px;min-width:18px;height:18px;font-size:10px}.avn span{font-size:10px}.avx{width:70px;height:3px}
  #coins{top:calc(max(8px,env(safe-area-inset-top)) + 46px)}
- #top{padding:3px 8px 3px 14px;gap:6px;width:min(440px,46vw)}#wtime{min-width:54px}
+ #top{padding:3px 8px 3px 14px;gap:6px;width:min(440px,calc(46*var(--vw)))}#wtime{min-width:54px}
  #bars{padding-left:20px!important}
  #bars .bar.hp:before,#bars .bar.mp:before{width:15px;height:15px;font-size:10px;left:-19px}
  #bars .bar.rage:before{width:13px;height:13px;font-size:9px;left:-18px}#bars .bar.rage{height:7px!important}
@@ -329,7 +330,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #ava{display:none!important}
 #coins{top:max(10px,env(safe-area-inset-top))!important;left:max(14px,env(safe-area-inset-left));background:var(--pan);border:1px solid var(--pb);border-radius:10px;padding:5px 18px 5px 10px;font:700 20px "Noto Serif",serif;color:#f5ecd8;gap:12px}
 #coins canvas{width:24px;height:24px}
-#top{all:unset;position:absolute;left:50%;top:max(10px,env(safe-area-inset-top));transform:translateX(-50%);width:min(620px,52vw);display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+#top{all:unset;position:absolute;left:50%;top:max(10px,env(safe-area-inset-top));transform:translateX(-50%);width:min(620px,calc(52*var(--vw)));display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
 #tbar{width:100%;display:flex;align-items:center;gap:14px;padding:8px 22px;box-sizing:border-box;background:var(--pan);border:1px solid var(--pb);border-radius:24px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.3),0 4px 10px rgba(0,0,0,.45);position:relative}
 #tbar:before,#tbar:after{content:"";position:absolute;top:50%;width:9px;height:9px;transform:translateY(-50%) rotate(45deg);border:1px solid var(--pb);background:#14302b}
 #tbar:before{left:-5px}#tbar:after{right:-5px}
@@ -353,7 +354,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #killv{font:italic 700 44px/1.15 "Noto Serif",serif!important;color:#f8f0dc!important;-webkit-text-stroke:0!important;text-shadow:0 2px 0 rgba(0,0,0,.5)!important}
 #combov{font:italic 700 20px "Noto Serif",serif!important;color:#ffd36a!important;-webkit-text-stroke:0!important;text-align:center!important}
 #combov small{font:600 11px "Noto Serif",serif!important;color:#efe4cc!important}
-#bars{width:min(520px,40vw)!important;padding:8px 14px!important;gap:6px!important;background:var(--pan);border:1px solid var(--pb);border-radius:10px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.3),0 4px 10px rgba(0,0,0,.45);bottom:max(12px,env(safe-area-inset-bottom))!important}
+#bars{width:min(520px,calc(40*var(--vw)))!important;padding:8px 14px!important;gap:6px!important;background:var(--pan);border:1px solid var(--pb);border-radius:10px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.3),0 4px 10px rgba(0,0,0,.45);bottom:max(12px,env(safe-area-inset-bottom))!important}
 .lvtab{position:absolute;left:10px;top:-30px;padding:3px 18px;font:700 15px "Noto Serif",serif;color:#f5ecd8;background:var(--pan);border:1px solid var(--pb);border-bottom:0;border-radius:12px 12px 0 0}
 .brow{display:flex;align-items:center;gap:10px;padding:2px 4px}
 .brow+.brow{border-top:1px solid rgba(143,198,178,.18);padding-top:6px}
@@ -384,11 +385,11 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #acts{gap:22px!important;align-items:center!important;right:max(18px,env(safe-area-inset-right))!important;bottom:max(18px,env(safe-area-inset-bottom))!important}
 @media (max-height:520px){
  #coins{font-size:14px;padding:3px 12px 3px 7px;gap:8px}#coins canvas{width:16px;height:16px}
- #top{width:min(440px,50vw);gap:4px}#tbar{padding:4px 14px;gap:8px}#tStage{font-size:14px}.tsep{height:14px}#tWave{font-size:11px}#tbar #wbar{height:8px}#tPct{font-size:11px;min-width:28px}
+ #top{width:min(440px,calc(50*var(--vw)));gap:4px}#tbar{padding:4px 14px;gap:8px}#tStage{font-size:14px}.tsep{height:14px}#tWave{font-size:11px}#tbar #wbar{height:8px}#tPct{font-size:11px;min-width:28px}
  #wtime{font-size:13px;padding:2px 12px}#wtime .hgs{width:9px;height:12px}
  #pauseBtn{width:34px!important;height:34px!important;font-size:14px!important}
  .kpan{min-width:72px;padding:4px 8px 3px}.kpan span{font-size:10px!important;padding-bottom:2px}#killv{font-size:26px!important}#combov{font-size:13px!important}
- #bars{width:min(330px,calc(100vw - 440px))!important;padding:4px 9px!important;gap:3px!important}
+ #bars{width:min(330px,calc(calc(100*var(--vw)) - 440px))!important;padding:4px 9px!important;gap:3px!important}
  .lvtab{top:-20px;font-size:10px;padding:2px 10px;left:8px}
  .brow{gap:6px;padding:0 2px}.brow+.brow{padding-top:3px}.brow svg{width:12px;height:12px}.brow b{width:44px;font-size:10px}.brow span{min-width:46px;font-size:9px}#bars .brow .bar{height:6px}
  #skills{gap:6px!important;bottom:max(10px,env(safe-area-inset-bottom))!important}.sk{width:40px!important;height:46px!important}.sk b{font-size:20px!important}.sk .lb{font-size:9px}
@@ -447,7 +448,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 }
 
 /* ===== thanh gọn kiểu clip: Nộ / Nội lực / Sinh lực ở giữa đáy ===== */
-#vbars{position:absolute;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(440px,38vw);display:flex;flex-direction:column;align-items:flex-end;gap:3px;pointer-events:none;z-index:5}
+#vbars{position:absolute;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(440px,calc(38*var(--vw)));display:flex;flex-direction:column;align-items:flex-end;gap:3px;pointer-events:none;z-index:5}
 .vr{display:flex;align-items:center;width:100%}
 .vr.mp{width:93%}
 .ve{flex:none;position:relative;z-index:2;display:grid;place-items:center;border-radius:50%;margin-right:-9px;background:radial-gradient(circle at 45% 35%,#3a2c1c,#120c07 70%);box-shadow:0 0 0 1.5px #1a1008,0 0 0 3px #c9a45e,0 0 0 4px #4a3618,0 2px 5px rgba(0,0,0,.7)}
@@ -472,7 +473,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .axb i{display:block;height:100%;width:0;background:linear-gradient(#ffe7a8,#e6a84a 60%,#a8701e)}
 .axp em{font:700 10px Silkscreen,sans-serif;font-style:normal;color:#f5ecd8;text-shadow:0 1px 2px #000}
 @media (max-height:520px){
- #vbars{width:min(300px,calc(100vw - 440px));gap:2px;bottom:max(6px,env(safe-area-inset-bottom))}
+ #vbars{width:min(300px,calc(calc(100*var(--vw)) - 440px));gap:2px;bottom:max(6px,env(safe-area-inset-bottom))}
  .vr.hp .ve{width:20px;height:20px}.vr.mp .ve{width:16px;height:16px}
  .ve{margin-right:-6px;box-shadow:0 0 0 1px #1a1008,0 0 0 2px #c9a45e,0 1px 3px rgba(0,0,0,.7)}
  .vt{padding:2px 2px 2px 7px;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%)}
@@ -505,8 +506,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 
 /* bỏ chữ "Màn N" trên thanh đợt: màn đã báo khi vào đợt */
 #tStage,#tbar .tsep{display:none!important}
-#top{width:min(520px,44vw)!important}
-@media (max-height:520px){#top{width:min(380px,42vw)!important}}
+#top{width:min(520px,calc(44*var(--vw)))!important}
+@media (max-height:520px){#top{width:min(380px,calc(42*var(--vw)))!important}}
 .item canvas{image-rendering:auto!important;width:48px!important;height:48px!important}
 
 /* ===== nút tạm dừng ===== */
@@ -521,7 +522,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 @media (max-height:520px){#pauseBtn{width:36px;height:36px;border-radius:8px}#pauseBtn svg{width:17px;height:17px}#pauseBtn:before{inset:5px}#pauseBtn .tas{height:5px}#pauseBtn .tas:after{height:9px;top:9px}#pauseBtn .tas:before{top:5px}}
 /* ===== bảng tạm dừng ===== */
 #pause{align-items:center!important;background:rgba(5,10,9,.72)!important;backdrop-filter:blur(3px)}
-.pz{width:min(640px,94vw);margin:auto;background:linear-gradient(#16231f,#0c1512);border-radius:14px;padding:18px 22px 16px;box-shadow:inset 0 0 0 1px #0a1210,inset 0 0 0 3px #c9a45e,inset 0 0 0 4px rgba(0,0,0,.5),0 10px 40px rgba(0,0,0,.6);color:#efe4cc}
+.pz{width:min(640px,calc(94*var(--vw)));margin:auto;background:linear-gradient(#16231f,#0c1512);border-radius:14px;padding:18px 22px 16px;box-shadow:inset 0 0 0 1px #0a1210,inset 0 0 0 3px #c9a45e,inset 0 0 0 4px rgba(0,0,0,.5),0 10px 40px rgba(0,0,0,.6);color:#efe4cc}
 .pzh{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
 .pzh svg{width:22px;height:22px;fill:#e8c27a}.pzh h2{margin:0;font:700 24px "Noto Serif",serif;color:#f5e3bd;letter-spacing:.5px}
 .pzb{display:grid;grid-template-columns:1fr 1.25fr;gap:16px}
@@ -539,7 +540,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .pzc{display:flex;gap:10px;justify-content:center;margin-top:14px}.pzc .btn{min-width:120px}
 #quitBtn.warn{background:linear-gradient(#a8321f,#5a0e08)!important;color:#fff!important;border-color:#ff8a70!important}
 @media (max-height:520px){
- .pz{padding:10px 16px 10px;width:min(620px,88vw)}.pzh{margin-bottom:6px}.pzh h2{font-size:17px}.pzh svg{width:16px;height:16px}
+ .pz{padding:10px 16px 10px;width:min(620px,calc(88*var(--vw)))}.pzh{margin-bottom:6px}.pzh h2{font-size:17px}.pzh svg{width:16px;height:16px}
  .pzb{gap:12px}.pzs{gap:4px}.pzs div{padding:3px 7px}.pzs span{font-size:9px}.pzs b{font-size:12px}
  .pzr{min-height:31px}.pzr span{font-size:12px}.sw{width:38px;height:22px}.sw i:after{width:16px;height:16px}.sw input:checked+i:after{transform:translateX(16px)}
  .pzc{margin-top:8px}.pzc .btn{min-width:96px;padding:6px 12px;font-size:13px;min-height:34px}
@@ -559,7 +560,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 @media (max-height:520px){#clearBan b{font-size:34px}#clearBan em{font-size:13px;letter-spacing:4px}#clearBan i{height:76px}}
 
 /* ===== ô bình thuốc (cạnh thanh máu) ===== */
-#pots{position:absolute;left:calc(50% - min(440px,38vw)/2 - 30px);bottom:calc(max(10px,env(safe-area-inset-bottom)) + 72px);display:flex;gap:6px;z-index:6}
+#pots{position:absolute;left:calc(50% - min(440px,calc(38*var(--vw)))/2 - 30px);bottom:calc(max(10px,env(safe-area-inset-bottom)) + 72px);display:flex;gap:6px;z-index:6}
 .pot{all:unset;position:relative;width:38px;height:38px;box-sizing:border-box;border-radius:6px;cursor:pointer;background:radial-gradient(circle at 50% 40%,#3a1a14,#120806);box-shadow:inset 0 0 0 1px #000,0 0 0 1px #c9a45e,0 2px 5px rgba(0,0,0,.6);overflow:hidden}
 .pot.mp{background:radial-gradient(circle at 50% 40%,#142a4a,#060a14)}
 .pot .pi,.pi{display:block;width:100%;height:100%;background:url(assets/ui/drops.png) 0 0/200% 100% no-repeat;image-rendering:pixelated}
@@ -572,7 +573,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .shopc{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--pb,#5a4a2a);border-radius:10px;background:rgba(0,0,0,.25)}
 .shopc .pi{width:56px;height:56px;flex:none}.sinfo{flex:1;display:flex;flex-direction:column;gap:2px}.sinfo b{font:700 16px "Noto Serif",serif;color:#f5e3bd}.sinfo span{font-size:13px;color:#d8cdb4}.sinfo small{font-size:12px;color:#9fb8ae}
 .shopc .btn{min-width:86px}
-@media (max-height:520px){#pots{left:calc(50% - min(300px,calc(100vw - 440px))/2 - 26px);bottom:calc(max(6px,env(safe-area-inset-bottom)) + 44px);gap:4px}.pot{width:26px;height:26px;border-radius:4px}.pot b{font-size:8px}
+@media (max-height:520px){#pots{left:calc(50% - min(300px,calc(calc(100*var(--vw)) - 440px))/2 - 26px);bottom:calc(max(6px,env(safe-area-inset-bottom)) + 44px);gap:4px}.pot{width:26px;height:26px;border-radius:4px}.pot b{font-size:8px}
  .shopg{gap:8px}.shopc{padding:6px 8px;gap:8px}.shopc .pi{width:40px;height:40px}.sinfo b{font-size:13px}.sinfo span{font-size:11px}.sinfo small{font-size:10px}}
 
 
@@ -598,7 +599,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 @media (max-height:520px){#quests{top:calc(max(8px,env(safe-area-inset-top)) + 104px);width:170px}#qHead{padding:2px 8px}#qHead b{font-size:10px}.qi{font-size:8.5px;padding:1px 8px}.qi u{left:8px}}
 /* ===== kỳ ngộ ===== */
 #kyngo{align-items:center!important;background:rgba(5,8,7,.6)!important;z-index:30}
-.kyp{width:min(520px,92vw);margin:auto;background:linear-gradient(#1c1610,#0e0a07);border-radius:12px;padding:14px 18px;box-shadow:inset 0 0 0 1px #0a0806,inset 0 0 0 3px #c9a45e,0 10px 40px rgba(0,0,0,.6);color:#efe4cc}
+.kyp{width:min(520px,calc(92*var(--vw)));margin:auto;background:linear-gradient(#1c1610,#0e0a07);border-radius:12px;padding:14px 18px;box-shadow:inset 0 0 0 1px #0a0806,inset 0 0 0 3px #c9a45e,0 10px 40px rgba(0,0,0,.6);color:#efe4cc}
 .kyh{text-align:center;font:800 20px "Noto Serif",serif;color:#f0c45a;letter-spacing:2px;margin-bottom:8px}
 .kyb{display:flex;gap:12px;align-items:center}.kyb canvas{width:80px;height:80px;flex:none;image-rendering:pixelated;background:radial-gradient(#3a2a18,#120c07);border-radius:8px;box-shadow:0 0 0 1px #c9a45e}
 .kyb b{font:700 16px "Noto Serif",serif;color:#ffe9b0}.kyb p{margin:4px 0 0;font-size:13px;color:#d8cdb4;font-style:italic}
@@ -696,14 +697,14 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
  #quests:before,#quests:after{background:radial-gradient(circle at 50% 3px,#d9b46a 0 2px,#5a3a14 2.5px 3px,transparent 3.5px),radial-gradient(circle at 50% calc(100% - 3px),#d9b46a 0 2px,#5a3a14 2.5px 3px,transparent 3.5px),linear-gradient(90deg,#0e0805,#3a2414 40%,#5a3a20 55%,#120a05)!important}}
 
 /* ===== thu nhỏ thanh + chú thích ===== */
-#vbars{width:min(380px,33vw)!important;gap:2px!important}
+#vbars{width:min(380px,calc(33*var(--vw)))!important;gap:2px!important}
 .vr.hp .vt{height:19px!important}.vr.mp .vt{height:14px!important}
 .vr.hp .ve{width:26px!important;height:26px!important}.vr.mp .ve{width:21px!important;height:21px!important}
 .vt span{font-size:11px!important}.vr.mp .vt span{font-size:9px!important}
 .vr{position:relative}.vl{position:absolute;left:calc(100% + 6px);top:50%;transform:translateY(-50%);font:700 11px "Be Vietnam Pro",sans-serif;font-style:normal;white-space:nowrap;text-shadow:0 1px 2px #000,0 0 3px #000}
 .vr.hp .vl{color:#ff8a7a}.vr.mp .vl{color:#8fc0ff}
 .vr.mp .ve svg{animation:none!important}
-@media (max-height:520px){#vbars{width:min(250px,calc(100vw - 500px))!important}
+@media (max-height:520px){#vbars{width:min(250px,calc(calc(100*var(--vw)) - 500px))!important}
  .vr.hp .vt{height:12px!important}.vr.mp .vt{height:9px!important}
  .vr.hp .ve{width:17px!important;height:17px!important}.vr.mp .ve{width:14px!important;height:14px!important}
  .vt span{font-size:7px!important}.vr.mp .vt span{font-size:6px!important}.vl{font-size:7.5px;left:calc(100% + 4px)}}
@@ -727,10 +728,10 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 @media (max-height:520px){#godBtn{right:max(12px,env(safe-area-inset-right))!important;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 66px)!important}}
 
 /* Lướt sát bên trái thanh máu, Hóa Thân sát bên phải thanh máu (2 chỗ trống giữa đáy) */
-#acts{left:calc(50% - min(380px,33vw)/2 - 108px)!important;right:auto!important;bottom:max(12px,env(safe-area-inset-bottom))!important}
+#acts{left:calc(50% - min(380px,calc(33*var(--vw)))/2 - 108px)!important;right:auto!important;bottom:max(12px,env(safe-area-inset-bottom))!important}
 #godBtn{right:calc(max(14px,env(safe-area-inset-right)) + 222px)!important;bottom:max(10px,env(safe-area-inset-bottom))!important}
 @media (max-height:520px){
- #acts{left:calc(50% - min(250px,calc(100vw - 500px))/2 - 66px)!important;bottom:max(8px,env(safe-area-inset-bottom))!important}
+ #acts{left:calc(50% - min(250px,calc(calc(100*var(--vw)) - 500px))/2 - 66px)!important;bottom:max(8px,env(safe-area-inset-bottom))!important}
  #godBtn{right:calc(max(10px,env(safe-area-inset-right)) + 146px)!important;bottom:max(6px,env(safe-area-inset-bottom))!important}}
 
 /* bỏ chú thích chữ; icon Nộ chớp như tia sét */
@@ -798,7 +799,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #tnshop{align-items:center!important;background:rgba(8,4,12,.62)!important;z-index:30}
 .kyp.tn{box-shadow:inset 0 0 0 1px #0a0806,inset 0 0 0 3px #9a70d0,0 10px 40px rgba(0,0,0,.7)}
 .kyp.tn .kyh{color:#d8b8ff}
-.tnl{display:flex;flex-direction:column;gap:5px;margin-top:8px;max-height:52vh;overflow:auto}
+.tnl{display:flex;flex-direction:column;gap:5px;margin-top:8px;max-height:calc(52*var(--vh));overflow:auto}
 .tnr{display:flex;align-items:center;gap:10px;padding:5px 8px;background:rgba(0,0,0,.32);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gc) 45%,transparent)}
 .tnr.sold{opacity:.45}
 .tng{flex:none;display:grid;place-items:center;width:36px;height:36px;font:400 22px/1 "Ma Shan Zheng","Noto Serif",serif;font-style:normal;color:var(--gc);background:radial-gradient(#2a1e14,#0c0805);box-shadow:inset 0 0 0 1px var(--gc)}
@@ -817,10 +818,10 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .tlcoin{margin-top:6px;font:700 13px "Be Vietnam Pro",sans-serif;color:#f0c45a}
 #fade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:60;transition:opacity .4s}
 #fade.on{opacity:1}
-@media (max-height:520px){.tnl{max-height:44vh;gap:3px;margin-top:4px}.tnr{padding:3px 6px}.tng,.tnr .item{width:28px;height:28px;font-size:17px}.tni b{font-size:12px}.tni small{font-size:10px}.tnr .btn{min-height:28px;min-width:66px;font-size:12px}
+@media (max-height:520px){.tnl{max-height:calc(44*var(--vh));gap:3px;margin-top:4px}.tnr{padding:3px 6px}.tng,.tnr .item{width:28px;height:28px;font-size:17px}.tni b{font-size:12px}.tni small{font-size:10px}.tnr .btn{min-height:28px;min-width:66px;font-size:12px}
  .books{grid-template-columns:repeat(2,minmax(0,1fr))}#tacloot .lcard{width:200px;padding:8px}#tlArt{width:64px;height:48px}#tacloot h2{margin:0}}
 @media (max-height:520px){
-#tnshop .kyp{max-height:96vh;display:flex;flex-direction:column}
+#tnshop .kyp{max-height:calc(96*var(--vh));display:flex;flex-direction:column}
 .tnl{max-height:none!important;flex:1;min-height:0}
 .tnr{padding:2px 6px!important}
 .kyp.tn .kyb canvas{width:44px!important;height:44px!important}
@@ -1217,7 +1218,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #tutShade{position:absolute;inset:0;z-index:18;overflow:hidden;pointer-events:none}
 #tutShade:not(.has-target){background:rgba(0,0,0,.72)}
 #tutFocus{position:absolute;border:2px solid #ffe08a;border-radius:50%;box-shadow:0 0 0 200vmax rgba(0,0,0,.72),inset 0 0 8px #ffe08a;pointer-events:none}
-#tut:not([hidden]){z-index:19;text-align:center;width:max-content;max-width:calc(100vw - 28px);min-width:0}
+#tut:not([hidden]){z-index:19;text-align:center;width:max-content;max-width:calc(calc(100*var(--vw)) - 28px);min-width:0}
 #tutDo{margin-top:5px;padding:4px 12px;min-height:36px;border-color:#ffe08a;box-shadow:0 0 0 2px #ffe08a55}
 #tutDo:focus-visible{outline:2px solid #fff2bf;outline-offset:2px}
 #danBtn{position:absolute;pointer-events:auto;z-index:11;width:42px;height:42px;border:0;padding:0;cursor:pointer;left:calc(50% - 300px);bottom:max(78px,calc(env(safe-area-inset-bottom) + 74px));display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 45% 35%,#4a2210,#140806);box-shadow:inset 0 0 0 2px #ff8a3a,0 2px 6px rgba(0,0,0,.6)}
@@ -1250,7 +1251,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .sk-remaining{position:absolute;left:2px;bottom:1px;z-index:3;font:800 9px/1 "Be Vietnam Pro",sans-serif;color:#cbf4ff;background:#101920;border-radius:2px;padding-inline:1px;pointer-events:none}
 .hud-press{position:absolute;top:1px;left:50%;transform:translateX(-50%);padding-inline:3px}
 #skillInspect{position:absolute;inset:0;z-index:24;pointer-events:auto;display:grid;place-items:center;padding:12px;background:rgba(0,0,0,.67)}
-#skillInspect article{width:min(405px,100%);max-height:calc(100vh - 24px);overflow:auto;background:#17100c;border:1px solid #bf9c60;border-radius:8px;padding:14px;color:#f3e5c8}
+#skillInspect article{width:min(405px,100%);max-height:calc(calc(100*var(--vh)) - 24px);overflow:auto;background:#17100c;border:1px solid #bf9c60;border-radius:8px;padding:14px;color:#f3e5c8}
 #skillInspect h2{font-size:19px;margin:0 0 5px;color:#ffdb95}
 #skillInspect p{font-size:13px;margin:0 0 7px;line-height:1.4}
 #skillInspect dl{margin:9px 0;display:grid;grid-template-columns:max-content 1fr;gap:5px 12px;font-size:12px}
@@ -1271,7 +1272,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .sk-slot{position:relative}
 #skills .sk-info{position:absolute;top:1px;right:1px;z-index:5;width:17px;height:17px;padding:0;border:1px solid #987240;border-radius:50%;color:#ffe1a4;background:#291b10;font:800 11px/1 sans-serif;cursor:help;touch-action:pan-x pan-y}
 #skills .sk-info:focus-visible{outline:2px solid #fff0bc}
-#aimHelp{position:absolute;z-index:14;top:max(96px,calc(env(safe-area-inset-top) + 92px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100vw - 20px);padding:5px 8px;border:1px solid #d6ad6a;border-radius:4px;background:#22160e;color:#ffe9be;font:700 12px "Be Vietnam Pro",sans-serif}
+#aimHelp{position:absolute;z-index:14;top:max(96px,calc(env(safe-area-inset-top) + 92px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(calc(100*var(--vw)) - 20px);padding:5px 8px;border:1px solid #d6ad6a;border-radius:4px;background:#22160e;color:#ffe9be;font:700 12px "Be Vietnam Pro",sans-serif}
 #aimHelp .btn{padding:3px 8px;min-height:28px}
 @media(max-height:520px){
  #skills .sk.manual{width:54px!important;height:54px!important}
@@ -1309,6 +1310,37 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
  #brk #strip span{font-size:10.5px!important}#brk #strip b{font-size:13px!important}
  #picksLeft{font-size:12px!important}
 
+}
+</style>
+
+<style id="hudPhone">
+/* ===== HUD điện thoại ngang (màn thấp): nút gọn lại, thanh máu/năng lượng dài và dày, số dễ đọc ===== */
+@media (max-height:520px){
+ html body #acts{left:auto}
+ html body #dashBtn{width:60px!important;height:60px!important}
+ html body #dashBtn svg{width:22px!important;height:16px!important}
+ html body #skills .skr:not(.s2) .sk{width:46px!important;height:46px!important}
+ html body #skills .skr:not(.s2) .sk b{font-size:22px!important}
+ html body #skills .skr.s2 .sk{width:32px!important;height:32px!important}
+ html body #skills .sk.manual.ult{width:50px!important;height:50px!important}
+ html body #skills .skr{gap:5px!important}
+ html body #godBtn{width:52px!important;height:52px!important;right:calc(max(10px,env(safe-area-inset-right)) + 150px)!important;bottom:calc(max(6px,env(safe-area-inset-bottom)) + 100px)!important}
+ html body #vbars{left:calc(max(12px,env(safe-area-inset-left)) + 236px)!important;right:calc(max(10px,env(safe-area-inset-right)) + 216px)!important;width:auto!important;transform:none!important;gap:3px!important}
+ html body .vr.hp .vt{height:20px!important}html body .vr.mp .vt{height:15px!important}
+ html body .vr.hp .ve{width:24px!important;height:24px!important}html body .vr.mp .ve{width:20px!important;height:20px!important}
+ html body .vt span{font-size:12px!important;letter-spacing:.5px}html body .vr.mp .vt span{font-size:10px!important}
+ /* Vượt Ải trên điện thoại ngang: bỏ chữ phụ, thu khoảng trống, ảnh bản đồ thấp lại để thấy được sao và thần tướng */
+ html body #menu .mhead p{display:none}
+ html body #menu .mhead h1{font-size:22px!important;margin:0 0 4px!important}
+ html body #menu .panel{padding:8px 10px!important}
+ html body #menu .panel h2{font-size:14px!important;margin:0 0 6px!important}
+ html body #menu #mapArt{height:64px!important;object-fit:cover}
+ html body #menu #maps .opt,html body #menu #maps button{min-height:34px!important;padding:2px 4px!important;font-size:12px!important}
+ html body #menu .mapname{font-size:13px!important;margin-top:4px!important}
+ html body #menu #mapDesc,html body #menu .panel>p.dim.sm{display:none}
+ html body #menu #gods .opt{padding:5px 8px!important;font-size:11px!important}
+ html body #menu .mfoot{padding-top:8px!important;padding-bottom:6px!important}
+ html body #menu .mfoot .btn{min-height:38px!important}
 }
 </style>
 </head>
@@ -1565,7 +1597,7 @@ CHM.hero_nam.runStride=16;CHM.hero_nu.runStride=16;
   A.tl=seq.map(([fi,ms,h])=>{const st=acc/tot;if(h)hit=st;acc+=ms;return[fi,acc/tot]});A.hit=hit;A.dur=tot/1000}}
 const CH={};
 for(const id in CHM){const m=CHM[id];m.ay-=2;if(!m.anims.dash&&m.anims.run){const r=m.anims.run.f;m.anims.dash={fps:15,f:[r[1],r[3],r[5]]}}if(!m.anims.brake&&m.anims.run)m.anims.brake={fps:1,f:[m.anims.run.f[0]]};const h={id,meta:m,img:new Image(),flash:null,ok:false,SC:0.98,AV:0.4};
- h.img.onload=()=>{const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;{const d=document.createElement('canvas');d.width=c.width;d.height=c.height;const q=d.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgba(14,20,30,.85)';q.fillRect(0,0,d.width,d.height);h.dark=d}{const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const q=t.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-atop';q.fillStyle='rgba(255,214,120,.62)';q.fillRect(0,0,t.width,t.height);h.tint=t}h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
+ h.img.onload=()=>{if(id.startsWith('god_'))setTimeout(()=>{try{paintGodIcon();if(!$('#menu').hidden)buildMenu()}catch(e){}},60);const c=document.createElement('canvas');c.width=h.img.width;c.height=h.img.height;const g=c.getContext('2d');g.drawImage(h.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);h.flash=c;{const d=document.createElement('canvas');d.width=c.width;d.height=c.height;const q=d.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgba(14,20,30,.85)';q.fillRect(0,0,d.width,d.height);h.dark=d}{const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const q=t.getContext('2d');q.drawImage(h.img,0,0);q.globalCompositeOperation='source-atop';q.fillStyle='rgba(255,214,120,.62)';q.fillRect(0,0,t.width,t.height);h.tint=t}h.ok=true;if(!G&&id.startsWith('hero')){buildMenu();paintMap();lobbyPics()}};
  h.img.src=m.src;CH[id]=h;setTimeout(()=>preDecode(h.img),0)}
 let HERO=CH.hero_nam;
 const useHero=(gender,weapon)=>{const h=CH['hero_'+gender];if(weapon==='kiem'&&h&&h.ok){HERO=h;return true}return false};
@@ -1925,9 +1957,9 @@ const WEAPONS={
 };
 const GOD=o=>Object.assign({src:'g',t:'w'},o);
 const GODS={
- wukong:{name:'Tôn Ngộ Không',tier:'SSS',mult:3.0,dur:20,cd:60,armor:15,spd:0.2,look:'wukong',wpn:'bong',g:'悟',role:'Sát thương diện rộng, phân thân',wname:'Như Ý Kim Cô Bổng',
+ wukong:{name:'Tôn Ngộ Không',tier:'SSS',mult:3.0,dur:20,cd:60,armor:15,spd:0.2,look:'wukong',wpn:'bong',g:'悟',role:'Sát thương diện rộng, thổi lông hóa khỉ con',wname:'Như Ý Kim Cô Bổng',
   basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);P._gB=!P._gB;swing(a,P.sw=-(P.sw||1));const fc=Math.cos(a)<0?-1:1,ta=clamp(Math.atan2(Math.sin(a),Math.abs(Math.cos(a))),-0.35,0.35);if(!P._gB){/* Bổ: gậy giơ cao bổ xuống phía trước -> vệt trăng tâm ở tay, quét trên xuống trước mặt; trúng ở khung gậy bổ xuống, đã chạy đi thì hủy */later(0.2,()=>{if(P.moving||P.form!=='god')return;const sp=vok('wk_slash');arc(P.x,P.y-8,a,138,2.4,14*gp(),GOD({kb:120,nofx:sp}),'#ffd36a',1);if(sp)fx({k:'sp',s:'wk_slash',x:P.x+fc*4,y:P.y-64,ang:ta*fc,sc:1.2,fx:fc,f0:1,T:0.42})},'g')}
-   else{/* Đâm: gậy nằm ngang theo hướng mặt, tia vàng phóng ra từ đầu gậy, trúng theo đường thẳng hẹp và xa hơn */later(0.12,()=>{if(P.moving||P.form!=='god')return;const aa=fc>0?ta:Math.PI-ta,sp=vok('wk_thrust');arc(P.x,P.y-8,aa,175,1.1,15*gp(),GOD({kb:150,nofx:sp}),'#ffd36a',1);if(sp)fx({k:'sp',s:'wk_thrust',x:P.x+fc*88,y:P.y-64,ang:ta*fc,sc:1,fx:fc,T:0.4})},'g')}}},
+   else{/* Đâm: gậy nằm ngang theo hướng mặt, tia vàng phóng ra từ đầu gậy, trúng theo đường thẳng hẹp và xa hơn */later(0.12,()=>{if(P.moving||P.form!=='god')return;const aa=fc>0?ta:Math.PI-ta,sp=1;arc(P.x,P.y-8,aa,175,1.1,15*gp(),GOD({kb:150,nofx:sp}),'#ffd36a',1);/* gậy không có mũi: chỉ chớp lửa nhỏ ở đầu gậy */if(vok('wk_hit'))fx({k:'sp',s:'wk_hit',x:P.x+fc*96,y:P.y-63,sc:0.45,f0:0,f1:4,T:0.22})},'g')}}},
   skills:[
    {name:'Thổi Lông Hóa Khỉ',g:'猴',cd:9,range:420,desc:'Nhổ một nhúm lông thổi ra 5 khỉ con. Mỗi con tự tìm quái, lao tới cào cắn trong 8 giây.',cast(){blowMonkeys(5)}},
    {name:'Cân Đẩu Vân',g:'雲',cd:5,range:460,desc:'Cưỡi mây lao tới đám quái đông nhất, nện xuống diện rộng.',cast(tg){const t=densest(P.x,P.y,460)||tg;const x0=P.x,y0=P.y;const cs=vok('wk_cloud');for(let i=0;i<8;i++){const fx0=x0+(t.x-x0)*i/8,fy0=y0+(t.y-y0)*i/8;if(cs){const d=i*0.03;fx({k:'sp',s:'wk_cloud',x:fx0,y:fy0-14,sc:0.6,f0:3,f1:6,fade:0.95,al:0.85,T:0.16+d*0.5});if(vok('wk_puff'))later(0.08+d*0.5,()=>fx({k:'sp',s:'wk_puff',x:fx0,y:fy0-22,sc:0.6,f0:5,f1:8,al:0.45,fade:0.6,T:0.6}),'g')}else fx({k:'cloud',x:fx0,y:fy0,T:0.6+i*0.03})}P.x=clamp(t.x,30,AW-30);P.y=clamp(t.y+10,30,AH-30);P.inv=Math.max(P.inv,0.35);circ(P.x,P.y,150,22*gp(),GOD({kb:150}),cs?null:'#ffe9a0');if(cs){fx({k:'sp',s:'wk_cloud',x:P.x,y:P.y+14,sc:1.1,f0:4,fade:0.6,T:0.45});fx({k:'scorch',x:P.x,y:P.y,r:95,T:1.6,gr:1});if(vok('wk_whirl'))fx({k:'sp',s:'wk_whirl',x:P.x,y:P.y-4,sc:1.4,f0:2,T:0.55,gr:1});cracks(P.x,P.y,110);G.shake=Math.max(G.shake,8)}G.shake=6}},
@@ -2641,7 +2673,7 @@ function viewApply(){
  Object.assign(VIEW,{L,T,W,H,rot,on});const b=document.body.style;
  if(on){Object.assign(b,{position:'fixed',left:L+'px',top:T+'px',width:(rot?H:W)+'px',height:(rot?W:H)+'px',overflow:'hidden',transformOrigin:'0 0',transform:rot?`translate(${W}px,0) rotate(90deg)`:'translateZ(0)'})}
  else for(const k of['position','left','top','width','height','overflow','transformOrigin','transform'])b[k]='';
- document.documentElement.classList.toggle('vrot',rot);mediaSync();
+ document.documentElement.classList.toggle('vrot',rot);{const rs=document.documentElement.style;if(on){rs.setProperty('--vw',((rot?H:W)/100)+'px');rs.setProperty('--vh',((rot?W:H)/100)+'px')}else{rs.removeProperty('--vw');rs.removeProperty('--vh')}}mediaSync();
  if(typeof resize==='function')resize();dispatchEvent(new Event('resize'))}
 try{if(window.top!==window){new IntersectionObserver(es=>{const e=es[es.length-1];VIEW.vis=e.isIntersecting?e.intersectionRect:null;viewApply()},{threshold:Array.from({length:101},(_,i)=>i/100)}).observe(document.documentElement)}}catch(e){}
 addEventListener('resize',()=>{if(!VIEW._busy){VIEW._busy=1;setTimeout(()=>{VIEW._busy=0;viewApply()},0)}});
@@ -3032,7 +3064,7 @@ function trainingTick(dt){if(!G||!G.training)return;
  const el=document.getElementById('trDps');if(el&&G.trLog.length>1){const a=G.trLog[0],b=G.trLog[G.trLog.length-1];el.textContent='ST/giây: '+Math.round((b[1]-a[1])/Math.max(0.5,b[0]-a[0]))}}
 function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=document.createElement('div');b.id='trP';
  const gods=Object.keys(GODS).filter(k=>godOwned(k)||true),gname=k=>GODS[k].name;
- b.innerHTML=`<style>#trP{position:fixed;z-index:40;top:max(6px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:min(96vw,760px);padding:5px 6px;background:rgba(18,12,8,.88);border:1px solid #8a6a3a;border-radius:8px;font:600 12px 'Be Vietnam Pro',sans-serif;color:#f0e2c4;pointer-events:auto}
+ b.innerHTML=`<style>#trP{position:fixed;z-index:40;top:max(6px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:min(calc(96*var(--vw)),760px);padding:5px 6px;background:rgba(18,12,8,.88);border:1px solid #8a6a3a;border-radius:8px;font:600 12px 'Be Vietnam Pro',sans-serif;color:#f0e2c4;pointer-events:auto}
  #trP button{font:inherit;color:#f0e2c4;background:#2a1e14;border:1px solid #7a5a30;border-radius:6px;padding:5px 8px;min-height:30px;cursor:pointer;touch-action:pan-x pan-y}#trP button.on{background:#7a5a20;border-color:#e0b860}#trP.fold>*:not(b):not([data-t=fold]):not(#trDps):not([data-t=hoa]):not(style){display:none}#trP b{align-self:center;color:#ffd987;padding:0 4px}#trP span{align-self:center;color:#9fe0b0;padding:0 4px;min-width:84px}
  body.playing #trP~#quests{display:none}</style>
  <b>Luyện Công</b><button data-t="fold">${TR.fold?'Mở bảng ▾':'Thu gọn ▴'}</button>
@@ -3872,7 +3904,7 @@ function hud(dt){
  el.dashBtn.firstChild.style.setProperty('--cd',Math.max(0,P.dashCd/(1.4*(1-S.dashCdr/100))));
  updateSkillRings();
 }
-function paintGodIcon(){const cn=$('#godIcon'),g=cn.getContext('2d');g.clearRect(0,0,160,160);const gr=g.createRadialGradient(80,70,10,80,80,80);gr.addColorStop(0,'#5a3510');gr.addColorStop(1,'#140a05');g.fillStyle=gr;g.fillRect(0,0,160,160);X=g;const gd=GODS[sel.god];drawChar(80,150,LOOK[gd.look],{f:1,t:0,w:gd.wpn,atk:-1,aa:0,sc:2.3});X=ctx}
+function paintGodIcon(){const cn=$('#godIcon'),g=cn.getContext('2d');g.clearRect(0,0,160,160);const gr=g.createRadialGradient(80,70,10,80,80,80);gr.addColorStop(0,'#5a3510');gr.addColorStop(1,'#140a05');g.fillStyle=gr;g.fillRect(0,0,160,160);const gd=GODS[sel.god];if(godBust(g,gd.look))return;X=g;drawChar(80,150,LOOK[gd.look],{f:1,t:0,w:gd.wpn,atk:-1,aa:0,sc:2.3});X=ctx}
 
 /* ================= CARDS / BREAK ================= */
 function cardPool(){
@@ -3952,7 +3984,7 @@ $('#bbody').addEventListener('click',e=>{const b=e.target.closest('[data-buy]');
 $('#rerollBtn').addEventListener('click',()=>{if(G.reroll>0&&G.picks>0){G.reroll--;G.cards=rollCards();saveCP('rest');openBreak('cul')}});
 $('#contBtn').addEventListener('click',()=>{if(G.picks>0||needFork())return;$('#brk').hidden=true;$('#hud').hidden=false;if(G.route){saveCP('ready',G.sw+1);startWave(G.sw+1)}else startWave(G.wave+1)});
 
-function endRun(win){
+function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* bảng Luyện Công không được đè lên màn kết thúc */
  if(G.over)return;cancelSkillAim();P.manualQueue=null;G.over=true;G.state='end';if(!win)P.deadAt=performance.now();
  const cp0=G.route?save.cp:null,ngoc=G.route?Math.floor(Math.max(0,G.coins-((cp0&&cp0.paid)||0))*0.5+(win?60*G.star:0)):Math.floor(G.coins*0.5+((G.stage-1)*5+G.sw)*10+(win?60*G.stage:0));if(cp0)cp0.paid=Math.max(cp0.paid||0,G.coins);
  save.ngoc=(save.ngoc||0)+ngoc;const pxp=Math.round(G.xpGain||0),pup=profGain(pxp);save.bestStage=Math.max(save.bestStage||0,G.stage-(win?0:1));save.best=Math.max(save.best||0,win?11:G.wave);if(win)save.wins=(save.wins||0)+1;persist();
@@ -4235,7 +4267,9 @@ $('#homeBtn').addEventListener('click',()=>{$('#chest').hidden=true;G.chest=null
 function lootMsg(t){const d=document.createElement('div');d.innerHTML=t;$('#loot').appendChild(d);setTimeout(()=>d.remove(),3200);if($('#loot').children.length>3)$('#loot').firstChild.remove()}
 
 /* ================= MENU ================= */
-function portrait(cn,look,wpn,bg){const g=cn.getContext('2d');cn.width=cn.height=160;const gr=g.createRadialGradient(80,70,10,80,80,90);gr.addColorStop(0,bg||'#3a2410');gr.addColorStop(1,'#120a06');g.fillStyle=gr;g.fillRect(0,0,160,160);if(useHero(look,wpn)){drawHeroFrame(g,'idle',0,80,150,1,1.2,false);return}X=g;drawChar(80,140,LOOK[look],{f:1,t:1.2,w:wpn,atk:-1,aa:0,sc:2.2});X=ctx}
+/* Chân dung Hóa Thân cắt từ chính sprite (đứng khung 0): vùng đầu + mũ lông vũ + vai, phóng đúng 2x để giữ nét pixel */
+function godBust(g,look){const k=GOD_SPR[look],h=k&&CH[k];if(!h||!h.ok)return false;const fr=h.meta.anims.idle.f[0];g.save();g.imageSmoothingEnabled=false;g.drawImage(h.img,fr[0]+26,fr[1]+22,80,80,0,0,160,160);g.restore();return true}
+function portrait(cn,look,wpn,bg){const g=cn.getContext('2d');cn.width=cn.height=160;const gr=g.createRadialGradient(80,70,10,80,80,90);gr.addColorStop(0,bg||'#3a2410');gr.addColorStop(1,'#120a06');g.fillStyle=gr;g.fillRect(0,0,160,160);if(godBust(g,look))return;if(useHero(look,wpn)){drawHeroFrame(g,'idle',0,80,150,1,1.2,false);return}X=g;drawChar(80,140,LOOK[look],{f:1,t:1.2,w:wpn,atk:-1,aa:0,sc:2.2});X=ctx}
 function buildMenu(){
  $('#genders').innerHTML=[['nam','Nam'],['nu','Nữ']].map(g=>`<button class="opt${sel.gender===g[0]?' on':''}" data-g="${g[0]}"><canvas></canvas><b>${g[1]}</b></button>`).join('');
  document.querySelectorAll('#genders canvas').forEach((cn,i)=>portrait(cn,i?'nu':'nam',sel.weapon));
