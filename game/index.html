@@ -1601,10 +1601,11 @@ CHM.hero_nam.runStride=16;CHM.hero_nu.runStride=16;
 // Nhịp đòn theo thời lượng gốc của gói (rút gọn ~0,5 s), bỏ frame 0 trùng tư thế đứng. hit = frame kiếm chạm địch.
 // Nam A: vung kiếm lên → dựng cao → bổ khụy gối (chạm) → dứt đòn thấp → thu. Nam B: kéo sau → vung → đâm ngang (chạm) → thu.
 // Nữ A: lấy đà → chém hất (chạm) → hạ kiếm → thu. Nữ B: lùi kiếm → đâm thẳng (chạm) → thu.
-/* Combo kiếm A→B→C (PixelLab, phác thảo đã duyệt): hàng cuối sheet. A rút kiếm quét ngang → tấn cung; B giơ kiếm trước mặt → bổ → kiếm thấp; C (+9) vòng kiếm → vắt vai → lao → đâm thấp.
+/* Combo kiếm A→B→C theo 3 ảnh chủ game (PixelLab khung xương): A lao đâm thấp; B chém vòng xuống khụy thấp; C (+9) chém lốc xoay tại chỗ.
+ C: phần tử thứ 3 của khung = 1 là lật hướng (nhân vật quay người giữa vòng xoay), kiếm luôn chĩa ra trước mặt.
  Khung đầu B = khung cuối A, khung đầu C = khung cuối B. Hoạt ảnh A/B cũ giữ trong sheet cho Lướt Trảm (cutC). */
-{const NC={"nam":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256],[1440,256]],"C":[[1600,256],[1760,256],[1920,256],[2080,256],[2240,256],[2400,256]]},"nu":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256],[1440,256]],"C":[[1600,256],[1760,256],[1920,256],[2080,256],[2240,256],[2400,256]]}};for(const g of ['nam','nu']){const A=CHM['hero_'+g].anims;A.attack={fps:12,f:NC[g].A};A.attack2={fps:12,f:NC[g].B};A.attack3={fps:12,f:NC[g].C}}}
-{const TA=[[0,60],[1,70],[2,110,1],[3,80],[4,90]],TB=[[0,70],[1,80],[2,110,1],[3,80],[4,100]],TC=[[0,70],[1,90],[2,80],[3,130,1],[4,90],[5,90]];
+{const NC={"nam":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]},"nu":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]}};for(const g of ['nam','nu']){const A=CHM['hero_'+g].anims;A.attack={fps:12,f:NC[g].A};A.attack2={fps:12,f:NC[g].B};A.attack3={fps:12,f:NC[g].C}}}
+{const TA=[[0,60],[1,90],[2,120,1],[3,80],[4,90]],TB=[[0,90],[1,80],[2,120,1],[3,110]],TC=[[0,80,1],[1,70],[2,80],[3,70],[4,110],[5,110]];
  const TL={hero_nam:{attack:TA,attack2:TB,attack3:TC},hero_nu:{attack:TA,attack2:TB,attack3:TC}};
  for(const id in TL)for(const an in TL[id]){const A=CHM[id].anims[an],seq=TL[id][an],tot=seq.reduce((t,x)=>t+x[1],0);let acc=0,hit=0.42;
   A.tl=seq.map(([fi,ms,h])=>{const st=acc/tot;if(h)hit=st;acc+=ms;return[fi,acc/tot]});A.hit=hit;A.dur=tot/1000}}
@@ -1643,7 +1644,8 @@ const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_sl
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
 const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
- sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm A/B/C (PixelLab VFX)
+ sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
+ cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
 const isWk=()=>P.god&&P.god.def.look==='wukong';
 // Gậy Như Ý do PixelLab vẽ riêng ở độ phân giải gốc (không phóng to): đầu bịt trên + 1 hàng thân + đầu bịt dưới. Kéo dài chỉ lặp hàng thân. Vẽ dọc từ y=0 xuống y=len.
 function drawWkStaff(c,len,k){const I=VFX[k],m=STF[k],w=m.w,x0=-Math.floor(w/2);c.drawImage(I,0,0,w,m.t,x0,0,w,m.t);c.drawImage(I,0,m.t,w,1,x0,m.t,w,Math.max(0,len-m.t-m.b));c.drawImage(I,0,m.t+1,w,m.b,x0,len-m.b,w,m.b)}
@@ -1728,7 +1730,7 @@ function heroFrame(){
  return['idle',Math.floor(P.t*4)%HERO.meta.anims.idle.f.length];
 }
 function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
- const M=HERO.meta,A=M.anims[an],fr=A.f[fi];c.save();c.imageSmoothingEnabled=false;
+ const M=HERO.meta,A=M.anims[an],fr=A.f[fi];if(fr[2])f=-f;c.save();c.imageSmoothingEnabled=false;
  /* chạy = động tác đi bộ của gói + ngả người, nhún theo bước (không vẽ lại pixel) */
  let k=0,bob=0;if(c===X){if(an==='run'&&M.realRun){bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='run'&&!M.realRun){k=0.08;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='dash')k=0.12;else if(an==='brake')k=-0.06}
  if(tf)k=tf.k;
@@ -1751,13 +1753,15 @@ function startSwordCut(target,basic){
  if(lunge)P.truyPhongT=0;
  swing(angle,dir);
  P.avAlt=dir===-1||heavy;P.runSwing=!heavy&&!lunge;
- P.avAnim=['attack','attack2','attack3'][step];
+ P.avAnim=['attack','attack2','attack3'][step];if(!lunge)comboFx(step);
  const Aw=HERO.meta.anims[P.avAnim]||HERO.meta.anims.attack;
  if(Aw&&Aw.dur)P.av=P.avTotal=Aw.dur;
  if(Math.abs(Math.cos(angle))>0.15)P.facing=Math.cos(angle)>=0?1:-1;
  const delay=P.av*(Aw&&Aw.hit!=null?Aw.hit+0.03:0.42);
  P.swordCut={upgrade,angle,step,heavy,dir,lunge,delay,basic};
 }
+function comboFx(step){if(!(P.kit&&P.kit.w==='kiem')||!vok('cA_behind'))return;const f=P.facing||1,k=['cA','cB','cC'][step],sc=HERO.SC*(step===2?1.5:1);   // vòng lốc C to như ảnh mẫu
+ for(const [part,s0,T] of {"cA":[["behind",0,0.426],["front",2,0.284]],"cB":[["behind",0,0.426],["front",0,0.426]],"cC":[["behind",0,0.581],["front",0,0.581]]}[k]){const go=()=>fx({k:'sp',s:k+'_'+part,x:P.x,y:P.y,sc,fx:f,T,gr:part==='behind'?1:0,follow:1});if(s0)later(s0*0.071,go,'h');else go()}}
 function finishSwordCut(dt){
  const cut=P.swordCut;
  if(!cut)return;
@@ -1770,17 +1774,13 @@ function finishSwordCut(dt){
  P.swordGuard={anim:heavy?'attack3':step===1?'attack2':'attack',until:P.t+0.42};
  const damage=(heavy?15:lunge?11:9)*pw();
  const color=heavy?'#fff0b2':lunge?'#8cecff':'#bfe2ff';
- const isB=step===1,swfx=!lunge&&P.kit&&P.kit.w==='kiem'&&vok('sw_a')&&vok('sw_b')&&vok('sw_c'),fc=Math.cos(angle)<0?-1:1;
- {const tg_=nearest(P.x,P.y,200),room=tg_?clamp((Math.hypot(tg_.x-P.x,tg_.y-P.y)-tg_.r-34)/60,0,1):1,push=(heavy?165:isB?115:70)*room;if(!P.moving){P.kx+=Math.cos(angle)*push;P.ky+=Math.sin(angle)*push}}
+ const isB=step===1,swfx=!lunge&&P.kit&&P.kit.w==='kiem'&&vok('cA_behind'),fc=Math.cos(angle)<0?-1:1;
+ {const tg_=nearest(P.x,P.y,200),room=tg_?clamp((Math.hypot(tg_.x-P.x,tg_.y-P.y)-tg_.r-34)/60,0,1):1,push=(heavy?30:isB?115:150)*room;if(!P.moving){P.kx+=Math.cos(angle)*push;P.ky+=Math.sin(angle)*push}}
  if(isB)G.shake=Math.max(G.shake||0,2);
  arc(P.x,P.y-8,angle,(heavy?118:lunge?96:80)*Ar(),heavy?TAU:1.9,damage,
   H({kb:heavy?60:isB?32:20,stun:heavy?0.10:0,swordBasic:true,mark:heavy,pierceArmor:upgrade>=3 ? SWORD_FORGE_PIERCE : 0,
    stop:isB?0.055:0.035,numUp:isB?0.12:0,cutFx:{n:0,ang:angle+(dir>0?1.2:-1.2)},sarc:isB?2:lunge?3:1,nofx:swfx}),color,dir);
- if(swfx){/* A: trăng sát đất trước mặt · B: vệt bổ dọc + bụi ở điểm bổ · C: 2 vòng sáng ép dẹt nằm trên đất quanh người */
-  if(heavy){fx({k:'sp',s:'sw_c',x:P.x,y:P.y-2,sc:1.6,sy:0.5,T:0.6,gr:1});G.shake=Math.max(G.shake||0,4)}
-  else if(isB)fx({k:'sp',s:'sw_b',x:P.x+fc*38,y:P.y+6,sc:2,fx:fc,T:0.55});
-  else if(vok('sw_arc')){/* A: vệt trăng Slash arc (PixelLab VFX) dựng trước ngực, quét từ trên xuống theo hướng mặt */fx({k:'sp',s:'sw_arc',x:P.x+fc*44,y:P.y-50,sc:1.6,fx:fc,T:0.44});fx({k:'sp',s:'sw_a',x:P.x+fc*30,y:P.y+6,sc:1,f0:1,al:0.6,T:0.4,gr:1})}
-  else fx({k:'sp',s:'sw_a',x:P.x+fc*30,y:P.y+6,sc:1.3,f0:0,T:0.45});}
+ if(swfx&&heavy)G.shake=Math.max(G.shake||0,4);
  if(heavy&&upgrade>=9){
   const x=P.x+Math.cos(angle)*36,y=P.y+Math.sin(angle)*36-8;
   shoot(x,y,angle,370,{dmg:damage*.35,pierce:3,r:18,life:.26,kind:'crescent',c:color,o:H({pierceArmor:SWORD_FORGE_PIERCE})});
@@ -2901,7 +2901,7 @@ function drawFx(f){
   case'pillar':{const w=90*(1-k*0.6);const g=c.createLinearGradient(f.x-w,0,f.x+w,0);g.addColorStop(0,'rgba(255,200,80,0)');g.addColorStop(0.5,`rgba(255,240,180,${a})`);g.addColorStop(1,'rgba(255,200,80,0)');c.fillStyle=g;c.fillRect(f.x-w,f.y-700,w*2,720);c.globalAlpha=a;c.strokeStyle='#ffd36a';c.lineWidth=4;c.beginPath();c.ellipse(f.x,f.y,60+k*160,(60+k*160)*0.4,0,0,TAU);c.stroke();break}
   case'sword':{const fall=Math.min(1,k/0.45);const y=f.y-260*(1-fall);c.globalAlpha=fall<1?1:a*2;c.translate(f.x,y);c.fillStyle=f.spear?'rgba(160,200,255,.4)':'rgba(140,210,255,.45)';ell(0,-30,8,40);c.fillStyle='#eaf6ff';if(f.spear){c.fillRect(-1.5,-70,3,60);c.beginPath();c.moveTo(-4,-10);c.lineTo(0,4);c.lineTo(4,-10);c.fill()}else{c.beginPath();c.moveTo(-3,-50);c.lineTo(3,-50);c.lineTo(2.5,-6);c.lineTo(0,4);c.lineTo(-2.5,-6);c.fill();c.fillStyle='#ffd36a';c.fillRect(-7,-52,14,3)}break}
   case'scorch':{/* vết nện trên đất: sẫm, mờ dần, nằm dưới chân nhân vật */c.globalCompositeOperation='source-over';c.globalAlpha=0.55*Math.min(1,(1-k)*2.2);c.fillStyle='#2a1d14';c.beginPath();c.ellipse(f.x,f.y,f.r,f.r*0.42,0,0,TAU);c.fill();c.globalAlpha*=0.7;c.fillStyle='#120b07';c.beginPath();c.ellipse(f.x,f.y,f.r*0.55,f.r*0.22,0,0,TAU);c.fill();break}
-  case'sp':{const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x),Math.round(f.y));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
+  case'sp':{if(f.follow&&P){f.x=P.x;f.y=P.y}const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x),Math.round(f.y));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
   case'staff':{const fall=Math.min(1,k/0.7);c.globalCompositeOperation='source-over';c.globalAlpha=k>0.85?(1-k)/0.15:1;c.translate(f.x,f.y);if(vok('wk_staff_big')){c.imageSmoothingEnabled=false;const L=600,top=-L-520*(1-fall)*(1-fall)+12;c.translate(0,Math.round(top));drawWkStaff(c,L,'wk_staff_big');break}c.fillStyle='#b5281a';const len=520,top=-len-500*(1-fall);c.fillRect(-18,top,36,len);c.fillStyle='#f0c040';c.fillRect(-22,top,44,60);c.fillRect(-22,top+len-60,44,60);break}
   case'cloud':{c.globalCompositeOperation='source-over';c.globalAlpha=a*0.85;c.fillStyle='#fff7e8';circle(f.x,f.y-20,16*(1+k));circle(f.x+14,f.y-16,12*(1+k));circle(f.x-14,f.y-15,11*(1+k));break}
   case'throw':{const x=f.x0+(f.x-f.x0)*k,y=f.y0+(f.y-f.y0)*k-Math.sin(k*Math.PI)*60;c.fillStyle='#ffe28a';c.translate(x,y);c.rotate(k*12);c.fillRect(-5,-7,10,14);break}
