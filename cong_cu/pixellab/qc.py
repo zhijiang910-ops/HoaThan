@@ -91,3 +91,24 @@ def costume12(a,pal):
     px=a[a[...,3]>128][:,:3].astype(float)
     d=np.min(np.linalg.norm(px[:,None,:]-pal[None,:,:],axis=2),axis=1)
     return float((d<=12).mean())
+
+# ---- Hình dáng trang phục: tỉ lệ nhóm màu ở vùng thân (cổ→hông) so với master ----
+def torso_mix(a,neck,hips,half=14):
+    H,W=a.shape[:2];x0=int(min(neck[0],hips[0])-half);x1=int(max(neck[0],hips[0])+half);y0=int(neck[1]);y1=int(hips[1])
+    reg=a[max(0,y0):y1,max(0,x0):x1];m=reg[...,3]>128;px=reg[m][:,:3].astype(int)
+    if len(px)==0:return np.zeros(4)
+    r,g,b=px[:,0],px[:,1],px[:,2]
+    gold=(r>=150)&(g>=95)&(b<=90)&(r-b>=70);red=(r>=100)&(g<=70)&(b<=75)&(r-g>=50)
+    cool=(b>=r-5)&(b>=40);other=~(gold|red|cool)
+    return np.array([gold.mean(),red.mean(),cool.mean(),other.mean()])
+def mix_dist(m1,m2):return float(np.abs(m1-m2).sum()/2)
+
+def torso_mix2(a,d,half=14,armw=7):
+    """Như torso_mix nhưng bỏ dải quanh cánh tay gần (vai→khuỷu→cổ tay) và quanh gậy/kiếm."""
+    H,W=a.shape[:2];yy,xx=np.mgrid[0:H,0:W];mask=np.zeros((H,W),bool)
+    def seg(p,q,w):
+        px,py=xx-p[0],yy-p[1];vx,vy=q[0]-p[0],q[1]-p[1];L=vx*vx+vy*vy or 1
+        t=np.clip((px*vx+py*vy)/L,0,1);return np.hypot(px-t*vx,py-t*vy)<=w
+    for p,q,w in [('near_shoulder','near_elbow',armw),('near_elbow','near_wrist',armw),('staff_grip','staff_front_tip',4),('staff_grip','staff_back_tip',4)]:
+        if p in d and q in d:mask|=seg(d[p],d[q],w)
+    b=a.copy();b[...,3]=np.where(mask,0,b[...,3]);return torso_mix(b,d['neck'],d['hips'],half)

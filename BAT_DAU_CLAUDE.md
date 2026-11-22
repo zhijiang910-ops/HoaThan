@@ -107,3 +107,9 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 - **Bộ kiểm** `cong_cu/pixellab/qc_all.py`: mỗi frame phải có 1 kiếm đúng vị trí tay trước, độ dài ±5% master, đủ bàn tay (màu da tại khớp cổ tay), màu trang phục ≥97% trước khóa màu, không đốm lẻ; xuất ảnh soát có khung đỏ frame lỗi. Sau đó soát mắt bắt buộc.
 - `ghep_anim.py` nhận ảnh master để **khóa bảng màu** (mọi điểm ảnh về màu master gần nhất).
 - Trang soát trong game: mở `index.html#xem-hoat-anh` (chọn nhân vật/động tác, chậm ×0,25, đi từng frame, cạnh master).
+
+## Cập nhật 22/11 (đợt 9) · Hóa Thân Tôn Ngộ Không có sprite
+- Chủ game tạo Ngộ Không trên PixelLab (khung 112); vẽ lại cỡ 144 bằng `/v2/resize` (khóa bảng màu bản gốc), chọn bản A.
+- Động tác bằng rig tùy chỉnh (gậy 2 đầu, đuôi 7 khớp, 2 lông vũ): đứng 4, chạy 8, quét gậy 6, bổ gậy 6, trúng đòn 3 (`cong_cu/pixellab/wkpose.py`). Kiểm `qc_wk.py` (gậy phủ đủ 2 đầu, đuôi, màu, đốm) + soát mắt giáp. Tiêu chí tỉ lệ màu vùng ngực (`torso_mix`) báo nhầm khi tay/gậy che thân, chỉ dùng tham khảo.
+- Game: `CHM.god_wukong`, `drawGodSprite` (luân phiên quét/bổ theo mỗi lần đánh, 0,45 s), phân thân dùng `drawCloneSprite`. Các Hóa Thân khác vẫn vẽ code.
+- Game chơi thử đăng ở artifact riêng tư claude.ai (link trong hội thoại), cập nhật bằng cách đăng lại `game/index.html` kèm assets.

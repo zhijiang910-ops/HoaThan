@@ -1543,6 +1543,8 @@ const CHM={"hero_nam":{"w":131,"h":138,"ax":57,"ay":119,"anims":{"idle":{"fps":4
 Object.assign(CHM,{quytuong:{"w": 145, "h": 149, "ax": 49, "ay": 137, "anims": {"idle": {"fps": 4.0, "f": [[0, 0], [145, 0], [290, 0], [435, 0]]}, "run": {"fps": 8.0, "f": [[580, 0], [725, 0], [870, 0], [1015, 0], [1160, 0], [1305, 0], [1450, 0], [1595, 0]]}, "attack": {"fps": 10.0, "f": [[1740, 0], [1885, 0], [2030, 0], [2175, 0], [0, 149], [145, 149], [290, 149], [435, 149]]}, "attack2": {"fps": 10.53, "f": [[580, 149], [725, 149], [870, 149], [1015, 149], [1160, 149], [1305, 149], [1450, 149], [1595, 149]]}, "hit": {"fps": 8.7, "f": [[1740, 149], [1885, 149], [2030, 149], [2175, 149]]}, "death": {"fps": 2.38, "f": [[0, 298], [145, 298], [290, 298], [435, 298]]}}, "src": "assets/quytuong.png", "realRun": true, "wuxia": "蓝灰獠牙鬼战士像"}});
 // Nhân vật chính lấy từ gói Wuxia Vol.2 (cong_cu/wuxia_sheet.py): nam = Huyền Tiêu Kiếm Tông · Nam đệ tử,
 // nữ = Xích Diễm Đao Môn · Nữ đệ tử. Cả hai cầm kiếm cùng một kiểu khi đứng, đi và chém.
+// Hóa Thân Tôn Ngộ Không: sprite PixelLab (vẽ lại cỡ 144, khung xương có gậy + đuôi), đã kiểm từng frame.
+Object.assign(CHM,{god_wukong:{"w": 175, "h": 168, "ax": 92, "ay": 163, "anims": {"idle": {"fps": 10, "f": [[0, 0], [175, 0], [350, 0], [525, 0]]}, "run": {"fps": 10, "f": [[700, 0], [875, 0], [1050, 0], [1225, 0], [1400, 0], [1575, 0], [1750, 0], [1925, 0]]}, "attack": {"fps": 10, "f": [[0, 168], [175, 168], [350, 168], [525, 168], [700, 168], [875, 168]]}, "attack2": {"fps": 10, "f": [[1050, 168], [1225, 168], [1400, 168], [1575, 168], [1750, 168], [1925, 168]]}, "hit": {"fps": 10, "f": [[0, 336], [175, 336], [350, 336]]}}, "src": "assets/god_wukong.png", "realRun": true}});
 Object.assign(CHM,{hero_nam:{"w": 160, "h": 128, "ax": 80, "ay": 118, "anims": {"idle": {"fps": 10, "f": [[0, 0], [160, 0], [320, 0], [480, 0]]}, "run": {"fps": 10, "f": [[640, 0], [800, 0], [960, 0], [1120, 0], [1280, 0], [1440, 0], [1600, 0], [1760, 0]]}, "attack": {"fps": 10, "f": [[1920, 0], [2080, 0], [2240, 0], [2400, 0], [0, 128], [160, 128]]}, "attack2": {"fps": 10, "f": [[320, 128], [480, 128], [640, 128], [800, 128], [960, 128]]}, "hit": {"fps": 10, "f": [[1120, 128], [1280, 128], [1440, 128], [1600, 128]]}, "death": {"fps": 10, "f": [[1760, 128], [1920, 128], [2080, 128], [2240, 128]]}}, "src": "assets/hero_nam.png", "realRun": true, "face": [56, 14]},hero_nu:{"w": 160, "h": 128, "ax": 80, "ay": 118, "anims": {"idle": {"fps": 10, "f": [[0, 0], [160, 0], [320, 0], [480, 0]]}, "run": {"fps": 10, "f": [[640, 0], [800, 0], [960, 0], [1120, 0], [1280, 0], [1440, 0], [1600, 0], [1760, 0]]}, "attack": {"fps": 10, "f": [[1920, 0], [2080, 0], [2240, 0], [2400, 0], [0, 128], [160, 128]]}, "attack2": {"fps": 10, "f": [[320, 128], [480, 128], [640, 128], [800, 128], [960, 128]]}, "hit": {"fps": 10, "f": [[1120, 128], [1280, 128], [1440, 128], [1600, 128]]}, "death": {"fps": 10, "f": [[1760, 128], [1920, 128], [2080, 128], [2240, 128]]}}, "src": "assets/hero_nu.png", "realRun": true, "face": [54, 15]}});
 // Nhát C Kiếm +6 · Lướt Trảm: lấy đà, lướt đâm, trượt dừng, thu thế 1-2-3.
 // Chạy, đòn A, đòn B: frame tạo bằng PixelLab (khung xương có khớp kiếm), đã kiểm từng frame với master:
@@ -2504,7 +2506,7 @@ function updAlly(a,dt){
  a.t+=dt;if(a.atk>0)a.atk-=dt;const tg=nearest(a.x,a.y,500);if(!tg)return;
  const an=Math.atan2(tg.y-a.y,tg.x-a.x),d=Math.hypot(tg.x-a.x,tg.y-a.y);a.f=Math.cos(an)>=0?1:-1;
  if(d>80){a.x+=Math.cos(an)*280*dt;a.y+=Math.sin(an)*280*dt;a.mv=1}else a.mv=0;
- a.cd-=dt;if(a.cd<=0&&d<115){arc(a.x,a.y-8,an,104,3,9*gp(),GOD({kb:60}),'#ffd36a');a.cd=0.6;a.atk=0.22;a.aAng=an}
+ a.cd-=dt;if(a.cd<=0&&d<115){arc(a.x,a.y-8,an,104,3,9*gp(),GOD({kb:60}),'#ffd36a');a.cd=0.6;a.atk=0.22;a.alt=!a.alt;a.aAng=an}
 }
 function updProj(dt){
  for(const p of G.pproj){
@@ -2872,6 +2874,7 @@ function drawPlayer(){
   drawHeroFrame(X,an,fi,P.x,P.y,facing*turn,HERO.SC,P.hurt>0.12&&!P.deadAt,flick?0.55:1);return;
  }
  if(P.hidden>0){X.fillStyle='#4a3020';ell(P.x,P.y,18,7);X.fillStyle='#6a4a30';ell(P.x,P.y-3,12,5);if(Math.random()<.4)part(P.x+rnd(-10,10),P.y,rnd(-30,30),-40,0.4,3,'#8a6a4a',0,100);return}
+ if(godSprite()){drawGodSprite();return}
  const god=P.form==='god',g=P.god.def;
  const L=god?LOOK[g.look]:LOOK[G.cfg.gender],w=god?g.wpn:G.cfg.weapon;
  const flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
@@ -2888,6 +2891,26 @@ function pixWrap(x,y,w,h,fn){
  const keep=X;X=PIXG;try{fn()}finally{X=keep}
  X.save();X.imageSmoothingEnabled=false;X.drawImage(PIXC,Math.round(x-w/2),Math.round(y-h),W,H);X.restore();
 }
+// Hóa Thân có sprite riêng (hiện: Tôn Ngộ Không). Các Hóa Thân khác vẫn vẽ bằng code.
+const GOD_SPR={wukong:'god_wukong'};
+const godSprite=()=>P.form==='god'&&GOD_SPR[P.god.def.look]&&CH[GOD_SPR[P.god.def.look]]&&CH[GOD_SPR[P.god.def.look]].ok;
+function drawGodSprite(){
+ const h=CH[GOD_SPR[P.god.def.look]],A=h.meta.anims;
+ if(P.atkT>(P._gLast||0)+0.01){P._gAlt=!P._gAlt;P._gAtk={t:G.t,an:P._gAlt?'attack2':'attack'}}P._gLast=P.atkT;
+ let an='idle',fi=Math.floor(G.t*6)%A.idle.f.length;const DUR=0.45;
+ if(P.hurt>0.05&&A.hit){an='hit';fi=Math.min(A.hit.f.length-1,Math.floor((1-P.hurt/0.2)*A.hit.f.length))}
+ else if(P._gAtk&&G.t-P._gAtk.t<DUR){an=P._gAtk.an;fi=Math.min(A[an].f.length-1,Math.floor((G.t-P._gAtk.t)/DUR*A[an].f.length))}
+ else if(P.moving)fi=Math.floor((P.runPh||0)/18)%A.run.f.length,an='run';
+ drawAura(P.x,P.y);X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,22,7);
+ const M=h.meta,fr=A[an].f[fi],sc=0.98,flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
+ X.save();X.imageSmoothingEnabled=false;X.translate(Math.round(P.x),Math.round(P.y));X.scale(P.facing*sc,sc);if(flick)X.globalAlpha=0.55;
+ X.drawImage(P.hurt>0.12&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);X.restore();
+}
+function drawCloneSprite(e){const h=CH.god_wukong;if(!h||!h.ok)return false;const A=h.meta.anims,M=h.meta;
+ let an='idle',fi=Math.floor((G.t+e.T)*6)%A.idle.f.length;
+ if(e.atk>0){an=e.alt?'attack2':'attack';fi=Math.min(A[an].f.length-1,Math.floor((1-e.atk/0.22)*A[an].f.length))}else if(e.mv){an='run';fi=Math.floor((G.t+e.T)*12)%A.run.f.length}
+ const fr=A[an].f[fi],sc=0.85;X.save();X.imageSmoothingEnabled=false;X.globalAlpha=0.6+0.15*Math.sin(G.t*8);X.translate(Math.round(e.x),Math.round(e.y));X.scale((e.f||1)*sc,sc);
+ X.drawImage(h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);X.restore();return true}
 const AURA=new Image();AURA.src='assets/vfx/qi_aura.png';
 function drawAura(x,y){if(!AURA.complete||!AURA.naturalWidth){X.save();X.globalCompositeOperation='lighter';X.fillStyle='rgba(255,200,80,.18)';ell(x,y-24,34,44);X.restore();return}
  const fi=Math.floor(G.t*20)%32,w=90,h=132,sc=1.15;X.save();X.globalCompositeOperation=MAPS[G.cfg.map].ground==='g_snow'?'source-over':'lighter';X.globalAlpha=0.9;
@@ -2912,7 +2935,7 @@ function render(){
  if(G){
   const ents=[];for(const e of G.enemies)if(!e.dead&&Math.abs(e.x-cx)<VW/ZOOM&&Math.abs(e.y-cy)<VH/ZOOM)ents.push(e);
   if(G.ev&&!G.ev.on)ents.push({isNpc:1,y:G.ev.y});ents.push(P);for(const a of G.allies)ents.push(a);if(G.brk)for(const b of G.brk)if(Math.abs(b.x-cx)<VW/ZOOM&&Math.abs(b.y-cy)<VH/ZOOM)ents.push(b);if(MAPS[G.cfg.map].ground)for(const d of decor)if(Math.abs(d.x-cx)<VW/ZOOM/2+300&&d.y-cy<VH/ZOOM/2+460&&cy-d.y<VH/ZOOM/2+60)ents.push(d);ents.sort((a,b)=>a.y-b.y);
-  for(const e of ents){if(e.isNpc){drawNpc();continue}if(e.k==='p'){drawProp(e);continue}if(e.isBrk){drawBrk(e);continue}if(e===P){if(P.form==='god')pixWrap(P.x,P.y,170,190,drawPlayer);else drawPlayer()}else if(e.T)pixWrap(e.x,e.y,150,170,()=>{drawChar(e.x,e.y,LOOK.wukong,{f:e.f,t:G.t+e.T,mv:e.mv,w:'bong',atk:e.atk>0?1-e.atk/0.22:-1,aa:e.aAng,sw:1,al:0.6+0.2*Math.sin(G.t*8)})});else if(e.type==='hoa')pixWrap(e.x,e.y,90,90,()=>drawEnemy(e));else drawEnemy(e)}
+  for(const e of ents){if(e.isNpc){drawNpc();continue}if(e.k==='p'){drawProp(e);continue}if(e.isBrk){drawBrk(e);continue}if(e===P){if(P.form==='god'&&!godSprite())pixWrap(P.x,P.y,170,190,drawPlayer);else drawPlayer()}else if(e.T){if(!drawCloneSprite(e))pixWrap(e.x,e.y,150,170,()=>{drawChar(e.x,e.y,LOOK.wukong,{f:e.f,t:G.t+e.T,mv:e.mv,w:'bong',atk:e.atk>0?1-e.atk/0.22:-1,aa:e.aAng,sw:1,al:0.6+0.2*Math.sin(G.t*8)})})}else if(e.type==='hoa')pixWrap(e.x,e.y,90,90,()=>drawEnemy(e));else drawEnemy(e)}
   if(G.ev&&G.ev.on&&G.ev.target&&!G.ev.target.dead&&G.ev.target.bounty){const t=G.ev.target,y=t.y-t.r*3.6-10+Math.sin(G.t*6)*2;c.fillStyle='#b3261e';c.beginPath();c.moveTo(t.x,y+10);c.lineTo(t.x-7,y);c.lineTo(t.x+7,y);c.fill();c.font='700 11px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText('Truy nã',t.x,y-4);c.fillStyle='#ff8a70';c.fillText('Truy nã',t.x,y-4)}
   if(G.lowTag&&G.state==='play'){const y=P.y-122+Math.sin(G.t*6)*2;c.font='800 13px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=4;c.strokeStyle='rgba(0,0,0,.85)';c.strokeText('Máu thấp',P.x,y);c.fillStyle='#ff6a5a';c.fillText('Máu thấp',P.x,y)}
   for(const t of G.enemies)if(t.nm&&!t.dead){const y=t.y-t.r*3.4-8;c.font='700 12px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText(t.nm,t.x,y);c.fillStyle='#ff8a70';c.fillText(t.nm,t.x,y);const w=60;c.fillStyle='#1a0806';c.fillRect(t.x-w/2-1,y+4,w+2,6);c.fillStyle='#d8382a';c.fillRect(t.x-w/2,y+5,w*Math.max(0,t.hp/t.mhp),4)}
