@@ -1635,6 +1635,7 @@ const isWk=()=>P.god&&P.god.def.look==='wukong';
 function drawWkStaff(c,len,k){const I=VFX[k],m=STF[k],w=m.w,x0=-Math.floor(w/2);c.drawImage(I,0,0,w,m.t,x0,0,w,m.t);c.drawImage(I,0,m.t,w,1,x0,m.t,w,Math.max(0,len-m.t-m.b));c.drawImage(I,0,m.t+1,w,m.b,x0,len-m.b,w,m.b)}
 // Hào quang lửa khi Ngộ Không hóa thân: fire_aura_01 của KanaWorks_AI (giấy phép KanaWorks_AI VFX Asset License 1.0, phải ghi công), đã chuyển pixel 0.6x, 20 khung 134x240, chân ở tâm vòng lửa (67,212)
 const AURAF={w:134,h:240,c:10,n:20,ax:67,ay:212,fps:15};{const i=new Image();i.src='assets/vfx/wk_aura_fire.png';preDecode(i);VFX.wk_aura_fire=i}
+{const i=new Image();i.src='assets/vfx/wk_crack.png';preDecode(i);VFX.wk_crack=i}/* vết nứt đất (PixelLab, ép dẹt theo góc nhìn) 128x74 */
 const STF={wk_staff:{w:20,t:65,b:65},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
@@ -2176,7 +2177,7 @@ function num(x,y,v,k,sc){if(!SET.nums&&k!=='h'&&k!=='mpn')return;if(G.nums.lengt
 function part(x,y,vx,vy,T,s,c,add,g){if(G.parts.length>(LOWFX?160:520))return;G.parts.push({x,y,vx,vy,t:0,T,s,c,add,g:g||0})}
 function burst(x,y,c,n){n=LOWFX?Math.ceil(n/3):n;for(let i=0;i<n;i++){const a=rnd(0,TAU),s=rnd(40,220);part(x,y,Math.cos(a)*s,Math.sin(a)*s-60,rnd(.3,.7),rnd(2,4),c,1,200)}}
 function fireBurst(x,y,r){const n=LOWFX?6:18;for(let i=0;i<n;i++){const a=rnd(0,TAU),d=rnd(0,r);part(x+Math.cos(a)*d,y+Math.sin(a)*d,rnd(-20,20),rnd(-120,-40),rnd(.4,.8),rnd(3,7),pick(['#ff8a2a','#ffcf4a','#ff4a1a']),1,-40)}}
-function cracks(x,y,r){fx({k:'crack',x,y,r,T:1.2,seed:Math.random()*1000,gr:1});burst(x,y,'#9a7050',10)}
+function cracks(x,y,r){fx({k:'crack',x,y,r,T:1.2,seed:Math.random()*1000,gr:1});/* nện lớn: thêm vết nứt nhỏ quanh tâm thay vì phóng to một hình */if(r>150){const n=r>220?4:3,a0=Math.random()*TAU;for(let i=0;i<n;i++){const a=a0+i*TAU/n+rnd(-0.3,0.3),d=r*rnd(0.5,0.62);fx({k:'crack',x:x+Math.cos(a)*d,y:y+Math.sin(a)*d*0.55,r:70,sc:1,fl:Math.random()<0.5,T:1.2+rnd(0,0.2),seed:0,gr:1})}}burst(x,y,'#9a7050',10)}
 const COMBO_HOLD=2.2,COMBO_DECAY=2.4;
 const COMBO_REWARDS=[
  {at:25,rage:5,crit:0,dmg:0,label:'Nộ +5%',detail:'Tích Nộ nhanh hơn 5%'},
@@ -2877,7 +2878,7 @@ function drawFx(f){
   case'cloud':{c.globalCompositeOperation='source-over';c.globalAlpha=a*0.85;c.fillStyle='#fff7e8';circle(f.x,f.y-20,16*(1+k));circle(f.x+14,f.y-16,12*(1+k));circle(f.x-14,f.y-15,11*(1+k));break}
   case'throw':{const x=f.x0+(f.x-f.x0)*k,y=f.y0+(f.y-f.y0)*k-Math.sin(k*Math.PI)*60;c.fillStyle='#ffe28a';c.translate(x,y);c.rotate(k*12);c.fillRect(-5,-7,10,14);break}
   case'heal':{c.globalAlpha=a;c.strokeStyle='#7dff9a';c.lineWidth=3;c.beginPath();c.ellipse(f.x,f.y,40+k*30,(40+k*30)*0.5,0,0,TAU);c.stroke();for(let i=0;i<5;i++){const xx=f.x+Math.cos(i*1.3)*30,yy=f.y-20-k*60-i*6;c.fillStyle='#9dffb0';c.fillRect(xx-1.5,yy-5,3,10);c.fillRect(xx-5,yy-1.5,10,3)}break}
-  case'crack':{c.globalCompositeOperation='source-over';c.globalAlpha=a;c.strokeStyle='#ff8a3a';c.lineWidth=2;let s=f.seed;const R=()=>{s=(s*9301+49297)%233280;return s/233280};c.beginPath();for(let i=0;i<9;i++){let an=R()*TAU,x=f.x,y=f.y;c.moveTo(x,y);for(let j=0;j<4;j++){an+=(R()-0.5)*0.8;x+=Math.cos(an)*f.r*0.25;y+=Math.sin(an)*f.r*0.2;c.lineTo(x,y)}}c.stroke();break}
+  case'crack':{if(vok('wk_crack')){/* vết nứt pixel: phóng số nguyên theo bán kính, hiện nhanh, mờ dần ở 40% cuối */const I=VFX.wk_crack,sc=f.sc||Math.min(2,Math.max(1,Math.round(f.r/70))),w=I.width*sc,h=I.height*sc;c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=Math.min(1,k/0.06)*(k>0.6?(1-k)/0.4:1);c.translate(Math.round(f.x),Math.round(f.y));if(f.fl)c.scale(-1,1);c.drawImage(I,-Math.round(w/2),-Math.round(h/2),w,h);break}c.globalCompositeOperation='source-over';c.globalAlpha=a;c.strokeStyle='#ff8a3a';c.lineWidth=2;let s=f.seed;const R=()=>{s=(s*9301+49297)%233280;return s/233280};c.beginPath();for(let i=0;i<9;i++){let an=R()*TAU,x=f.x,y=f.y;c.moveTo(x,y);for(let j=0;j<4;j++){an+=(R()-0.5)*0.8;x+=Math.cos(an)*f.r*0.25;y+=Math.sin(an)*f.r*0.2;c.lineTo(x,y)}}c.stroke();break}
   case'spike':{c.globalCompositeOperation='source-over';c.globalAlpha=a;c.fillStyle='#8a6a4a';const h=40*Math.min(1,k*5);for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(f.x+i*12-6,f.y);c.lineTo(f.x+i*12,f.y-h*(i?0.7:1));c.lineTo(f.x+i*12+6,f.y);c.fill()}break}
  }
  c.restore();
