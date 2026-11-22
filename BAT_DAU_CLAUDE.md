@@ -71,3 +71,18 @@ Chủ game gửi clip quay màn hình (đòn đâm lướt xuyên mục tiêu) v
 ## Cập nhật 22/11 (đợt 3)
 - **A/B chọn lại frame theo logic ra đòn** (`setSwordPoses`): nam A `2,3,3,4,5,5,5,7` (giơ cao → khụy bổ xuống → dứt đòn → thủ), B `6,6,6,14,14,12,13,13` (kéo sau hông → chém ngang → hất lên); nữ A `1,0,0,3,4,5,5,5` (vung qua đầu → bổ chéo xuống), B `5,5,4,6,7,7,7,6` (từ thấp hất lên). Frame chạm địch là ô thứ 4. Thêm chuyển động thân khi đánh (`tf` trong `drawPlayer`): 0–35% ngả sau co người, 35–55% đổ người về trước, sau đó trả về.
 - **Nữ cắt bớt dải lụa** (giữ màu gốc): `cong_cu/nu_lua/nu_edit.py <hero_nu_goc_lua.png> <out.png> goc 5`. Bản gốc còn lụa lưu ở `game/assets/hero_nu_goc_lua.png`. Script chỉ cắt điểm xanh lụa (b−r ≥ 38) nằm xa thân váy quá 5 px, vá lỗ tóc, xóa cụm vụn < 40 điểm. Bảng master nữ cần dựng lại theo sheet mới.
+
+## Cập nhật 22/11 (đợt 4) · Đồng bộ toàn bộ theo gói Wuxia Pixel Assets Vol.2 (bản trả phí, Integrated)
+
+Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia, đồng bộ phong cách, tự quyết. **Không đưa asset của gói lên git** (giấy phép cấm đăng file gốc/đã sửa công khai); `game/assets/` đã nằm trong `.gitignore`.
+
+- **Nhân vật chính đổi sang nhân vật Wuxia** cầm kiếm nhất quán khi đứng, đi, chém (sửa vụ "chạy cất kiếm, đứng lại cầm kiếm"):
+  - Nam = Huyền Tiêu Kiếm Tông · Nam đệ tử (玄霄剑宗-男弟子): A = attack, B = attack_secondary.
+  - Nữ = Xích Diễm Đao Môn · Nữ đệ tử (赤焰刀门-女弟子): chỉ có 1 bộ đòn → A = attack, B = đâm thẳng ghép từ attack `[2,2,1,6,6,6,7,7]`.
+  - Sheet dựng bằng `cong_cu/wuxia_sheet.py <04_Integrated> "<tên>" <id> <ra>`, meta dán vào `Object.assign(CHM,{hero_nam,hero_nu})`. Bỏ `setSwordPoses`, đảo frame chạy, cắt lụa và kéo dài kiếm cũ (không còn áp dụng). Chạy = walk 8 frame, `runStride` 13. Avatar HUD dùng `meta.face`.
+  - Nhát C dùng: nam `attack2[2] → attack2[6] → attack[5] → attack[7] → idle`, nữ `attack[2] → attack[6] → attack[4] → attack[7] → idle`.
+- **Trùm ải 5** tạm dùng sprite Tượng Quỷ Chiến Sĩ Nanh Xám (`quytuong`, ESPR boss ×1,45) thay Ngưu Ma Vương vẽ bằng code.
+- **Hóa Thân, phân thân Ngộ Không, Hỏa yêu** (vẽ bằng code, Wuxia không có) được vẽ qua `pixWrap` ở 1 điểm ảnh = 1 đơn vị rồi phóng lên cho cùng mật độ pixel. Tạm thời, chờ sprite PixelLab (prompt trong `pixellab/PROMPT_PIXELLAB.md` của gói gửi chủ game).
+- **Icon trang bị**: `gear.png` thêm 2 hàng icon Items_64 của Wuxia cho phẩm Phàm/Linh/Bảo và ô Đai/Găng (`cong_cu/gear_build.py`), phẩm Tiên trở lên giữ icon pháp bảo cũ. `GCELL` cập nhật, `.cxwb .gi` background-size 1000% 500%.
+- Vật phá được, vệt chém, hiệu ứng Như Lai/Thái Cực/Vạn Kiếm, nền đất và 13 âm thanh vốn đã là Wuxia (đối chiếu hash), giữ nguyên.
+- Giữ asset ngoài Wuxia: 14 NPC HOANTDZ (chân dung hội thoại), bình thuốc, tranh núi mực, nét mực, hào quang Hóa Thân, Google Fonts.
