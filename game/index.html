@@ -1601,11 +1601,9 @@ CHM.hero_nam.runStride=16;CHM.hero_nu.runStride=16;
 // Nhịp đòn theo thời lượng gốc của gói (rút gọn ~0,5 s), bỏ frame 0 trùng tư thế đứng. hit = frame kiếm chạm địch.
 // Nam A: vung kiếm lên → dựng cao → bổ khụy gối (chạm) → dứt đòn thấp → thu. Nam B: kéo sau → vung → đâm ngang (chạm) → thu.
 // Nữ A: lấy đà → chém hất (chạm) → hạ kiếm → thu. Nữ B: lùi kiếm → đâm thẳng (chạm) → thu.
-/* Combo kiếm A→B→C theo 3 ảnh chủ game (PixelLab khung xương): A lao đâm thấp; B chém vòng xuống khụy thấp; C (+9) chém lốc xoay tại chỗ.
- C: phần tử thứ 3 của khung = 1 là lật hướng (nhân vật quay người giữa vòng xoay), kiếm luôn chĩa ra trước mặt.
- Khung đầu B = khung cuối A, khung đầu C = khung cuối B. Hoạt ảnh A/B cũ giữ trong sheet cho Lướt Trảm (cutC). */
-{const NC={"nam":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]},"nu":{"A":[[0,256],[160,256],[320,256],[480,256],[640,256]],"B":[[800,256],[960,256],[1120,256],[1280,256]],"C":[[1440,256],[1440,256,1],[1600,256],[1600,256,1],[1440,256],[1760,256]]}};for(const g of ['nam','nu']){const A=CHM['hero_'+g].anims;A.attack={fps:12,f:NC[g].A};A.attack2={fps:12,f:NC[g].B};A.attack3={fps:12,f:(c=>[c[0],c[2],c[4],c[2],c[0],c[5]].map(x=>x.slice(0,2)))(NC[g].C)}}}
-{const TA=[[0,60],[1,90],[2,120,1],[3,80],[4,90]],TB=[[0,90],[1,80],[2,120,1],[3,110]],TC=[[0,80,1],[1,70],[2,80],[3,70],[4,110],[5,110]];
+/* Combo kiếm theo bản mẫu 'VFX & ANIMATION MẪU - KIẾM' (PixelLab khung xương): A Khởi Kiếm 8 khung (khung 0 = khung đứng), B Hồi Kiếm 7, C Phá Thế Trảm 10 (+6, không quay lưng; bỏ khung giơ cao bị vỡ lưỡi). Khung đầu B = cuối A, đầu C = cuối B. */
+{const NC={"nam":{"A":[[0,0],[0,256],[160,256],[320,256],[480,256],[640,256],[800,256],[960,256]],"B":[[1120,256],[1280,256],[1440,256],[1600,256],[1760,256],[1920,256],[2080,256]],"C":[[2240,256],[2400,256],[2560,256],[2720,256],[2880,256],[3040,256],[3200,256],[3360,256],[3520,256],[3680,256]]},"nu":{"A":[[0,0],[0,256],[160,256],[320,256],[480,256],[640,256],[800,256],[960,256]],"B":[[1120,256],[1280,256],[1440,256],[1600,256],[1760,256],[1920,256],[2080,256]],"C":[[2240,256],[2400,256],[2560,256],[2720,256],[2880,256],[3040,256],[3200,256],[3360,256],[3520,256],[3680,256]]}};for(const g of ['nam','nu']){const A=CHM['hero_'+g].anims;A.attack={fps:12,f:NC[g].A};A.attack2={fps:12,f:NC[g].B};A.attack3={fps:12,f:NC[g].C}}}
+{const TA=[[0,50],[1,70],[2,70],[3,60],[4,110,1],[5,70],[6,70],[7,80]],TB=[[0,70],[1,70],[2,110,1],[3,80],[4,70],[5,70],[6,80]],TC=[[0,70],[1,90,1],[2,70],[3,70],[4,70],[5,80],[6,70],[7,100],[8,80],[9,100]];
  const TL={hero_nam:{attack:TA,attack2:TB,attack3:TC},hero_nu:{attack:TA,attack2:TB,attack3:TC}};
  for(const id in TL)for(const an in TL[id]){const A=CHM[id].anims[an],seq=TL[id][an],tot=seq.reduce((t,x)=>t+x[1],0);let acc=0,hit=0.42;
   A.tl=seq.map(([fi,ms,h])=>{const st=acc/tot;if(h)hit=st;acc+=ms;return[fi,acc/tot]});A.hit=hit;A.dur=tot/1000}}
@@ -1644,7 +1642,7 @@ const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_sl
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
 const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
- sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
+ sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},k5a_front:{w:82,h:103,c:3,n:6,px:-36,py:106},k5b_front:{w:124,h:163,c:3,n:6,px:22,py:151},k5c_behind:{w:334,h:125,c:4,n:15,px:167,py:107},k5c_front:{w:334,h:121,c:4,n:15,px:167,py:99},zs1:{w:101,h:87,c:3,n:9,px:44,py:102},zs2:{w:108,h:122,c:3,n:7,px:32,py:117},zs3:{w:87,h:88,c:3,n:9,px:30,py:90},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
  cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
 const isWk=()=>P.god&&P.god.def.look==='wukong';
 // Gậy Như Ý do PixelLab vẽ riêng ở độ phân giải gốc (không phóng to): đầu bịt trên + 1 hàng thân + đầu bịt dưới. Kéo dài chỉ lặp hàng thân. Vẽ dọc từ y=0 xuống y=len.
@@ -1748,7 +1746,7 @@ function startSwordCut(target,basic){
  const upgrade=weaponForge(),angle=angTo(target);
  const lunge=!!(secOn('truyphong')&&P.truyPhongT>0&&!target.isBrk);
  if(P.t-(basic.lastT||-9)>1.2)basic.step=0;basic.lastT=P.t;   // ngưng quá 1,2 giây thì combo quay về A
- const step=lunge?0:Math.min(basic.step||0,1);   // tạm thời combo chỉ A → B
+ const step=lunge?0:Math.min(basic.step||0,upgrade>=6?2:1);   // A → B → C (C mở ở +6)
  const heavy=step===2,dir=step===1?-1:1;
  if(lunge)P.truyPhongT=0;
  swing(angle,dir);
@@ -1760,13 +1758,13 @@ function startSwordCut(target,basic){
  const delay=P.av*(Aw&&Aw.hit!=null?Aw.hit+0.03:0.42);
  P.swordCut={upgrade,angle,step,heavy,dir,lunge,delay,basic};
 }
-function comboFx(step){if(!(P.kit&&P.kit.w==='kiem')||!vok('slash_el'))return;const f=P.facing||1,sc=HERO.SC;
- const el=(o)=>fx(Object.assign({k:'el',x:P.x,y:P.y,follow:1,T:0.5},o));
- if(step===0){/* A: vệt Slash nằm ngang = cung elip chém ngang trước người ở tầm hông + tia đâm */later(0.16,()=>{el({ox:f*24,oy:-38,sx:2.2*f,sy:0.62,T:0.42});if(vok('cA_front'))fx({k:'sp',s:'cA_front',x:P.x,y:P.y,sc,fx:f,T:0.28,follow:1})},'h')}
- else if(step===1){for(const part of ['behind','front'])fx({k:'sp',s:'cB_'+part,x:P.x,y:P.y,sc,fx:f,T:0.43,gr:part==='behind'?1:0,follow:1})}
- else{/* C: mỗi vòng xoay = nửa elip sau người + nửa elip trước người; vòng 2 rộng hơn */
-  const ring=(w,d)=>later(d,()=>{el({oy:-40,sx:w*f,sy:0.38,back:1,gr:1,T:0.36});el({oy:-40,sx:w*f,sy:0.38,T:0.36})},'h');
-  ring(1.9,0.08);ring(2.5,0.30)}}
+function comboFx(step){/* VFX bản mẫu (PixelLab, gói tách lớp, tông trắng bạc - xanh ngọc). A, B nổ đúng khung trúng; C: lớp sau người + lớp trước người */
+ if(!(P.kit&&P.kit.w==='kiem')||!vok('zs3'))return;const f=P.facing||1,sc=HERO.SC,an=HERO.meta.anims[['attack','attack2','attack3'][step]],at=(an&&an.dur?an.dur*an.hit:0.2);
+ const go=(k,T,gr,m)=>fx({k:'sp',s:k,x:P.x,y:P.y,sc:sc*(m||1),fx:f,T,gr:gr?1:0,follow:1});
+ /* Vệt chém: bộ Slashes (Frostwindz) đổi sang bảng màu game; khung lớn nhất của vệt trùng khung trúng */
+ if(step===0)later(Math.max(0,at-0.14),()=>go('zs3',0.42,0,1.35),'h');
+ else if(step===1)later(Math.max(0,at-0.16),()=>go('zs2',0.38,0,1.3),'h');
+ else{later(0,()=>go('zs1',0.45,0,1.3),'h');later(at,()=>{go('k5c_behind',0.75,1);go('k5c_front',0.75)},'h')}}
 function finishSwordCut(dt){
  const cut=P.swordCut;
  if(!cut)return;
@@ -1774,12 +1772,12 @@ function finishSwordCut(dt){
  if(cut.delay>0)return;
  P.swordCut=null;
  const {upgrade,angle,step,heavy,dir,lunge,basic}=cut;
- basic.step=(step+1)%2;tutHook('cut',step);
+ basic.step=(step+1)%(upgrade>=6?3:2);tutHook('cut',step);
  // Hold the recovery pose through the short gap between basic strikes.
  P.swordGuard={anim:heavy?'attack3':step===1?'attack2':'attack',until:P.t+0.42};
  const damage=(heavy?15:lunge?11:9)*pw();
  const color=heavy?'#fff0b2':lunge?'#8cecff':'#bfe2ff';
- const isB=step===1,swfx=!lunge&&P.kit&&P.kit.w==='kiem'&&vok('cA_behind'),fc=Math.cos(angle)<0?-1:1;
+ const isB=step===1,swfx=!lunge&&P.kit&&P.kit.w==='kiem'&&vok('zs3'),fc=Math.cos(angle)<0?-1:1;
  {const tg_=nearest(P.x,P.y,200),room=tg_?clamp((Math.hypot(tg_.x-P.x,tg_.y-P.y)-tg_.r-34)/60,0,1):1,push=(heavy?30:isB?115:150)*room;if(!P.moving){P.kx+=Math.cos(angle)*push;P.ky+=Math.sin(angle)*push}}
  if(isB)G.shake=Math.max(G.shake||0,2);
  arc(P.x,P.y-8,angle,(heavy?118:lunge?96:80)*Ar(),heavy?TAU:1.9,damage,
@@ -1898,7 +1896,7 @@ function drawCutC(facing){
 const VAN_KIEM={range:420,radius:180,impact:58};
 const WEAPONS={
  kiem:{name:'Kiếm',g:'劍',role:'DPS linh hoạt',tr:'Liên kích, kiếm khí, chí mạng',kit:[
-  {id:'k0',name:'Liên Hoàn Kiếm',g:'劍',kind:'basic',cd:0.5,range:95,get desc(){return 'Combo lao đâm → chém vòng xuống, mỗi nhát lao tới. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
+  {id:'k0',name:'Liên Hoàn Kiếm',g:'劍',kind:'basic',cd:0.5,range:95,get desc(){return 'Combo Khởi Kiếm → Hồi Kiếm, mỗi nhát lao tới. Kiếm +6 mở nhát C Phá Thế Trảm: quét xoay 360°, trúng mọi phía. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
    cast(tg,s){startSwordCut(tg,s)}},
   {id:'k1',hotkey:'Q',power:22,name:'Kiếm Khí Trảm',g:'氣',kind:'active',cd:2.4,mp:10,range:440,desc:'Phóng kiếm khí trăng khuyết xuyên qua quái.',up:'+1 mục tiêu xuyên, +25% sát thương',
    cast(tg,l){const a=angTo(tg);swing(a,1);shoot(P.x,P.y-14,a,560,{dmg:this.power*lv(l)*pw(),pierce:3+(l-1),r:20*Ar(),life:0.85,kind:'crescent',c:'#9fd8ff',o:H({kb:30})})}},
@@ -4109,7 +4107,7 @@ function forgeMarkup(it){
  const level=forgeLevel(it),cost=it.damaged?REPAIR_COST:FORGE_COST[level];
  const odds=FORGE_ODDS[level]?.map((v,i)=>v?FORGE_RESULT[i]+' '+v+'%':'').filter(Boolean).join(' · ');
  const perk=forgePerk(it);
- const milestones=it.slot==='vk'?' +3 Đòn thường bỏ qua 5% giáp · +6 '+(forgeSeen(6)?'Đòn thường mạnh hơn':'??? tự khám phá')+' · +9 '+(forgeSeen(9)?'Kiếm khí':'??? tự khám phá'):
+ const milestones=it.slot==='vk'?' +3 Đòn thường bỏ qua 5% giáp · +6 '+(forgeSeen(6)?'Phá Thế Trảm (C)':'??? tự khám phá')+' · +9 '+(forgeSeen(9)?'Kiếm khí':'??? tự khám phá'):
   perk?sn(perk.stat)[0]+' · '+FORGE_MILESTONES.map((m,i)=>'+'+m+': +'+perk.values[i].toLocaleString('vi-VN')+sn(perk.stat)[1]).join(' · '):'';
  const detail=milestones?'<p class="dim sm">'+milestones+'</p>':'';
  return '<div class="forgery"><b>'+(it.damaged?'Hư hỏng':('Cường hóa +'+level))+'</b><span class="dim sm"> · '+MATN.thiet+' '+forgeStones()+'</span>'+detail+
