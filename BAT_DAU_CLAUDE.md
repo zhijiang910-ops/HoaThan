@@ -113,3 +113,7 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 - Động tác bằng rig tùy chỉnh (gậy 2 đầu, đuôi 7 khớp, 2 lông vũ): đứng 4, chạy 8, quét gậy 6, bổ gậy 6, trúng đòn 3 (`cong_cu/pixellab/wkpose.py`). Kiểm `qc_wk.py` (gậy phủ đủ 2 đầu, đuôi, màu, đốm) + soát mắt giáp. Tiêu chí tỉ lệ màu vùng ngực (`torso_mix`) báo nhầm khi tay/gậy che thân, chỉ dùng tham khảo.
 - Game: `CHM.god_wukong`, `drawGodSprite` (luân phiên quét/bổ theo mỗi lần đánh, 0,45 s), phân thân dùng `drawCloneSprite`. Các Hóa Thân khác vẫn vẽ code.
 - Game chơi thử đăng ở artifact riêng tư claude.ai (link trong hội thoại), cập nhật bằng cách đăng lại `game/index.html` kèm assets.
+
+## Cập nhật 22/11 (đợt 10)
+- Ngộ Không: bỏ thế kẹp gậy dưới nách (của ảnh gốc). Đứng = dựng gậy thẳng trước người, xa mặt (`IDLE3`, seed 23); chạy = vác gậy chéo qua vai (`RUN2`); trúng đòn = giữ gậy dựng (`HIT2`). Chạy/trúng đòn tạo từ frame đứng mới làm ảnh gốc. Đòn A/B bỏ frame cuối (quay về thế kẹp nách).
+- Chống phóng to khi chạm đúp trong artifact: `touch-action:manipulation` cho mọi phần tử, chặn chạm đúp cả trên nút (gọi click thủ công), ép lại thẻ viewport `maximum-scale=1,user-scalable=no` và ghi lại khi visualViewport bị phóng (iOS tự thu về).

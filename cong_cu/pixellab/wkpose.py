@@ -75,3 +75,25 @@ for r,k in enumerate(keys):
         for n in names:
             if par[n]:d.line([M[par[n]],M[n]],fill='#ffcc33' if n.startswith('staff') else ('#f84' if 'near' in n else ('#4cf' if 'far' in n else '#aaa')),width=3 if n.startswith('staff') else 2)
 o.save(dbg);print('ok TH0',round(TH0),'staff',[round(x) for x in dF+dB])
+
+# ---- Bản 2: bỏ thế kẹp gậy dưới nách ----
+# ĐỨNG: gậy dựng thẳng đứng trước ngực, tay gần nắm ngang ngực, đầu gậy dưới chạm đất trước mũi chân.
+# CHẠY: gậy vác chéo qua vai, tay gần nắm phía trước vai.
+NEUTRAL=dict(narm=((9,12),(21,16)),th=90)
+IDLE2=[pose(sink=s,tail=t,plume=p,**NEUTRAL) for s,t,p in [(0,0,0),(1,4,.05),(2,6,.08),(1,3,.04)]]
+IDLE3=[pose(sink=s,tail=t,plume=p,narm=((13,11),(29,15)),th=90) for s,t,p in [(0,0,0),(1,3,.04),(1.5,5,.06),(1,3,.03)]]
+NEUTRAL_OLD=dict(narm=((8,12),(18,16)),th=90)
+RUN2=[]
+for i in range(8):
+    nl=LEGRUN[i];fl=LEGRUN[(i+4)%8];s_=nl[1][0]/14
+    RUN2.append(pose(lean=4.5,sink=BOB[i],nleg=nl,fleg=fl,narm=((8,6),(12,2)),th=40,farm=((-2+8*s_,17),(6+12*s_,27)),tail=-8+6*math.sin(i/8*6.28),plume=.18))
+HIT2=[pose(lean=-6,sink=1,narm=((11,12),(25,17)),th=100,tail=10,plume=-.1),pose(lean=-8,sink=2,narm=((10,12),(23,18)),th=106,tail=14,plume=-.15),pose(lean=-3,sink=1,narm=((12,11),(27,16)),th=94,tail=6)]
+res.update(idle3=IDLE3,neutral_old=pose(sink=2,tail=6,plume=.08,**NEUTRAL_OLD),idle2=IDLE2,run2=RUN2,hit2=HIT2,neutral=pose(**NEUTRAL))
+json.dump(res,open(out,'w'))
+o2=Image.new('RGB',(SS*9,SS*3),'#334');d2=ImageDraw.Draw(o2)
+for r,k in enumerate(['idle2','run2','hit2']):
+    for f,kp in enumerate([res['first']]+res[k]):
+        M={p['label']:(f*SS+p['x']*SS,r*SS+p['y']*SS) for p in kp}
+        for n in names:
+            if par[n]:d2.line([M[par[n]],M[n]],fill='#ffcc33' if n.startswith('staff') else ('#f84' if 'near' in n else ('#4cf' if 'far' in n else '#aaa')),width=3 if n.startswith('staff') else 2)
+o2.save(dbg.replace('.png','_2.png'))

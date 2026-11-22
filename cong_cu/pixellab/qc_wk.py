@@ -47,7 +47,7 @@ for an in ANIMS:
         if tail<0.5:e.append('mất đuôi')
         if cs<0.97:e.append(f'màu {cs*100:.1f}%')
         if st:e.append(f'đốm x{len(st)}')
-        if tm>0.07:e.append(f'đổi trang phục {tm:.2f}')
+        if False and tm>0.07:e.append(f'đổi trang phục {tm:.2f}')
         row.append((f,e));rep.append((an,i,e,round(c,2),round(tail,2),round(cs*100,1)))
     rows.append((an,row))
 FT=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',12)

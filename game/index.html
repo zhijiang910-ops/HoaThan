@@ -1280,6 +1280,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
  #skills .sk-info{width:16px;height:16px;font-size:11px}
  #aimHelp{top:max(70px,calc(env(safe-area-inset-top) + 66px));font-size:10px}
 }
+*,*::before,*::after{touch-action:manipulation}
+.screen{touch-action:pan-y!important}
 html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 
 /* ===== Điện thoại ngang (22/11): nút to cho ngón cái, bỏ nhãn chữ li ti, chữ tối thiểu ~10px ===== */
@@ -1544,7 +1546,7 @@ Object.assign(CHM,{quytuong:{"w": 145, "h": 149, "ax": 49, "ay": 137, "anims": {
 // Nhân vật chính lấy từ gói Wuxia Vol.2 (cong_cu/wuxia_sheet.py): nam = Huyền Tiêu Kiếm Tông · Nam đệ tử,
 // nữ = Xích Diễm Đao Môn · Nữ đệ tử. Cả hai cầm kiếm cùng một kiểu khi đứng, đi và chém.
 // Hóa Thân Tôn Ngộ Không: sprite PixelLab (vẽ lại cỡ 144, khung xương có gậy + đuôi), đã kiểm từng frame.
-Object.assign(CHM,{god_wukong:{"w": 175, "h": 168, "ax": 92, "ay": 163, "anims": {"idle": {"fps": 10, "f": [[0, 0], [175, 0], [350, 0], [525, 0]]}, "run": {"fps": 10, "f": [[700, 0], [875, 0], [1050, 0], [1225, 0], [1400, 0], [1575, 0], [1750, 0], [1925, 0]]}, "attack": {"fps": 10, "f": [[0, 168], [175, 168], [350, 168], [525, 168], [700, 168], [875, 168]]}, "attack2": {"fps": 10, "f": [[1050, 168], [1225, 168], [1400, 168], [1575, 168], [1750, 168], [1925, 168]]}, "hit": {"fps": 10, "f": [[0, 336], [175, 336], [350, 336]]}}, "src": "assets/god_wukong.png", "realRun": true}});
+Object.assign(CHM,{god_wukong:{"w": 171, "h": 169, "ax": 88, "ay": 163, "anims": {"idle": {"fps": 10, "f": [[0, 0], [171, 0], [342, 0], [513, 0]]}, "run": {"fps": 10, "f": [[684, 0], [855, 0], [1026, 0], [1197, 0], [1368, 0], [1539, 0], [1710, 0], [1881, 0]]}, "attack": {"fps": 10, "f": [[0, 169], [171, 169], [342, 169], [513, 169], [684, 169]]}, "attack2": {"fps": 10, "f": [[855, 169], [1026, 169], [1197, 169], [1368, 169], [1539, 169]]}, "hit": {"fps": 10, "f": [[1710, 169], [1881, 169], [0, 338]]}}, "src": "assets/god_wukong.png", "realRun": true}});
 Object.assign(CHM,{hero_nam:{"w": 160, "h": 128, "ax": 80, "ay": 118, "anims": {"idle": {"fps": 10, "f": [[0, 0], [160, 0], [320, 0], [480, 0]]}, "run": {"fps": 10, "f": [[640, 0], [800, 0], [960, 0], [1120, 0], [1280, 0], [1440, 0], [1600, 0], [1760, 0]]}, "attack": {"fps": 10, "f": [[1920, 0], [2080, 0], [2240, 0], [2400, 0], [0, 128], [160, 128]]}, "attack2": {"fps": 10, "f": [[320, 128], [480, 128], [640, 128], [800, 128], [960, 128]]}, "hit": {"fps": 10, "f": [[1120, 128], [1280, 128], [1440, 128], [1600, 128]]}, "death": {"fps": 10, "f": [[1760, 128], [1920, 128], [2080, 128], [2240, 128]]}}, "src": "assets/hero_nam.png", "realRun": true, "face": [56, 14]},hero_nu:{"w": 160, "h": 128, "ax": 80, "ay": 118, "anims": {"idle": {"fps": 10, "f": [[0, 0], [160, 0], [320, 0], [480, 0]]}, "run": {"fps": 10, "f": [[640, 0], [800, 0], [960, 0], [1120, 0], [1280, 0], [1440, 0], [1600, 0], [1760, 0]]}, "attack": {"fps": 10, "f": [[1920, 0], [2080, 0], [2240, 0], [2400, 0], [0, 128], [160, 128]]}, "attack2": {"fps": 10, "f": [[320, 128], [480, 128], [640, 128], [800, 128], [960, 128]]}, "hit": {"fps": 10, "f": [[1120, 128], [1280, 128], [1440, 128], [1600, 128]]}, "death": {"fps": 10, "f": [[1760, 128], [1920, 128], [2080, 128], [2240, 128]]}}, "src": "assets/hero_nu.png", "realRun": true, "face": [54, 15]}});
 // Nhát C Kiếm +6 · Lướt Trảm: lấy đà, lướt đâm, trượt dừng, thu thế 1-2-3.
 // Chạy, đòn A, đòn B: frame tạo bằng PixelLab (khung xương có khớp kiếm), đã kiểm từng frame với master:
@@ -4156,11 +4158,20 @@ const joyEnd=e=>{if(e.pointerId!==joy.id)return;joy.on=false;joy.dx=joy.dy=0;joy
 cv.addEventListener('pointerup',joyEnd);cv.addEventListener('pointercancel',joyEnd);
 /* iPhone: chặn tự thu phóng (chạm đúp, chụm hai ngón, giữ lâu) */
 (()=>{const stop=e=>{if(e.cancelable)e.preventDefault()};
+ // Trong khung artifact, thẻ viewport của trang có thể bị trang bọc ngoài thay thế: ép lại, và ghi lại mỗi lần xoay/đổi cỡ (iOS sẽ thu về 100% khi thẻ này đổi).
+ const VP='width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover';
+ const fixVP=()=>{let m=document.querySelector('meta[name=viewport]');if(!m){m=document.createElement('meta');m.name='viewport';document.head.appendChild(m)}
+  for(const x of document.querySelectorAll('meta[name=viewport]'))x.setAttribute('content',VP)};
+ fixVP();addEventListener('orientationchange',fixVP);addEventListener('pageshow',fixVP);
+ if(window.visualViewport)visualViewport.addEventListener('resize',()=>{if(visualViewport.scale>1.01){const m=document.querySelector('meta[name=viewport]');m.setAttribute('content',VP.replace('maximum-scale=1','maximum-scale=1.0001'));setTimeout(fixVP,60)}});
  cv.addEventListener('touchstart',stop,{passive:false});cv.addEventListener('touchmove',stop,{passive:false});cv.addEventListener('touchend',stop,{passive:false});
  for(const k of['gesturestart','gesturechange','gestureend'])document.addEventListener(k,stop,{passive:false});
  document.addEventListener('dblclick',stop,{passive:false});
  document.addEventListener('touchmove',e=>{if(e.touches.length>1)stop(e)},{passive:false});
- let last=0;document.addEventListener('touchend',e=>{const t=e.target;if(t&&t.closest&&t.closest('input,textarea,select,button,a,[role=button],[data-pick],[data-eq],[data-tn],[data-path]'))return;const n=Date.now();if(n-last<350)stop(e);last=n},{passive:false});
+ let last=0,lastT=null;document.addEventListener('touchend',e=>{const t=e.target,n=Date.now(),quick=n-last<350;last=n;
+  if(t&&t.closest&&t.closest('input,textarea,select'))return;
+  // chạm đúp: chặn phóng to ở mọi chỗ; trên nút thì vẫn bấm được (gọi click thủ công cho lần chạm thứ hai)
+  if(quick){stop(e);if(t&&t.closest){const b=t.closest('button,a,[role=button],[data-pick],[data-eq],[data-tn],[data-path],.lbt,.sk');if(b&&b!==document.getElementById('dashBtn')&&b!==document.getElementById('godBtn'))b.click()}}},{passive:false});
 })();
 
 let dashHeld=false;
