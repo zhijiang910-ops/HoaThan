@@ -2523,7 +2523,7 @@ function updHaz(dt){
  G.eproj=G.eproj.filter(p=>p.life>0);
 }
 /* ===== Khỉ con (Thổi Lông Hóa Khỉ) ===== */
-const KHI={w:96,h:96,ax:48,ay:92,anims:{"idle":[[0,0],[96,0],[192,0],[288,0]],"run":[[0,96],[96,96],[192,96],[288,96],[384,96],[480,96]],"atk":[[0,192],[96,192],[192,192],[288,192],[384,192],[480,192],[576,192],[672,192]]},img:new Image()};KHI.img.src='assets/khi.png';preDecode(KHI.img);
+const KHI={w:96,h:96,ax:48,ay:92,anims:{"idle":[[0,0],[96,0],[192,0],[288,0]],"run":[[0,96],[96,96],[192,96],[288,96],[384,96],[480,96],[576,96],[672,96]],"atk":[[0,192],[96,192],[192,192],[288,192],[384,192],[480,192],[576,192],[672,192]]},img:new Image()};KHI.img.src='assets/khi.png';preDecode(KHI.img);
 function blowMonkeys(n){const f=P.facing||1,mx=P.x+f*16,my=P.y-58;
  if(vok('wk_puff'))fx({k:'sp',s:'wk_puff',x:mx+f*14,y:my,sc:0.7,T:0.4});
  for(let i=0;i<n;i++){const ang=(f>0?0:Math.PI)+(i-(n-1)/2)*0.55,r=rnd(70,100),x=clamp(P.x+Math.cos(ang)*r,30,AW-30),y=clamp(P.y+Math.sin(ang)*r*0.8,30,AH-30);
@@ -2545,7 +2545,7 @@ function updMonkey(a,dt){
  else{a.mv=0;if(a.cd<=0){a.atkT=0.5;a.hit=0;a.cd=0.55+Math.random()*0.15}}}
 function drawMonkey(a){const M=KHI;if(!M.img.complete||!M.img.naturalWidth||!M.anims){X.fillStyle='#b8762a';circle(a.x,a.y-16,10);return}
  const A=M.anims;let an='idle',fi=Math.floor((G.t+a.ph)*7)%A.idle.length;
- if(a.atkT>0){an='atk';fi=Math.min(A.atk.length-1,Math.floor((1-a.atkT/0.5)*A.atk.length))}else if(a.mv){an='run';fi=Math.floor((G.t+a.ph)*14)%A.run.length}
+ if(a.atkT>0){an='atk';fi=Math.min(A.atk.length-1,Math.floor((1-a.atkT/0.5)*A.atk.length))}else if(a.mv){an='run';fi=Math.floor((G.t+a.ph)*16)%A.run.length}
  const fr=A[an][fi],al=a.t<0.15?a.t/0.15:a.t>a.T-0.3?Math.max(0,(a.T-a.t)/0.3):1;
  X.fillStyle='rgba(0,0,0,.3)';ell(a.x,a.y,12,4);
  X.save();X.imageSmoothingEnabled=false;X.globalAlpha=al;X.translate(Math.round(a.x),Math.round(a.y));X.scale(a.f,1);X.drawImage(M.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);X.restore()}
