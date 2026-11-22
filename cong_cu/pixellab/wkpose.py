@@ -97,3 +97,25 @@ for r,k in enumerate(['idle2','run2','hit2']):
         for n in names:
             if par[n]:d2.line([M[par[n]],M[n]],fill='#ffcc33' if n.startswith('staff') else ('#f84' if 'near' in n else ('#4cf' if 'far' in n else '#aaa')),width=3 if n.startswith('staff') else 2)
 o2.save(dbg.replace('.png','_2.png'))
+
+# ---- Bản 3: đòn đánh xuất phát từ thế dựng gậy, gậy luôn ở trước người ----
+# th = hướng đoạn gậy ngắn; đoạn dài (đầu đánh) = th+180. Dựng đứng: th=90 (đầu dài chĩa lên).
+A3=[dict(lean=-3,sink=1,narm=((7,8),(17,6)),th=60,tail=4),            # nghiêng đầu gậy ra sau, lấy đà
+    dict(lean=1,sink=1,narm=((10,4),(22,0)),th=115,tail=0,plume=.1),    # vung qua đầu
+    dict(lean=6,sink=3,narm=((13,6),(27,8)),th=180,tail=-8,plume=.2),   # bổ ngang ra trước (chạm)
+    dict(lean=7,sink=4,narm=((12,9),(25,14)),th=205,tail=-10,plume=.2), # đầu gậy chúi xuống
+    dict(lean=3,sink=2,narm=((10,10),(24,14)),th=130,tail=-4)]          # thu về
+B3=[dict(lean=-2,sink=1,narm=((9,11),(23,14)),th=160,tail=2),           # hạ gậy ngang
+    dict(lean=-5,sink=2,narm=((-2,12),(2,16)),th=180,tail=6),           # kéo tay về sau
+    dict(lean=7,sink=2,narm=((13,9),(29,10)),th=180,tail=-8,plume=.2),  # đâm thẳng (chạm)
+    dict(lean=8,sink=2,narm=((14,9),(30,10)),th=180,tail=-10,plume=.22),# giữ
+    dict(lean=3,sink=1,narm=((11,10),(25,14)),th=130,tail=-4)]          # thu về
+res.update(A3=[pose(**d) for d in A3],B3=[pose(**d) for d in B3])
+json.dump(res,open(out,'w'))
+o3=Image.new('RGB',(SS*6,SS*2),'#334');d3=ImageDraw.Draw(o3)
+for r,k in enumerate(['A3','B3']):
+    for f,kp in enumerate([res['idle3'][0]]+res[k]):
+        M={p['label']:(f*SS+p['x']*SS,r*SS+p['y']*SS) for p in kp}
+        for n in names:
+            if par[n]:d3.line([M[par[n]],M[n]],fill='#ffcc33' if n.startswith('staff') else ('#f84' if 'near' in n else ('#4cf' if 'far' in n else '#aaa')),width=3 if n.startswith('staff') else 2)
+o3.save(dbg.replace('.png','_3.png'))

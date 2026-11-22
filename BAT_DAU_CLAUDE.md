@@ -120,3 +120,7 @@ Chủ game đã mua gói Integrated (19,99 USD) và giao: giữ toàn bộ Wuxia
 
 ## Cập nhật 22/11 (đợt 11) · Luyện Công
 - Sảnh có ô **Luyện Công** (`startTraining`): 6 cọc gỗ (`ET.coc`, ai dummy, không chết, không đánh), không sinh quái, không lưu checkpoint. Bảng chỉnh `#trP`: Nộ đầy mãi, Hóa Thân ngay, Hồi hết chiêu, Kiếm +0/3/6/9 (`G.trForge` ghi đè `weaponForge`), Nam/Nữ, đổi Hóa Thân (thử được mọi Hóa Thân), Chậm ×0,25 (`G.trScale`), Bất tử, + Quái thật, Đặt lại cọc, ST/giây (5 giây gần nhất), Thu gọn, Ra sảnh. Lựa chọn nhớ trong `localStorage.tdst_tr`.
+
+## Cập nhật 22/11 (đợt 12)
+- Ngộ Không: làm lại 2 đòn từ thế dựng gậy, gậy luôn ở trước người (bỏ thế kéo gậy ra sau hông làm thân xoay ngang, đuôi quấn gậy). Đòn A bổ chéo (`A3`: nghiêng ra sau → qua đầu → bổ ngang → thu), 4 frame từ seed 41 (0–2) + seed 23 (frame thu). Đòn B đâm thẳng (`B3`, seed 23), bỏ frame kéo tay về. Loại: seed 41 frame 3 có 2 cây gậy; các frame có vệt xám mờ.
+- `qc_wk.py` thêm kiểm **vệt mờ** (số điểm ảnh xám > 1,6 lần master). Kiểm gậy thừa bằng màu không dùng được (gậy trùng màu giáp), phải soát mắt.

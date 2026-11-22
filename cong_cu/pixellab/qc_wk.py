@@ -29,6 +29,14 @@ def best(m,g,th,dF,dB,rad=2):
                 c=(cov(m,gg,f,rad)+cov(m,gg,b,rad))/2
                 if c>bestv[0]:bestv=(c,(gg,f,b,th+da))
     return bestv
+def grayc(a):
+    r,g,b,al=a[...,0],a[...,1],a[...,2],a[...,3];mx=np.maximum(np.maximum(r,g),b);mn=np.minimum(np.minimum(r,g),b)
+    return int(((al>10)&(mx-mn<25)&(mx>70)&(mx<200)).sum())
+GRAY0=grayc(M)
+def extra_staff(sm,gg,fe,be,w=9):
+    H,W=sm.shape;yy,xx=np.mgrid[0:H,0:W];vx,vy=fe[0]-be[0],fe[1]-be[1];L=vx*vx+vy*vy or 1
+    t=np.clip(((xx-be[0])*vx+(yy-be[1])*vy)/L,0,1);dd=np.hypot(xx-be[0]-t*vx,yy-be[1]-t*vy)
+    return int((sm&(dd>w)).sum())
 rows=[];rep=[]
 for an in ANIMS:
     fs=sorted(glob.glob(D+f'out/wk_{an}_0*.png'));row=[]
@@ -41,7 +49,8 @@ for an in ANIMS:
         fend=cov(sm,(gg[0]+u[0]*dF*.85,gg[1]+u[1]*dF*.85),fe);bend=cov(sm,(gg[0]-u[0]*dB*.85,gg[1]-u[1]*dB*.85),be)
         fm=furpx(A);tail=cov(fm,d['tail_2'],d['tail_tip'],rad=4)
         cs=qc.costume12(A,pal);st=qc.stray(A);tm=qc.mix_dist(qc.torso_mix2(A,d),MIX0)
-        e=[]
+        e=[];ex=extra_staff(sm,gg,fe,be);gc=grayc(A)
+        if gc>GRAY0*1.6:e.append(f'vệt mờ ({gc})')
         if c<0.8:e.append(f'gậy thiếu ({c:.2f})')
         if fend<0.5 or bend<0.5:e.append('gậy ngắn')
         if tail<0.5:e.append('mất đuôi')
