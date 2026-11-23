@@ -3105,13 +3105,30 @@ function trainingTick(dt){if(!G||!G.training)return;
  const el=document.getElementById('trDps');if(el&&G.trLog.length>1){const a=G.trLog[0],b=G.trLog[G.trLog.length-1];el.textContent='ST/giây: '+Math.round((b[1]-a[1])/Math.max(0.5,b[0]-a[0]))}}
 /* Thử VFX gói Wuxia (chỉ trong Luyện Công, không gắn vào chiêu nào). Ảnh xuất từ bản demo Godot của gói, tải khi bấm Phát lần đầu */
 const WXT=[{k:'01_array',n:'Thiên Xu Kiếm Trận',w:369,h:604,c:11,f:60,px:15,py:610,sc:0.88,T:5.0,flw:0},
- {k:'03_orbit',n:'Hồi Phong Quy Sao',w:416,h:174,c:9,f:75,px:134,py:150,sc:0.88,T:5.0,flw:1},
+ {k:'03_orbit',n:'Hồi Phong Quy Sao',w:268,h:158,c:15,f:93,px:134,py:134,sc:0.88,T:6.2,flw:1},
  {k:'02_beam',n:'Nhất Tuyến Khai Thiên',w:601,h:95,c:6,f:19,px:-9,py:103,sc:0.88,T:1.27,flw:0},
- {k:'wanjian_n',n:'Vạn Kiếm Quy Tông gốc (lên)',w:317,h:720,c:12,f:58,px:158,py:577,sc:0.96,T:3.87,flw:0},
- {k:'wanjian_e',n:'Vạn Kiếm Quy Tông gốc (ngang)',w:838,h:332,c:4,f:45,px:198,py:229,sc:0.96,T:3.75,flw:0}];
+ {k:'wanjian_n',n:'Vạn Kiếm Quy Tông gốc (lên)',w:316,h:721,c:12,f:59,px:158,py:578,sc:0.96,T:3.93,flw:0},
+ {k:'wanjian_e',n:'Vạn Kiếm Quy Tông gốc (ngang)',w:838,h:316,c:4,f:46,px:198,py:213,sc:0.96,T:3.83,flw:0}];
 function wxPlay(i){const d=WXT[i],id='wx_'+d.k;SPX[id]={w:d.w,h:d.h,c:d.c,n:d.f,px:d.px,py:d.py};
  const go=()=>{if(!G||G.state!=='play')return;const f=P.facing||1;fx({k:'sp',s:id,x:P.x,y:P.y,sc:d.sc,fx:f,T:d.T,follow:d.flw})};
  if(!VFX[id]){const im=new Image();im.onload=go;im.src='assets/vfx/'+id+'.png';VFX[id]=im}else if(vok(id))go()}
+/* === Ô KỸ NĂNG TẠM để test VFX gói Wuxia: xóa khối này + #wxT khi test xong === */
+const WXS=[{g:'陣',cd:8},{g:'旋',cd:8},{g:'線',cd:3},{g:'萬',cd:10},{g:'劍',cd:10}];
+function wxCast(j){if(!G||G.state!=='play'||G.paused)return;const S0=WXS[j];if(S0.G===G&&S0.r>G.t)return;S0.G=G;S0.r=G.t+S0.cd;
+ const f=P.facing||1,x0=P.x,y0=P.y,dm=26*pw(),T=(t,fn)=>later(t,fn,null);
+ const hitIn=(x,y,r,m,kb)=>{for(const e of enemiesIn(x,y,r)){if(e.dead||e.brk)continue;hit(e,dm*m,H({kb:kb||10,stun:0.08}),x,y)}};
+ const hitLine=(ax,ay,bx,by,w,m)=>{const mx=(ax+bx)/2,my=(ay+by)/2,hl=Math.hypot(bx-ax,by-ay)/2;for(const e of enemiesIn(mx,my,hl+w+40)){if(e.dead||e.brk)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+w)hit(e,dm*m,H({kb:30,stun:0.08}),ax,ay)}};
+ wxPlay(j);sfx('sword_slash',0.4,0.1);
+ if(j===0){const cx=x0+176*f,cy=y0-79;for(let i=0;i<9;i++)T(0.6+i*0.5,()=>hitIn(cx,cy,120,0.45))}
+ else if(j===1){for(let i=0;i<16;i++)T(0.4+i*0.35,()=>hitIn(P.x,P.y,115,0.3,25))}
+ else if(j===2)T(0.55,()=>hitLine(x0,y0-20,x0+f*520,y0-20,26,2.2))
+ else if(j===3){for(let i=0;i<6;i++)T(1.2+i*0.4,()=>hitLine(x0,y0,x0,y0-560,80,0.7))}
+ else{for(let i=0;i<6;i++)T(1.2+i*0.4,()=>hitLine(x0,y0-20,x0+f*560,y0-20,70,0.7))}}
+(()=>{const d=document.createElement('div');d.id='wxT';
+ d.innerHTML='<style>#wxT{position:fixed;z-index:30;right:max(8px,env(safe-area-inset-right));top:calc(max(6px,env(safe-area-inset-top)) + 48px);display:none;flex-direction:row;gap:5px;pointer-events:auto}body.playing #wxT{display:flex}#wxT button{position:relative;width:42px;height:42px;font:700 20px serif;color:#f5e3bd;background:radial-gradient(#3d2a17,#140c07);border:1px solid #c8a060;border-radius:6px;padding:0;touch-action:none}#wxT button i{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.6);font:700 13px sans-serif;border-radius:6px}#wxT small{position:absolute;left:-1px;top:-7px;font:700 8px sans-serif;background:#7a1f1f;color:#fff;padding:0 3px;border-radius:3px}</style>'+WXS.map((q,j)=>`<button data-j="${j}" title="${WXT[j].n}"><small>TEST</small>${q.g}<i hidden></i></button>`).join('');
+ document.body.appendChild(d);
+ d.addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(!b)return;e.preventDefault();e.stopPropagation();wxCast(+b.dataset.j)});
+ setInterval(()=>{if(!G)return;for(const b of d.querySelectorAll('button')){const q=WXS[+b.dataset.j],r=q.G===G?q.r-G.t:0,i=b.querySelector('i');if(r>0){i.hidden=false;i.textContent=Math.ceil(r)}else i.hidden=true}},200)})();
 function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=document.createElement('div');b.id='trP';
  const gods=Object.keys(GODS).filter(k=>godOwned(k)||true),gname=k=>GODS[k].name;
  b.innerHTML=`<style>#trP{position:fixed;z-index:40;top:max(6px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:min(calc(96*var(--vw)),760px);padding:5px 6px;background:rgba(18,12,8,.88);border:1px solid #8a6a3a;border-radius:8px;font:600 12px 'Be Vietnam Pro',sans-serif;color:#f0e2c4;pointer-events:auto}
