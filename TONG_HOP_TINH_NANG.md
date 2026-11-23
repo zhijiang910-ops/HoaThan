@@ -15,7 +15,7 @@
 | Vật phẩm, nhiệm vụ, kỳ ngộ | Có vật phẩm nhặt trong trận, bình/thùng/rương phá được, bẫy, bảng nhiệm vụ và hệ kỳ ngộ NPC, thương nhân, kẻ cướp, Sơn Trại/Hổ Huyệt. | Chi tiết và các thông số ban đầu xem hồ sơ chặng cũ. Kiểm thử lại khi chỉnh tỷ lệ rơi hoặc thêm tuyến. |
 | Rương boss và tiến trình | **Đang chạy:** hạ boss hoàn thành ải/mở sao kể cả khi không đủ thể lực; rương nhận thưởng tốn 15 thể lực, bảo đảm 4 Huyền Thiết + lượt dược liệu, có tỷ lệ trang bị/bí tịch tăng theo sao; lần đầu nhận Truy Phong Kiếm. | **Đã chốt, CHƯA triển khai:** khi thiếu thể lực, giữ một rương chờ nhận hợp lệ thay vì bỏ qua là mất thưởng; nhận sau khi đủ 15 thể lực, không cần đánh boss lại; chống nhận trùng/farm vô hạn không tốn thể lực. Giữ tỷ lệ thưởng ★1–★5 hiện có. Bí tịch trùng cần công dụng khi mở hệ nâng cấp bí tịch; kinh tế/phẩm đá cân sau. |
 | Trang bị và kho | **Đang chạy:** 6 ô (Vũ khí, Y phục, Hài, Hộ phù, Nhẫn/Bội ngọc, Đai/Găng tay), so/mặc đồ, phân giải, kho 120 món và hàng chờ, bảo vệ đồ đang mặc. | **Đã chốt, CHƯA triển khai:** thêm ô thứ 7 là **Nón** (trang bị riêng), có nút **Ẩn/Hiện Nón** chỉ tác động phần hình ảnh; khi ẩn vẫn mặc Nón và hưởng đủ chỉ số. Cần UI, asset Nón, hệ hiển thị Nón cho nhân vật nam/nữ và kiểm tra lưu game cũ. |
-| Cường hóa | Đang chạy +0 đến +9 cho 6 ô hiện tại, rủi ro rớt cấp từ +5, hư hỏng ở +8/+9; món hỏng giữ lại để sửa. Có đọc đồ cũ và báo mốc lần đầu. | Khi triển khai ô Nón thứ 7, bổ sung cường hóa và phần thưởng mốc +3/+6/+9 theo quy tắc chung; **chỉ số và bonus riêng của Nón chưa chốt**, không tự đặt số. Vũ khí là ô mở đòn, các ô khác tăng chỉ số. Kinh tế/phẩm đá cuối cùng còn chờ cân. |
+| Cường hóa | Đang chạy +0 đến +9 cho 6 ô hiện tại, rủi ro rớt cấp từ +5, hư hỏng ở +8/+9; món hỏng giữ lại để sửa. Có đọc đồ cũ và báo mốc lần đầu. | **Đã chốt cho thiết kế mới:** Vũ khí +3 tăng chỉ số ẩn, +6 mở đòn C, +9 tăng hiệu ứng/sát thương/phạm vi tùy loại. Trang bị +3/+6 tăng chỉ số; +9 tăng chỉ số hoặc passive/buff phòng ngự theo món. Thêm Nón thứ 7 theo quy tắc chung, chỉ số riêng chưa chốt. Không tự đổi các chỉ số đã ghi ở bảng; kinh tế/phẩm đá còn chờ cân. |
 | Đòn thường Kiếm | A–B trong lúc di chuyển. +3 xuyên 5% giáp cho đòn thường. +6 mở C Lướt Trảm (lấy đà → lướt chém xuyên hàng ~160 → trượt dừng → thu thế, 15 sát thương, mỗi mục tiêu 1 lần); dấu Phá Thế hỗ trợ nhát thường kế và giúp phá Cương Khí. +9 thêm kiếm khí ngắn. | Demo C Lướt Trảm nam + nữ (`demo/nhat_c/`) chờ duyệt. Lỗi: nhát B nữ đang dùng anim chưởng (`attack2`). Làm rõ hạ trọng tâm, một kiếm nhất quán, đúng tay cầm, nhát ra có lực và về thế mượt. Nâng +6 nên mở cách đánh có ích. Giữ nhát C gắn combo; +9 giữ vai trò riêng. |
 | Kỹ năng Kiếm | Kiếm Khí Trảm (Q), Hoành Tảo (F), Vạn Kiếm Quy Tông (X) chủ động. Vạn Kiếm chọn vùng đặt mưa kiếm. Kiếm Ảnh là ba kiếm tự xoay quanh người, có vòng hồi. Có nội tại Kiếm Tâm. | Chủ động nhìn rõ nút dùng. Tự kích hoạt hiển thị vòng hồi riêng. Bấm xem chú thích thuốc và kỹ năng, gồm sát thương đơn/diện, hiệu ứng, hồi chiêu, nội lực và số lượng thuốc tùy mục. |
 | Lướt và bí tịch | Có Lướt và hủy nhát đang lấy đà. Có bí tịch cộng chỉ số vĩnh viễn và biến thể Truy Phong Kiếm, Hồi Phong. Truy Phong dùng được từ +0 và biến đổi nhát đầu sau Lướt. Hồi Phong ảnh hưởng Hoành Tảo sau Lướt. Chọn một bí tịch Lướt mang theo. | Tối đa một ô bí tịch chủ động ở giai đoạn thử, chưa xác nhận ô riêng trong bản đóng gói. Ưu tiên thay đổi cách dùng một chiêu; có thể thử tăng tốc ngắn hoặc thêm dư ảnh Lướt. Dịch chuyển xuyên địa hình và nhiều biến thể đồng thời để sau. |
@@ -64,13 +64,19 @@ Mỗi cấp tăng 4% chỉ số gốc. Sửa tốn 3 Huyền Thiết và đưa m
 
 | Ô | +3 | +6 | +9 |
 |---|---|---|---|
-| Kiếm | Đòn thường bỏ qua 5% giáp | Mở nhát C | Thêm kiếm khí sau C |
+| Kiếm | Đòn thường bỏ qua 5% giáp | Mở nhát C | Thêm hiệu ứng hoặc sát thương sau C |
 | Y phục | +4 HP | +6 HP | +8 HP |
 | Hài | Giảm hồi Lướt 3% | 4,5% | 6% |
 | Hộ phù | +0,25 Nội lực/giây | +0,375 | +0,50 |
 | Nhẫn/Bội ngọc | +1 điểm % chí mạng | +1,5 | +2 |
 | Đai | +3 HP | +4,5 HP | +6 HP |
 | Găng tay | +2% tốc độ đòn thường | +3% | +4% |
+
+
+**Quy tắc chung đã chốt cho các loại vũ khí và trang bị (23/11/2026; định hướng thiết kế, chưa cập nhật code):**
+- **Vũ khí:** +3 tăng **chỉ số ẩn** phù hợp lối đánh của từng loại vũ khí (ví dụ Kiếm xuyên 5% giáp như bảng); +6 **mở đòn thường C**; +9 **nâng cấp hiệu ứng, sát thương hoặc phạm vi tấn công** tùy bộ chiêu của từng loại vũ khí. Game thiết kế theo **vũ khí**, không chia class/môn phái cố định. Không ép mọi loại vũ khí dùng cùng một hiệu ứng +9.
+- **Trang bị không phải vũ khí:** +3 và +6 tăng chỉ số; +9 **tăng chỉ số, hoặc nâng cấp passive/phòng ngự, hoặc cấp buff phòng ngự**, tùy món. Các con số trong bảng trên là **mốc chỉ số tham chiếu hiện có**; không tự thay bằng passive/buff mới khi chưa có thiết kế chi tiết được duyệt. Hệ Nón thứ 7 phải tuân theo cùng quy tắc, nhưng phần thưởng cụ thể chưa chốt.
+- Các mức thưởng +3/+6/+9 là **mốc cường hóa**; chỉ áp dụng theo cấp đang đạt của món và nguyên tắc cộng dồn/không cộng dồn phải được định nghĩa rõ khi triển khai. Mọi thay đổi gameplay cần kiểm tra cân bằng với thẻ Tu luyện, bí tịch và trang bị.
 
 ## 3. Các hệ thống để sau
 
