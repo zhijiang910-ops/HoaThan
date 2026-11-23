@@ -52,12 +52,13 @@
 |---|---:|---:|---:|---:|---:|
 | +1 / +2 | 100% | 0% | 0% | 0% | 1 / 1 |
 | +3 / +4 | 80% | 20% | 0% | 0% | 2 / 2 |
-| +5 / +6 | 50% | 40% | 10% | 0% | 3 / 3 |
-| +7 | 30% | 50% | 20% | 0% | 4 |
+| +5 | 50% | 40% | 10% | 0% | 3 |
+| +6 | 40% | 50% | 10% | 0% | 3 |
+| +7 | 25% | 55% | 20% | 0% | 4 |
 | +8 | 15% | 59% | 20% | 6% | 5 |
 | +9 | 8% | 56% | 25% | 11% | 6 |
 
-**ĐÃ CHỐT THIẾT KẾ, CHƯA SỬA CODE GAME (23/11/2026):** Tỷ lệ thành công +1/+2 = 100%; +3/+4 = 80%; +5/+6 = 50%; +7 = **30%**; +8 = **15%**; +9 = **8%**. Để bảng luôn đủ 100%, tạm giữ nguyên tỷ lệ rớt cấp và hư hỏng đang có, chỉ điều chỉnh tỷ lệ *Giữ cấp* thành 50% tại +7 và 59% tại +8. Các tỷ lệ thất bại này là giả định cân bảng, có thể cân riêng sau; không được hiểu là code đã cập nhật.
+**ĐÃ CHỐT THIẾT KẾ, CHƯA SỬA CODE GAME (23/11/2026):** Tỷ lệ thành công +1/+2 = 100%; +3/+4 = 80%; **+5 = 50%; +6 = 40%; +7 = 25%; +8 = 15%; +9 = 8%**. Các cột thất bại chưa được chủ game chốt lại: bảng tạm **giữ nguyên xác suất rớt cấp và hư hỏng cũ**, phân bổ phần chênh lệch vào tỷ lệ *Giữ cấp* để mỗi dòng đủ 100%. Cần duyệt lại phân phối thất bại trước khi cập nhật code game.
 
 Mỗi cấp tăng 4% chỉ số gốc. Sửa tốn 3 Huyền Thiết và đưa món về +0. Thưởng mốc lấy mốc cao nhất trên từng món.
 
