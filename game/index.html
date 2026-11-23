@@ -471,8 +471,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .axp{display:flex;align-items:center;gap:6px}
 .acp{display:inline-flex;align-items:center;gap:5px;margin-top:3px;padding:1px 9px 1px 2px;background:linear-gradient(90deg,rgba(92,46,10,.92),rgba(40,22,8,.75) 70%,rgba(40,22,8,0));border:1px solid #d8a84a;border-right:0;border-radius:12px 2px 2px 12px;box-shadow:0 0 8px rgba(255,180,60,.25)}
 #hud .acp b{background:none!important;-webkit-background-clip:initial;background-clip:initial;color:#ffd54a!important;filter:none!important;font:900 16px 'Noto Serif',serif!important;text-shadow:0 1px 0 #5a2a00,0 0 1px #5a2a00,0 0 6px rgba(255,170,40,.75)!important;letter-spacing:.5px}
-.acp .cpi{width:19px;height:19px;font-size:11px}.acp small{font-size:9px}
-@media (max-height:460px){.acp{margin-top:2px;padding:0 7px 0 1px}.acp .cpi{width:15px;height:15px;font-size:9px}.acp small{font-size:8px}#hud .acp b{font-size:13px!important}}
+.acp .cpi{width:22px;height:22px}.acp small{font-size:9px}
+@media (max-height:460px){.acp{margin-top:2px;padding:0 7px 0 1px}.acp .cpi{width:18px;height:18px}.acp small{font-size:8px}#hud .acp b{font-size:13px!important}}
 .axp b{font:700 12px "Noto Serif",serif;color:#ffe08a;text-shadow:0 1px 2px #000;white-space:nowrap}
 .axb{position:relative;width:120px;height:7px;border-radius:4px;background:rgba(0,0,0,.55);box-shadow:0 0 0 1px #c9a45e;overflow:hidden}
 .axb i{display:block;height:100%;width:0;background:linear-gradient(#ffe7a8,#e6a84a 60%,#a8701e)}
@@ -931,7 +931,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .lbinfo b{font:800 20px "Noto Serif",serif;color:#ffe9b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lblv{font:700 13px "Be Vietnam Pro",sans-serif;color:#c9a45e}.lblv i{font-style:normal;color:#ffe08a}
 .lbcp{display:inline-flex;align-items:center;gap:7px;margin:5px 0 6px;padding:3px 12px 3px 3px;background:linear-gradient(90deg,rgba(92,46,10,.95),rgba(40,22,8,.85) 70%,rgba(40,22,8,0));border:1px solid #d8a84a;border-right:0;border-radius:16px 3px 3px 16px;box-shadow:0 0 10px rgba(255,180,60,.28),inset 0 1px 0 rgba(255,230,160,.25)}
-.lbcp .cpi,.acp .cpi{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font:900 15px 'Noto Serif',serif;font-style:normal;color:#3a1a04;background:radial-gradient(circle at 40% 35%,#fff2b8,#f0b93a 55%,#9a5a10);box-shadow:0 0 0 1px #5a3008,0 0 8px rgba(255,190,70,.7)}
+.lbcp .cpi,.acp .cpi{display:block;width:30px;height:30px;background:url(assets/ui/cp_icon.png) center/contain no-repeat;image-rendering:pixelated;filter:drop-shadow(0 0 4px rgba(255,180,60,.75))}
 .lbcp small,.acp small{font:700 11px 'Noto Serif',serif;color:#e8d0a0;letter-spacing:.3px;text-shadow:0 1px 2px #000}
 .lbcp b,.acp b{font:900 22px 'Noto Serif',serif;letter-spacing:.5px;background:linear-gradient(#fff6c8,#ffd24a 45%,#e88a1a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 #4a2200) drop-shadow(0 0 6px rgba(255,170,40,.55))}
 .lbbar{position:relative;height:14px;background:rgba(0,0,0,.6);box-shadow:inset 0 0 0 1px #6a5230}
@@ -1366,7 +1366,7 @@ input,select,textarea,#crName{font-size:16px!important}
 <canvas id="cv"></canvas>
 
 <div id="hud" hidden>
- <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Hóa Thân!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><div class="acp" title="Lực chiến"><i class="cpi">戰</i><small>Lực chiến</small><b id="cpv">0</b></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
+ <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Hóa Thân!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><div class="acp" title="Lực chiến"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="cpv">0</b></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
  <div id="coins" class="frm"><canvas id="coinIco" width="13" height="13"></canvas><b id="coinv">0</b></div>
  <div id="top"><div id="tbar"><b id="tStage">Màn 1</b><i class="tsep"></i><span id="tWave">Đợt 1/5</span><div id="wbar"><i id="wfill"></i></div><em id="tPct">0%</em><span id="wl2" hidden></span><span id="wr2" hidden></span></div><div id="wtime"><svg viewBox="0 0 12 16" class="hgs"><path d="M1 1h10M1 15h10M2 1c0 4 4 5 4 7s-4 3-4 7M10 1c0 4-4 5-4 7s4 3 4 7" fill="none" stroke="#f5e3bd" stroke-width="1.6"/><path d="M4 13h4l-2-3z" fill="#f5e3bd"/></svg><span id="wtimeT">00:20</span></div></div>
  <div id="bossbar" hidden><div class="bn">Ngưu Ma Vương</div><div class="bb"><i id="bossfill"></i></div></div>
@@ -1438,7 +1438,7 @@ input,select,textarea,#crName{font-size:16px!important}
   <div class="lbl">
    <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i><button id="lbSwap" class="lbswap" type="button" title="Đổi giới tính, tên, kiểu tóc">⇄ Đổi nhân vật</button></span>
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
-    <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi">戰</i><small>Lực chiến</small><b id="lbCp">0</b></div>
+    <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
    <canvas id="lbHero" width="240" height="200"></canvas><div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
   </div>
