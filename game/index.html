@@ -3103,6 +3103,15 @@ function trainingTick(dt){if(!G||!G.training)return;
  if(G.trRage){if(P.form==='god')P.rage=Math.max(P.rage,100);else{P.rage=100;P.godCd=0}}
  G.trLog.push([G.t,G.dmgDealt]);while(G.trLog.length&&G.t-G.trLog[0][0]>5)G.trLog.shift();
  const el=document.getElementById('trDps');if(el&&G.trLog.length>1){const a=G.trLog[0],b=G.trLog[G.trLog.length-1];el.textContent='ST/giây: '+Math.round((b[1]-a[1])/Math.max(0.5,b[0]-a[0]))}}
+/* Thử VFX gói Wuxia (chỉ trong Luyện Công, không gắn vào chiêu nào). Ảnh xuất từ bản demo Godot của gói, tải khi bấm Phát lần đầu */
+const WXT=[{k:'01_array',n:'Thiên Xu Kiếm Trận',w:369,h:604,c:11,f:60,px:15,py:610,sc:0.88,T:5.0,flw:0},
+ {k:'03_orbit',n:'Hồi Phong Quy Sao',w:416,h:174,c:9,f:75,px:134,py:150,sc:0.88,T:5.0,flw:1},
+ {k:'02_beam',n:'Nhất Tuyến Khai Thiên',w:601,h:95,c:6,f:19,px:-9,py:103,sc:0.88,T:1.27,flw:0},
+ {k:'wanjian_n',n:'Vạn Kiếm Quy Tông gốc (lên)',w:317,h:720,c:12,f:58,px:158,py:577,sc:0.96,T:3.87,flw:0},
+ {k:'wanjian_e',n:'Vạn Kiếm Quy Tông gốc (ngang)',w:838,h:332,c:4,f:45,px:198,py:229,sc:0.96,T:3.75,flw:0}];
+function wxPlay(i){const d=WXT[i],id='wx_'+d.k;SPX[id]={w:d.w,h:d.h,c:d.c,n:d.f,px:d.px,py:d.py};
+ const go=()=>{if(!G||G.state!=='play')return;const f=P.facing||1;fx({k:'sp',s:id,x:P.x,y:P.y,sc:d.sc,fx:f,T:d.T,follow:d.flw})};
+ if(!VFX[id]){const im=new Image();im.onload=go;im.src='assets/vfx/'+id+'.png';VFX[id]=im}else if(vok(id))go()}
 function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=document.createElement('div');b.id='trP';
  const gods=Object.keys(GODS).filter(k=>godOwned(k)||true),gname=k=>GODS[k].name;
  b.innerHTML=`<style>#trP{position:fixed;z-index:40;top:max(6px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:min(calc(96*var(--vw)),760px);padding:5px 6px;background:rgba(18,12,8,.88);border:1px solid #8a6a3a;border-radius:8px;font:600 12px 'Be Vietnam Pro',sans-serif;color:#f0e2c4;pointer-events:auto}
@@ -3119,6 +3128,7 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
  <button data-t="godmode" class="${TR.god_on?'on':''}">Bất tử</button>
  <button data-t="mob">+ Quái thật</button>
  <button data-t="reset">Đặt lại cọc</button>
+ <button data-t="wxsel">VFX gói: ${WXT[TR.wx||0].n}</button><button data-t="wxplay">▶ Phát VFX</button>
  <span id="trDps">ST/giây: 0</span>
  <button data-t="exit">Ra sảnh</button>`;
  document.body.appendChild(b);b.classList.toggle('fold',!!TR.fold);
@@ -3134,6 +3144,8 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
   else if(k==='godmode'){TR.god_on=G.trGod=!TR.god_on;t.classList.toggle('on',TR.god_on)}
   else if(k==='mob'){for(let i=0;i<4;i++){const a=rnd(0,TAU);spawnEnemy(i===3?'can':'tieu',clamp(P.x+Math.cos(a)*260,40,AW-40),clamp(P.y+Math.sin(a)*200,40,AH-40))}}
   else if(k==='reset'){trPlaceDummies()}
+  else if(k==='wxsel'){TR.wx=((TR.wx||0)+1)%WXT.length;t.textContent='VFX gói: '+WXT[TR.wx].n}
+  else if(k==='wxplay'){wxPlay(TR.wx||0)}
   else if(k==='exit'){b.remove();showLobby();return}
   trSave()})}
 const _showLobby=showLobby;showLobby=function(){const b=document.getElementById('trP');if(b)b.remove();return _showLobby.apply(this,arguments)};
