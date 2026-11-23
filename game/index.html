@@ -2982,7 +2982,7 @@ function drinkPot(k){if(!G||G.state!=='play'||G.paused||G.clearing)return;const 
 let potLast='';
 function updPots(force){const p=pots(),k=p.hp+'|'+p.mp+'|'+(potCd>0);if(!force&&k===potLast)return;potLast=k;
  for(const b of document.querySelectorAll('#skills [data-pot]')){const t=b.dataset.pot;b.querySelector('small').textContent=p[t];b.classList.toggle('empty',p[t]<=0)}}
-const GEARC=['#c9c9c9','#6fe07a','#58b4ff','#c27dff','#ffc23a','#ff5a4a','#ff8af0'];
+const GEARC=['#c9c9c9','#6fe07a','#58b4ff','#c27dff','#ffc23a','#ff5a4a','#ff8af0','#ff9a3c','#e0c070','#9ff0ff','#b0a0ff','#ffffff'];
 function gotGear(it){const inv=invList();addItems([it]);persist();sfx('sword_wave',0.35,0);
  notice('<span style="color:'+GEARC[it.tier]+'">'+it.name+'</span>',TIERS[it.tier].n+' · đã cất vào kho đồ')}
 /* ===== bình sứ, vò gốm, thùng gỗ: đánh vỡ rơi máu, mana, trang bị ===== */
@@ -3680,7 +3680,7 @@ const HAIRC=[{k:'den',n:'Đen',c:'#1a1210',on:1},{k:'nau',n:'Nâu',c:'#6a3a1a'},
 const STA={max:100,cap:115,regenMs:15*60*1000};
 function prof(){return save.prof||null}
 function profNeed(lv){return Math.round(150+lv*90+lv*lv*8)}
-function profGain(x){const P0=prof();if(!P0||!(x>0))return 0;let up=0;P0.exp=(P0.exp||0)+Math.round(x);while(P0.exp>=profNeed(P0.lv)){P0.exp-=profNeed(P0.lv);P0.lv++;up++}persist();return up}
+function profGain(x){const P0=prof();if(!P0||!(x>0))return 0;let up=0;P0.exp=(P0.exp||0)+Math.round(x);while(P0.lv<LV_OPEN&&P0.exp>=profNeed(P0.lv)){P0.exp-=profNeed(P0.lv);P0.lv++;up++}if(P0.lv>=LV_OPEN)P0.exp=Math.min(P0.exp,profNeed(P0.lv)-1);persist();return up}
 function sta(){return save.sta||(save.sta={v:STA.max,t:Date.now()})}
 function staTick(){const s0=sta(),now=Date.now();if(!(s0.t<=now))s0.t=now;if(s0.v>=STA.max){if(s0.t!==now&&s0.v>=STA.max)s0.t=now;return s0}
  const n=Math.floor((now-s0.t)/STA.regenMs);if(n>0){s0.v=Math.min(STA.max,s0.v+n);s0.t=s0.v>=STA.max?now:s0.t+n*STA.regenMs;persist()}return s0}
@@ -4052,7 +4052,11 @@ function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* 
 
 
 /* ================= TRANG BỊ: 7 PHẨM CẤP ================= */
-const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300}];
+const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300},
+ /* 5 phẩm sau khóa lúc ra mắt (trần Lv70), mở khi nâng trần cấp */
+ {n:'Hồng Hoang',k:'Hồng Hoang khí',m:14,a:5,v:700,lock:1},{n:'Thái Cổ',k:'Thái Cổ khí',m:19,a:6,v:1500,lock:1},{n:'Vô Cực',k:'Vô Cực khí',m:25,a:6,v:3000,lock:1},{n:'Tạo Hóa',k:'Tạo Hóa khí',m:33,a:6,v:6000,lock:1},{n:'Thiên Đạo',k:'Thiên Đạo khí',m:45,a:6,v:12000,lock:1}];
+/* Cấp nhân vật: tối đa 120, 12 phẩm (mỗi phẩm 10 cấp). Ra mắt mở đến Lv70 (7 phẩm đầu), phần sau khóa */
+const LV_MAX=120,LV_OPEN=70,TIER_OPEN=TIERS.filter(t=>!t.lock).length;
 const SLOTS={vk:{n:'Vũ khí',base:[['dmgW',6],['dmgM',6]],names:['Thanh Phong Kiếm','Hàn Thiết Kiếm','Long Tuyền Kiếm','Tử Điện Kiếm','Trảm Yêu Kiếm','Thái A Kiếm']},
  ao:{n:'Y phục',base:[['hp',16],['armor',2]],names:['Bố Y','Thanh Sam','Huyền Giáp','Vân Cẩm Bào','Kim Lũ Y','Bát Quái Bào']},
  phu:{n:'Hộ phù',base:[['cdr',3],['mpR',1]],names:['Bình An Phù','Trấn Tà Phù','Ngũ Lôi Phù','Thái Thượng Phù','Hộ Tâm Phù']},
@@ -4077,8 +4081,10 @@ function invList(){const L=save.inv||(save.inv=[]);if(!invList.mig){invList.mig=
 function eqMap(){return save.eq||(save.eq={})}
 // Outcome columns: success, unchanged, down one, damaged.
 const FORGE_ODDS=[[100,0,0,0],[100,0,0,0],[80,20,0,0],[80,20,0,0],
- [50,40,10,0],[50,40,10,0],[20,60,20,0],[20,54,20,6],[8,56,25,11]];
-const FORGE_COST=[1,1,2,2,3,3,4,5,6], REPAIR_COST=3;
+ [50,40,10,0],[50,40,10,0],[20,60,20,0],[20,54,20,6],[8,56,25,11],
+ [6,54,26,14],[5,52,27,16],[4,50,28,18]];
+const FORGE_COST=[1,1,2,2,3,3,4,5,6,8,10,12], REPAIR_COST=3;
+const FORGE_MAX=12,FORGE_OPEN=9; /* +10..+12 khóa, mở sau (mốc +12: aura đen kèm sấm sét) */
 const FORGE_RESULT=['Thành công','Giữ cấp','Rớt 1 cấp','Hư hỏng'];
 const forgeLevel=it=>it?.forge||0;
 const forgeSeen=l=>!!(save.forgeSeen&&save.forgeSeen[l]);
@@ -4105,7 +4111,7 @@ function weaponForge(){
 function forgeItem(id,repair){
  const it=invList().find(x=>x.id===id);
  if(!it||!!it.damaged!==repair)return '';
- if(!repair&&forgeLevel(it)>=9)return '';
+ if(!repair&&forgeLevel(it)>=FORGE_OPEN)return '';
  const cost=repair?REPAIR_COST:FORGE_COST[forgeLevel(it)];
  if(forgeStones()<cost)return '';
  mats().thiet=forgeStones()-cost;
@@ -4123,17 +4129,17 @@ function forgeItem(id,repair){
  return FORGE_RESULT[result]+(result<3?' · +'+forgeLevel(it):'');
 }
 function forgeMarkup(it){
- const level=forgeLevel(it),cost=it.damaged?REPAIR_COST:FORGE_COST[level];
+ const level=forgeLevel(it),cost=it.damaged?REPAIR_COST:level>=FORGE_OPEN?0:FORGE_COST[level];
  const odds=FORGE_ODDS[level]?.map((v,i)=>v?FORGE_RESULT[i]+' '+v+'%':'').filter(Boolean).join(' · ');
  const perk=forgePerk(it);
  const milestones=it.slot==='vk'?' +3 Đòn thường bỏ qua 5% giáp · +6 '+(forgeSeen(6)?'Phá Thế Trảm (C)':'??? tự khám phá')+' · +9 '+(forgeSeen(9)?'Kiếm khí':'??? tự khám phá'):
   perk?sn(perk.stat)[0]+' · '+FORGE_MILESTONES.map((m,i)=>'+'+m+': +'+perk.values[i].toLocaleString('vi-VN')+sn(perk.stat)[1]).join(' · '):'';
  const detail=milestones?'<p class="dim sm">'+milestones+'</p>':'';
  return '<div class="forgery"><b>'+(it.damaged?'Hư hỏng':('Cường hóa +'+level))+'</b><span class="dim sm"> · '+MATN.thiet+' '+forgeStones()+'</span>'+detail+
- (cost?'<p class="dim sm">'+(it.damaged?'Sửa đưa về +0':('Lên +'+(level+1)+' · '+odds))+'</p><button class="btn" id="forgeDo" '+(forgeStones()<cost?'disabled':'')+'>'+(it.damaged?'Sửa':'Cường hóa')+' · '+cost+' '+MATN.thiet+'</button>':'<p class="dim sm">Đã đạt +9</p>')+'</div>';
+ (cost?'<p class="dim sm">'+(it.damaged?'Sửa đưa về +0':('Lên +'+(level+1)+' · '+odds))+'</p><button class="btn" id="forgeDo" '+(forgeStones()<cost?'disabled':'')+'>'+(it.damaged?'Sửa':'Cường hóa')+' · '+cost+' '+MATN.thiet+'</button>':'<p class="dim sm">Đã đạt +'+FORGE_OPEN+' · +'+(FORGE_OPEN+1)+' đến +'+FORGE_MAX+' sẽ mở sau</p>')+'</div>';
 }
 function equipBonus(){const b={},inv=invList(),eq=eqMap();for(const sl in eq){const it=inv.find(x=>x.id===eq[sl]);if(!it||it.damaged)continue;const factor=forgeBaseFactor(it);for(const k in it.base)b[k]=(b[k]||0)+it.base[k]*factor;for(const[k,v]of it.aff)b[k]=(b[k]||0)+v;if(it.sp)b.godDmg=(b.godDmg||0)+it.spv;
- const perk=forgePerk(it),rank=Math.floor(forgeLevel(it)/3);
+ const perk=forgePerk(it),rank=Math.min(3,Math.floor(forgeLevel(it)/3));
  if(perk&&rank>0)b[perk.stat]=(b[perk.stat]||0)+perk.values[rank-1];
  }return b}
 function itemStats(it){let h='';for(const k in it.base)h+=`<div>${sn(k)[0]} <b>${fmtv(k,it.base[k]*forgeBaseFactor(it))}</b></div>`;for(const[k,v]of it.aff)h+=`<div class="aff">${sn(k)[0]} <b>${fmtv(k,v)}</b></div>`;if(it.sp)h+=`<div class="sp">${it.sp}: sát thương hóa thân +${it.spv}%</div>`;return h}
