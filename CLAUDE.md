@@ -45,24 +45,19 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - Chủ game thích được thử ngay trong game: khi cần duyệt hiệu ứng, có thể làm tạm ô kỹ năng TEST, duyệt xong thì xóa.
 - Ảnh và video tham chiếu đã gửi: `nguon/tham_chieu/` (xem README trong đó).
 
+## Vũ khí, aura, trang phục (ĐÃ LÀM, 23/11)
+- **Vũ khí là lớp riêng:** nhân vật dùng sheet không kiếm `hero_{nam,nu}_ns.png` + lớp nắm tay `_hand.png`. `WSOCK[giới]["x,y"]` = [chuôi x, chuôi y, góc, 'b' sau thân | 'f' trước thân] cho từng khung. `drawHeroFrame` vẽ vũ khí theo socket.
+  - Ảnh vũ khí: `game/assets/wpn/*.png` (nằm ngang, mũi sang phải), thông số trong `WPN`. Tên món → ảnh: `WART` (Thanh Phong, Long Tuyền = kiếm gốc; Thái A, Tử Điện = kiếm đỏ; Hàn Thiết = đại kiếm; Trảm Yêu = trảm mã đao).
+  - Công cụ: `cong_cu/claude/build_ns.py` (tách kiếm + socket; khung lệch thì thêm toạ độ tay vào `MAN`), `detsword.py`, `reattach.py`.
+- **Aura cường hóa** (`WAURA`, ảnh `vfx/aura_{3,6,9,12}.png`): +3 lục mờ, +6 vàng, +9 tím, +12 đen + sấm (mốc +12 khóa). Kéo theo chiều dài lưỡi.
+- **Hồi Phong Quy Sao** bay bằng chính vũ khí đang cầm, kèm aura.
+- **Trang phục theo bộ:** `OUTFIT[tên Y phục] = hậu tố sheet`. Hiện có `'Huyền Giáp':'hg'` → `hero_{nam,nu}_hg.png` (+ `_hg_hand.png`), 48 khung mỗi giới, tạo bằng `transfer-outfit-v2` (3 khung/lần, 10 lượt). Ảnh mẫu: `nguon/pixellab/outfit/ref_huyengiap2.png` (nam), `ref_nu.png` (nữ). Làm bộ mới: `nguon/pixellab/outfit` + script `hg/run_tf.py` (đã chép vào `cong_cu/claude/`).
+- **Luyện Công** có nút "Áo" và "Kiếm" để thử nhanh.
+
 ## Đã chốt, CHƯA làm vào game (việc tiếp theo)
-1. **Tách vũ khí thành lớp riêng** cho mọi động tác (nam, nữ). Đã làm thử ổn trên đòn A nam, xem `nguon/pixellab/wl/`.
-   - `cong_cu/claude/unsword.py`: xóa kiếm khỏi frame theo khớp `sword_grip/tip` trong file job khung xương (`nguon/pixellab/combo5/job_*.json`).
-   - Ghi "socket" (vị trí tay, góc) cho từng frame.
-   - Game vẽ vũ khí đang trang bị vào tay, rồi vẽ lại nắm tay (bán kính ~3,2 px) đè lên chuôi.
-   - Vũ khí: mỗi cây 1 ảnh PixelLab (pixflux, nằm ngang, mũi sang phải). Ví dụ: `wl/gen/red1, red2, big1m, big2`.
-2. **Aura vũ khí theo cường hóa** (đã có VFX PixelLab, `nguon/pixellab/aura/`):
-   | Mốc | Aura | File |
-   |---|---|---|
-   | +3 | lục mờ | `aura3` |
-   | +6 | vàng | `aura6y` |
-   | +9 | tím | `aura9p` |
-   | +12 | đen + sấm sét (khóa) | `aura12` |
-   - Sáng tăng dần theo mốc. Dùng lớp `front`, xoay theo kiếm, kéo theo chiều dài lưỡi.
-3. **Đồ theo bộ** (chủ game chọn hướng này). Mỗi bộ có trang phục riêng và kiếm đi kèm, hiệu ứng bộ mốc 2/4/6 món nên đổi lối chơi.
-   - Đề xuất 4 bộ: Thanh Sam (mặc định), Huyền Giáp, Kim Lũ Y, Huyết Ma Bào. Chờ chủ game chốt danh sách và hiệu ứng.
-   - Trang phục: `edit-image-pro-flash` tạo ảnh mẫu (6 lượt), sau đó `transfer-outfit-v2` mặc lên frame (3 frame/lần, 10 lượt). Mỗi bộ cho đủ động tác khoảng 170 lượt/giới tính. Bản thử Huyền Giáp: `nguon/pixellab/outfit/`.
-4. Chưa có: yêu cầu cấp để mặc đồ; đồ rơi theo cấp nhân vật (hiện rơi theo ải).
+1. **Thêm các bộ đồ khác** (đề xuất: Kim Lũ Y, Huyết Ma Bào) + hiệu ứng bộ mốc 2/4/6 món (nên đổi lối chơi). Mỗi bộ ~330 lượt PixelLab cho cả nam và nữ.
+2. Thêm dáng vũ khí (mỗi cây 1 lượt, pixflux, có thể lấy icon gói Wuxia `UI/Items_64` làm mẫu).
+3. Gói Wuxia chỉ có icon vũ khí/trang bị 64px (không có hình cầm tay); danh sách giữ/bỏ đã đề xuất cho chủ game, chưa chốt.
 
 ## Công cụ và quy trình
 - **PixelLab API v2:** `https://api.pixellab.ai/v2`, header `Authorization: Bearer <key>`. Môi trường mới phải thêm key PixelLab làm network secret cho host `api.pixellab.ai`. Không ghi key vào code; script dùng `Bearer proxy-injected`.
