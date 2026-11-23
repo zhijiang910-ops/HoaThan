@@ -1914,8 +1914,8 @@ const WEAPONS={
     for(let t=2;t<2+dur;t+=4)later(t,()=>fx({k:'sp',s:'tx_loop',x:cx,y:cy,sc,T:4,gr:1}),null);
     later(2+Math.ceil(dur/4)*4,()=>fx({k:'sp',s:'tx_out',x:cx,y:cy,sc,T:0.73,gr:1}),null);
     for(let t=0.5;t<2+dur;t+=0.5)later(t,()=>{for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,dmg,H({kb:8,stun:0.06}),cx,cy)}},null)}},
-  {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:25,range:260,desc:'Ba phi kiếm bay vòng quanh người, tự lao tới chém quái ở gần rồi quay về.',up:'+0.5 giây, cấp 3 và 5 thêm 1 kiếm',
-   cast(tg,l){sfx('wanjian_launch',0.45,0.2);const n=3+(l>=3)+(l>=5);addZone({kind:'blades',follow:1,T:6+0.5*(l-1),n,r:80*Ar(),dmg:this.power*lv(l)*pw(),o:H({kb:20}),hm:new Map(),rot:0,sw:Array.from({length:n},(_,i)=>({st:0,nx:0.3+i*0.25,x:P.x,y:P.y,ang:0}))})}},
+  {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:25,range:260,desc:'Ba phi kiếm bay vòng quanh người, tự lao tới chém quái ở gần rồi quay về.',up:'+0.5 giây, +25% sát thương',
+   cast(tg,l){sfx('wanjian_launch',0.45,0.2);const n=3;addZone({kind:'blades',follow:1,T:6+0.5*(l-1),n,r:80*Ar(),dmg:this.power*lv(l)*pw(),o:H({kb:20}),hm:new Map(),rot:0,sw:Array.from({length:n},(_,i)=>({st:0,nx:0.3+i*0.25,x:P.x,y:P.y,ang:0}))})}},
   {id:'k6',hotkey:'X',ground:true,power:38,name:'Vạn Kiếm Quy Tông',g:'萬',kind:'ult',cd:24,range:VAN_KIEM.range,desc:'Chọn vị trí để gọi mưa kiếm trong vùng đã ngắm.',up:'+2 thanh kiếm, +25% sát thương',
    cast(tg,l){
     const n=14+2*(l-1),power=this.power,scale=Ar();
@@ -2100,7 +2100,7 @@ function newRun(skip){
   kills:0,coins:0,dmgDealt:0,level:1,xp:0,picks:0,lvWave:0,reroll:3,shake:0,freeze:0,slow:0,paused:false,over:false,cam:{x:AW/2,y:AH/2},spawnAcc:0,packT:6,eliteT:[],clearing:0,qs:[],ev:null,evT:40,noHit:0,mk:[],mkRe:0,brk:[],brkT:4,wTarget:30,wK:0,wC:0,wD:0,wT:0,flash:0};
  P={x:AW/2,y:AH/2,r:14,facing:1,moveAng:0,aimAng:0,t:0,moving:false,av:0,atkT:0,atkAng:0,swingDir:1,thrust:0,dashT:0,dashCd:0,dashAng:0,inv:0,hurt:0,kx:0,ky:0,
   form:'human',rage:0,godCd:0,refund:0,transT:0,godDur:Gd.dur,combo:0,comboT:0,comboAtHit:0,comboPeak:0,hidden:0,buffSpd:0,trail:0,trailAcc:0,mods:{},stacks:{},pf:{},hp:100,mp:60,
-  kit:{w:sel.weapon,basic:{def:W.kit.find(d=>d.kind==='basic'),cd:0},act:W.kit.filter(d=>d.kind==='active'||d.kind==='auto').map((d,i)=>({def:d,lvl:i===0||d.id==='k2'?1:0,cd:d.hotkey?0:0.5})),pas:W.kit.filter(d=>d.kind==='passive').map(d=>({def:d,on:false})),ult:{def:W.kit.find(d=>d.kind==='ult'),lvl:0,cd:3}},
+  kit:{w:sel.weapon,basic:{def:W.kit.find(d=>d.kind==='basic'),cd:0},act:W.kit.filter(d=>d.kind==='active'||d.kind==='auto').map((d,i)=>({def:d,lvl:i===0||d.id==='k2'||(sel.weapon==='kiem'&&d.id==='k3')?1:0,cd:d.hotkey?0:0.5})),pas:W.kit.filter(d=>d.kind==='passive').map(d=>({def:d,on:false})),ult:{def:W.kit.find(d=>d.kind==='ult'),lvl:0,cd:3}},
   god:{def:Gd,basic:{cd:0},sk:Gd.skills.map(d=>({def:d,cd:1})),ult:Gd.ult?{def:Gd.ult,cd:2}:null}};
  recalc();P.hp=S.hp;P.mp=S.mp*0.6;
  paintGodIcon();
@@ -3667,7 +3667,7 @@ function resumeCP(){const cp=save.cp;if(!cp)return;sel.star=cp.star;sel.keo=!!cp
  newRun(true);
  Object.assign(G,{path:cp.path||null,coins:cp.coins|0,kills:cp.kills|0,level:cp.level||1,xp:cp.xp||0,dmgDealt:cp.dmg||0,t:cp.t||0,reroll:cp.reroll??3,matRun:{...(cp.matRun||{duoc:0,hiem:0})},danNext:cp.danNext||null});
  P.mods={...(cp.mods||{})};P.stacks={...(cp.stacks||{})};(cp.act||[]).forEach((l,i)=>{if(P.kit.act[i])P.kit.act[i].lvl=l});(cp.pas||[]).forEach((o,i)=>{if(P.kit.pas[i])P.kit.pas[i].on=o});P.kit.ult.lvl=cp.ult||0;
- if(P.kit.act[1]?.def.id==='k2')P.kit.act[1].lvl=Math.max(1,P.kit.act[1].lvl);
+ if(P.kit.act[1]?.def.id==='k2')P.kit.act[1].lvl=Math.max(1,P.kit.act[1].lvl);if(P.kit.w==='kiem'){const h=P.kit.act.find(q=>q.def.id==='k3');if(h)h.lvl=Math.max(1,h.lvl)}
  recalc();
  P.hp=Number.isFinite(cp.hp)?clamp(cp.hp,0,S.hp):S.hp;
  P.mp=Number.isFinite(cp.mp)?clamp(cp.mp,0,S.mp):S.mp*0.6;
