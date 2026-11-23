@@ -30,6 +30,17 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - **6 ô trang bị:** Vũ khí, Y phục, Hộ phù, Hài, Nhẫn/Bội, Đai/Găng.
 - Bản chơi thử (artifact của tài khoản cũ): https://claude.ai/artifact/7HgwkR1wd2kZ521bQ1oRTA. Tài khoản khác sẽ đăng link mới.
 
+## Sở thích thẩm mỹ của chủ game (rút ra từ góp ý)
+- VFX phải chau chuốt, dày, có chiều sâu. Nét mỏng, phẳng là "như đồ chơi". Vòng elip đòn C phải có độ dày đáng kể.
+- Không để đòn đánh trông như nhân vật bị giật, lag hay xoay 360° bằng cách lật sprite. Cảm giác xoay để VFX lo.
+- Đòn A, B, C phải liền mạch như một combo. Vệt chém phải nằm trước mặt, đúng hướng chém.
+- Không dùng mảnh, hạt lạ do demo để lại (ví dụ tia trúng cọc trong bản xuất Godot bị xem là "mảnh băng").
+- HUD gọn: ô kỹ năng không quá to, thanh máu và mana đủ to, không che màn hình. Joystick cố định góc trái dưới, không hiện ở chỗ chạm khác.
+- Điện thoại (iPhone, Samsung): không được tự phóng to khi bấm đúp hoặc khi nhập tên. Nút không được lọt khỏi khung.
+- Ngộ Không: khỉ con là con của Ngộ Không, không đeo vòng kim cô. Hình phải cổ trang, không giống võ sĩ hiện đại.
+- Chủ game thích được thử ngay trong game: khi cần duyệt hiệu ứng, có thể làm tạm ô kỹ năng TEST, duyệt xong thì xóa.
+- Ảnh và video tham chiếu đã gửi: `nguon/tham_chieu/` (xem README trong đó).
+
 ## Đã chốt, CHƯA làm vào game (việc tiếp theo)
 1. **Tách vũ khí thành lớp riêng** cho mọi động tác (nam, nữ). Đã làm thử ổn trên đòn A nam, xem `nguon/pixellab/wl/`.
    - `cong_cu/claude/unsword.py`: xóa kiếm khỏi frame theo khớp `sword_grip/tip` trong file job khung xương (`nguon/pixellab/combo5/job_*.json`).
