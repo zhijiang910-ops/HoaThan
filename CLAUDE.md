@@ -24,8 +24,9 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
   - Đã bỏ Lướt Trảm, Kiếm Ảnh, Kiếm Tâm, Kiếm Ý. Code lướt `cutC` vẫn giữ vì Huyết Ảnh dùng.
 - **HUD ô kỹ năng:** hàng trên 4 ô chủ động (Q, F, X + 1 trống). Hàng dưới: 2 ô chiêu tự thi triển có hồi chiêu, máu, mana, 1 ô dự phòng. Nội tại cộng chỉ số không hiện ô.
 - **Cấp và phẩm:**
-  - Tối đa 120 cấp, 12 phẩm (mỗi phẩm 10 cấp). Ra mắt mở đến Lv70 và 7 phẩm đầu (`LV_OPEN`, `TIER_OPEN`).
-  - 5 phẩm khóa: Hồng Hoang, Thái Cổ, Vô Cực, Tạo Hóa, Thiên Đạo.
+  - Tạm mở đến **Lv70**, 7 phẩm đầu, mỗi phẩm 10 cấp (`LV_OPEN`, `TIER_OPEN`).
+  - **Cấp tối đa CHƯA chốt.** Đừng tính theo mốc 120; chủ game có thể để tối đa 200. Số phẩm sau Lv70 cũng chưa chốt.
+  - 5 phẩm khóa đang đặt chỗ trong code (Hồng Hoang, Thái Cổ, Vô Cực, Tạo Hóa, Thiên Đạo) chỉ là tạm, không rơi ra.
   - Cường hóa tối đa +12, mở đến +9 (`FORGE_OPEN`).
 - **6 ô trang bị:** Vũ khí, Y phục, Hộ phù, Hài, Nhẫn/Bội, Đai/Găng.
 - Bản chơi thử (artifact của tài khoản cũ): https://claude.ai/artifact/7HgwkR1wd2kZ521bQ1oRTA. Tài khoản khác sẽ đăng link mới.

@@ -4053,10 +4053,10 @@ function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* 
 
 /* ================= TRANG BỊ: 7 PHẨM CẤP ================= */
 const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300},
- /* 5 phẩm sau khóa lúc ra mắt (trần Lv70), mở khi nâng trần cấp */
+ /* Phẩm sau Lv70: tạm đặt chỗ, khóa. Số phẩm và tên sẽ chốt khi chốt cấp tối đa */
  {n:'Hồng Hoang',k:'Hồng Hoang khí',m:14,a:5,v:700,lock:1},{n:'Thái Cổ',k:'Thái Cổ khí',m:19,a:6,v:1500,lock:1},{n:'Vô Cực',k:'Vô Cực khí',m:25,a:6,v:3000,lock:1},{n:'Tạo Hóa',k:'Tạo Hóa khí',m:33,a:6,v:6000,lock:1},{n:'Thiên Đạo',k:'Thiên Đạo khí',m:45,a:6,v:12000,lock:1}];
-/* Cấp nhân vật: tối đa 120, 12 phẩm (mỗi phẩm 10 cấp). Ra mắt mở đến Lv70 (7 phẩm đầu), phần sau khóa */
-const LV_MAX=120,LV_OPEN=70,TIER_OPEN=TIERS.filter(t=>!t.lock).length;
+/* Cấp nhân vật: tạm mở đến Lv70 (7 phẩm đầu, mỗi phẩm 10 cấp). Cấp tối đa CHƯA chốt (có thể tới 200); các phẩm 'lock' chỉ là chỗ chờ */
+const LV_OPEN=70,TIER_OPEN=TIERS.filter(t=>!t.lock).length;
 const SLOTS={vk:{n:'Vũ khí',base:[['dmgW',6],['dmgM',6]],names:['Thanh Phong Kiếm','Hàn Thiết Kiếm','Long Tuyền Kiếm','Tử Điện Kiếm','Trảm Yêu Kiếm','Thái A Kiếm']},
  ao:{n:'Y phục',base:[['hp',16],['armor',2]],names:['Bố Y','Thanh Sam','Huyền Giáp','Vân Cẩm Bào','Kim Lũ Y','Bát Quái Bào']},
  phu:{n:'Hộ phù',base:[['cdr',3],['mpR',1]],names:['Bình An Phù','Trấn Tà Phù','Ngũ Lôi Phù','Thái Thượng Phù','Hộ Tâm Phù']},
