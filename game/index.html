@@ -3865,7 +3865,7 @@ function renderCreate(){const W=WEAPONS[cr.view],H0=HAIR[cr.gender][cr.hairI];
  $('#crWInfo').innerHTML=`<span>${W.tr}</span>${cr.view==='kiem'?'':'<em>Đang thử nghiệm, bản đầu chỉ chơi được Kiếm</em>'}`;
  $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crHairC').innerHTML=HAIRC.map(h=>`<button class="cxc${cr.hairC===h.k?' on':''}${h.on?'':' lock'}" data-cc="${h.k}" ${h.on?'':'disabled'} title="${h.n}${h.on?'':' · chưa có sprite'}"><i style="background:${h.c}"></i></button>`).join('');
- $('#crInfo').innerHTML=`<div><span>Sở trường</span><b>${W.role}</b></div>`;
+ $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${W.name}</b></div><div><span>Sở trường</span><b>${W.role}</b></div>`;
  const kit=W.kit,rows=[['Chủ động',kit.filter(x=>x.hotkey)],['Tự kích hoạt',kit.filter(x=>x.kind!=='passive'&&!x.hotkey)],['Nội tại',kit.filter(x=>x.kind==='passive'&&!x.legacy)]].filter(([,arr])=>arr.length);
  $('#crSk').innerHTML=rows.map(([lab,arr])=>`<div class="cxskr"><span>${lab}</span><div>${arr.map(x=>{const i=kit.indexOf(x);return `<button class="cxs ${x.kind}${cr.sk===i?' on':''}" data-sk="${i}" title="${x.name}">${x.g}</button>`}).join('')}</div></div>`).join('');
  const X=kit[cr.sk]||kit[0],KN=X.hotkey?'Chủ động · '+X.hotkey:{basic:'Đánh thường tự động',active:'Chiêu tự kích hoạt',auto:'Bị động tự kích hoạt',ult:'Tuyệt kỹ tự kích hoạt',passive:'Nội tại'}[X.kind]||'';
