@@ -16,7 +16,7 @@
 | Rương boss và tiến trình | **Đang chạy:** hạ boss hoàn thành ải/mở sao kể cả khi không đủ thể lực; rương nhận thưởng tốn 15 thể lực, bảo đảm 4 Huyền Thiết + lượt dược liệu, có tỷ lệ trang bị/bí tịch tăng theo sao; lần đầu nhận Truy Phong Kiếm. | **Đã chốt, CHƯA triển khai:** khi thiếu thể lực, giữ một rương chờ nhận hợp lệ thay vì bỏ qua là mất thưởng; nhận sau khi đủ 15 thể lực, không cần đánh boss lại; chống nhận trùng/farm vô hạn không tốn thể lực. Giữ tỷ lệ thưởng ★1–★5 hiện có. Bí tịch trùng cần công dụng khi mở hệ nâng cấp bí tịch; kinh tế/phẩm đá cân sau. |
 | Trang bị và kho | **Đang chạy:** 6 ô (Vũ khí, Y phục, Hài, Hộ phù, Nhẫn/Bội ngọc, Đai/Găng tay), so/mặc đồ, phân giải, kho 120 món và hàng chờ, bảo vệ đồ đang mặc. | **Đã chốt, CHƯA triển khai:** thêm ô thứ 7 là **Nón** (trang bị riêng), có nút **Ẩn/Hiện Nón** chỉ tác động phần hình ảnh; khi ẩn vẫn mặc Nón và hưởng đủ chỉ số. Cần UI, asset Nón, hệ hiển thị Nón cho nhân vật nam/nữ và kiểm tra lưu game cũ. |
 | Cường hóa | Đang chạy +0 đến +9 cho 6 ô hiện tại, rủi ro rớt cấp từ +5, hư hỏng ở +8/+9; món hỏng giữ lại để sửa. Có đọc đồ cũ và báo mốc lần đầu. | **Đã chốt cho thiết kế mới:** Vũ khí +3 tăng chỉ số ẩn, +6 mở đòn C, +9 tăng hiệu ứng/sát thương/phạm vi tùy loại. Trang bị +3/+6 tăng chỉ số; +9 tăng chỉ số hoặc passive/buff phòng ngự theo món. Thêm Nón thứ 7 theo quy tắc chung, chỉ số riêng chưa chốt. Không tự đổi các chỉ số đã ghi ở bảng; kinh tế/phẩm đá còn chờ cân. |
-| Đòn thường Kiếm | A–B trong lúc di chuyển. +3 xuyên 5% giáp cho đòn thường. +6 mở C Lướt Trảm (lấy đà → lướt chém xuyên hàng ~160 → trượt dừng → thu thế, 15 sát thương, mỗi mục tiêu 1 lần); dấu Phá Thế hỗ trợ nhát thường kế và giúp phá Cương Khí. +9 thêm kiếm khí ngắn. | Demo C Lướt Trảm nam + nữ (`demo/nhat_c/`) chờ duyệt. Lỗi: nhát B nữ đang dùng anim chưởng (`attack2`). Làm rõ hạ trọng tâm, một kiếm nhất quán, đúng tay cầm, nhát ra có lực và về thế mượt. Nâng +6 nên mở cách đánh có ích. Giữ nhát C gắn combo; +9 giữ vai trò riêng. |
+| Đòn thường Kiếm | **Hiện trạng code (23/11):** có cơ chế liên kích A–B, kiếm +6 mở đòn C và hiệu ứng đi kèm, nhưng animation/VFX đang dùng thuộc **phiên bản cũ**. Mốc +3 xuyên 5% giáp cho đòn thường. | **ĐÃ CHỐT: LOẠI BỎ BỘ TƯ THẾ CHÉM A–B–C CŨ khỏi định hướng sản xuất.** Không dùng demo C Lướt Trảm, chuỗi pose A/B/C cũ hay thông số chuyển động cũ làm chuẩn mới; **chưa có bản animation A–B–C thay thế được duyệt**. Giữ ý nghĩa cơ chế: Kiếm +6 mở đòn C, +9 thêm hiệu ứng hoặc sát thương sau C. Đề xuất/duyệt concept động tác mới riêng trước khi triển khai; **không hiểu quyết định loại pose là lệnh xóa code combo A–B–C hiện đang chạy**. |
 | Kỹ năng Kiếm | Kiếm Khí Trảm (Q), Hoành Tảo (F), Vạn Kiếm Quy Tông (X) chủ động. Vạn Kiếm chọn vùng đặt mưa kiếm. Kiếm Ảnh là ba kiếm tự xoay quanh người, có vòng hồi. Có nội tại Kiếm Tâm. | Chủ động nhìn rõ nút dùng. Tự kích hoạt hiển thị vòng hồi riêng. Bấm xem chú thích thuốc và kỹ năng, gồm sát thương đơn/diện, hiệu ứng, hồi chiêu, nội lực và số lượng thuốc tùy mục. |
 | Lướt và bí tịch | Có Lướt và hủy nhát đang lấy đà. Có bí tịch cộng chỉ số vĩnh viễn và biến thể Truy Phong Kiếm, Hồi Phong. Truy Phong dùng được từ +0 và biến đổi nhát đầu sau Lướt. Hồi Phong ảnh hưởng Hoành Tảo sau Lướt. Chọn một bí tịch Lướt mang theo. | Tối đa một ô bí tịch chủ động ở giai đoạn thử, chưa xác nhận ô riêng trong bản đóng gói. Ưu tiên thay đổi cách dùng một chiêu; có thể thử tăng tốc ngắn hoặc thêm dư ảnh Lướt. Dịch chuyển xuyên địa hình và nhiều biến thể đồng thời để sau. |
 | Luyện đan | Tinh anh và boss cho đường lấy Tuyết Sâm/Băng Tâm Liên. Có Cuồng Huyết Đan dùng tạm trong ải và Trúc Cơ Đan vĩnh viễn giới hạn trong bản thử. Có Hộ Thể Đan giải trạng thái. | Định hướng bản đầu ưu tiên đan dùng trong ải. Trúc Cơ Đan hiện vẫn tồn tại trong code (+20 HP/viên, một lượt dùng mở theo mỗi sao đã vượt, tối đa 5). Để chủ game chốt phần thử này trước khi mở rộng; bỏ hướng làm nhiều đan cộng vĩnh viễn nhiều chỉ số. |
@@ -25,7 +25,7 @@
 | Liên kích | Có đếm tụt dần khi ngừng đánh, lớp màu đen đi qua chữ số và thưởng theo mốc. Bản hiện tại giữ 2,2 giây rồi tụt trong 2,4 giây. | Mốc 25 tích Nộ nhanh hơn 5%, 100 thêm 4 điểm phần trăm chí mạng, 300 thêm 5% sát thương. Thưởng mất theo mốc khi tụt. Đây là phần Claude đã sửa, ưu tiên giữ hành vi hiện tại. |
 | Hướng dẫn lần đầu | Có luồng đi, đánh, Lướt và nối đòn. Ghi nhận để lần sau không lặp. Tạm dừng khi chờ xác nhận, có spotlight vào nút Lướt ở bước tương ứng. | Giữ nguyên tắc chỉ hiện ở lần đầu và chiếu đúng ô cần thao tác. Mở rộng có chọn lọc cho Hóa Thân, thuốc, nghỉ giữa ải và rèn nếu bổ sung hướng dẫn mới. |
 | Màn hình điện thoại | Có chặn dọc, hiện yêu cầu xoay ngang và dừng chạy trận khi đang dọc. Chặn tự thu phóng khi chạm/chạm đúp/chụm ngón trên vùng chơi (22/11). | Xác nhận trên iPhone/Safari thật và trường hợp mở link trong app chat. |
-| Hiệu ứng và chuyển động | Có bản A–B sửa tư thế, nối thế kiếm, idle ổn định và Vạn Kiếm ngắm vùng. Có video thử nhát C. | Soi đổi hướng khi vừa di chuyển vừa đánh, tay cầm, frame dư kiếm, tóc bị giật khi thoát đòn, nhịp tiếp xúc và hiệu ứng trúng. Xuất clip tốc độ thật và quay chậm để duyệt trước khi ghép C mới. |
+| Hiệu ứng và chuyển động | Game còn đang chứa hoạt ảnh/VFX Kiếm A–B–C ở phiên bản cũ; có video demo lịch sử. | **Bộ tư thế Kiếm A–B–C cũ bị loại khỏi kế hoạch tiếp tục**, không dùng để duyệt master. Khi dựng bộ mới phải có concept được duyệt, khóa sprite/master nam nữ, kiểm đồng bộ vũ khí, chân trụ, chuyển hướng và hit timing; xuất clip thật/chậm để QA. Không tự thay code game trước khi chủ game giao làm. |
 
 ## 2. Các thông số thử quan trọng
 
@@ -48,17 +48,17 @@
 
 ### Cường hóa
 
-| Mốc muốn lên | Thành công | Giữ cấp | Rớt 1 cấp | Hư hỏng | Huyền Thiết |
-|---|---:|---:|---:|---:|---:|
-| +1 / +2 | 100% | 0% | 0% | 0% | 1 / 1 |
-| +3 / +4 | 80% | 20% | 0% | 0% | 2 / 2 |
-| +5 | 50% | 40% | 10% | 0% | 3 |
-| +6 | 40% | 50% | 10% | 0% | 3 |
-| +7 | 25% | 55% | 20% | 0% | 4 |
-| +8 | 15% | 59% | 20% | 6% | 5 |
-| +9 | 8% | 56% | 25% | 11% | 6 |
+| Mốc muốn lên | Thành công | Giữ cấp | Rớt 1 cấp | Hư hỏng | Huyền Thiết (đề xuất mới) | Nguyên liệu phụ (đề xuất) |
+|---|---:|---:|---:|---:|---:|---|
+| +1 / +2 | 100% | 0% | 0% | 0% | 1 / 1 | Không |
+| +3 / +4 | 80% | 20% | 0% | 0% | 2 / 2 | Không |
+| +5 | 50% | 40% | 10% | 0% | **4** | Không |
+| +6 | 40% | 50% | 10% | 0% | **5** | Không |
+| +7 | 25% | 55% | 20% | 0% | **7** | Không |
+| +8 | 15% | 59% | 20% | 6% | **10** | **1 Tinh Hoa Rèn** (tên tạm) |
+| +9 | 8% | 56% | 25% | 11% | **14** | **2 Tinh Hoa Rèn** (tên tạm) |
 
-**ĐÃ CHỐT THIẾT KẾ, CHƯA SỬA CODE GAME (23/11/2026):** Tỷ lệ thành công +1/+2 = 100%; +3/+4 = 80%; **+5 = 50%; +6 = 40%; +7 = 25%; +8 = 15%; +9 = 8%**. Các cột thất bại chưa được chủ game chốt lại: bảng tạm **giữ nguyên xác suất rớt cấp và hư hỏng cũ**, phân bổ phần chênh lệch vào tỷ lệ *Giữ cấp* để mỗi dòng đủ 100%. Cần duyệt lại phân phối thất bại trước khi cập nhật code game.
+**ĐÃ CHỐT THIẾT KẾ, CHƯA SỬA CODE GAME (23/11/2026):** Tỷ lệ thành công +1/+2 = 100%; +3/+4 = 80%; **+5 = 50%; +6 = 40%; +7 = 25%; +8 = 15%; +9 = 8%**. Các cột thất bại chưa được chủ game chốt lại: bảng tạm **giữ nguyên xác suất rớt cấp và hư hỏng cũ**, phân bổ phần chênh lệch vào tỷ lệ *Giữ cấp* để mỗi dòng đủ 100%. **Đã chốt hướng tăng tiêu hao Huyền Thiết ở +5 đến +9 và thêm nguyên liệu phụ ở +8/+9. Số lượng 4/5/7/10/14 cùng tên tạm `Tinh Hoa Rèn` (1 ở +8, 2 ở +9) là ĐỀ XUẤT ĐỂ DUYỆT, KHÔNG PHẢI SỐ ĐÃ CHỐT.** Phải chốt nguồn rơi nguyên liệu phụ, tỷ lệ rơi và cân kinh tế trước khi sửa code.
 
 Mỗi cấp tăng 4% chỉ số gốc. Sửa tốn 3 Huyền Thiết và đưa món về +0. Thưởng mốc lấy mốc cao nhất trên từng món.
 
@@ -92,9 +92,9 @@ Mỗi cấp tăng 4% chỉ số gốc. Sửa tốn 3 Huyền Thiết và đưa m
 
 ## 4. Thứ tự làm tiếp và cách nghiệm thu
 
-1. Duyệt chuyển động và công dụng nhát C. Dựng thử với nam và nữ, so cùng bố cục và cùng mục tiêu, có đoạn tắt VFX. Nhát C lướt chém là phương án demo, đoạn lướt thật và cân bằng còn phải thử.
-2. Khi được duyệt, tích hợp tại `startSwordCut` và `finishSwordCut`. Kiểm tra +0/+3/+6/+9, không dư kiếm, không mất khả năng vừa đi vừa đánh. Kiểm tra Lướt hủy lấy đà và Truy Phong hoạt động đúng, mỗi mục tiêu chỉ trúng một lần trong phương án lướt. Kiểm tra cản địa hình, đổi hướng và va chạm khi bị vây.
+1. **Loại các tư thế Kiếm A–B–C cũ khỏi kế hoạch sản xuất** (không xóa code hiện tại). Phác thảo bộ combo mới theo Master nam/nữ để chủ game duyệt; KHÔNG dùng demo `demo/nhat_c/` hay logic nhát C Lướt Trảm cũ làm chuẩn cho animation mới.
+2. Sau khi được duyệt mới triển khai animation/VFX A–B–C mới, kiểm tra +0/+3/+6/+9, hướng chém, đúng tay cầm và socket, đồng bộ điểm chạm/hitbox và nối đòn; giữ chức năng các kỹ năng khác không bị ảnh hưởng. Đồng thời chốt số lượng Huyền Thiết mới +5 đến +9, vật liệu phụ +8/+9 và nguồn kiếm nguyên liệu trước khi sửa hệ cường hóa.
 3. Chạy lại luồng tạo nhân vật → sảnh → ải → nghỉ → checkpoint → boss → rương → cường hóa. Khi triển khai: kiểm lưu/nhận rương chờ nếu thiếu thể lực, không mất thưởng và không nhận trùng; kiểm Nón thứ 7 (Ẩn/Hiện không mất chỉ số, hoạt ảnh nam/nữ, save cũ). Test HUD máu thấp, mô tả kỹ năng/thuốc, Vạn Kiếm ngắm vùng, hướng dẫn lần đầu, Liên kích và xoay ngang. Dùng một lượt hồ sơ mới và một lượt hồ sơ cũ.
 4. Cân vòng solo trước. Sau đó mới triển khai tính năng cần tài khoản, máy chủ, sổ giao dịch, Raid/PvP và bảng rơi chính thức.
 
-Hồ sơ cũ ghi kết quả kiểm thử tại thời điểm từng chặng. Tình trạng trong tài liệu này dựa trên code bản đóng gói và hồ sơ bàn giao. Safari iPhone thật, cân bằng dài hạn và cảm giác nhát C trong game vẫn cần kiểm thử trực tiếp.
+Hồ sơ cũ ghi kết quả kiểm thử tại thời điểm từng chặng. Tình trạng trong tài liệu này dựa trên code bản đóng gói và hồ sơ bàn giao; những tư thế A–B–C và demo Lướt Trảm cũ chỉ là lịch sử, đã bị loại khỏi phương án sản xuất mới. Safari iPhone thật, cân bằng dài hạn và combo Kiếm mới vẫn cần kiểm thử trực tiếp.
