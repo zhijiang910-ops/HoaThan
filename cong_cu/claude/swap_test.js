@@ -1,0 +1,11 @@
+const L=require('./rec_lib');const O=process.argv[3];
+(async()=>{const {b,pg,errs}=await L.open(process.argv[2],{w:844,h:390,mobile:true,seed:false});
+ await pg.fill('input','Thu');await pg.click('#crGo');await pg.waitForTimeout(1000);
+ await pg.evaluate(()=>{const s=JSON.parse(localStorage.getItem('tdst'));return 0});
+ await pg.screenshot({path:O+'/s1_lobby.png'});
+ await pg.click('#lbSwap');await pg.waitForTimeout(600);await pg.screenshot({path:O+'/s2_edit.png'});
+ await pg.locator('#create button',{hasText:'Nữ'}).first().click();await pg.fill('input','Thu Nữ');await pg.click('#crGo');await pg.waitForTimeout(1000);
+ await pg.screenshot({path:O+'/s3_lobby_nu.png'});
+ const st=await pg.evaluate(()=>{const s=JSON.parse(localStorage.getItem('tdst'));return {prof:s.prof,inv:(s.inv||[]).length,eq:s.eq}});console.log(JSON.stringify(st));
+ await pg.evaluate(()=>TDST.newRun());await pg.waitForTimeout(1200);console.log('game gender',await pg.evaluate(()=>TDST.G.cfg.gender));await pg.screenshot({path:O+'/s4_play.png'});
+ console.log(errs);await b.close()})();

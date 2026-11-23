@@ -1,0 +1,10 @@
+const {chromium,devices}=require('playwright');const fs=require('fs'),path=require('path');
+const ROOT='/home/user/HoaThan/game';
+(async()=>{const b=await chromium.launch();const d={...devices['iPhone 15 Pro Max']};d.viewport={width:+process.argv[2]||739,height:+process.argv[3]||378};d.deviceScaleFactor=1;
+ const ctx=await b.newContext(d);const pg=await ctx.newPage();
+ await ctx.route('http://game.test/**',r=>{const u=new URL(r.request().url());let f=path.join(ROOT,decodeURIComponent(u.pathname));if(u.pathname==='/')f=path.join(ROOT,'index.html');if(!fs.existsSync(f))return r.fulfill({status:404,body:''});r.fulfill({body:fs.readFileSync(f),contentType:{'.html':'text/html','.png':'image/png'}[path.extname(f)]||'application/octet-stream'})});
+ await ctx.addInitScript(()=>{localStorage.setItem('tdst',JSON.stringify({prof:{name:'Kaee',gender:'nam',weapon:'kiem',hair:0,hairC:0,lv:1,exp:0,created:1},tut:1}))});
+ await pg.goto('http://game.test/');await pg.waitForTimeout(2000);
+ await pg.evaluate(()=>{[...document.querySelectorAll('button')].find(x=>/Vượt Ải/.test(x.textContent)).click()});await pg.waitForTimeout(800);await pg.evaluate(()=>document.getElementById('startBtn').click());await pg.waitForTimeout(2500);
+ console.log(await pg.evaluate(()=>{const out=[];for(const id of ['ava','coins','vbars','skills','acts','dashBtn','godBtn','pots','danBtn','top','avaBox','quests']){const e=document.getElementById(id);if(!e)continue;const r=e.getBoundingClientRect();out.push(id+' '+[r.left,r.top,r.width,r.height].map(Math.round)+' kids:'+[...e.children].slice(0,6).map(c=>c.tagName+'.'+c.className+'#'+c.id+'['+Math.round(c.getBoundingClientRect().width)+'x'+Math.round(c.getBoundingClientRect().height)+']').join(' '))}return out.join('\n')}));
+ await pg.screenshot({path:'hud_'+(process.argv[2]||739)+'.png'});await b.close()})();

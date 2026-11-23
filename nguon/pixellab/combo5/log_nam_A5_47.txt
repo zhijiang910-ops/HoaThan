@@ -1,0 +1,2 @@
+job 69869248-bda5-4295-aeb0-02b002a8922e {'usage': None, 'background_job_id': '69869248-bda5-4295-aeb0-02b002a8922e', 'status': 'processing'}
+done 8 in 86 s {'seed': 47, 'type': 'done', 'action': 'smoothing frames', 'status': 'initializing', 'progress': 1.0, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': 'a5a885cd-330a-4c14-ae97-2e91e8bfdb8e', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-22T22:32:31.698085+00:00', 'estimated_wait_seconds': 0}

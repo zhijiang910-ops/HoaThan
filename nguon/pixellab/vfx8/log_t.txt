@@ -1,0 +1,2 @@
+hv_mark quote 6
+hv_mark done 33 s {'h': 72, 'w': 134} 18 20 | Made a crimson ground seal that snaps inward, rotates four sharp targeting ticks, pulses once, and fades away. It has a flattened perspective, white-red highlig

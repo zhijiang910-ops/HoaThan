@@ -1,0 +1,219 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "hv_ring",
+ "fps": 24,
+ "frame_ms": 42,
+ "frames": 24,
+ "loop": false,
+ "canvas": {
+  "w": 246,
+  "h": 169
+ },
+ "anchor": {
+  "kind": "feet",
+  "x": 123,
+  "y": 109
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 22,
+   "frame": {
+    "w": 240,
+    "h": 140
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 22,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -120,
+    "y": -83
+   }
+  },
+  {
+   "name": "whole-with-sprite",
+   "title": "the whole effect with the sprite in it",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 240,
+    "h": 163
+   },
+   "sheets": [
+    {
+     "file": "whole-with-sprite.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -120,
+    "y": -106
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 22,
+   "frame": {
+    "w": 240,
+    "h": 117
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 22,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -120,
+    "y": -60
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 2,
+   "frames": 19,
+   "frame": {
+    "w": 137,
+    "h": 131
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 19,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -69,
+    "y": -83
+   }
+  },
+  {
+   "name": "part-slash",
+   "title": "the slash part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 19,
+   "frame": {
+    "w": 134,
+    "h": 34
+   },
+   "sheets": [
+    {
+     "file": "part-slash.png",
+     "first_frame": 0,
+     "frames": 19,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -66,
+    "y": -60
+   }
+  },
+  {
+   "name": "part-wave",
+   "title": "the wave part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 1,
+   "frames": 21,
+   "frame": {
+    "w": 240,
+    "h": 114
+   },
+   "sheets": [
+    {
+     "file": "part-wave.png",
+     "first_frame": 0,
+     "frames": 21,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -120,
+    "y": -57
+   }
+  },
+  {
+   "name": "part-sparks",
+   "title": "the sparks part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 2,
+   "frames": 14,
+   "frame": {
+    "w": 116,
+    "h": 111
+   },
+   "sheets": [
+    {
+     "file": "part-sparks.png",
+     "first_frame": 0,
+     "frames": 14,
+     "columns": 4,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -57,
+    "y": -83
+   }
+  },
+  {
+   "name": "part-petals",
+   "title": "the petals part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 3,
+   "frames": 18,
+   "frame": {
+    "w": 137,
+    "h": 120
+   },
+   "sheets": [
+    {
+     "file": "part-petals.png",
+     "first_frame": 0,
+     "frames": 18,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -69,
+    "y": -72
+   }
+  }
+ ]
+}

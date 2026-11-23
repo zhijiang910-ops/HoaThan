@@ -1,0 +1,6 @@
+const {chromium}=require('playwright');const fs=require('fs'),path=require('path');const ROOT=process.argv[2];
+(async()=>{const b=await chromium.launch();const pg=await b.newPage({viewport:{width:844,height:390},isMobile:true,hasTouch:true});const errs=[];pg.on('pageerror',e=>errs.push(e.message));
+ await pg.route('http://game.test/**',r=>{const u=new URL(r.request().url());let f=path.join(ROOT,decodeURIComponent(u.pathname));if(u.pathname==='/')f=path.join(ROOT,'index.html');if(!fs.existsSync(f))return r.fulfill({status:404,body:''});r.fulfill({body:fs.readFileSync(f),contentType:{'.html':'text/html','.png':'image/png','.jpg':'image/jpeg','.mp3':'audio/mpeg'}[path.extname(f)]||'application/octet-stream'})});
+ await pg.goto('http://game.test/#xem-hoat-anh');await pg.waitForTimeout(2500);await pg.click('#avX');await pg.waitForTimeout(500);
+ await pg.fill('input','Thu');await pg.click('#crGo');await pg.waitForTimeout(1000);await pg.locator('button',{hasText:'Vượt Ải'}).first().click();await pg.waitForTimeout(700);await pg.locator('button',{hasText:'Xuất phát'}).first().click();await pg.waitForTimeout(2000);
+ console.log('url',pg.url(),'state',await pg.evaluate(()=>TDST.G&&TDST.G.state),errs);await b.close()})();

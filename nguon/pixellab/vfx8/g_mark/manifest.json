@@ -1,0 +1,119 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "hv_mark",
+ "fps": 20,
+ "frame_ms": 50,
+ "frames": 18,
+ "loop": false,
+ "canvas": {
+  "w": 134,
+  "h": 72
+ },
+ "anchor": {
+  "kind": "origin",
+  "x": 67,
+  "y": 36
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 17,
+   "frame": {
+    "w": 128,
+    "h": 66
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 17,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -64,
+    "y": -33
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 17,
+   "frame": {
+    "w": 128,
+    "h": 66
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 17,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -64,
+    "y": -33
+   }
+  },
+  {
+   "name": "part-seal",
+   "title": "the seal part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 17,
+   "frame": {
+    "w": 128,
+    "h": 66
+   },
+   "sheets": [
+    {
+     "file": "part-seal.png",
+     "first_frame": 0,
+     "frames": 17,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -64,
+    "y": -33
+   }
+  },
+  {
+   "name": "part-pulse",
+   "title": "the pulse part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 10,
+   "frames": 5,
+   "frame": {
+    "w": 98,
+    "h": 50
+   },
+   "sheets": [
+    {
+     "file": "part-pulse.png",
+     "first_frame": 0,
+     "frames": 5,
+     "columns": 3,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": -49,
+    "y": -25
+   }
+  }
+ ]
+}

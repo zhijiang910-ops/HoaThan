@@ -1,0 +1,169 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "aura9b",
+ "fps": 16,
+ "frame_ms": 63,
+ "frames": 24,
+ "loop": true,
+ "canvas": {
+  "w": 70,
+  "h": 46
+ },
+ "anchor": {
+  "kind": "feet",
+  "x": 35,
+  "y": 36
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 57,
+    "h": 39
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -25,
+    "y": -33
+   }
+  },
+  {
+   "name": "whole-with-sprite",
+   "title": "the whole effect with the sprite in it",
+   "depth": "both",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 64,
+    "h": 39
+   },
+   "sheets": [
+    {
+     "file": "whole-with-sprite.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -32,
+    "y": -33
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 57,
+    "h": 29
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -25,
+    "y": -23
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 47,
+    "h": 29
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -16,
+    "y": -33
+   }
+  },
+  {
+   "name": "part-divine",
+   "title": "the divine part",
+   "depth": "both",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 57,
+    "h": 39
+   },
+   "sheets": [
+    {
+     "file": "part-divine.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -25,
+    "y": -33
+   }
+  },
+  {
+   "name": "part-edge",
+   "title": "the edge part",
+   "depth": "front",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 24,
+   "frame": {
+    "w": 40,
+    "h": 7
+   },
+   "sheets": [
+    {
+     "file": "part-edge.png",
+     "first_frame": 0,
+     "frames": 24,
+     "columns": 5,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -9,
+    "y": -11
+   }
+  }
+ ]
+}

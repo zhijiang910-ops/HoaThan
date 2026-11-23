@@ -1,0 +1,2 @@
+aura3 quote 4
+aura3 done 17 s {'h': 56, 'w': 112} 16 16 | Made the aura faint pale green, with translucent edge glow, barely visible wisps, and two tiny motes. The shape, timing, and seamless loop are unchanged.

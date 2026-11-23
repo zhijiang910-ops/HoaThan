@@ -1,0 +1,2 @@
+job 9c95fbb8-132e-462a-b1a4-347825543717 {'usage': None, 'background_job_id': '9c95fbb8-132e-462a-b1a4-347825543717', 'status': 'processing'}
+done 8 in 55 s {'seed': 47, 'type': 'done', 'action': 'smoothing frames', 'status': 'initializing', 'progress': 0.99, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': '2edb0e39-2b13-4d53-9278-6b10c111bb11', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-22T22:33:21.749567+00:00', 'estimated_wait_seconds': 0}

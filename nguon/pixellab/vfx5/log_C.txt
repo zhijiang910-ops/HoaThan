@@ -1,0 +1,2 @@
+k5C quote 10
+k5C done 189 s {'h': 106, 'w': 282} 10 14 | Made a wide, flat jade-cyan and silver sword sweep that spins twice around the character, passing behind and in front, then fades out over 10 frames. Try Sweep 

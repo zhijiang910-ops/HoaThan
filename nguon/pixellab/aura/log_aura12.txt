@@ -1,0 +1,2 @@
+aura12 quote 4
+aura12 done 41 s {'h': 56, 'w': 112} 16 16 | Kept the same aura shape and one-second loop, with black-violet smoky flames and intense white-blue lightning flashing every few frames. Electric sparks are at 

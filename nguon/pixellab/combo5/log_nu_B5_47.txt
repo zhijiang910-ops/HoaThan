@@ -1,0 +1,2 @@
+job 627db37d-6c28-4c21-b6dc-4a2f7bfdef29 {'usage': None, 'background_job_id': '627db37d-6c28-4c21-b6dc-4a2f7bfdef29', 'status': 'processing'}
+done 8 in 67 s {'seed': 47, 'type': 'message_progress', 'action': 'smoothing frames', 'status': 'initializing', 'progress': 1.0, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': '46055192-8eaa-49aa-b51a-0c7e5cf80305', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-22T22:38:35.818812+00:00', 'estimated_wait_seconds': 0}

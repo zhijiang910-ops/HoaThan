@@ -1,0 +1,14 @@
+const L=require('./rec_lib');const O=process.argv[3];
+(async()=>{const {b,pg,errs}=await L.open(process.argv[2],{gender:'nam',forge:0,w:844,h:390,mobile:true});
+ await pg.locator('button',{hasText:'Luyện Công'}).first().click();await pg.waitForTimeout(2500);
+ const st=()=>pg.evaluate(()=>({state:TDST.G.state,tr:TDST.G.training,en:TDST.G.enemies.length,forge:TDST.weaponForge(),dmg:Math.round(TDST.G.dmgDealt),hp:Math.round(TDST.P.hp),rage:Math.round(TDST.P.rage),form:TDST.P.form,dps:document.getElementById('trDps').textContent}));
+ console.log('start',JSON.stringify(await st()));await pg.screenshot({path:O+'/tr1.png'});
+ await pg.keyboard.down('KeyD');await pg.waitForTimeout(600);await pg.keyboard.up('KeyD');await pg.waitForTimeout(3000);
+ console.log('sau 3s',JSON.stringify(await st()));await pg.screenshot({path:O+'/tr2.png'});
+ await pg.click('#trP [data-t=hoa]');await pg.waitForTimeout(2500);console.log('hoa',JSON.stringify(await st()));await pg.screenshot({path:O+'/tr3.png'});
+ await pg.waitForTimeout(25000);console.log('sau 25s van hoa than?',JSON.stringify(await st()));
+ await pg.click('#trP [data-t=mob]');await pg.waitForTimeout(3000);console.log('mob',JSON.stringify(await st()));
+ await pg.click('#trP [data-t=gender]');await pg.waitForTimeout(2000);console.log('gender',await pg.evaluate(()=>TDST.G.cfg.gender),JSON.stringify(await st()));
+ await pg.click('#trP [data-t=god]');await pg.waitForTimeout(1500);console.log('god',await pg.evaluate(()=>TDST.P.god.def.name));
+ await pg.click('#trP [data-t=exit]');await pg.waitForTimeout(1000);console.log('lobby',await pg.evaluate(()=>!document.querySelector('#lobby').hidden&&!document.getElementById('trP')));
+ console.log(errs);await b.close()})();

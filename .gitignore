@@ -1,6 +1,9 @@
-# Asset có giấy phép không cho phân phối lại: không đưa lên git
-game/assets/
+# Repo để RIÊNG TƯ: asset có giấy phép được lưu ở đây theo quyết định của chủ game (chủ game chịu trách nhiệm). Không công khai repo.
 cong_cu/kiem_nam/*.png
 demo/**/*.mp4
 demo/**/*.png
 demo/**/*.jpg
+
+# file tạm
+__pycache__/
+*.pyc

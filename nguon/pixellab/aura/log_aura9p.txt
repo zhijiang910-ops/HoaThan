@@ -1,0 +1,2 @@
+aura9p quote 4
+aura9p done 17 s {'h': 56, 'w': 112} 16 16 | Recolored the aura violet-purple with brighter lilac blade-edge flames, a fuller glow, and six purple motes. The shape, timing, and seamless loop are unchanged,

@@ -1,0 +1,495 @@
+{
+ "frames": [
+  {
+   "filename": "hv-mark 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 1.png",
+   "frame": {
+    "x": 134,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 2.png",
+   "frame": {
+    "x": 268,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 3.png",
+   "frame": {
+    "x": 402,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 4.png",
+   "frame": {
+    "x": 536,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 5.png",
+   "frame": {
+    "x": 0,
+    "y": 72,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 6.png",
+   "frame": {
+    "x": 134,
+    "y": 72,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 7.png",
+   "frame": {
+    "x": 268,
+    "y": 72,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 8.png",
+   "frame": {
+    "x": 402,
+    "y": 72,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 9.png",
+   "frame": {
+    "x": 536,
+    "y": 72,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 10.png",
+   "frame": {
+    "x": 0,
+    "y": 144,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 11.png",
+   "frame": {
+    "x": 134,
+    "y": 144,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 12.png",
+   "frame": {
+    "x": 268,
+    "y": 144,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 13.png",
+   "frame": {
+    "x": 402,
+    "y": 144,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 14.png",
+   "frame": {
+    "x": 536,
+    "y": 144,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 15.png",
+   "frame": {
+    "x": 0,
+    "y": 216,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 16.png",
+   "frame": {
+    "x": 134,
+    "y": 216,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "hv-mark 17.png",
+   "frame": {
+    "x": 268,
+    "y": 216,
+    "w": 134,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 72
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "hv-mark.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 670,
+   "h": 288
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 67,
+   "y": 36
+  },
+  "frameTags": [
+   {
+    "name": "hv-mark",
+    "from": 0,
+    "to": 17,
+    "direction": "forward"
+   }
+  ]
+ }
+}

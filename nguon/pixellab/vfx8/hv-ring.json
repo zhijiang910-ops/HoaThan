@@ -1,0 +1,651 @@
+{
+ "frames": [
+  {
+   "filename": "hv-ring 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 1.png",
+   "frame": {
+    "x": 246,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 2.png",
+   "frame": {
+    "x": 492,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 3.png",
+   "frame": {
+    "x": 738,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 4.png",
+   "frame": {
+    "x": 984,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 5.png",
+   "frame": {
+    "x": 0,
+    "y": 169,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 6.png",
+   "frame": {
+    "x": 246,
+    "y": 169,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 7.png",
+   "frame": {
+    "x": 492,
+    "y": 169,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 8.png",
+   "frame": {
+    "x": 738,
+    "y": 169,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 9.png",
+   "frame": {
+    "x": 984,
+    "y": 169,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 10.png",
+   "frame": {
+    "x": 0,
+    "y": 338,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 11.png",
+   "frame": {
+    "x": 246,
+    "y": 338,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 12.png",
+   "frame": {
+    "x": 492,
+    "y": 338,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 13.png",
+   "frame": {
+    "x": 738,
+    "y": 338,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 14.png",
+   "frame": {
+    "x": 984,
+    "y": 338,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 15.png",
+   "frame": {
+    "x": 0,
+    "y": 507,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 16.png",
+   "frame": {
+    "x": 246,
+    "y": 507,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 17.png",
+   "frame": {
+    "x": 492,
+    "y": 507,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 18.png",
+   "frame": {
+    "x": 738,
+    "y": 507,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 19.png",
+   "frame": {
+    "x": 984,
+    "y": 507,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 20.png",
+   "frame": {
+    "x": 0,
+    "y": 676,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 21.png",
+   "frame": {
+    "x": 246,
+    "y": 676,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 22.png",
+   "frame": {
+    "x": 492,
+    "y": 676,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hv-ring 23.png",
+   "frame": {
+    "x": 738,
+    "y": 676,
+    "w": 246,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 246,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 246,
+    "h": 169
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6449704142011834
+   },
+   "duration": 42
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "hv-ring.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1230,
+   "h": 845
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "feet",
+   "x": 123,
+   "y": 109
+  },
+  "frameTags": [
+   {
+    "name": "hv-ring",
+    "from": 0,
+    "to": 23,
+    "direction": "forward"
+   }
+  ]
+ }
+}

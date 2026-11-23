@@ -1,0 +1,2 @@
+hv_ring quote 8
+hv_ring done 51 s {'h': 169, 'w': 246} 24 24 | Created a crimson finishing burst with a bold, white-edged ground shockwave, a single waist-height crescent rotation, and scattering red sparks and dark petals.

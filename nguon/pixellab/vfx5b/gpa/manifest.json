@@ -1,0 +1,144 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "k5A",
+ "fps": 16,
+ "frame_ms": 63,
+ "frames": 7,
+ "loop": false,
+ "canvas": {
+  "w": 280,
+  "h": 160
+ },
+ "anchor": {
+  "kind": "feet",
+  "x": 100,
+  "y": 132
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 6,
+   "frame": {
+    "w": 82,
+    "h": 103
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 6,
+     "columns": 3,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": 36,
+    "y": -106
+   }
+  },
+  {
+   "name": "whole-with-sprite",
+   "title": "the whole effect with the sprite in it",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 7,
+   "frame": {
+    "w": 166,
+    "h": 106
+   },
+   "sheets": [
+    {
+     "file": "whole-with-sprite.png",
+     "first_frame": 0,
+     "frames": 7,
+     "columns": 3,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -48,
+    "y": -106
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 6,
+   "frame": {
+    "w": 82,
+    "h": 103
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 6,
+     "columns": 3,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": 36,
+    "y": -106
+   }
+  },
+  {
+   "name": "part-cut",
+   "title": "the cut part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 6,
+   "frame": {
+    "w": 77,
+    "h": 103
+   },
+   "sheets": [
+    {
+     "file": "part-cut.png",
+     "first_frame": 0,
+     "frames": 6,
+     "columns": 3,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": 36,
+    "y": -106
+   }
+  },
+  {
+   "name": "part-glints",
+   "title": "the glints part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 2,
+   "frames": 2,
+   "frame": {
+    "w": 7,
+    "h": 7
+   },
+   "sheets": [
+    {
+     "file": "part-glints.png",
+     "first_frame": 0,
+     "frames": 2,
+     "columns": 2,
+     "rows": 1
+    }
+   ],
+   "offset": {
+    "x": 111,
+    "y": -53
+   }
+  }
+ ]
+}

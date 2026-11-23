@@ -1,0 +1,194 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "hv_vortex",
+ "fps": 24,
+ "frame_ms": 42,
+ "frames": 28,
+ "loop": false,
+ "canvas": {
+  "w": 288,
+  "h": 224
+ },
+ "anchor": {
+  "kind": "feet",
+  "x": 144,
+  "y": 176
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 28,
+   "frame": {
+    "w": 209,
+    "h": 100
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 28,
+     "columns": 6,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -106,
+    "y": -100
+   }
+  },
+  {
+   "name": "whole-with-sprite",
+   "title": "the whole effect with the sprite in it",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 28,
+   "frame": {
+    "w": 209,
+    "h": 106
+   },
+   "sheets": [
+    {
+     "file": "whole-with-sprite.png",
+     "first_frame": 0,
+     "frames": 28,
+     "columns": 6,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -106,
+    "y": -106
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 3,
+   "frames": 14,
+   "frame": {
+    "w": 191,
+    "h": 92
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 14,
+     "columns": 4,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -96,
+    "y": -98
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 28,
+   "frame": {
+    "w": 209,
+    "h": 100
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 28,
+     "columns": 6,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -106,
+    "y": -100
+   }
+  },
+  {
+   "name": "part-cuts",
+   "title": "the cuts part",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 26,
+   "frame": {
+    "w": 198,
+    "h": 100
+   },
+   "sheets": [
+    {
+     "file": "part-cuts.png",
+     "first_frame": 0,
+     "frames": 26,
+     "columns": 6,
+     "rows": 5
+    }
+   ],
+   "offset": {
+    "x": -97,
+    "y": -100
+   }
+  },
+  {
+   "name": "part-spray",
+   "title": "the spray part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 3,
+   "frames": 17,
+   "frame": {
+    "w": 209,
+    "h": 90
+   },
+   "sheets": [
+    {
+     "file": "part-spray.png",
+     "first_frame": 0,
+     "frames": 17,
+     "columns": 5,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -106,
+    "y": -90
+   }
+  },
+  {
+   "name": "part-motes",
+   "title": "the motes part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 19,
+   "frames": 9,
+   "frame": {
+    "w": 194,
+    "h": 84
+   },
+   "sheets": [
+    {
+     "file": "part-motes.png",
+     "first_frame": 0,
+     "frames": 9,
+     "columns": 3,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -95,
+    "y": -96
+   }
+  }
+ ]
+}

@@ -1,0 +1,287 @@
+{
+ "frames": [
+  {
+   "filename": "k5c 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 1.png",
+   "frame": {
+    "x": 282,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 2.png",
+   "frame": {
+    "x": 564,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 3.png",
+   "frame": {
+    "x": 846,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 4.png",
+   "frame": {
+    "x": 0,
+    "y": 106,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 5.png",
+   "frame": {
+    "x": 282,
+    "y": 106,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 6.png",
+   "frame": {
+    "x": 564,
+    "y": 106,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 7.png",
+   "frame": {
+    "x": 846,
+    "y": 106,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 8.png",
+   "frame": {
+    "x": 0,
+    "y": 212,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  },
+  {
+   "filename": "k5c 9.png",
+   "frame": {
+    "x": 282,
+    "y": 212,
+    "w": 282,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 282,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 282,
+    "h": 106
+   },
+   "pivot": {
+    "x": 0.5035460992907801,
+    "y": 0.9716981132075472
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "k5c.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1128,
+   "h": 318
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "feet",
+   "x": 142,
+   "y": 103
+  },
+  "frameTags": [
+   {
+    "name": "k5c",
+    "from": 0,
+    "to": 9,
+    "direction": "forward"
+   }
+  ]
+ }
+}

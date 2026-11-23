@@ -1,0 +1,339 @@
+{
+ "frames": [
+  {
+   "filename": "aura6 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 1.png",
+   "frame": {
+    "x": 58,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 2.png",
+   "frame": {
+    "x": 116,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 3.png",
+   "frame": {
+    "x": 174,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 4.png",
+   "frame": {
+    "x": 0,
+    "y": 26,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 5.png",
+   "frame": {
+    "x": 58,
+    "y": 26,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 6.png",
+   "frame": {
+    "x": 116,
+    "y": 26,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 7.png",
+   "frame": {
+    "x": 174,
+    "y": 26,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 8.png",
+   "frame": {
+    "x": 0,
+    "y": 52,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 9.png",
+   "frame": {
+    "x": 58,
+    "y": 52,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 10.png",
+   "frame": {
+    "x": 116,
+    "y": 52,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  },
+  {
+   "filename": "aura6 11.png",
+   "frame": {
+    "x": 174,
+    "y": 52,
+    "w": 58,
+    "h": 26
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 26
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 26
+   },
+   "pivot": {
+    "x": 0.4827586206896552,
+    "y": 0.8461538461538461
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "aura6.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 232,
+   "h": 78
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "feet",
+   "x": 28,
+   "y": 22
+  },
+  "frameTags": [
+   {
+    "name": "aura6",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ]
+ }
+}
