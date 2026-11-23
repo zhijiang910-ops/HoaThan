@@ -52,7 +52,8 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - **Aura cường hóa** (`WAURA`, ảnh `vfx/aura_{3,6,9,12}.png`): +3 lục mờ, +6 vàng, +9 tím, +12 đen + sấm (mốc +12 khóa). Kéo theo chiều dài lưỡi.
 - **Hồi Phong Quy Sao** bay bằng chính vũ khí đang cầm, kèm aura.
 - **Trang phục theo bộ:** `OUTFIT[tên Y phục] = hậu tố sheet`. Hiện có `'Huyền Giáp':'hg'` → `hero_{nam,nu}_hg.png` (+ `_hg_hand.png`), 48 khung mỗi giới, tạo bằng `transfer-outfit-v2` (3 khung/lần, 10 lượt). Ảnh mẫu: `nguon/pixellab/outfit/ref_huyengiap2.png` (nam), `ref_nu.png` (nữ). Làm bộ mới: `nguon/pixellab/outfit` + script `hg/run_tf.py` (đã chép vào `cong_cu/claude/`).
-- **Luyện Công** có nút "Áo" và "Kiếm" để thử nhanh.
+- **Luyện Công** có nút "Áo" và "Kiếm" để thử nhanh (gồm cả Thương và Tay không).
+- **Thương / Song Quyền (23/11):** đã có nhân vật pixel (đứng, chạy, lướt, trúng đòn, ngã) dùng chung sheet không kiếm. Thương = ảnh `wpn/thuong1.png` (cầm ở 40% cán), Song Quyền = tay không (`WCLASS_ART`). **Chưa có động tác đánh** (chủ game dặn để sau): khi đánh vẫn giữ tư thế đứng/chạy. Song Quyền chưa có trong `WEAPONS` (chưa có bộ chiêu). Phác thảo combo Song Quyền A/B/C đã gửi: `cong_cu/claude/quyen_sketch.py`.
 
 ## Đã chốt, CHƯA làm vào game (việc tiếp theo)
 1. **Thêm các bộ đồ khác** (đề xuất: Kim Lũ Y, Huyết Ma Bào) + hiệu ứng bộ mốc 2/4/6 món (nên đổi lối chơi). Mỗi bộ ~330 lượt PixelLab cho cả nam và nữ.
