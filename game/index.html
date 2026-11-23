@@ -469,6 +469,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .vr.mp .vt span{font-size:10px}
 /* EXP + cấp dưới tên nhân vật */
 .axp{display:flex;align-items:center;gap:6px}
+.acp{font:700 10px 'Noto Serif',serif;color:#e8d6b0;text-shadow:0 1px 2px #000;margin-top:1px}.acp b{color:#ffcf5a;font-size:11px}
 .axp b{font:700 12px "Noto Serif",serif;color:#ffe08a;text-shadow:0 1px 2px #000;white-space:nowrap}
 .axb{position:relative;width:120px;height:7px;border-radius:4px;background:rgba(0,0,0,.55);box-shadow:0 0 0 1px #c9a45e;overflow:hidden}
 .axb i{display:block;height:100%;width:0;background:linear-gradient(#ffe7a8,#e6a84a 60%,#a8701e)}
@@ -926,6 +927,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .lbinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .lbinfo b{font:800 20px "Noto Serif",serif;color:#ffe9b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lblv{font:700 13px "Be Vietnam Pro",sans-serif;color:#c9a45e}.lblv i{font-style:normal;color:#ffe08a}
+.lbcp{font:700 12px 'Noto Serif',serif;color:#e8d6b0;margin:3px 0 4px;text-shadow:0 1px 2px #000}.lbcp b{color:#ffcf5a;font-size:14px;letter-spacing:.5px}
 .lbbar{position:relative;height:14px;background:rgba(0,0,0,.6);box-shadow:inset 0 0 0 1px #6a5230}
 .lbbar i{display:block;height:100%;width:0;transition:width .3s}
 .lbbar.xp i{background:linear-gradient(#e6c2ff,#a356e8 55%,#4f1c8a)}
@@ -1358,7 +1360,7 @@ input,select,textarea,#crName{font-size:16px!important}
 <canvas id="cv"></canvas>
 
 <div id="hud" hidden>
- <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Hóa Thân!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
+ <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Hóa Thân!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><div class="acp">Lực chiến <b id="cpv">0</b></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
  <div id="coins" class="frm"><canvas id="coinIco" width="13" height="13"></canvas><b id="coinv">0</b></div>
  <div id="top"><div id="tbar"><b id="tStage">Màn 1</b><i class="tsep"></i><span id="tWave">Đợt 1/5</span><div id="wbar"><i id="wfill"></i></div><em id="tPct">0%</em><span id="wl2" hidden></span><span id="wr2" hidden></span></div><div id="wtime"><svg viewBox="0 0 12 16" class="hgs"><path d="M1 1h10M1 15h10M2 1c0 4 4 5 4 7s-4 3-4 7M10 1c0 4-4 5-4 7s4 3 4 7" fill="none" stroke="#f5e3bd" stroke-width="1.6"/><path d="M4 13h4l-2-3z" fill="#f5e3bd"/></svg><span id="wtimeT">00:20</span></div></div>
  <div id="bossbar" hidden><div class="bn">Ngưu Ma Vương</div><div class="bb"><i id="bossfill"></i></div></div>
@@ -1430,6 +1432,7 @@ input,select,textarea,#crName{font-size:16px!important}
   <div class="lbl">
    <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i><button id="lbSwap" class="lbswap" type="button" title="Đổi giới tính, tên, kiểu tóc">⇄ Đổi nhân vật</button></span>
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
+    <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp">Lực chiến <b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
    <canvas id="lbHero" width="240" height="200"></canvas><div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
   </div>
@@ -2102,6 +2105,9 @@ function newRun(skip){
  tutInit();if(skip===true)return;
  save.cp=null;persist();saveCP('ready',1);startWave(1);
 }
+/* Lực chiến: tổng chỉ số quy đổi + cấp nhân vật (chỉ để hiển thị, không ảnh hưởng chiến đấu) */
+function powerOf(s,lv){const v=k=>s[k]||0;return Math.max(0,Math.round(v('hp')*2+v('armor')*30+v('dodge')*25+(v('dmgW')+v('dmgM'))*20+v('wDmg')*20+v('crit')*30+(v('critD')-150)*5+v('aspd')*20+v('cdr')*25+v('speed')*8+v('mp')+v('mpR')*15+v('area')*10+v('regen')*40+v('lifeKill')*50+v('godDmg')*10+lv*25))}
+function lobbyPower(){const s={...BASE};const eb=equipBonus();for(const k in eb)if(k in s)s[k]+=eb[k];const bb=bookBonus();for(const k in bb)if(k in s)s[k]+=bb[k];s.hp+=(save.trucco||0)*TRUCCO.hp;return powerOf(s,heroLv())}
 function recalc(){
  const s={...BASE};for(const k in P.mods)s[k]+=P.mods[k];{const eb=equipBonus();for(const k in eb)if(k in s)s[k]+=eb[k]}{const bb=bookBonus();for(const k in bb)if(k in s)s[k]+=bb[k]}s.hp+=(save.trucco||0)*TRUCCO.hp;
  P.pf={};for(const p of P.kit.pas)if(p.on)P.pf[p.def.id]=1;
@@ -3679,7 +3685,7 @@ const HAIR={nam:[{k:'duoi',n:'Đuôi ngựa',on:1},{k:'bui',n:'Búi tó'},{k:'xo
 const HAIRC=[{k:'den',n:'Đen',c:'#1a1210',on:1},{k:'nau',n:'Nâu',c:'#6a3a1a'},{k:'bac',n:'Bạc',c:'#d8d8d0'},{k:'do',n:'Đỏ',c:'#a8281a'}];
 const STA={max:100,cap:115,regenMs:15*60*1000};
 function prof(){return save.prof||null}
-function profNeed(lv){return Math.round(150+lv*90+lv*lv*8)}
+function profNeed(lv){return Math.round(200+lv*60+lv*lv*3)} /* giảm dốc cho đường tới Lv200 */
 function profGain(x){const P0=prof();if(!P0||!(x>0))return 0;let up=0;P0.exp=(P0.exp||0)+Math.round(x);while(P0.lv<LV_OPEN&&P0.exp>=profNeed(P0.lv)){P0.exp-=profNeed(P0.lv);P0.lv++;up++}if(P0.lv>=LV_OPEN)P0.exp=Math.min(P0.exp,profNeed(P0.lv)-1);persist();return up}
 function sta(){return save.sta||(save.sta={v:STA.max,t:Date.now()})}
 function staTick(){const s0=sta(),now=Date.now();if(!(s0.t<=now))s0.t=now;if(s0.v>=STA.max){if(s0.t!==now&&s0.v>=STA.max)s0.t=now;return s0}
@@ -3756,7 +3762,7 @@ function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!
 let lbHeroT=0;function lobbyHero(){const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
  const prev=HERO;if(useHero(P0.gender,'kiem')){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);HERO=prev}lbHeroT+=0.125}
 function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="diemtam"] small');if(t)t.textContent=dtStatus()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
- $('#lbLv').textContent=P0.lv;$('#lbXp').style.width=Math.min(100,P0.exp/need*100)+'%';$('#lbXpT').textContent=P0.exp+'/'+need;
+ $('#lbLv').textContent=P0.lv;{const c=$('#lbCp');if(c)c.textContent=lobbyPower().toLocaleString('vi-VN')}$('#lbXp').style.width=Math.min(100,P0.exp/need*100)+'%';$('#lbXpT').textContent=P0.exp+'/'+need;
  $('#lbSta').style.width=Math.min(100,s0.v/STA.max*100)+'%';$('#lbStaT').textContent=s0.v+'/'+STA.max;
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
@@ -3928,7 +3934,7 @@ function hud(dt){
   setT('tp',$('#tPct'),Math.ceil(ratio*100)+'%');
  }
  el.bossbar.hidden=true;
- if(last.lvv!==G.level){last.lvv=G.level;$('#avaLv').textContent=G.level;el.lvlv.textContent='Cấp '+G.level}setT('xpt',$('#xptxt'),Math.floor(G.xp/xpNeed()*100)+'%');setW('xp',el.xpfill,G.xp/xpNeed());
+ if(last.lvv!==G.level){last.lvv=G.level;$('#avaLv').textContent=G.level;el.lvlv.textContent='Cấp '+G.level}setT('xpt',$('#xptxt'),Math.floor(G.xp/xpNeed()*100)+'%');if(S)setT('cpv',$('#cpv'),powerOf(S,heroLv()).toLocaleString('vi-VN'));setW('xp',el.xpfill,G.xp/xpNeed());
  setW('hp',el.hpfill,P.hp/S.hp);ghost('hp',P.hp/S.hp,dt);ghost('mp',P.mp/S.mp,dt);{const r=P.hp/S.hp,low=r<0.3;if(last.low!==low){last.low=low;$('#vbars').classList.toggle('low',low)}
   if(r<0.2&&P.hp>0){if(!G.below20){G.below20=true;G.edgeT=2}}else G.below20=false;if(G.edgeT>0)G.edgeT-=dt;tutTick();if(((G.t*4)|0)!==last.danq){last.danq=(G.t*4)|0;danHud()}
   const es=G.below20?(G.edgeT>0?'pulse':'steady'):'';if(last.edge!==es){last.edge=es;const E=$('#lowEdge');E.className=es;if(es==='pulse'){void E.offsetWidth;E.className='pulse'}}
@@ -4053,10 +4059,14 @@ function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* 
 
 /* ================= TRANG BỊ: 7 PHẨM CẤP ================= */
 const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300},
- /* Phẩm sau Lv70: tạm đặt chỗ, khóa. Số phẩm và tên sẽ chốt khi chốt cấp tối đa */
+ /* Phẩm 8-12 (Lv71-200): khóa lúc ra mắt */
  {n:'Hồng Hoang',k:'Hồng Hoang khí',m:14,a:5,v:700,lock:1},{n:'Thái Cổ',k:'Thái Cổ khí',m:19,a:6,v:1500,lock:1},{n:'Vô Cực',k:'Vô Cực khí',m:25,a:6,v:3000,lock:1},{n:'Tạo Hóa',k:'Tạo Hóa khí',m:33,a:6,v:6000,lock:1},{n:'Thiên Đạo',k:'Thiên Đạo khí',m:45,a:6,v:12000,lock:1}];
-/* Cấp nhân vật: tạm mở đến Lv70 (7 phẩm đầu, mỗi phẩm 10 cấp). Cấp tối đa CHƯA chốt (có thể tới 200); các phẩm 'lock' chỉ là chỗ chờ */
-const LV_OPEN=70,TIER_OPEN=TIERS.filter(t=>!t.lock).length;
+/* Cấp nhân vật: tối đa Lv200, 12 phẩm; ra mắt mở đến Lv70 (7 phẩm đầu), phẩm 8-12 khóa */
+const LV_MAX=200,LV_OPEN=70,TIER_OPEN=TIERS.filter(t=>!t.lock).length;
+/* Cấp bắt đầu của từng phẩm: số cấp mỗi phẩm 6,7,8,10,11,13,15 | 19,23,27,30,31 (phẩm đầu ngắn, sau dài dần; phẩm 7 hết ở Lv70) */
+const TIER_LV=[1,7,14,22,32,43,56,71,90,113,140,170];
+const tierOfLv=lv=>{let t=0;for(let i=0;i<TIER_LV.length;i++)if(lv>=TIER_LV[i])t=i;return t};
+const heroLv=()=>(prof()&&prof().lv)||1;
 const SLOTS={vk:{n:'Vũ khí',base:[['dmgW',6],['dmgM',6]],names:['Thanh Phong Kiếm','Hàn Thiết Kiếm','Long Tuyền Kiếm','Tử Điện Kiếm','Trảm Yêu Kiếm','Thái A Kiếm']},
  ao:{n:'Y phục',base:[['hp',16],['armor',2]],names:['Bố Y','Thanh Sam','Huyền Giáp','Vân Cẩm Bào','Kim Lũ Y','Bát Quái Bào']},
  phu:{n:'Hộ phù',base:[['cdr',3],['mpR',1]],names:['Bình An Phù','Trấn Tà Phù','Ngũ Lôi Phù','Thái Thượng Phù','Hộ Tâm Phù']},
@@ -4069,7 +4079,7 @@ const STATN={hp:['Khí huyết',''],armor:['Hộ giáp',''],dodge:['Né tránh',
 const sn=k=>STATN[k]||[k,''];
 const fmtv=(k,v)=>{const u=sn(k)[1];return '+'+(Math.abs(v)<10&&v%1?v.toFixed(1):Math.round(v))+(u||'')};
 function rollTier(st,boss){const w=[60,28,9,2.5,.4,.08,.02].map((b,i)=>b*Math.pow(1+0.55*(st-1),i));if(boss&&st>=2)w[0]=0;let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
-function makeItem(st,tier,lv){lv=lv||(G?itemLv():0);const sk=pick(Object.keys(SLOTS)),S0=SLOTS[sk],T=TIERS[tier],f=T.m*(lv?1+0.025*(lv-1):1+0.12*(st-1));
+function makeItem(st,tier,lv){tier=Math.max(0,Math.min(tier,tierOfLv(heroLv()),TIER_OPEN-1));lv=lv||(G?itemLv():0);const sk=pick(Object.keys(SLOTS)),S0=SLOTS[sk],T=TIERS[tier],f=T.m*(lv?1+0.025*(lv-1):1+0.12*(st-1));
  const name=pick(S0.names);
  const stats=sk==='tay'&&name.endsWith('Thủ Sáo')?[['dmgW',4],['aspd',2]]:S0.base;
  const base={};for(const[k,v]of stats)base[k]=+(v*f*rnd(.9,1.1)).toFixed(1);
@@ -4142,7 +4152,7 @@ function equipBonus(){const b={},inv=invList(),eq=eqMap();for(const sl in eq){co
  const perk=forgePerk(it),rank=Math.min(3,Math.floor(forgeLevel(it)/3));
  if(perk&&rank>0)b[perk.stat]=(b[perk.stat]||0)+perk.values[rank-1];
  }return b}
-function itemStats(it){let h='';for(const k in it.base)h+=`<div>${sn(k)[0]} <b>${fmtv(k,it.base[k]*forgeBaseFactor(it))}</b></div>`;for(const[k,v]of it.aff)h+=`<div class="aff">${sn(k)[0]} <b>${fmtv(k,v)}</b></div>`;if(it.sp)h+=`<div class="sp">${it.sp}: sát thương hóa thân +${it.spv}%</div>`;return h}
+function itemStats(it){let h=heroLv()<TIER_LV[it.tier]?`<div class="aff" style="color:#ff7a6a">Yêu cầu Cấp ${TIER_LV[it.tier]}</div>`:'';for(const k in it.base)h+=`<div>${sn(k)[0]} <b>${fmtv(k,it.base[k]*forgeBaseFactor(it))}</b></div>`;for(const[k,v]of it.aff)h+=`<div class="aff">${sn(k)[0]} <b>${fmtv(k,v)}</b></div>`;if(it.sp)h+=`<div class="sp">${it.sp}: sát thương hóa thân +${it.spv}%</div>`;return h}
 const GEARIMG=new Image();GEARIMG.src='assets/ui/gear.png';GEARIMG.onload=()=>{try{document.querySelectorAll('.item').length&&paintIcons(document)}catch(e){}};
 // Phẩm Phàm/Linh/Bảo: icon Wuxia (hàng 4–5 của gear.png). Phẩm Tiên trở lên: icon pháp bảo cũ. Hộ phù giữ bùa cũ.
 const GCELL={vk:[[30],[31],[32],[4,7],[3],[2,8],[9]],phu:[[14],[14],[11],[12],[10],[13],[13]],ao:[34,35,36,17,18,19,19],hai:[37,38,39,22,23,24,24],boi:[40,41,42,27,28,29,29],tay:[43,44,45,46,47,48,49]};
@@ -4161,7 +4171,7 @@ function drawItemIcon(cn,it){const ci=gearCell(it);if(ci>=0&&GEARIMG.complete&&G
 }
 function itemEl(it,eqd){return `<div class="item t${it.tier}" data-id="${it.id}"><canvas></canvas>${it.lv?'<span class="ilv">'+it.lv+'</span>':''}${it.damaged?'<span class="forge-tag">Hỏng</span>':forgeLevel(it)?'<span class="forge-tag">+'+forgeLevel(it)+'</span>':''}${eqd?'<span class="eqd">Mặc</span>':''}</div>`}
 function paintIcons(root){root.querySelectorAll('.item').forEach(d=>{const it=invList().find(x=>x.id===d.dataset.id)||(G&&G.chestItems||[]).find(x=>x.id===d.dataset.id)||(G&&G.mk||[]).map(m=>m.it).find(x=>x.id===d.dataset.id);if(it)drawItemIcon(d.querySelector('canvas'),it)})}
-function equip(id){const it=invList().find(x=>x.id===id);if(!it||it.damaged)return;eqMap()[it.slot]=id;persist();if(G&&P)recalc()}
+function equip(id){const it=invList().find(x=>x.id===id);if(!it||it.damaged)return;if(heroLv()<TIER_LV[it.tier]){notice('Cần đạt Cấp '+TIER_LV[it.tier]+' để mặc đồ '+TIERS[it.tier].n);return}eqMap()[it.slot]=id;persist();if(G&&P)recalc()}
 function unequip(sl){delete eqMap()[sl];persist();if(G&&P)recalc()}
 let invSel=null;
 function openInv(){invFrom='menu';$('#menu').hidden=true;$('#inv').hidden=false;renderInv()}

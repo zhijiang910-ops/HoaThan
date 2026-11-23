@@ -24,10 +24,13 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
   - Đã bỏ Lướt Trảm, Kiếm Ảnh, Kiếm Tâm, Kiếm Ý. Code lướt `cutC` vẫn giữ vì Huyết Ảnh dùng.
 - **HUD ô kỹ năng:** hàng trên 4 ô chủ động (Q, F, X + 1 trống). Hàng dưới: 2 ô chiêu tự thi triển có hồi chiêu, máu, mana, 1 ô dự phòng. Nội tại cộng chỉ số không hiện ô.
 - **Cấp và phẩm:**
-  - Tạm mở đến **Lv70**, 7 phẩm đầu, mỗi phẩm 10 cấp (`LV_OPEN`, `TIER_OPEN`).
-  - **Cấp tối đa CHƯA chốt.** Đừng tính theo mốc 120; chủ game có thể để tối đa 200. Số phẩm sau Lv70 cũng chưa chốt.
-  - 5 phẩm khóa đang đặt chỗ trong code (Hồng Hoang, Thái Cổ, Vô Cực, Tạo Hóa, Thiên Đạo) chỉ là tạm, không rơi ra.
+  - Tối đa **Lv200, 12 phẩm**. Ra mắt mở đến **Lv70 và 7 phẩm** (`LV_OPEN`, `TIER_OPEN`).
+  - Cấp bắt đầu mỗi phẩm (`TIER_LV`): 1, 7, 14, 22, 32, 43, 56 | khóa: 71, 90, 113, 140, 170. Số cấp mỗi phẩm tăng dần (6 → 31).
+  - Kinh nghiệm lên cấp: `200 + 60×L + 3×L²` (đã giảm dốc).
+  - Đồ rơi không vượt phẩm theo cấp nhân vật (`makeItem`). Mặc đồ phải đủ cấp của phẩm; chi tiết món đồ hiện "Yêu cầu Cấp X".
+  - 5 phẩm khóa: Hồng Hoang, Thái Cổ, Vô Cực, Tạo Hóa, Thiên Đạo.
   - Cường hóa tối đa +12, mở đến +9 (`FORGE_OPEN`).
+- **Lực chiến:** `powerOf()` quy đổi chỉ số + cấp, chỉ để hiển thị. Hiện dưới thanh kinh nghiệm ở sảnh (`#lbCp`) và trong trận (`#cpv`).
 - **6 ô trang bị:** Vũ khí, Y phục, Hộ phù, Hài, Nhẫn/Bội, Đai/Găng.
 - Bản chơi thử (artifact của tài khoản cũ): https://claude.ai/artifact/7HgwkR1wd2kZ521bQ1oRTA. Tài khoản khác sẽ đăng link mới.
 
