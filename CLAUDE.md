@@ -13,6 +13,7 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 4. **Kiểm từng frame 98–99% so với master** trước khi gửi: không dư kiếm, không mất tay chân, độ dài kiếm bằng master, trang phục giữ nguyên.
 5. Không co giãn (squash/stretch) frame nhân vật, không hitstop, không tự đổi màu nhân vật.
 6. Gửi video/ảnh kiểm tra khi xong mỗi phần. Báo đúng sự thật, kể cả lỗi.
+7. **PixelLab chỉ dùng khi thật sự cần thiết, không lạm dụng** (chủ game dặn 24/11). Làm trước bằng cách rẻ: phác thảo/xem trước, dùng lại asset đã có, chỉnh timing/vị trí/code, bản mẫu thử trong game. Chỉ gọi PixelLab khi bản đó không ổn. Không "thử cho biết": mỗi lần gọi nói rõ vì sao cần và số lượt dự kiến.
 
 ## Hiện trạng game (23/11)
 - **Bộ Kiếm (nam và nữ chung):**
