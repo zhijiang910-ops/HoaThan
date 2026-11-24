@@ -239,3 +239,7 @@ Gỡ hết `swhit` (đòn thường, điểm chạm C, Thiên Xu, Vạn Kiếm),
 
 ## Tối ưu sảnh trên màn thấp (24/11 đêm)
 Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên màn thấp). Lỗi thấy: khi có ải đang dở, `#lbHero` bị ép về cao 0 (nhân vật biến mất), nút "Tiếp tục ải đang dở" bị cắt dòng phụ, 6 ô chức năng nhỏ và chữ bị cắt `…`. Sửa bằng khối CSS `@media (max-height:360px)` "Sảnh trên màn thấp" (trong khối `<style>` chính, KHÔNG phải `</style>` cuối file vì nó nằm trong chuỗi JS): Vượt Ải và Tiếp tục xếp 2 cột cùng hàng (Vượt Ải chiếm cả hàng nếu không có ải dở, dùng `:has`), ẩn dòng "Thể lực đầy", nhân vật giữ tối thiểu 56 px, lưới 6 ô giãn hết chiều cao, phụ đề tối đa 2 dòng thay vì cắt. Test: `scratchpad/lobby_shot.js` (664×307, 700×310, 844×390, 932×430, có/không `cp`). Màn ≥ 361 px cao giữ nguyên.
+
+## A/B/C nhanh hơn nữa + Vạn Kiếm dùng kiếm đang cầm (24/11 đêm)
+- A/B/C: `A.dur=tot*0.74` (trước 0,88) và hồi chiêu `k0.cd` 0,5→0,4 (cd chặn nhịp đánh). `dps_qa.js`: Kiếm +0 45→54, +6 68→79, +9 77→93 (~+16-20%). Chưa cân lại sát thương.
+- Vạn Kiếm (X, `k6`): zone `vkx` vẽ 16 kiếm bằng chính vũ khí đang cầm + hào quang, xoay quanh người rồi lao theo làn ngắm 6 đợt (1,2 s + 0,32 s/đợt). Không có ảnh vũ khí thì dùng `vk_e`. Ảnh kiểm: `nguon/tham_chieu/vankiem_kiem_cam.png` (bản trước khi phóng kiếm ×1,3).
