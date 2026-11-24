@@ -1,10 +1,13 @@
 # Đóng sheet VFX Xích Diễm Đao Môn (gói Wuxia, xuất từ Godot bằng nguon/godot_bake/Bake.gd) cho class Đao.
-# Dùng: python3 dq_pack.py <thư mục chứa out/07_cleave...> <thư mục ra game/assets/vfx>
+# Dùng: python3 dq_pack.py <thư mục chứa out/07_cleave...> <thư mục ra game/assets/vfx> [dq|pm]
 import sys,glob,json
 import numpy as np
 from PIL import Image
 src,dst=sys.argv[1],sys.argv[2]
-CFG={'dq_cleave':('07_cleave',1,0.25),'dq_triple':('08_triple',2,0.25),'dq_ring':('09_ring',2,0.25)}
+import os
+CFG_ALL={'dq':{'dq_cleave':('07_cleave',1,0.25),'dq_triple':('08_triple',2,0.25),'dq_ring':('09_ring',2,0.25)},
+ 'pm':{'pm_bell':('19_bell',3,0.25),'pm_palm':('20_palm',2,0.25),'pm_guard':('21_guardian',4,0.25)}}
+CFG=CFG_ALL[sys.argv[3] if len(sys.argv)>3 else 'dq']   # nhóm: dq = Xích Diễm Đao Môn, pm = Kim Cương Tự
 spx={}
 for name,(sid,step,thr) in CFG.items():
     fs=sorted(glob.glob(f'{src}/{sid}/f*.png'))

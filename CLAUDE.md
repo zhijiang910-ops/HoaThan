@@ -394,3 +394,8 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - **Màn tạo nhân vật:** cột phải dài hơn khi chọn Đao (thêm hàng Nội tại) nên đã thêm CSS thu gọn theo chiều cao màn (`max-height:680/440/400`), kiểm nút Lưu nằm trong khung ở 1100×620, 1280×720, 932×430, 844×390, 667×375.
 - Ảnh kiểm: `nguon/tham_chieu/dao_chieu_trong_game.png`, `dao_man_tao_nhan_vat.png`.
 
+## CLASS TRƯỢNG (Phục Ma Tự) CHƠI ĐƯỢC (24/11 đêm, cùng quy trình với Đao)
+- `SECT_WEAPON.phucma='truong'`, `WCLASS_ART.truong='tichtruong'`, `MELEE_ANIM=new Set(['kiem','dao','truong'])` (lớp dùng khung đánh của Kiếm; thêm lớp mới thì thêm vào đây).
+- VFX gói Wuxia **Kim Cương Tự** xuất Godot: `pm_bell` (金钟震岳 kim chung, 34 khung 10 fps), `pm_palm` (伏魔镇山掌 bàn tay Phật vàng, 17 khung 15 fps), `pm_guard` (不动明王身 Minh Vương hộ pháp, 25 khung ~7 fps). Đóng sheet: `python3 cong_cu/claude/dq_pack.py <thư mục có out/> game/assets/vfx pm`. `pm_slash` = vệt `wx_slash` gốc (teal, `nguon/vfx_goc/wx_slash_goc.png`) nhuộm bảng vàng bằng code (bảng 4 mốc, giữ alpha).
+- Bộ chiêu `WEAPONS.truong`: `p0` Hàng Ma Trượng (đánh thường, vệt vàng), `p1` **Q Kim Chung Chấn Nhạc** (miễn thương 1 s, chấn choáng 0,5 s bán kính 185, power 22, cd 7), `p2` **F Phục Ma Trấn Sơn Chưởng** (bàn tay đè vùng cách 165 px, kb 260, choáng 0,45 s, power 32, cd 9, khởi đầu đã lĩnh ngộ), `p3` Hộ Thể Kim Cương (tự kích hoạt, đẩy lùi), `p6` **X Bất Động Minh Vương Thân** (miễn thương 3,5 s, chấn mỗi 0,7 s, power 40, cd 26). Chưa có nội tại. **Số liệu tạm, chưa cân bằng.** Ảnh: `nguon/tham_chieu/truong_chieu_trong_game.png`.
+
