@@ -2588,12 +2588,14 @@ function castHuman(dt){
   if(tg&&(n>=4||G.boss||G.enemies.length<4))applyHumanSkill(u,tg);
  }
 }
+/* mọi thần tướng: kỹ năng bấm tay Q/F/X, tuyệt kỹ R (chủ game 24/11) */
+for(const id in GODS){const d=GODS[id];(d.skills||[]).forEach((k,i)=>{if(!k.hotkey)k.hotkey=['Q','F','X','C'][i]});if(d.ult&&!d.ult.hotkey)d.ult.hotkey='R'}
 function castGod(dt){
  const g=P.god,asp=1+S.aspd/200;
  g.basic.cd-=dt;
  if(g.basic.cd<=0){const tg=nearest(P.x,P.y,g.def.basic.range);if(tg){g.def.basic.cast(tg);g.basic.cd=g.def.basic.cd/asp}}
  /* Kỹ năng và tuyệt kỹ của Hóa Thân do người chơi BẤM (chủ game, 24/11); ở đây chỉ hồi chiêu. Thần tướng khác vẫn tự thi triển. */
- const manual=g.def.look==='wukong';
+ const manual=true;
  for(const s of g.sk){s.cd=Math.max(0,s.cd-dt);if(manual)continue;if(s.cd<=0){if(s.def.need&&!s.def.need())continue;const tg=nearest(P.x,P.y,s.def.range);if(tg){s.def.cast(tg);s.cd=s.def.cd;s.fl=0.3}}}
  if(g.ult){g.ult.cd=Math.max(0,g.ult.cd-dt);if(!manual&&g.ult.cd<=0){const tg=nearest(P.x,P.y,g.ult.def.range);if(tg){g.ult.def.cast(tg);g.ult.cd=g.ult.def.cd;notice(g.ult.def.name)}}}
 }
@@ -4605,7 +4607,7 @@ addEventListener('keydown',e=>{
   if(e.code==='Escape'&&P.skillAim){cancelSkillAim();e.preventDefault();return}
   const slot=HUMAN_SKILL_KEYS[e.code];
   if(slot&&P.form==='human'){if(!e.repeat)requestHumanSkill(slot);e.preventDefault();return}
-  {const gk={KeyQ:'g0',KeyF:'g1',KeyX:'g2',KeyR:'gu'}[e.code];if(gk&&P.form==='god'&&P.god.def.look==='wukong'){if(!e.repeat)requestGodSkill(gk);e.preventDefault();return}}
+  {const gk={KeyQ:'g0',KeyF:'g1',KeyX:'g2',KeyR:'gu'}[e.code];if(gk&&P.form==='god'){if(!e.repeat)requestGodSkill(gk);e.preventDefault();return}}
  }
  keys[e.code]=true;if(e.code==='Space'){dash();e.preventDefault()}if(e.code==='KeyR'||e.code==='KeyE')tryTransform();if(e.code==='KeyM'){MUTE=!MUTE;try{localStorage.setItem('tdst_mute',MUTE?'1':'0')}catch(_){}setSnd();if(G)notice(MUTE?'Tắt âm thanh':'Bật âm thanh','Phím M')}if(e.code==='Escape'||e.code==='KeyP')togglePause();if(e.code==='Digit1')drinkPot('hp');if(e.code==='Digit2')drinkPot('mp')});
 addEventListener('keyup',e=>{keys[e.code]=false});
