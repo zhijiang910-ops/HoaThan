@@ -1808,7 +1808,7 @@ const ESPR_PX=new Set(['nguudau','madien','hacvo','bachvo','manhba','phanquan','
 for(const k of ESPR_PX)if(CHM[k])CHM[k].hq=4;
 let _hqOff=false;
 /* Trùm Âm Giới dùng CHUNG một bậc nguyên n theo máy (n pixel màn hình cho mỗi pixel ảnh), nên cả 7 con luôn đúng tỉ lệ với nhau (ảnh càng cao càng to). BOSS_REL thu riêng từng con (<1 thì vẽ bằng lọc mịn vì không còn là số nguyên). */
-const BOSS_T=1.03,BOSS_REL={nguudau:1.15};/* Phán Quan bỏ thu 0,88: thu hệ số lẻ làm viền lởm chởm (đo 24/11), nay vẽ ở tỉ lệ nguyên (nét), cao hơn các trùm khác ~14% *//* Ngưu Đầu thấp nhất (141 px) nên nâng 15% để không lùn hơn Mã Diện (chủ game) */
+const BOSS_T=1.03,BOSS_REL={nguudau:1.135};/* Phán Quan bỏ thu 0,88: thu hệ số lẻ làm viền lởm chởm (đo 24/11), nay vẽ ở tỉ lệ nguyên (nét), cao hơn các trùm khác ~14% *//* Ngưu Đầu thấp nhất (141 px) nên nâng 15% để không lùn hơn Mã Diện (chủ game) */
 function espScale(m){if(!ESPR_PX.has(m[0])){_hqOff=false;return m[1]}const d=DPR*ZOOM,n=Math.max(1,Math.round(BOSS_T*d)),r=BOSS_REL[m[0]]||1;if(r===1){_hqOff=true;return n/d}_hqOff=false;return n*r/d}
 function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=CH[m[0]];if(!h||!h.ok)return false;const A=h.meta.anims;let an='run',fi;
  if(e.stun>0&&A.hit){an='hit';fi=1}
