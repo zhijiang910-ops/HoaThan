@@ -1899,7 +1899,7 @@ function finishSwordCut(dt){
  arc(P.x,P.y-8,angle,(heavy?118:lunge?96:80)*Ar(),heavy?TAU:1.9,damage,
   H({kb:heavy?60:isB?32:20,stun:heavy?0.10:0,swordBasic:true,mark:heavy,pierceArmor:upgrade>=3 ? SWORD_FORGE_PIERCE : 0,
    stop:isB?0.055:0.035,numUp:isB?0.12:0,cutFx:{n:0,ang:angle+(dir>0?1.2:-1.2)},sarc:isB?2:lunge?3:1,nofx:swfx}),color,dir);
- if(swfx&&heavy)G.shake=Math.max(G.shake||0,4);
+ if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);/* điểm chạm đòn C (24/11): vòng xung kích, bụi tuyết bắn lên, vết cắt, chớp sáng */const ix=P.x+Math.cos(angle)*62,iy=P.y-8+Math.sin(angle)*62;fx({k:'ring',x:ix,y:iy+6,r0:10,r1:74,c:'#d8efff',T:0.3});fx({k:'ring',x:ix,y:iy+6,r0:6,r1:46,c:'#ffffff',T:0.22});if(!LOWFX){burst(ix,iy,'#eef8ff',16);for(let i=0;i<10;i++)part(ix+rnd(-10,10),iy+4,Math.cos(angle)*rnd(30,110)+rnd(-60,60),rnd(-150,-40),rnd(0.35,0.6),rnd(3,6),'rgba(235,245,255,.8)',1)}if(vok('swhit'))fx({k:'sp',s:'swhit',x:ix,y:iy,sc:1.7,T:0.22});fx({k:'crack',x:ix,y:iy+10,r:70,sc:1,T:0.5,seed:0,gr:1})}
  if(heavy&&upgrade>=9){
   const x=P.x+Math.cos(angle)*36,y=P.y+Math.sin(angle)*36-8;
   shoot(x,y,angle,370,{dmg:damage*.35,pierce:3,r:18,life:.26,kind:'crescent',c:color,o:H({pierceArmor:SWORD_FORGE_PIERCE})});

@@ -187,3 +187,8 @@ Nguyên nhân: `startTraining` gán `P0.gender=TR.gender` (giới tính thử �
 - (24/11 đêm) Đòn 3 Ngộ Không nhanh thêm: anim/đứng yên 0,36 s, chạm 0,17 s, nhịp sau 0,45 s. Đòn C Kiếm: elip phóng 1,35 lần, đuôi tan hết trước 80% đòn (hết mảnh vụn nhỏ cuối đòn), mặc định tia sao ở đầu nhát chém (chủ game chọn), không còn vòng nhỏ.
 - (24/11 đêm) Chủ game chọn GIỮ elip chùm sợi (`c_ellipse.py`), chỉ lấy từ video Spine (thử ở `c_ellipse2.py`, không dùng) phần **đuôi tối dần sang xanh đậm – tím** (`tailmix`). Cung đặc kiểu video đã bỏ.
 - (24/11 đêm) Đòn C: VFX elip chậm lại (T 0,5→0,72 s, bật sớm hơn 0,4 s trước chạm để đỉnh sáng vẫn gần khung chạm). Đòn A/B: `wx_slash` và `zs2` đổi màu theo cùng bảng với C (đầu trắng → lam sáng → xanh đậm → tím ở đuôi, tô theo độ sáng, từ gốc `nguon/vfx_goc/*_teal.png`).
+
+## Đòn C nâng cấp 1-2-3 (24/11 đêm, chủ game muốn >9 điểm)
+1. `c_ellipse.py`: elip nhỏ hơn (RX 128, RY 60), đuôi tím đậm hơn (`tailmix` k 0,95), tia sao ở đầu to hơn (44/24 px).
+2. Điểm chạm đòn C (`finishSwordCut`): 2 vòng xung kích, bụi tuyết bắn lên, chớp `swhit` ×1,7, vết nứt, rung 5.
+3. **PixelLab VFX pro** (18 lượt, 1 lần, `nguon/pixellab/c_pro/`): nhát chém cong dày nhiều dải, đầu sáng đuôi xanh đậm, `k5c_pro.png` (whole, 15 khung 196×200, anchor px:89 py:104). **CHƯA vào game** (chỉ thử ở bản sao): chờ chủ game chọn giữa bản code (1-2) và bản PixelLab. Bản PixelLab đẹp, sạch hơn nhưng là một vành đứng cố định phía trước (tự vẽ dần), không quét từ sau lưng như bản code.

@@ -1,0 +1,119 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "c_pro1",
+ "fps": 20,
+ "frame_ms": 50,
+ "frames": 16,
+ "loop": false,
+ "canvas": {
+  "w": 260,
+  "h": 260
+ },
+ "anchor": {
+  "kind": "origin",
+  "x": 130,
+  "y": 126
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 15,
+   "frame": {
+    "w": 196,
+    "h": 200
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 15,
+     "columns": 4,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -89,
+    "y": -104
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 15,
+   "frame": {
+    "w": 196,
+    "h": 200
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 15,
+     "columns": 4,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -89,
+    "y": -104
+   }
+  },
+  {
+   "name": "part-sweep",
+   "title": "the sweep part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 15,
+   "frame": {
+    "w": 183,
+    "h": 200
+   },
+   "sheets": [
+    {
+     "file": "part-sweep.png",
+     "first_frame": 0,
+     "frames": 15,
+     "columns": 4,
+     "rows": 4
+    }
+   ],
+   "offset": {
+    "x": -76,
+    "y": -104
+   }
+  },
+  {
+   "name": "part-accents",
+   "title": "the accents part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 2,
+   "frames": 12,
+   "frame": {
+    "w": 183,
+    "h": 180
+   },
+   "sheets": [
+    {
+     "file": "part-accents.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -89,
+    "y": -90
+   }
+  }
+ ]
+}

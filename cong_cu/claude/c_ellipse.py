@@ -6,13 +6,13 @@ from PIL import Image,ImageDraw,ImageFilter
 OUT=sys.argv[1] if len(sys.argv)>1 else 'game/assets/vfx/'
 VAR=sys.argv[2] if len(sys.argv)>2 else 'spark'  # mặc định: tia sao ở đầu nhát chém (chủ game chọn 24/11)
 N=15;CW,CH=360,224;COLS=4;CX,CY=180,114
-RX,RY=150,66
+RX,RY=128,60
 M=18
 PAL=[(255,255,255),(214,244,255),(150,214,255),(86,168,250),(44,112,214),(28,72,160)]
 def ang(u):return math.radians(200+330*u)
-def tailmix(col,sv,k=0.75):
+def tailmix(col,sv,k=0.95):
     """từ video Spine (24/11): đuôi tối dần sang xanh đậm - tím, đầu giữ sáng"""
-    w=max(0.0,1-sv)**1.4*k;tc=(60,36,150) if sv<0.25 else (40,70,205)
+    w=max(0.0,1-sv)**1.4*k;tc=(78,34,170) if sv<0.35 else (44,64,215)
     return tuple(int(col[i]*(1-w)+tc[i]*w) for i in range(3))
 def prof(s):                       # độ rộng chùm theo vị trí s (0 đuôi → 1 đầu): dày về phía cuối, mỏng nhọn hai đầu
     return (max(0.0,math.sin(math.pi*min(1,s)**0.7))**0.8)*(0.35+0.65*s)
@@ -121,7 +121,7 @@ def sheet(name,front):
             # tia sao ở đầu nhát chém + tia lửa bắn ra ngoài
             dd=ImageDraw.Draw(im);a=ang(head);hx=CX+RX*math.cos(a);hy=CY+RY*math.sin(a);fade=max(0,1-max(0,p-0.75)/0.25)
             if math.sin(a)>0:
-                for L_,w_ in ((26,3),(14,7)):
+                for L_,w_ in ((44,4),(24,11)):
                     dd.polygon([(hx,hy-L_),(hx+w_,hy),(hx,hy+L_),(hx-w_,hy)],fill=PAL[0]+(int(255*fade),));dd.polygon([(hx-L_,hy),(hx,hy-w_),(hx+L_,hy),(hx,hy+w_)],fill=PAL[0]+(int(255*fade),))
                 rr=random.Random(f)
                 for _ in range(14):
