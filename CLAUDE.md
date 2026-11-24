@@ -210,3 +210,6 @@ Chủ game xin vòng sét giật nằm trong. Pack Wuxia và game không có sé
 
 ## Gỡ "mảnh băng" Wuxia, va chạm Kiếm đồng bộ một kiểu (24/11 đêm, chủ game chê "nồi cám heo")
 Gỡ hết `swhit` (đòn thường, điểm chạm C, Thiên Xu, Vạn Kiếm), `hp_imp`/`hp_star` (Hồi Phong trúng), `imp` row Kiếm (mọi chiêu trúng) và các vòng sáng/hạt/vết nứt tao tự thêm. Thay bằng **một hàm duy nhất `hitFx(x,y,ang,sc)`**: một chớp chém `wx_slash` (xanh–tím, cùng bộ A/B/C) xoay theo hướng lưỡi/làn kiếm, T 0,2 s. Sét Thiên Xu giữ lại (ảnh PixelLab trên quái). Ảnh `swhit.png`, `arc_sheet.png`, `hp_imp.png`, `hp_star.png` vẫn nằm trong thư mục, không còn gọi (trừ `imp` của vũ khí khác). Quy tắc: va chạm Kiếm chỉ dùng `hitFx`, không thêm kiểu mới.
+
+## Gộp nhánh ChatGPT (24/11 đêm)
+Đã gộp `origin/claude/relaxed-heisenberg-72j521` (tới `bbb5804`, 8 commit): nút quay lại ở Kho đồ và Vượt Ải trên điện thoại, thu gọn khung chi tiết Kho đồ, phóng biểu tượng vũ khí ô trang bị, bánh bao ăn dần (Điểm Tâm), 8 chân dung thần thoại (`assets/ui/ava_*.png`), tách biểu cảm Bạch Cốt Tinh/Đát Kỷ, khóa số kỹ năng thần tướng S–UR (docs `TONG_HOP_TINH_NANG.md`). Xung đột duy nhất: khung viền nhẹ tranh, giữ viền. Nhánh làm việc vẫn `claude/jolly-ritchie-pitrnx`.
