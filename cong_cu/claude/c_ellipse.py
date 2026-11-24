@@ -4,7 +4,7 @@ Ra k5c_behind.png / k5c_front.png: ô 360x160, 15 khung, 4 cột. python3 c_elli
 import math,random,sys
 from PIL import Image,ImageDraw,ImageFilter
 OUT=sys.argv[1] if len(sys.argv)>1 else 'game/assets/vfx/'
-N=15;CW,CH=360,200;COLS=4;CX,CY=180,104
+N=15;CW,CH=360,224;COLS=4;CX,CY=180,114
 RX,RY=150,66
 M=18
 PAL=[(255,255,255),(214,244,255),(150,214,255),(86,168,250),(44,112,214),(28,72,160)]
@@ -34,7 +34,7 @@ def sheet(name,front):
                     u0=tail+(head-tail)*s['a'];u1=tail+(head-tail)*s['b'];n=70;pts=[]
                     for i in range(n+1):
                         u=u0+(u1-u0)*i/n;sv=(u-tail)/max(1e-6,head-tail)
-                        W=56*prof(sv)*(0.6+0.4*s['d'])
+                        W=64*prof(sv)*(0.6+0.4*s['d'])
                         a=ang(u);r=s['off']*W/2
                         nx,ny=math.cos(a)/RX,math.sin(a)/RY;nl=math.hypot(nx,ny);nx/=nl;ny/=nl
                         pts.append((a,CX+RX*math.cos(a)+nx*r,CY+RY*math.sin(a)+ny*r,sv))
@@ -50,8 +50,25 @@ def sheet(name,front):
                             fade=min(1,sv*5)*(1 if sv>0.0 else 0)
                             d.line([(x,y),(x2,y2)],fill=col+(255,),width=s['w'] if k>0.35 else s['w']+1)
             gl=gl.filter(ImageFilter.GaussianBlur(6))
-            al=gl.getchannel('A').point(lambda v:0 if v<25 else 40 if v<80 else 70);gl.putalpha(al)
+            al=gl.getchannel('A').point(lambda v:0 if v<45 else 22 if v<110 else 40);gl.putalpha(al)
             base=Image.new('RGBA',(CW,CH),(0,0,0,0));base.alpha_composite(gl);base.alpha_composite(im);im=base;d=ImageDraw.Draw(im)
+            # --- sợi mảnh lẻ ở nhiều bán kính (trong & ngoài), dài ngắn khác nhau, như ảnh mẫu
+            wr=random.Random(5+f*0+(1 if front else 0))
+            for si in range(34):
+                sc_=wr.choice([0.5,0.62,0.74,0.86,1.0,1.1,1.2,1.3]) if wr.random()<0.8 else wr.uniform(0.45,1.35)
+                a0=wr.uniform(0.0,0.85);L=wr.uniform(0.18,0.55);b0=a0+L
+                u0=tail+(head-tail)*a0;u1=tail+(head-tail)*min(1,b0)
+                if u1-u0<0.03:continue
+                ww=wr.choice([1,1,1,2]);tone=wr.choice([PAL[0],PAL[1],PAL[1],PAL[2],PAL[2],PAL[3]])
+                n=50
+                for i in range(n):
+                    ua=u0+(u1-u0)*i/n;ub=u0+(u1-u0)*(i+1)/n
+                    if (math.sin(ang((ua+ub)/2))>0)!=front:continue
+                    s_=i/n;al=max(0.0,math.sin(math.pi*s_))**0.6
+                    if al<0.25:continue
+                    xa=CX+RX*sc_*math.cos(ang(ua));ya=CY+RY*sc_*math.sin(ang(ua));xb=CX+RX*sc_*math.cos(ang(ub));yb=CY+RY*sc_*math.sin(ang(ub))
+                    col=tuple(int(tone[j]*al+ (44,112,214)[j]*(1-al)) for j in range(3))
+                    d.line([(xa,ya),(xb,yb)],fill=col+(255,),width=ww)
             # vệt gió ngắn ngoài vòng + hạt
             for _ in range(22):
                 u=rnd.uniform(tail,head);a=ang(u)
