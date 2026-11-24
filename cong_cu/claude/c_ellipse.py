@@ -1,65 +1,70 @@
-"""Dựng sheet elip đòn C v2 (24/11): 3 dải lồng nhau dày-mỏng, gradient viền→thân→lõi, vệt tốc độ, hạt, quầng sáng; vẽ dần rồi tan từ đuôi (đuôi vỡ hạt).
-Ra k5c_behind.png / k5c_front.png (ô 334x125 / 334x121, 15 khung, 4 cột)."""
+"""Elip đòn C v3 (24/11) bám ảnh tham chiếu của chủ game: elip dẹt rộng quanh nhân vật, chùm nhiều sợi mảnh song song,
+dày dần về cuối (dưới-trái), lõi trắng - rìa xanh lam - quầng sáng, vệt gió ngoài vòng; vẽ dần từ sau lưng rồi tan từ đuôi.
+Ra k5c_behind.png / k5c_front.png: ô 360x160, 15 khung, 4 cột. python3 c_ellipse.py [thư mục ra]"""
 import math,random,sys
 from PIL import Image,ImageDraw,ImageFilter
 OUT=sys.argv[1] if len(sys.argv)>1 else 'game/assets/vfx/'
-N=15;CW=334;COLS=4
-RX,RY=140,52
-C_OUT=(30,104,112);C_MID=(60,170,170);C_LT=(130,228,214);C_HI=(214,250,242);C_W=(255,255,255)
+N=15;CW,CH=360,200;COLS=4;CX,CY=180,104
+RX,RY=150,66
+M=18
+PAL=[(255,255,255),(214,244,255),(150,214,255),(86,168,250),(44,112,214),(28,72,160)]
 def ang(u):return math.radians(200+330*u)
-def ribbon(d,front,cy,rx,ry,t0,t1,th,cols,rnd,dith=0.0):
-    n=110;P=[]
-    for i in range(n+1):
-        u=t0+(t1-t0)*i/n;s=i/n
-        w=th*(max(0.0,math.sin(math.pi*(s**0.75)))**0.7)
-        a=ang(u);x=CW/2+rx*math.cos(a);y=cy+ry*math.sin(a)
-        nx,ny=math.cos(a)/rx,math.sin(a)/ry;nl=math.hypot(nx,ny)
-        P.append((u,x,y,nx/nl,ny/nl,w))
-    for (k,(frac,col)) in enumerate(cols):
-        for i in range(n):
-            u,x,y,nx,ny,w=P[i];u2,x2,y2,nx2,ny2,w2=P[i+1]
-            if (math.sin(ang((u+u2)/2))>0)!=front:continue
-            # dải lệch về phía ngoài (mép trên) để có chiều sâu: viền ngoài sáng hơn
-            off=0.18*w*(1-frac)
-            a=w*frac/2;b=w2*frac/2
-            q=[(x+nx*(a+off),y+ny*(a+off)),(x2+nx2*(b+0.18*w2*(1-frac)),y2+ny2*(b+0.18*w2*(1-frac))),
-               (x2-nx2*(b-0.18*w2*(1-frac)),y2-ny2*(b-0.18*w2*(1-frac))),(x-nx*(a-off),y-ny*(a-off))]
-            if dith and k==0 and i<n*0.5 and rnd.random()<dith*(1-i/(n*0.5)):continue
-            d.polygon(q,fill=col+(255,))
-def sheet(name,CH,py,front):
-    cy=py-40;rnd=random.Random(11 if front else 5)
+def prof(s):                       # độ rộng chùm theo vị trí s (0 đuôi → 1 đầu): dày về phía cuối, mỏng nhọn hai đầu
+    return (max(0.0,math.sin(math.pi*min(1,s)**0.7))**0.8)*(0.35+0.65*s)
+def colour(k):                     # k 0=lõi .. 1=mép
+    x=k*(len(PAL)-1);i=int(x);f=x-i
+    a=PAL[min(i,len(PAL)-1)];b=PAL[min(i+1,len(PAL)-1)]
+    return tuple(int(a[j]+(b[j]-a[j])*f) for j in range(3))
+def strands(rnd):
+    S=[]
+    for i in range(M):
+        off=(i/(M-1))*2-1
+        S.append(dict(off=off,a=rnd.uniform(0.0,0.14),b=rnd.uniform(0.86,1.0),w=rnd.choice([1,1,2]),d=rnd.uniform(0.5,1.0)))
+    return S
+def sheet(name,front):
+    rnd=random.Random(21);ST=strands(rnd)
     out=Image.new('RGBA',(CW*COLS,CH*((N+COLS-1)//COLS)),(0,0,0,0))
     for f in range(N):
-        p=(f+0.5)/N;head=min(1,p*1.2);tail=head*min(1,max(0,(p-0.42)/0.5))**1.1
+        p=(f+0.5)/N;head=min(1,p*1.22);tail=head*min(1,max(0,(p-0.40)/0.52))**1.15
         im=Image.new('RGBA',(CW,CH),(0,0,0,0));d=ImageDraw.Draw(im)
-        glow=Image.new('RGBA',(CW,CH),(0,0,0,0));gd=ImageDraw.Draw(glow)
+        gl=Image.new('RGBA',(CW,CH),(0,0,0,0));gd=ImageDraw.Draw(gl)
         if head-tail>0.02:
-            # quầng sáng mềm (viết bằng dải rộng rồi làm mờ, lượng tử về 3 mức alpha cho giữ chất pixel)
-            ribbon(gd,front,cy,RX,RY,tail,head,64,[(1.0,(150,235,225))],rnd)
-            glow=glow.filter(ImageFilter.GaussianBlur(7))
-            a=glow.getchannel('A').point(lambda v:0 if v<40 else 45 if v<90 else 80)
-            glow.putalpha(a)
-            im.alpha_composite(glow)
-            # dải ngoài mảnh, mờ, đến sớm hơn (vệt gió)
-            ribbon(d,front,cy,RX*1.12,RY*1.14,max(0,tail-0.04),max(0,head-0.12),10,[(1.0,C_MID),(0.45,C_LT)],rnd,dith=0.6)
-            # dải chính dày
-            ribbon(d,front,cy,RX,RY,tail,head,44,[(1.0,C_OUT),(0.8,C_MID),(0.6,C_LT),(0.38,C_HI),(0.17,C_W)],rnd)
-            # dải trong, ngắn hơn, tụ về đầu
-            ribbon(d,front,cy,RX*0.84,RY*0.8,tail+(head-tail)*0.25,head*0.96,20,[(1.0,C_MID),(0.65,C_LT),(0.3,C_W)],rnd)
-            # vệt tốc độ + hạt quanh đầu và đuôi
-            for _ in range(26):
+            for pass_ in (0,1):
+                for s in ST:
+                    u0=tail+(head-tail)*s['a'];u1=tail+(head-tail)*s['b'];n=70;pts=[]
+                    for i in range(n+1):
+                        u=u0+(u1-u0)*i/n;sv=(u-tail)/max(1e-6,head-tail)
+                        W=56*prof(sv)*(0.6+0.4*s['d'])
+                        a=ang(u);r=s['off']*W/2
+                        nx,ny=math.cos(a)/RX,math.sin(a)/RY;nl=math.hypot(nx,ny);nx/=nl;ny/=nl
+                        pts.append((a,CX+RX*math.cos(a)+nx*r,CY+RY*math.sin(a)+ny*r,sv))
+                    # chia theo lớp trước/sau (sin>0 = nửa gần camera)
+                    for i in range(n):
+                        a,x,y,sv=pts[i];a2,x2,y2,_=pts[i+1]
+                        if (math.sin((a+a2)/2)>0)!=front:continue
+                        k=abs(s['off'])
+                        if pass_==0:
+                            gd.line([(x,y),(x2,y2)],fill=(70,150,255,255),width=7)
+                        else:
+                            col=colour(min(1,k*0.9+0.1*(1-sv)))
+                            fade=min(1,sv*5)*(1 if sv>0.0 else 0)
+                            d.line([(x,y),(x2,y2)],fill=col+(255,),width=s['w'] if k>0.35 else s['w']+1)
+            gl=gl.filter(ImageFilter.GaussianBlur(6))
+            al=gl.getchannel('A').point(lambda v:0 if v<25 else 40 if v<80 else 70);gl.putalpha(al)
+            base=Image.new('RGBA',(CW,CH),(0,0,0,0));base.alpha_composite(gl);base.alpha_composite(im);im=base;d=ImageDraw.Draw(im)
+            # vệt gió ngắn ngoài vòng + hạt
+            for _ in range(22):
                 u=rnd.uniform(tail,head);a=ang(u)
                 if (math.sin(a)>0)!=front:continue
-                r=rnd.uniform(0.9,1.28);x=CW/2+RX*r*math.cos(a);y=cy+RY*r*math.sin(a)
-                L=rnd.randint(3,9);tx,ty=-math.sin(a)*RX,math.cos(a)*RY;tl=math.hypot(tx,ty);tx/=tl;ty/=tl
-                col=rnd.choice([C_LT,C_HI,C_W])
-                d.line([(x,y),(x-tx*L,y-ty*L)],fill=col+(255,),width=1)
-            for _ in range(14):
-                u=rnd.uniform(head-0.18,head);a=ang(u)
+                r=rnd.uniform(1.05,1.3);x=CX+RX*r*math.cos(a);y=CY+RY*r*math.sin(a)
+                L=rnd.randint(4,11);tx,ty=-math.sin(a)*RX,math.cos(a)*RY;tl=math.hypot(tx,ty)
+                d.line([(x,y),(x-tx/tl*L,y-ty/tl*L)],fill=rnd.choice([PAL[0],PAL[1],PAL[2]])+(255,),width=1)
+            for _ in range(10):
+                a=ang(rnd.uniform(max(0,head-0.2),head))
                 if (math.sin(a)>0)!=front:continue
-                x=CW/2+RX*math.cos(a)+rnd.uniform(-18,18);y=cy+RY*math.sin(a)+rnd.uniform(-18,18)
-                d.rectangle([x,y,x+rnd.choice([0,1]),y+rnd.choice([0,1])],fill=rnd.choice([C_HI,C_W])+(255,))
+                x=CX+RX*math.cos(a)+rnd.uniform(-22,22);y=CY+RY*math.sin(a)+rnd.uniform(-20,20)
+                d.rectangle([x,y,x+rnd.choice([0,1]),y+rnd.choice([0,1])],fill=PAL[rnd.choice([0,1])]+(255,))
         out.paste(im,((f%COLS)*CW,(f//COLS)*CH))
     out.save(OUT+name)
-sheet('k5c_behind.png',125,107,False)
-sheet('k5c_front.png',121,99,True)
+sheet('k5c_behind.png',False)
+sheet('k5c_front.png',True)
