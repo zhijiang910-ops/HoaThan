@@ -217,3 +217,8 @@ Gỡ hết `swhit` (đòn thường, điểm chạm C, Thiên Xu, Vạn Kiếm),
 ## R và Thiên Xu chỉnh (24/11 đêm)
 - **R Định Hải Trấn Thiên:** điểm chạm lệch vì gậy rơi chậm dần (`(1-fall)^3`) nên đứng yên trên đất ~0,2 s trước vụ nổ. Đổi thành rơi nhanh dần (`1-fall²`) để chạm đất đúng khung nổ (0,95 s); thêm 2 vòng xung kích (vàng ngoài, trắng trong) và chớp màn hình `G.flash 0,22`.
 - **Thiên Xu:** bỏ chớp chém `hitFx` và vòng sáng khi nổ (chủ game: chỉ cần sét va chạm); sét PixelLab trên quái to hơn (`sc:1.25`, `y:e.y-e.r*0.5`).
+
+## Sửa khung C, tăng tốc A/B/C, va chạm Vạn Kiếm (24/11 đêm)
+- **Kiếm khung C bị mất/tuột (lỗi do tao đổi góc):** khung 1–2 (`2240`, `2400`) góc −150°/−115° làm lưỡi nằm sau thân/đầu nên biến mất. Đổi thành −75°/−95° (kiếm dựng lên từ tay). Lịch góc C hiện tại: −75, −95, −75, −35, 0, 30, 52, 62, 50, 38 (cả nam và nữ). Đã soi từng khung bằng `scratchpad/z.py`.
+- **Tăng tốc A/B/C ~12%:** `A.dur = tot*0.88/1000` (580/550/800 ms → ~510/484/704 ms). Đổi `dur` đổi chu kỳ đánh, tức DPS tăng ~14%.
+- **Vạn Kiếm Quy Tông va chạm:** mỗi quái bị trúng nhận sát thương trễ theo khoảng cách dọc làn (0–0,34 s) để khớp lúc mũi kiếm tới; hiệu ứng là 2 nhát `hitFx` bắt chéo (±0,55 rad) + rung 2. (Lần trước tao sửa nhầm R của Ngộ Không; chỗ chủ game chê là Vạn Kiếm.)
