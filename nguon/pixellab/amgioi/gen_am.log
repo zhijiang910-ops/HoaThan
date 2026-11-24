@@ -1,0 +1,5 @@
+idle 7 ok {'usd': 0.0, 'type': 'generations', 'generations': 3, 'cost_if_paid': 0.016428229987621307}
+run 9 ok {'usd': 0.0, 'type': 'generations', 'generations': 4, 'cost_if_paid': 0.016255497952302297}
+attack 9 ok {'usd': 0.0, 'type': 'generations', 'generations': 4, 'cost_if_paid': 0.016061347193188136}
+hit 5 ok {'usd': 0.0, 'type': 'generations', 'generations': 2, 'cost_if_paid': 0.015314030263159011}
+death 9 ok {'usd': 0.0, 'type': 'generations', 'generations': 4, 'cost_if_paid': 0.016160431894991133}
