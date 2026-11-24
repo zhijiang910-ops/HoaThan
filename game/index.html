@@ -1434,10 +1434,10 @@ input,select,textarea,#crName{font-size:16px!important}
 <section id="create" class="screen" hidden>
  <div class="cx">
   <div class="cxp cxL">
-   <label for="crName" class="cxh">Tên nhân vật</label>
-   <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
+   <label for="crName" class="cxh">Danh xưng</label>
+   <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập danh xưng (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
-   <h3 class="cxh">Chọn avatar</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn avatar nhân vật"></div>
+   <h3 class="cxh">Chân dung</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn chân dung"></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
     <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
@@ -3834,7 +3834,7 @@ function renderCreateAvatars(){
  const gender=cr.gender;
  group.innerHTML=Array.from({length:8},(_,i)=>{
   const n=i+1,position=avatarPosition(i);
-  const label='Avatar '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
+  const label='Chân dung '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
   return `<button type="button" class="cxavatar" data-avatar="${n}" title="${label}" aria-label="${label}" aria-pressed="${cr.avatars[gender]===n}" style="background-image:url('assets/portraits/avatar-${gender}.webp');background-position:${position}"></button>`;
  }).join('');
  renderCreateScene();
