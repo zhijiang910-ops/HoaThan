@@ -131,3 +131,6 @@ Chưa làm: lớp bàn tay; Huyền Giáp; so từng khung với Hovl; chơi iPh
 
 ## Dời timing VFX theo ảnh minh họa (24/11/2026, chủ game duyệt)
 Chỉ đổi thời điểm bật/thời lượng, không đổi khung, sát thương hay nhịp 580/550/800 ms: vệt A bật 0,06 s (đỉnh A4), vệt B bật 0,12 s (đỉnh B5), elip C bật 0,12 s với T 0,5 s (nhát nhọn C3–C4, elip mở C5, C6–C8, tan C9–C10, sạch từ C11). Ảnh minh họa mới: `nguon/phac_thao/MINH_HOA_COMBO_THEO_GUIDE_{nam,nu}_v2.png`. Đo 60 FPS nam+nữ: vệt A 50–417 ms, vệt B 700–1033 ms, vệt C 1250–1733 ms, không chồng sang đòn kế. Video: `QA_BEFORE_AFTER/TIMING_ABC_*`. Chưa chơi trên iPhone thật.
+
+## Trả về đòn A-B-C cũ (24/11/2026, theo yêu cầu chủ game)
+Khôi phục `NC`, `TA/TB/TC`, `comboFx` về bản trước khi làm lại combo (giữ các sửa khác). Đo 60 FPS nam: attack 0–583, attack2 583–1133, attack3 1133–1933 ms; VFX zs3, zs2, elip k5c_* tan ở 1683 ms trước hết đòn; không lỗi script. Combo thử nghiệm mới chỉ còn là tài nguyên tham khảo.
