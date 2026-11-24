@@ -1842,9 +1842,10 @@ function comboFx(step){/* VFX bản mẫu (PixelLab, gói tách lớp, tông tr�
  /* VFX theo Sword Combo Keyframe Guide (PixelLab VFX creator pro, 24/11): bật đúng khung bắt đầu vệt chém, đỉnh trùng khung chạm.
     A: vệt chéo xuống bắt đầu A3, đỉnh A4. B: quét ngang bắt đầu B3, đỉnh B5. C: nhát nhọn rơi xuống bắt đầu C4 rồi một elip duy nhất, tan trước hết đòn. */
  const st=k=>(k>0&&an&&an.tl?an.tl[k-1][1]:0)*(an&&an.dur||0.58);
- if(step===0)later(st(2),()=>go('g_a',6/16,0,1),'h');
- else if(step===1)later(st(2),()=>go('g_b',0.34,0,1),'h');
- else later(st(3),()=>{go('g_c_b',0.58,1,1);go('g_c_f',0.58,0,1)},'h')}
+ /* Timing chỉnh theo ảnh minh họa (24/11): A đỉnh ở A4 (bật 0,06 s), B đỉnh ở B5 (bật 0,12 s), C elip mở ở C5 và tan ở C9-C10 (bật 0,12 s, T 0,5 s) */
+ if(step===0)later(0.06,()=>go('g_a',6/16,0,1),'h');
+ else if(step===1)later(0.12,()=>go('g_b',0.34,0,1),'h');
+ else later(0.12,()=>{go('g_c_b',0.5,1,1);go('g_c_f',0.5,0,1)},'h')}
 function finishSwordCut(dt){
  const cut=P.swordCut;
  if(!cut)return;
