@@ -2088,7 +2088,7 @@ const WEAPONS={
      },null);
     /* đòn kết (24/11): sau khi các kiếm bay đi, một ĐẠI KIẾM (chính thanh đang cầm, phóng to) từ trời rơi xuống cuối làn, 0,55 s tới đất, choáng 0,35 s */
     later(2.75,()=>{let tx=x0+ca*260,ty=y0+sa*260;const es=enemiesIn(x0+ca*280,y0+sa*280,230).filter(e=>!e.dead);if(es.length){tx=es.reduce((s,e)=>s+e.x,0)/es.length;ty=es.reduce((s,e)=>s+e.y,0)/es.length}tx=clamp(tx,x0-560,x0+560);if(wartV&&WPN[wartV]&&WIMG[wartV]&&WIMG[wartV].complete)addZone({kind:'vkbig',T:1.7,src:'h',x:tx,y:ty,art:wartV});
-     later(0.55,()=>{for(const e of enemiesIn(tx,ty,150))hit(e,dmg*2.6,H({kb:140,stun:0.35}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:150,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:96,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:1});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.9})},null)}sfx('sword_hit',0.7,0.1)},null)},null);
+     later(0.55,()=>{for(const e of enemiesIn(tx,ty,150))hit(e,dmg*2.6,H({kb:140,stun:0.35}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:150,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:96,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:0.72});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.6})},null)}sfx('sword_hit',0.7,0.1)},null)},null);
     notice('Vạn Kiếm Quy Tông')}},
  ]},
  dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
