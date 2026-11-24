@@ -1104,7 +1104,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* viền nhẹ cho khung tranh: một nét sáng mảnh + một nét tối, nằm đè lên ảnh */
 .cxill::after,.cxL .cxst::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,236,190,.4),inset 0 0 0 3px rgba(10,6,3,.5),inset 0 0 0 4px rgba(255,236,190,.15)}
 .cxL .cxst{position:relative}
-.cxill #crBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.9)}
+.cxill #crBg{position:absolute;inset:-54.72% auto auto -25.2%;width:172%;height:172%;object-fit:cover;image-rendering:pixelated}
 
 .cxwi{margin-top:2px}
 .crscene-open{position:absolute;inset:0;z-index:1;border:0;background:none;cursor:zoom-in}
@@ -1112,7 +1112,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .crscene-open svg{position:absolute;top:10px;right:10px;width:18px;height:18px;padding:6px;border:1px solid #8a7045;background:#18110dbd;color:#ffebbe}
 .crscene-dialog{padding:0;border:1px solid #ba9653;background:#10100f;overflow:hidden;max-width:92vw;max-height:90vh}
 .crscene-dialog::backdrop{background:#090605e8}
-.crscene-dialog img{display:block;width:min(86vw,85vh);height:auto;image-rendering:pixelated}
+.crscene-dialog img{display:block;max-width:86vw;max-height:85vh;width:auto;height:auto;object-fit:contain;image-rendering:pixelated}
 .crscene-dialog button{position:absolute;top:6px;right:6px}
 .cxavatars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;flex-shrink:0}
 @media (max-width:760px){.cxavatars{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}}
@@ -1121,7 +1121,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* ô đang chọn: cùng kích thước với ô khác, vòng sáng nằm TRONG ô (không phình ra ngoài) */
 .cxavatar[aria-pressed="true"]{border-color:#ffd47a;box-shadow:inset 0 0 0 1px #ffd47a,inset 0 0 0 2px rgba(10,6,3,.6),0 0 7px rgba(199,140,66,.65)}
 .cxavatar:focus-visible{outline:2px solid #fff1c5;outline-offset:-3px}
-#crBg{image-rendering:pixelated;object-position:50% 42%}
+#crBg{image-rendering:pixelated}
 @media (max-height:520px){
  .cxL .cxst{min-height:60px}.cxhr b{font-size:10.5px}
 }
@@ -1402,12 +1402,18 @@ input,select,textarea,#crName{font-size:16px!important}
 #avaC{width:50px!important;height:50px!important}
 #avaLv{right:-4px!important;bottom:-2px!important;left:auto!important;top:auto!important;z-index:3}
 .avn{padding-top:1px}
-#coins{left:calc(max(10px,env(safe-area-inset-left)) + 66px)!important;top:calc(max(8px,env(safe-area-inset-top)) + 82px)!important;padding:2px 12px 2px 6px!important;font-size:14px!important;gap:6px!important;border-radius:8px!important}
+#coins{left:calc(max(10px,env(safe-area-inset-left)) + 66px)!important;top:calc(max(8px,env(safe-area-inset-top)) + 62px)!important;padding:2px 12px 2px 6px!important;font-size:14px!important;gap:6px!important;border-radius:8px!important}
 #coins canvas{width:16px!important;height:16px!important}
 @media (max-height:520px){
  #avaBtn{width:50px!important;height:50px!important}#avaC{width:43px!important;height:43px!important}
- #coins{top:calc(max(8px,env(safe-area-inset-top)) + 80px)!important;font-size:12px!important}
+ #coins{top:calc(max(8px,env(safe-area-inset-top)) + 60px)!important;font-size:12px!important}
 }
+/* Lực chiến trong trận nhỏ hơn một chút (24/11) */
+.acp{margin-top:2px!important;padding:0 32px 0 2px!important}
+.acp .cpi{width:20px!important;height:20px!important}
+#hud .acp b{font-size:14.5px!important}
+.acp small{font-size:8px!important}
+@media (max-height:460px){.acp .cpi{width:15px!important;height:15px!important}#hud .acp b{font-size:11.5px!important}.acp small{font-size:7px!important}}
 </style>
 </head>
 <body>
