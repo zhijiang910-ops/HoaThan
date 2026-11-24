@@ -165,3 +165,4 @@ Chủ game duyệt, cho phép PixelLab ở VFX Ngộ Không nhưng chỉ khi th�
 - **R:** gậy khổng lồ ×2,2 (ảnh `wk_staff_big`), bóng đổ lớn dần, vệt tốc độ, ánh vàng phủ nhẹ, chớp sáng khi chạm. Vết cháy 2,2→1,0 s, vết nứt 1,2→0,85 s và mờ sớm hơn (cả Cân Đẩu Trấn Địa).
 - Chưa dùng PixelLab. Điểm còn yếu: thân gậy X vẫn là một thanh đỏ thẳng có đầu vàng (ảnh `wk_staff`); muốn đẹp hơn cần ảnh thân gậy có hoa văn/rãnh vàng, khi đó mới nên gọi PixelLab (ước 12 lượt VFX pro).
 - Test: `scratchpad/xr_test.js` cần đặt cd kỹ năng = 0 trước khi bấm (cd sau Hóa Thân không giảm khi chạy đồng hồ ảo).
+- (24/11 tối) **R (Định Hải Trấn Thiên)** choáng 1,0→1,8 s (tinh anh nửa thời gian, trùm miễn choáng theo luật `hit`), sao choáng trên đầu quái 3→4 và to hơn. **X (Như Ý Xuyên Thiên)** sát thương xuyên 35% giáp (`pierceArmor:0.35`, hiện trong mô tả).
