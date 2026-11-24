@@ -102,3 +102,5 @@ Animation và VFX cũ (zs3/zs2, elip k5c_*) mày đã duyệt là đạt. Việc
 
 ## CHỐT 24/11 (cuối): GIỮ ĐÒN A-B-C CŨ
 Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX mới) và chọn **giữ lại đòn A, B, C cũ vì animation mới xấu**. Game đã trả về: A 8 khung (`attack`), B 7 khung (`attack2`), C 10 khung (`attack3`), VFX zs3 / zs2 / elip `k5c_*` (đã bỏ `zs1` dư, elip tan trước hết đòn). KHÔNG làm lại combo này nếu chủ game không yêu cầu. Các tài nguyên thử nghiệm giữ trong repo chỉ để tham khảo, không dùng: hàng y=384/512 của `hero_*_ns.png` + `WSOCK`, `ANIMATION_A_B_C/`, VFX `g_a`, `g_b`, `g_c_b`, `g_c_f`, `hc_*`, phân tích Hovl (`nguon/tham_chieu/hovl/`). Các mục "Combo Kiếm mới A7/B7/C12 ĐÃ VÀO GAME", "Đòn C theo Hovl" và "Chốt 24/11: A-B-C là MỘT CHUỖI" ở trên đã bị thay thế bởi mục này.
+
+**Đã xóa (24/11, theo yêu cầu chủ game):** toàn bộ tài nguyên combo thử nghiệm (khung 7/7/12, C Hovl, VFX g_*/hc_*, hàng sheet y=384/512 và WSOCK tương ứng, `ANIMATION_A_B_C/`, phân tích Hovl, ảnh minh họa, `animation_manifest.json`). Sheet `hero_*_ns.png`/`_hand.png` đã về 3840×384 đúng bản Master khóa.
