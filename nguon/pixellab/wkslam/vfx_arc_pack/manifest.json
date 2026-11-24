@@ -1,0 +1,144 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "wk_arc",
+ "fps": 16,
+ "frame_ms": 63,
+ "frames": 10,
+ "loop": false,
+ "canvas": {
+  "w": 192,
+  "h": 308
+ },
+ "anchor": {
+  "kind": "feet",
+  "x": 68,
+  "y": 249
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 9,
+   "frame": {
+    "w": 187,
+    "h": 302
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 9,
+     "columns": 3,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -66,
+    "y": -246
+   }
+  },
+  {
+   "name": "whole-with-sprite",
+   "title": "the whole effect with the sprite in it",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 10,
+   "frame": {
+    "w": 187,
+    "h": 302
+   },
+   "sheets": [
+    {
+     "file": "whole-with-sprite.png",
+     "first_frame": 0,
+     "frames": 10,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -66,
+    "y": -246
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 9,
+   "frame": {
+    "w": 187,
+    "h": 302
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 9,
+     "columns": 3,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -66,
+    "y": -246
+   }
+  },
+  {
+   "name": "part-swing",
+   "title": "the swing part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 8,
+   "frame": {
+    "w": 187,
+    "h": 242
+   },
+   "sheets": [
+    {
+     "file": "part-swing.png",
+     "first_frame": 0,
+     "frames": 8,
+     "columns": 3,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -66,
+    "y": -246
+   }
+  },
+  {
+   "name": "part-impact",
+   "title": "the impact part",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 4,
+   "frames": 5,
+   "frame": {
+    "w": 109,
+    "h": 100
+   },
+   "sheets": [
+    {
+     "file": "part-impact.png",
+     "first_frame": 0,
+     "frames": 5,
+     "columns": 3,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": 10,
+    "y": -44
+   }
+  }
+ ]
+}

@@ -1712,7 +1712,7 @@ const preDecode=i=>{try{i.decode&&i.decode().catch(()=>{})}catch(e){}};
 /* hiệu ứng gói Wuxia */
 const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_slash','ink_impact','ink_trail'].forEach(n=>{const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i});
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
-const SPX={wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
+const SPX={wk_arc:{w:187,h:302,c:3,n:9,px:66,py:246},wk_puff2:{w:35,h:24,c:3,n:7,px:20,py:17},wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
  sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},k5a_front:{w:82,h:103,c:3,n:6,px:-36,py:106},k5b_front:{w:124,h:163,c:3,n:6,px:22,py:151},k5c_behind:{w:334,h:125,c:4,n:15,px:167,py:107},k5c_front:{w:334,h:121,c:4,n:15,px:167,py:99},hv_mark:{w:128,h:66,c:5,n:17,px:64,py:33},hv_vortex_b:{w:191,h:92,c:4,n:14,px:96,py:98},hv_vortex_f:{w:209,h:100,c:6,n:28,px:106,py:100},hv_ring:{w:137,h:131,c:5,n:19,px:69,py:83},tx_in:{w:365,h:604,c:11,n:30,px:215,py:520},tx_loop:{w:309,h:278,c:13,n:60,px:155,py:196},tx_out:{w:304,h:269,c:11,n:11,px:153,py:187},vk_e:{w:838,h:316,c:4,n:46,px:198,py:213},hp_guard:{w:128,h:128,c:1,n:1,px:64,py:64},hp_imp:{w:48,h:48,c:8,n:8,px:24,py:24},hp_star:{w:64,h:64,c:10,n:10,px:32,py:32},zs1:{w:101,h:87,c:3,n:9,px:44,py:102},zs2:{w:108,h:122,c:3,n:7,px:32,py:117},zs3:{w:87,h:88,c:3,n:9,px:30,py:90},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
  cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
@@ -2066,7 +2066,7 @@ const WEAPONS={
 const GOD=o=>Object.assign({src:'g',t:'w'},o);
 const GODS={
  wukong:{name:'Tôn Ngộ Không',tier:'SSS',mult:3.0,dur:20,cd:60,armor:15,spd:0.2,look:'wukong',wpn:'bong',g:'悟',role:'Sát thương diện rộng, thổi lông hóa khỉ con',wname:'Như Ý Kim Cô Bổng',
-  basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);P._gB=!P._gB;swing(a,P.sw=-(P.sw||1));const fc=Math.cos(a)<0?-1:1,ta=clamp(Math.atan2(Math.sin(a),Math.abs(Math.cos(a))),-0.35,0.35);if(!P._gB){/* Bổ: gậy giơ cao bổ xuống phía trước -> vệt trăng tâm ở tay, quét trên xuống trước mặt; trúng ở khung gậy bổ xuống, đã chạy đi thì hủy */later(0.2,()=>{if(P.form!=='god')return;const sp=vok('wk_slash');arc(P.x,P.y-8,a,138,2.4,14*gp(),GOD({kb:120,nofx:sp}),'#ffd36a',1);if(sp)fx({k:'sp',s:'wk_slash',x:P.x+fc*4,y:P.y-64,ang:ta*fc,sc:1.2,fx:fc,f0:1,T:0.42,al:0.5})},'g')}
+  basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);P._gN=((P._gN||0)+1)%3;const slam=P._gN===0;P._gB=P._gN===2;P._gSl=slam;swing(a,P.sw=-(P.sw||1));if(slam){const fcs=Math.cos(a)<0?-1:1;P.facing=fcs;later(0.12,()=>{if(P.form!=='god')return;if(vok('wk_arc'))fx({k:'sp',s:'wk_arc',x:P.x,y:P.y,sc:0.98,fx:fcs,T:0.5,follow:1,al:0.9});},'g');later(0.33,()=>{if(P.form!=='god')return;arc(P.x,P.y-8,a,150,2.2,26*gp(),GOD({kb:220,stun:0.12}),'#ffd36a',1);G.shake=Math.max(G.shake||0,5);cracks(P.x+fcs*60,P.y,60)},'g');return}const fc=Math.cos(a)<0?-1:1,ta=clamp(Math.atan2(Math.sin(a),Math.abs(Math.cos(a))),-0.35,0.35);if(!P._gB){/* Bổ: gậy giơ cao bổ xuống phía trước -> vệt trăng tâm ở tay, quét trên xuống trước mặt; trúng ở khung gậy bổ xuống, đã chạy đi thì hủy */later(0.2,()=>{if(P.form!=='god')return;const sp=vok('wk_slash');arc(P.x,P.y-8,a,138,2.4,14*gp(),GOD({kb:120,nofx:sp}),'#ffd36a',1);if(sp)fx({k:'sp',s:'wk_slash',x:P.x+fc*4,y:P.y-64,ang:ta*fc,sc:1.2,fx:fc,f0:1,T:0.42,al:0.5})},'g')}
    else{/* Đâm: gậy nằm ngang theo hướng mặt, tia vàng phóng ra từ đầu gậy, trúng theo đường thẳng hẹp và xa hơn */later(0.12,()=>{if(P.form!=='god')return;const aa=fc>0?ta:Math.PI-ta,sp=1;arc(P.x,P.y-8,aa,175,1.1,15*gp(),GOD({kb:150,nofx:sp}),'#ffd36a',1);/* gậy không có mũi: chỉ chớp lửa nhỏ ở đầu gậy */if(vok('wk_hit'))fx({k:'sp',s:'wk_hit',x:P.x+fc*96,y:P.y-63,sc:0.45,f0:0,f1:4,T:0.22})},'g')}}},
   skills:[
    {name:'Thổi Lông Hóa Khỉ',g:'猴',hotkey:'Q',cd:9,range:420,desc:'Nhổ một nhúm lông thổi ra 5 khỉ con. Mỗi con tự tìm quái, lao tới cào cắn trong 8 giây.',cast(){P._gBlow=G.t;blowMonkeys(5)}},
@@ -2593,7 +2593,7 @@ for(const id in GODS){const d=GODS[id];(d.skills||[]).forEach((k,i)=>{if(!k.hotk
 function castGod(dt){
  const g=P.god,asp=1+S.aspd/200;
  g.basic.cd-=dt;
- if(g.basic.cd<=0){const tg=nearest(P.x,P.y,g.def.basic.range);if(tg){g.def.basic.cast(tg);g.basic.cd=g.def.basic.cd/asp}}
+ if(g.basic.cd<=0){const tg=nearest(P.x,P.y,g.def.basic.range);if(tg){g.def.basic.cast(tg);g.basic.cd=(g.def.look==='wukong'&&P._gN===0?0.78:g.def.basic.cd)/asp}}
  /* Kỹ năng và tuyệt kỹ của Hóa Thân do người chơi BẤM (chủ game, 24/11); ở đây chỉ hồi chiêu. Thần tướng khác vẫn tự thi triển. */
  const manual=true;
  for(const s of g.sk){s.cd=Math.max(0,s.cd-dt);if(manual)continue;if(s.cd<=0){if(s.def.need&&!s.def.need())continue;const tg=nearest(P.x,P.y,s.def.range);if(tg){s.def.cast(tg);s.cd=s.def.cd;s.fl=0.3}}}
@@ -2691,7 +2691,7 @@ function updHaz(dt){
 /* ===== Khỉ con (Thổi Lông Hóa Khỉ) ===== */
 const KHI={w:96,h:96,ax:48,ay:92,anims:{"idle":[[0,0],[96,0],[192,0],[288,0]],"run":[[0,96],[96,96],[192,96],[288,96],[384,96],[480,96],[576,96],[672,96]],"atk":[[0,192],[96,192],[192,192],[288,192],[384,192],[480,192],[576,192],[672,192]]},img:new Image()};KHI.img.src='assets/khi.png';preDecode(KHI.img);
 function blowMonkeys(n){const f=P.facing||1,mx=P.x+f*16,my=P.y-58;
- if(vok('wk_puff'))fx({k:'sp',s:'wk_puff',x:mx+f*14,y:my,sc:0.7,T:0.4});
+ if(vok('wk_puff2'))fx({k:'sp',s:'wk_puff2',x:mx+f*22,y:my,sc:1.8,fx:f,T:0.55,al:0.95});else if(vok('wk_puff'))fx({k:'sp',s:'wk_puff',x:mx+f*14,y:my,sc:0.7,T:0.4});
  for(let i=0;i<n;i++){const ang=(f>0?0:Math.PI)+(i-(n-1)/2)*0.55,r=rnd(70,100),x=clamp(P.x+Math.cos(ang)*r,30,AW-30),y=clamp(P.y+Math.sin(ang)*r*0.8,30,AH-30);
   // lông vàng bay từ miệng ra chỗ khỉ hiện
   for(let k=0;k<3;k++)part(mx,my,(x-mx)*rnd(2.2,2.8),(y-40-my)*rnd(2.2,2.8),0.4,2,'#ffd36a',1,0);
@@ -3179,16 +3179,18 @@ const GOD_SPR={wukong:'god_wukong'};
 {const C=[[0, 320], [166, 320], [332, 320], [498, 320], [664, 320], [830, 320]],Q=[0, 1, 2, 3, 4, 5, 5, 5];CHM.god_wukong.anims.runatk={fps:10,f:Q.map(i=>C[i].slice())}}
 /* Thổi lông (PixelLab animate-with-text-v3, 24/11): đưa tay lên miệng, hít, thổi, lông vàng bay ra. Hàng y=480 */
 CHM.god_wukong.anims.blow={fps:11,f:[[0, 480], [166, 480], [332, 480], [498, 480], [664, 480], [830, 480], [996, 480], [1162, 480]]};
+/* Đòn bổ từ trên xuống (đòn thứ 3 của chuỗi, theo clip tham chiếu 24/11; PixelLab animate-with-text-v3 1 lần 4 lượt). Hàng y=640 */
+CHM.god_wukong.anims.slam={fps:13,f:[[0, 640], [166, 640], [332, 640], [498, 640], [664, 640], [830, 640], [996, 640], [1162, 640]]};
 const godSprite=()=>P.form==='god'&&GOD_SPR[P.god.def.look]&&CH[GOD_SPR[P.god.def.look]]&&CH[GOD_SPR[P.god.def.look]].ok;
 function drawGodSprite(){
  const h=CH[GOD_SPR[P.god.def.look]],A=h.meta.anims;
- if(P.atkT>(P._gLast||0)+0.01){P._gAtk={t:G.t,an:P._gB?'attack2':'attack'}}P._gLast=P.atkT;
+ if(P.atkT>(P._gLast||0)+0.01){P._gAtk={t:G.t,an:P._gSl?'slam':P._gB?'attack2':'attack'};P._gSl=false}P._gLast=P.atkT;
  let an='idle',fi=Math.floor(G.t*6)%A.idle.f.length,lean=0;const DUR=0.45;
  if(P._gHold&&G.t<P._gHold.until){an=P._gHold.an;fi=P._gHold.fi}
  else if(P._gBlow!=null&&G.t-P._gBlow<0.73&&A.blow){an='blow';fi=Math.min(A.blow.f.length-1,Math.floor((G.t-P._gBlow)/0.73*A.blow.f.length))}
  else if(P.hurt>0.05&&A.hit){an='hit';fi=Math.min(A.hit.f.length-1,Math.floor((1-P.hurt/0.2)*A.hit.f.length))}
  // Đánh là hiện đúng động tác đánh, kể cả khi đang di chuyển (chủ game chọn 24/11); hết nhịp đánh thì về khung chạy.
- else if(P._gAtk&&G.t-P._gAtk.t<DUR){an=P.moving&&A.runatk?'runatk':P._gAtk.an;fi=Math.min(A[an].f.length-1,Math.floor((G.t-P._gAtk.t)/DUR*A[an].f.length))}
+ else if(P._gAtk&&G.t-P._gAtk.t<(P._gAtk.an==='slam'?0.62:DUR)){const D=P._gAtk.an==='slam'?0.62:DUR;an=P._gAtk.an==='slam'?'slam':(P.moving&&A.runatk?'runatk':P._gAtk.an);fi=Math.min(A[an].f.length-1,Math.floor((G.t-P._gAtk.t)/D*A[an].f.length))}
  else if(P.moving){an='run';fi=Math.floor((P.runPh||0)/18)%A.run.f.length}
  if(P.god.def.look==='wukong'&&vok('wk_aura_fire')){const A2=AURAF,i=Math.floor(G.t*A2.fps)%A2.n;X.save();X.imageSmoothingEnabled=false;X.drawImage(VFX.wk_aura_fire,(i%A2.c)*A2.w,Math.floor(i/A2.c)*A2.h,A2.w,A2.h,Math.round(P.x-A2.ax),Math.round(P.y-A2.ay),A2.w,A2.h);X.restore()}else drawAura(P.x,P.y);X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,22,7);
  const M=h.meta,fr=A[an].f[fi],sc=0.98,flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
