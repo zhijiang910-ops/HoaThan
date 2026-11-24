@@ -1009,9 +1009,13 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
  .lbmain{gap:5px}.lbbig{padding:5px 10px}.lbbig.gold b{font-size:17px}.lbbig b{font-size:13px}.lbbig small{font-size:9px}
  .lbtitle{font-size:19px}.lbtitle small{font-size:11px}
  .lbgrid{gap:5px}.lbt{padding:5px 6px;grid-template-columns:28px 1fr}.lbt i{width:28px;height:28px;font-size:18px}.lbt b{font-size:11px}.lbt small{font-size:9px}
+ .lbl{gap:6px}.lbprof .lbcp{margin:2px 0 3px}.lbmain .lbbig{padding:3px 10px;gap:1px}
  .lbfoot{gap:8px}.lbfoot .toggle{font-size:11px}
+ .lbfoot .credit{flex:1 1 220px;min-width:0;line-height:1.25;text-align:right}
 }
 @media (max-width:700px){#lobby .lb{grid-template-columns:minmax(190px,1fr) minmax(0,1.25fr)!important}.lbgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.lbfoot .credit{display:none}}
+@media (max-height:360px) and (min-width:620px) and (max-width:700px){.lbgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.lbr{gap:6px}}
+@media (max-height:320px){.lbfoot .toggle{min-height:26px}}
 .lbfoot{text-shadow:0 1px 2px #000,0 0 6px #000}.lbfoot .dim,.lbfoot .toggle{color:#d8cdb4!important}
 /* ===== tạo nhân vật 3 cột ===== */
 #create:not([hidden]){display:block!important;padding:0!important;overflow:hidden!important;background:radial-gradient(ellipse at 50% 30%,#2a1a10,#0a0604 75%)!important}
@@ -1480,10 +1484,11 @@ input,select,textarea,#crName{font-size:16px!important}
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
     <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
-   <canvas id="lbHero" width="240" height="200"></canvas><div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbBossChest" class="lbbig" hidden><b>Rương Boss chờ nhận</b><small id="lbBossChestS"></small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
+   <div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbBossChest" class="lbbig" hidden><b>Rương Boss chờ nhận</b><small id="lbBossChestS"></small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
   </div>
   <div class="lbr">
    <h1 class="lbtitle">Tây Du Sinh Tồn<small>西遊生存</small></h1>
+   <canvas id="lbHero" width="240" height="200" aria-hidden="true"></canvas>
    <div class="lbgrid" id="lbGrid"></div>
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
