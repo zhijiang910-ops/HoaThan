@@ -1136,8 +1136,10 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxsb{align-items:center;text-align:center;min-width:0}.cxsb .sav{width:100%;max-width:56px;aspect-ratio:1;border-radius:4px;background-size:cover;background-position:50% 8%;box-shadow:inset 0 0 0 1px rgba(255,236,190,.4);image-rendering:auto}
 .cxsb b{font-size:10.5px;line-height:1.15;white-space:normal}.cxsb small{display:block;font:600 9.5px "Be Vietnam Pro",sans-serif;color:#a8987a}
 .cxsb.on .sav{box-shadow:inset 0 0 0 2px #ffd36a}
+@media (max-height:680px){#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}}
 @media (max-height:440px){.cxsect{gap:3px}.cxsb{padding:2px 1px 1px}.cxsb .sav{max-width:30px}.cxsb b{font-size:8.5px;line-height:1.1}.cxsb small{font-size:8px}.cxsb .lk{font-size:9px}#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}.cxR h3.cxh{margin:2px 0}}
-@media (max-height:400px){.cxsb .sav{max-width:26px}.cxR .cxinfo div:nth-child(2){display:none}.cxR #crSkD{max-height:34px;overflow:auto}}
+@media (max-height:440px){.cxR .cxinfo div:nth-child(2){display:none}.cxR #crSkD{max-height:28px;overflow:auto}}
+@media (max-height:400px){.cxsb .sav{max-width:26px}.cxR .cxs{width:25px!important;height:25px!important;font-size:14px!important}.cxR .cxskr>span{font-size:9px!important}.cxR #crSkD{max-height:22px}.cxR #crSkH{display:none}}
 .cxill #crBg.sect,#crBg.sect{image-rendering:auto!important}
 #lbAva,#avaC{image-rendering:auto!important}/* chân dung phái không phải pixel art thật: làm mịn thay vì phóng ô cứng */
 .cxavatar[aria-pressed="true"]{border-color:#ffd47a;box-shadow:inset 0 0 0 1px #ffd47a,inset 0 0 0 2px rgba(10,6,3,.6),0 0 7px rgba(199,140,66,.65)}
@@ -1769,7 +1771,7 @@ const WAURA={"3":[39,15,4,16,16,17,-11],"6":[39,15,4,16,16,17,-11],"9":[39,15,4,
 const WIMG={},AIMG={};for(const n in WPN){const i=new Image();i.src='assets/wpn/'+n+'.png';WIMG[n]=i}for(const k in WAURA){const i=new Image();i.src='assets/vfx/aura_'+k+'.png';AIMG[k]=i}
 const WART={'Thanh Phong Kiếm':'thanhphong','Hàn Thiết Kiếm':'hanthiet','Long Tuyền Kiếm':'thanhphong','Tử Điện Kiếm':'tudien','Trảm Yêu Kiếm':'tramyeu','Thái A Kiếm':'thaia'};
 /* Thương: cây thương (cầm ở 40% cán); Song Quyền: tay không */
-const WCLASS_ART={thuong:'thuong1',quyen:null};
+const WCLASS_ART={thuong:'thuong1',quyen:null,dao:'daoquy'};
 function heroWeaponArt(g){let n='thanhphong';if(G&&G.training&&TR.wpn)n=TR.wpn;else{const wc=G&&G.cfg&&G.cfg.weapon;if(wc&&wc in WCLASS_ART)return WCLASS_ART[wc]}if(n==='none')return null;if(n!=='thanhphong'&&WPN[n])return n;if(n==='thanhphong'&&!(G&&G.training&&TR.wpn))try{const it=invList().find(x=>x.id===eqMap().vk);if(it&&!it.damaged&&WART[it.name])n=WART[it.name]}catch(e){}return n==='thanhphong'?'thanhphong_nu':n}/* nam và nữ dùng chung một thanh kiếm (bản nữ, chủ game chọn 24/11) */
 function auraLv(){const f=weaponForge();return f>=12?12:f>=9?9:f>=6?6:f>=3?3:0}
 /* Viền tối quanh kiếm bay (Hồi Phong): ảnh kiếm xám mỏng chìm vào nền tuyết sáng nên trông như mất kiếm. Bóng lấy từ chính ảnh kiếm, lưu sẵn */
@@ -1833,7 +1835,7 @@ const preDecode=i=>{try{i.decode&&i.decode().catch(()=>{})}catch(e){}};
 /* hiệu ứng gói Wuxia */
 const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_slash','ink_impact','ink_trail'].forEach(n=>{const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i});
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
-const SPX={wk_arc:{w:187,h:302,c:3,n:9,px:66,py:246},wk_puff2:{w:35,h:24,c:3,n:7,px:20,py:17},wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
+const SPX={dq_cleave:{w:272,h:326,c:8,n:16,px:3,py:301},dq_triple:{w:285,h:338,c:8,n:23,px:-13,py:301},dq_ring:{w:460,h:232,c:6,n:17,px:230,py:141},wk_arc:{w:187,h:302,c:3,n:9,px:66,py:246},wk_puff2:{w:35,h:24,c:3,n:7,px:20,py:17},wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
  sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},k5a_front:{w:82,h:103,c:3,n:6,px:-36,py:106},k5b_front:{w:124,h:163,c:3,n:6,px:22,py:151},wanjian_sword:{w:96,h:96,c:1,n:1,px:48,py:48},set_ring:{w:190,h:80,c:4,n:12,px:95,py:40},set_bolt:{w:80,h:240,c:4,n:12,px:40,py:228},set_bolt_do:{w:80,h:240,c:4,n:12,px:40,py:228},set_no_do:{w:240,h:140,c:4,n:12,px:120,py:100},set_len_do:{w:240,h:230,c:4,n:12,px:120,py:208},k5c_pro:{w:196,h:202,c:4,n:15,px:89,py:104},k5c_behind:{w:360,h:224,c:4,n:15,px:180,py:154},k5c_front:{w:360,h:224,c:4,n:15,px:180,py:154},hv_mark:{w:128,h:66,c:5,n:17,px:64,py:33},hv_vortex_b:{w:191,h:92,c:4,n:14,px:96,py:98},hv_vortex_f:{w:209,h:100,c:6,n:28,px:106,py:100},hv_ring:{w:137,h:131,c:5,n:19,px:69,py:83},tx_in:{w:365,h:604,c:11,n:30,px:215,py:520},tx_loop:{w:309,h:278,c:13,n:60,px:155,py:196},tx_out:{w:304,h:269,c:11,n:11,px:153,py:187},vk_e:{w:838,h:316,c:4,n:46,px:198,py:213},hp_guard:{w:128,h:128,c:1,n:1,px:64,py:64},hp_imp:{w:48,h:48,c:8,n:8,px:24,py:24},hp_star:{w:64,h:64,c:10,n:10,px:32,py:32},wx_slash:{w:96,h:96,c:4,n:8,px:48,py:48},zs1:{w:101,h:87,c:3,n:9,px:44,py:102},zs2:{w:108,h:122,c:3,n:7,px:32,py:117},zs3:{w:87,h:88,c:3,n:9,px:30,py:90},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
  cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
@@ -1929,7 +1931,7 @@ function heroFrame(){
  if(P.cutC&&HERO.meta.anims.cutC)return['cutC',cutCPose(P.cutC.t).fi];
  if(P.hurt>0&&!(P.av>0)&&HERO.meta.anims.hit)return['hit',Math.min(HERO.meta.anims.hit.f.length-1,Math.floor((1-P.hurt/0.2)*4))];
  if(P.dashT>0)return['dash',Math.floor(P.t*15)%3];
- if(P.av>0&&!(G&&G.cfg&&G.cfg.weapon!=='kiem')){ /* Thương/Song Quyền chưa có động tác đánh: giữ đứng/chạy */
+ if(P.av>0&&!(G&&G.cfg&&G.cfg.weapon!=='kiem'&&G.cfg.weapon!=='dao')){ /* Thương/Song Quyền chưa có động tác đánh: giữ đứng/chạy */
   const progress=swingProgress();
   // Keep the impact pose, then let running take over the recovery.
   if(!P.moving||!P.runSwing||progress<RUN_SWING_RETURN){
@@ -2120,6 +2122,8 @@ function drawCutC(facing){
  }
 }
 const VAN_KIEM={range:420,radius:180,impact:58};
+/* VFX Xích Diễm Đao Môn (gói Wuxia, hướng bake = đông): lật theo hướng chém, xoay theo góc a (noRot: không xoay, dùng cho vòng lửa) */
+function dqFx(name,x,y,a,sc,T,f0,f1,o){if(!vok(name))return;const f=Math.cos(a)<0?-1:1,r=!!(o&&o.noRot);fx(Object.assign({k:'sp',s:name,x,y,sc,fx:f,ang:r?0:(f===1?a:a-Math.PI),T,f0,f1},o||{}))}
 const WEAPONS={
  kiem:{name:'Kiếm',g:'劍',role:'DPS linh hoạt',tr:'Liên kích, kiếm khí, chí mạng',kit:[
   {id:'k0',name:'Đào Mộc Trảm Tà',g:'劍',kind:'basic',cd:0.4,range:95,get desc(){return 'Combo Khởi Kiếm → Hồi Kiếm, mỗi nhát lao tới. Kiếm +6 mở nhát C Phá Thế Trảm: quét xoay 360°, trúng mọi phía. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
@@ -2166,19 +2170,24 @@ const WEAPONS={
     later(0.55,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:0.72});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.6})},null)}sfx('sword_hit',0.7,0.1)},null);
     notice('Thái Thượng Trảm Ma')}},
  ]},
- dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
-  {id:'d0',name:'Trảm Kích',g:'刀',kind:'basic',cd:0.72,range:100,desc:'Nhát chém nặng trước mặt.',
-   cast(tg,s){const a=angTo(tg);s.step=((s.step||0)+1)%2;swing(a,s.step?1:-1);arc(P.x,P.y-8,a,94*Ar(),2.2,17*pw()*(P.pf.badao?1.3:1),H({kb:60}),'#ffd9a0',s.step?1:-1)}},
-  {id:'d1',name:'Liệt Địa Trảm',g:'裂',kind:'active',cd:2.8,mp:12,range:420,desc:'Sóng chém sát đất xuyên qua mọi kẻ địch trên đường.',up:'+25% sát thương, sóng rộng hơn',
-   cast(tg,l){const a=angTo(tg);swing(a,1);shoot(P.x,P.y,a,400,{dmg:24*lv(l)*pw(),pierce:99,r:(28+3*l)*Ar(),life:0.95,kind:'wave',c:'#ffb35a',o:H({kb:40})})}},
-  {id:'d2',name:'Cuồng Phong Đao',g:'風',kind:'active',cd:6.5,mp:20,range:140,desc:'Xoay đao liên tục quanh người.',up:'+0.3 giây, +25% sát thương',
-   cast(tg,l){addZone({kind:'whirl',follow:1,T:2.4+0.3*(l-1),r:108*Ar(),tick:0.25,dmg:8*lv(l)*pw(),o:H({kb:30}),c:'#ffcf8a'})}},
+ dao:{name:'Đao',g:'刀',role:'Bạo kích, diện rộng',tr:'Hỏa đao nặng, chém xuyên, quét rộng',kit:[
+  /* Trảm Yêu Môn (24/11): VFX gói Wuxia Xích Diễm Đao Môn (xuất từ Godot: dq_cleave, dq_triple, dq_ring). Hướng bake: đông; dqFx lật theo hướng chém. */
+  {id:'d0',name:'Quỷ Đầu Trảm',g:'刀',kind:'basic',cd:0.62,range:105,desc:'Nhát đao nặng trước mặt, hai nhát luân phiên, kèm vệt lửa nhỏ. Bá Đao tăng sát thương đánh thường.',
+   cast(tg,s){const a=angTo(tg);s.step=((s.step||0)+1)%2;swing(a,s.step?1:-1);dqFx('dq_triple',P.x,P.y-6,a,0.6,0.4,0,5,{al:0.95});arc(P.x,P.y-8,a,100*Ar(),2.2,17*pw()*(P.pf.badao?1.3:1),H({kb:60,nofx:1}),null,s.step?1:-1)}},
+  {id:'d1',hotkey:'Q',power:26,name:'Xích Long Đoạn Nhạc',g:'龍',kind:'active',cd:5,mp:18,range:340,desc:'Hỏa long bổ xuống một nhát dài trước mặt, chém xuyên mọi quái trên đường, đẩy lùi và làm choáng ngắn.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();swing(a,1);dqFx('dq_cleave',P.x,P.y-14,a,1.12,0.55);sfx('sword_wave',0.5,0.1);
+    later(0.2,()=>{line(P.x,P.y-10,a,330*Ar(),120*Ar(),dmg,H({kb:90,stun:0.15}),null);G.shake=Math.max(G.shake||0,6)},'h')}},
+  {id:'d2',hotkey:'F',power:20,name:'Liệu Nguyên Tam Điệp',g:'燎',kind:'active',cd:9,mp:22,range:300,desc:'Ba đợt đao hỏa liên tiếp trước mặt, mỗi đợt rộng và mạnh hơn đợt trước, đợt cuối bùng thành sóng lửa lớn.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),base=this.power*lv(l)*pw();dqFx('dq_triple',P.x,P.y-14,a,1.0,1.55,0,22,{follow:1});sfx('sword_wave',0.4,0.12);
+    const hits=[[0.45,120,1.7,0.7],[0.9,150,2.0,0.9],[1.12,210,2.5,1.5]];
+    for(const [t,r,sp,m] of hits)later(t,()=>{const a2=angTo(nearest(P.x,P.y,360)||tg);arc(P.x,P.y-8,a2,r*Ar(),sp,base*m,H({kb:t>1?120:50,nofx:1}),null,1);G.shake=Math.max(G.shake||0,t>1?9:3);sfx('sword_hit',0.3,0.1)},'h')}},
   {id:'d3',name:'Phá Giáp Trảm',g:'破',kind:'active',cd:4.5,mp:14,range:130,desc:'Chém mạnh, giảm 15 giáp và khiến mục tiêu nhận thêm 20% sát thương trong 5 giây.',up:'+25% sát thương',
-   cast(tg,l){const a=angTo(tg);swing(a,-1);arc(P.x,P.y-8,a,122*Ar(),1.7,30*lv(l)*pw(),H({kb:40,brk:15}),'#ff6a4a',-1)}},
+   cast(tg,l){const a=angTo(tg);swing(a,-1);dqFx('dq_triple',P.x,P.y-6,a,0.8,0.5,2,9,{al:0.95});arc(P.x,P.y-8,a,122*Ar(),1.7,30*lv(l)*pw(),H({kb:40,brk:15,nofx:1}),null,-1)}},
   {id:'badao',name:'Bá Đao',g:'霸',kind:'passive',desc:'Đánh thường +30% sát thương.'},
   {id:'huyetchien',name:'Huyết Chiến',g:'血',kind:'passive',desc:'Khí huyết càng thấp sát thương càng cao, tối đa +50%.'},
-  {id:'d6',name:'Thiên Địa Nhất Đao',g:'天',kind:'ult',cd:25,range:420,desc:'Một nhát chém khổng lồ xẻ đôi chiến trường.',up:'+25% sát thương',
-   cast(tg,l){const t=densest(P.x,P.y,420)||tg;const a=angTo(t);swing(a,1);notice('Thiên Địa Nhất Đao');fx({k:'line',x:P.x,y:P.y,ang:a,len:640*Ar(),w:20,c:'#ffeecc',T:0.3});later(0.25,()=>{line(P.x,P.y,a,640*Ar(),130*Ar(),110*lv(l)*pw(),H({kb:160}),'#ffb35a');G.shake=14},'h')}}
+  {id:'d6',hotkey:'X',power:60,name:'Tẫn Hỏa Hồi Thân',g:'燼',kind:'ult',cd:22,range:240,desc:'Xoay đao bung vòng lửa tàn quanh người, thiêu mọi quái xung quanh và đẩy lùi mạnh.',up:'+25% sát thương',
+   cast(tg,l){const dmg=this.power*lv(l)*pw();swing(angTo(tg),1);notice('Tẫn Hỏa Hồi Thân');dqFx('dq_ring',P.x,P.y+2,0,1.0,1.1,0,16,{follow:1,gr:1,noRot:1});sfx('sword_wave',0.6,0.1);
+    later(0.35,()=>{circ(P.x,P.y,190*Ar(),dmg*0.5,H({kb:110}),null);G.shake=Math.max(G.shake||0,6)},'h');later(0.7,()=>{circ(P.x,P.y,215*Ar(),dmg,H({kb:200,stun:0.3}),null);G.shake=Math.max(G.shake||0,12)},'h')}}
  ]},
  thuong:{name:'Thương',g:'槍',role:'DPS tầm trung',tr:'Đâm xuyên, tầm đánh dài',kit:[
   {id:'t0',name:'Liên Thứ',g:'槍',kind:'basic',cd:0.42,range:150,desc:'Đâm thương liên tiếp theo đường thẳng.',
@@ -2423,13 +2432,13 @@ function warmGPU(){const c=ctx;c.save();c.globalAlpha=0.003;const L=[...Object.v
 function newRun(skip){
  G=null;
  for(const k of['lobby','create','menu','inv'])$('#'+k).hidden=true;
- if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon='kiem';if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
+ if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
  const W=WEAPONS[sel.weapon],Gd=GODS[sel.god];buildDecor(sel.map);warmGPU();
  G={cfg:{...sel},diff:STARS[sel.star],route:'tuyet',rmap:sel.map,star:sel.star,keo:!!sel.keo,keoN:0,keoDone:false,path:null,matRun:{duoc:0,hiem:0},wave:0,t:0,waveT:0,waveDur:0,enemies:[],corpses:[],decals:[],stage:sel.star,sw:1,chest:null,nextStage:false,eproj:[],pproj:[],zones:[],haz:[],fx:[],nums:[],orbs:[],allies:[],spawnQ:[],later:[],parts:[],
   kills:0,coins:0,dmgDealt:0,level:1,xp:0,picks:0,lvWave:0,reroll:3,shake:0,freeze:0,slow:0,paused:false,over:false,cam:{x:AW/2,y:AH/2},spawnAcc:0,packT:6,eliteT:[],clearing:0,qs:[],ev:null,evT:40,noHit:0,mk:[],mkRe:0,brk:[],brkT:4,wTarget:30,wK:0,wC:0,wD:0,wT:0,flash:0};
  P={x:AW/2,y:AH/2,r:14,facing:1,moveAng:0,aimAng:0,t:0,moving:false,av:0,atkT:0,atkAng:0,swingDir:1,thrust:0,dashT:0,dashCd:0,dashAng:0,inv:0,hurt:0,kx:0,ky:0,
   form:'human',rage:0,godCd:0,refund:0,transT:0,godDur:Gd.dur,combo:0,comboT:0,comboAtHit:0,comboPeak:0,hidden:0,buffSpd:0,trail:0,trailAcc:0,mods:{},stacks:{},pf:{},hp:100,mp:60,
-  kit:{w:sel.weapon,basic:{def:W.kit.find(d=>d.kind==='basic'),cd:0},act:W.kit.filter(d=>d.kind==='active'||d.kind==='auto').map((d,i)=>({def:d,lvl:i===0||d.id==='k2'||(sel.weapon==='kiem'&&d.id==='k3')?1:0,cd:d.hotkey?0:0.5})),pas:W.kit.filter(d=>d.kind==='passive').map(d=>({def:d,on:false})),ult:{def:W.kit.find(d=>d.kind==='ult'),lvl:0,cd:3}},
+  kit:{w:sel.weapon,basic:{def:W.kit.find(d=>d.kind==='basic'),cd:0},act:W.kit.filter(d=>d.kind==='active'||d.kind==='auto').map((d,i)=>({def:d,lvl:i===0||d.id==='k2'||d.id==='d2'||(sel.weapon==='kiem'&&d.id==='k3')?1:0,cd:d.hotkey?0:0.5})),pas:W.kit.filter(d=>d.kind==='passive').map(d=>({def:d,on:false})),ult:{def:W.kit.find(d=>d.kind==='ult'),lvl:0,cd:3}},
   god:{def:Gd,basic:{cd:0},sk:Gd.skills.map(d=>({def:d,cd:1})),ult:Gd.ult?{def:Gd.ult,cd:2}:null}};
  recalc();P.hp=S.hp;P.mp=S.mp*0.6;
  paintGodIcon();
@@ -4228,7 +4237,7 @@ function resumeCP(){const cp=save.cp;if(!cp)return;sel.map=ROUTE_MAPS.includes(c
  newRun(true);
  Object.assign(G,{path:cp.path||null,coins:cp.coins|0,kills:cp.kills|0,level:cp.level||1,xp:cp.xp||0,dmgDealt:cp.dmg||0,t:cp.t||0,reroll:cp.reroll??3,matRun:{...(cp.matRun||{duoc:0,hiem:0})},danNext:cp.danNext||null});
  P.mods={...(cp.mods||{})};P.stacks={...(cp.stacks||{})};(cp.act||[]).forEach((l,i)=>{if(P.kit.act[i])P.kit.act[i].lvl=l});(cp.pas||[]).forEach((o,i)=>{if(P.kit.pas[i])P.kit.pas[i].on=o});P.kit.ult.lvl=cp.ult||0;
- if(P.kit.act[1]?.def.id==='k2')P.kit.act[1].lvl=Math.max(1,P.kit.act[1].lvl);if(P.kit.w==='kiem'){const h=P.kit.act.find(q=>q.def.id==='k3');if(h)h.lvl=Math.max(1,h.lvl)}
+ if(P.kit.act[1]?.def.id==='k2'||P.kit.act[1]?.def.id==='d2')P.kit.act[1].lvl=Math.max(1,P.kit.act[1].lvl);if(P.kit.w==='kiem'){const h=P.kit.act.find(q=>q.def.id==='k3');if(h)h.lvl=Math.max(1,h.lvl)}
  recalc();
  P.hp=Number.isFinite(cp.hp)?clamp(cp.hp,0,S.hp):S.hp;
  P.mp=Number.isFinite(cp.mp)?clamp(cp.mp,0,S.mp):S.mp*0.6;
@@ -4257,6 +4266,9 @@ function showOnly(id){for(const k of['menu','lobby','create','inv','end'])$('#'+
 const WICON={kiem:{g:0},phu:{g:10},dao:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADGElEQVR4Xu2bPWsVQRSGV7GyUAsL0cIPLOSWFiGEEPwBgh/4A1KnChb5CRYpxEos7w8QFQtbQwjBWFjpJUXQpFCCBBRB28i74Vxmz87szOyc3Z0Z7tOEGNjL854zZ3YmsSgy5vKFs8cfPu8f46tJ83Su/pD+/uuvVS/bAFyZBeCaVErw9n+1NSn/TeeQZQA+ZBeAbvi9fbdhzCSrALj8zpcDazNkE0AbeZBFAG3lswggRD75AFzkmwZg0gG4yBPjJyvFj9//TmXzHuAjbyO5ISgpn9wS8JW3rf+kAvCVdyWJJdCVfBIdYJLf3P7UWGSX9o8+AJu8KQRVvmkLjDoAmzxYWrhd6wIf+WgD6EsenHGdln1AtzbqZSYdadV2t1XeB+3r4RDoLjLaytvWvUoU22CIPMdHPooZECrvO/Q4g3bA0PKDdkAM8oMFICkfSu9LQFred+gNOgNik+91CcQoD3p5EQqR153qQttepfMAJOUhDkwXnG3oNABpeUlxorMA2sp33fIckQAgq1ZHSr6LlhffBkvZ/efTo6ykPELtou3FhiDJE1eurVTO8sB2pO275TmiFyL8r7J85ftoebEZwKt/sDEun3313nunyqugCyT3dh+ChiCFQPIUAP/LDFxn6a6xwMPFkfje7kNQAAAhbI/nap95ePOkI5qAfNdDzobIaXB9fbf2OZf2lo2fDfEY5EFQAKj+00c3yge5hkDiQ1eeaL0EVHlic3JUrK3d0i6Hode6iVYBQP7+6Nz0mUuji5Xnz9+tfg8Wlj8Ovt51eC8BU+VRffD45ddSloNBSb/4iAmvDjDJE28mf6ZV5rtDrB3gHICt7VF5PtgohFjlgVMAVHlqcxWsf508wU+KsWEMQF2vtNWp017X9imiDQDyr5/NFd+2jipV59O+qfKpUAuA5AmEANT2t7V9SlQC4PKmENRpnzqV9wBM8Qer9T38+uLJiw0qz5dB6jTOAA6FE8t7vAS1N8Hd+VF5wXn+xc/a8zEYc6PxPYDPBHRATtXXgg7AD+grQtgZ32n876fZE+MhZsaMGSL8B07LqUJFTemzAAAAAElFTkSuQmCC'},thuong:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACcUlEQVR4Xu2bLU8DQRCGr4SQBnWKEAwNQZBgGhISLBUIDPyEaiSK8AsIJEgEmCokeAS1BEFKFQKBoZAazkBwJbNkyHbZvdtr725n5/qaI8dXn2d2drq0BAHzLISzA1OOz68GU5z5Af7141OLeHJxLe6zFmAKwrMWYKq+DL+1ucFzBdjCs1wBaeBZCQBwm56HZS+HxSYI8LcrNW311Z6Xs72+HFR8H4MID6kezInr4k5bXB+f38T1pn03VHkAh/Sir4rXAnTwKADh1QA8gON9LwVgv8Oyl4MrABOtXv59LFdd/h7vBAD8aRgG9flQ2706CWrVWWyCnfdIK+D7qP9vo5OXvBqvpgBWH5MkAWTgdNDa4nAWSJLQeHqJXQHe7AFq9XVR94UkeK9WAPTxfqTve11L2MB7JQBT3R0efWqgJWzhvRIALXDWrIsH3V2aMe1pIjAm484GcqZjfxKRyPD33V7so8I2iRt9csiPQRO8bj+AewBuCw8hPQVM8K2HvgDFyZC26nLICkiCRwj4ujQVV0NSgC18FiG3BxQJT24MFg1PSoALeDICXMGTEOAS3rkA1/BOBVCAdyaACnzhT4XxhIanOvlgg09vs3hykyaF/UK56hAK8IW1AFX4QgRQhs9dQBw8leR2GEqCd7XpqclFgC/wubSAT/CZC/ANPlMBPsJnJsBX+EwE+Aw/tgDf4ccSwAF+ZAFc4EcSwAk+tQBu8KkEcIS3FsAV3koAZ/hEAdzhYwWUAd4ooCzwWgFlgtcKgHdb7LU64pPqG5Ko/BkryxhfF4CV0Fz7/QcECEf4xICEw0ZtgK/olDKlhp9kkknY5wdYw0BHqJ6/PgAAAABJRU5ErkJggg=='},con:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACdUlEQVR4Xu2br04DQRDGWyQKScAgkchqXoA3IKiG8BR9ioZUERQWxzMgEFXgMDQEhUJS8l0yZG+7f653s3M7e/2ZOpLvm9m53W/CeDQgjg721x/v83/Fj7PFaDwE/RAOnbb45+WqfAPsqr893dZqvld6B6y+f8bHJzeVTFs8KP4IoAPmV2eV2NPJ70a9i+4AUzy4X3zWDDi/XpZrgC0eA880AeJxPIo8Aj7x4O7lq/qF+CJnQEw8CSeKmgHbigfFGNBGfDEGtBVfhAFdxKs3oKt41QZwiFdrAJd4lQZwildnALd4FQZQmJFCfPYGUJiRSnzWBphJjhll0auOHjb23X5bsnwN+mIs8z2PV11X8Vl2QCjDu5weslU+y9dgLMAEZAIX2bwGIT4WYAJKcrgMYPtDXaDKI70NBZjc4rOYAb5p7wowOYaeTa8d0GTa48ynqDzRmwGxgYcOsAPMFPQ6BLGcBK6NDU37FG1v0ksH2Fdb18YmZdubiHeA614vNfBciBoQetSQCVKVFx+CIfFAYuC5EJkBTcSnHnY+kh+BnMUnvwnmLj6pARrEJzNAi/gkBmgSz26ANvGsBmgUz2aAVvEsBmgWD1rfBGljQxEWMDN7ut72dcNrSqubIIUZ2sW3OgJmknMxm6qtPLFVB7hiLDvM4NrYSNHYAOmNjRSNDIgFmIB7YyNF1ACa9qEAE0gnOVwEP4NUeRIP+gwwU+A0gKru+hcTu921Vp7YMMA+74ByezO9Tb2xkaJmQEg8IbWxkaI2BM31tA+pjY0UG1+B2I5e+5m3cX4GfZ1QmnjgvQfABAgePBiMrw+TNX0aB8mgxe/YUTZ/sWBSRI5S+3QAAAAASUVORK5CYII='}};
 /* 24/11: bỏ sheet avatar cũ (avatar-nam/nu.webp) và 8 tranh cảnh; chỉ còn chân dung 6 phái */
 /* avatar 1-8: tấm ảnh nhỏ cũ (avatar-nam/nu.webp, có tranh cảnh); avatar 9-14: chân dung đại diện 6 môn phái (SECTS, ảnh rời) */
+/* môn phái chơi được và lớp vũ khí tương ứng (24/11): Mao Sơn = Kiếm, Trảm Yêu Môn = Đao */
+const SECT_WEAPON={maoson:'kiem',tramyeu:'dao'};
+function profWeapon(){const P0=prof();return P0&&P0.sect&&SECT_WEAPON[P0.sect]||'kiem'}
 const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon'];
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
 for(const g of['nam','nu'])for(const k of SECT_KEYS){const im=new Image();im.onload=()=>{const profile=prof();if(profile?.gender===g&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===g)paintAva()};im.src=SECTS[k].avatar[g];SECT_AVATAR_IMGS[g][k]=im}
@@ -4303,10 +4315,10 @@ function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d'
   drawHeroFrame(g,'idle',fi,x,y,1,scale,false);
   HERO=prev;
  }}
-function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=cr.sect==='maoson',W=open?WEAPONS.kiem:null,H0=HAIR[cr.gender][cr.hairI];
+function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=!!SECT_WEAPON[cr.sect],W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
- $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${k==='maoson'?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${k==='maoson'?'':' · đang thử nghiệm'}"><span class="sav" style="background-image:url('${S0.avatar[cr.gender]}')"></span><b>${S0.n}</b><small>${S0.weapon}</small>${k==='maoson'?'':'<i class="lk">鎖</i>'}</button>`}).join('');
- $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Đang thử nghiệm, bản đầu chỉ chơi được Mao Sơn Phái</em>'}`;
+ $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${SECT_WEAPON[k]?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${SECT_WEAPON[k]?'':' · đang thử nghiệm'}"><span class="sav" style="background-image:url('${S0.avatar[cr.gender]}')"></span><b>${S0.n}</b><small>${S0.weapon}</small>${SECT_WEAPON[k]?'':'<i class="lk">鎖</i>'}</button>`}).join('');
+ $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Đang thử nghiệm, bản đầu chỉ chơi được Mao Sơn Phái và Trảm Yêu Môn</em>'}`;
  $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crHairC').innerHTML=HAIRC.map(h=>`<button class="cxc${cr.hairC===h.k?' on':''}${h.on?'':' lock'}" data-cc="${h.k}" ${h.on?'':'disabled'} title="${h.n}${h.on?'':' · chưa có sprite'}"><i style="background:${h.c}"></i></button>`).join('');
  $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${SC.weapon}</b></div><div><span>Sở trường</span><b>${SC.role}</b></div><div><span>Màu chủ đạo</span><b>${SC.color}</b></div>`;
@@ -4333,12 +4345,12 @@ $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(
 $('#crName').addEventListener('input',()=>{$('#crErr').textContent=''});
 $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click()});
 $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim();
- if(cr.sect!=='maoson'){$('#crErr').textContent='Bản đầu chỉ chơi được Mao Sơn Phái';return}
+ if(!SECT_WEAPON[cr.sect]){$('#crErr').textContent='Bản đầu chỉ chơi được Mao Sơn Phái và Trảm Yêu Môn';return}
  if(!HAIR[cr.gender][cr.hairI].on){$('#crErr').textContent='Kiểu tóc này chưa mở';return}
  if(n.length<2){$('#crErr').textContent='Tên cần ít nhất 2 ký tự';$('#crName').focus();return}if(n.length>14){$('#crErr').textContent='Tên tối đa 14 ký tự';return}
- if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.sect=cr.sect;P0.hair=cr.hair;P0.hairC=cr.hairC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
- save.prof={name:n,gender:cr.gender,avatar:cr.avatars[cr.gender],sect:cr.sect,weapon:'kiem',hair:cr.hair,hairC:cr.hairC,lv:1,exp:0,created:Date.now()};
- sel.gender=cr.gender;sel.weapon='kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
+ if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.sect=cr.sect;P0.weapon=SECT_WEAPON[cr.sect]||'kiem';sel.weapon=P0.weapon;P0.hair=cr.hair;P0.hairC=cr.hairC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
+ save.prof={name:n,gender:cr.gender,avatar:cr.avatars[cr.gender],sect:cr.sect,weapon:SECT_WEAPON[cr.sect]||'kiem',hair:cr.hair,hairC:cr.hairC,lv:1,exp:0,created:Date.now()};
+ sel.gender=cr.gender;sel.weapon=SECT_WEAPON[cr.sect]||'kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
 /* --- sảnh --- */
 const LBT=[
  {k:'inv',g:'庫',n:'Kho Đồ',st:()=>invList().length+' món · '+Object.keys(books()).length+' bí tịch'},
