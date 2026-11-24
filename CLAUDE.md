@@ -108,3 +108,4 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 ## 24/11 (tối): sửa 2 lỗi người chơi báo
 - **Ngộ Không đi + đánh bị méo cả khung:** do phép nghiêng (shear) tao thêm ở `drawGodSprite`; đã bỏ hẳn (luật: không co giãn/biến dạng frame). Khi đang di chuyển vẫn dùng khung chạy gốc (8 khung, không méo), nhịp đánh do VFX gậy lo.
 - **Kiếm bay Hồi Phong chỉ có lưỡi, không chuôi:** ảnh `wpn/thanhphong_{nam,nu}.png` chỉ có lưỡi (chuôi nằm dưới nắm tay nên vốn không có). Đã tạo bản có chuôi `wpn/thanhphong_{nam,nu}_f.png` bằng PixelLab `edit-images-v2` (1 lần, 10 lượt, giữ nguyên lưỡi) và chỉ dùng cho kiếm bay (`WPN[...+'_f']` trong `drawZone`); kiếm cầm tay giữ nguyên.
+- **Kiếm mặc định nam và nữ dùng chung một thanh** (bản nữ `thanhphong_nu`, chủ game chọn): `heroWeaponArt` trả `thanhphong_nu` cho cả hai giới; ảnh `thanhphong_nam*` không còn dùng.
