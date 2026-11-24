@@ -158,3 +158,10 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 
 ## Đổi tên kỹ năng Ngộ Không (24/11, theo gợi ý ChatGPT, chủ game duyệt)
 Hóa Thân (Ngộ Không) = **Tề Thiên Giáng Thế** (`GODS.wukong.tf`; nút và mục chung vẫn ghi "Hóa Thân" vì các thần tướng khác dùng chung, thông báo và bảng thông tin hiện tên riêng). Đánh thường = **Như Ý Liên Bổng** (basic), Q = **Bạt Mao Triệu Hầu**, F = **Cân Đẩu Trấn Địa**, X = **Như Ý Xuyên Thiên**, R = **Định Hải Trấn Thiên**.
+
+## Như Ý Xuyên Thiên (X) và Định Hải Trấn Thiên (R) sửa (24/11)
+Chủ game duyệt, cho phép PixelLab ở VFX Ngộ Không nhưng chỉ khi thật cần. Đã làm bằng tài nguyên có sẵn + code:
+- **X:** dài ra mượt trong ~0,34 s (easeOut), dày 0,6→1,35 lần, ánh vàng chạy dọc thân gậy lúc xuyên (`staffGlow`: vẽ lại ảnh gậy, tô vàng bằng source-atop rồi cộng sáng), chớp `wk_hit` ở đầu gậy và ở từng quái bị xuyên, khói ở tay lúc ra và lúc thu về, T 0,75 s.
+- **R:** gậy khổng lồ ×2,2 (ảnh `wk_staff_big`), bóng đổ lớn dần, vệt tốc độ, ánh vàng phủ nhẹ, chớp sáng khi chạm. Vết cháy 2,2→1,0 s, vết nứt 1,2→0,85 s và mờ sớm hơn (cả Cân Đẩu Trấn Địa).
+- Chưa dùng PixelLab. Điểm còn yếu: thân gậy X vẫn là một thanh đỏ thẳng có đầu vàng (ảnh `wk_staff`); muốn đẹp hơn cần ảnh thân gậy có hoa văn/rãnh vàng, khi đó mới nên gọi PixelLab (ước 12 lượt VFX pro).
+- Test: `scratchpad/xr_test.js` cần đặt cd kỹ năng = 0 trước khi bấm (cd sau Hóa Thân không giảm khi chạy đồng hồ ảo).
