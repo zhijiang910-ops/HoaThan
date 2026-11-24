@@ -1649,7 +1649,7 @@ const rnd=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>v<a?a:v>b?b:v,pick=a=>a[Ma
 const angDiff=(a,b)=>{let d=(a-b)%TAU;if(d>Math.PI)d-=TAU;if(d<-Math.PI)d+=TAU;return d};
 let VW=0,VH=0,DPR=1,ZOOM=1,vign=null;
 let save={};try{save=JSON.parse(localStorage.getItem('tdst')||'{}')}catch(e){}
-const persist=()=>{try{localStorage.setItem('tdst',JSON.stringify(save))}catch(e){}};
+const persist=()=>{try{const P0=save.prof,g0=window.__trG0,cur=P0&&P0.gender;if(P0&&g0!=null)P0.gender=g0;/* đang thử giới tính khác ở Luyện Công: không lưu giới tính tạm */try{localStorage.setItem('tdst',JSON.stringify(save))}finally{if(P0&&g0!=null)P0.gender=cur}}catch(e){}};
 let LOWFX=!!save.lowfx;
 
 /* ================= DATA ================= */
@@ -3270,11 +3270,12 @@ function drawDummy(e){const c=X;c.fillStyle='rgba(0,0,0,.35)';ell(e.x,e.y,18,6);
  else{c.fillStyle='#8a6038';c.fillRect(e.x-6,e.y-50,12,50)}}
 let TR={forge:6,god:null,gender:null,scale:1,god_on:true,rage:true};
 try{Object.assign(TR,JSON.parse(localStorage.getItem('tdst_tr')||'{}'))}catch(e){}
+TR.gender=null;/* 24/11: giới tính thử ở Luyện Công chỉ là tạm, không giữ giữa các lần mở game (trước đây làm nhân vật Nam tự thành Nữ) */
 const trSave=()=>{try{localStorage.setItem('tdst_tr',JSON.stringify(TR))}catch(e){}};
 function trPlaceDummies(){G.enemies=G.enemies.filter(e=>e.type!=='coc');
  const pts=[[110,0],[150,-30],[150,30],[190,0],[-120,-60],[-120,60]];for(const [dx,dy] of pts){const e=spawnEnemy('coc',P.x+dx,P.y+dy);e.f=-1}}
 function startTraining(){
- const P0=prof();if(TR.gender&&P0)P0.gender=TR.gender;if(TR.god&&GODS[TR.god])sel.god=TR.god;
+ const P0=prof();if(P0&&window.__trG0==null)window.__trG0=P0.gender;/* nhớ giới tính thật để trả lại khi về sảnh */if(TR.gender&&P0)P0.gender=TR.gender;if(TR.god&&GODS[TR.god])sel.god=TR.god;
  newRun(true);G.training=true;
  if(TR.god&&GODS[TR.god]&&P.god.def!==GODS[TR.god]){const Gd=GODS[TR.god];sel.god=TR.god;G.cfg.god=TR.god;P.god={def:Gd,basic:{cd:0},sk:Gd.skills.map(d=>({def:d,cd:1})),ult:Gd.ult?{def:Gd.ult,cd:2}:null};P.godDur=Gd.dur;recalc();paintGodIcon()}
 G.route=null;G.tut=null;G.evT=1e9;G.brkT=1e9;G.brk=[];G.waveDur=Infinity;G.wTarget=Infinity;G.wave=1;
@@ -4058,7 +4059,7 @@ const LBT=[
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
  const it={id:'kiem0_'+Date.now().toString(36),slot:'vk',tier:0,st:1,name:'Thanh Phong Kiếm',base:{dmgW:6,dmgM:6},aff:[]};L.push(it);const E=eqMap();if(!E.vk)E.vk=it.id;persist()}
 let lbTimer=null,invFrom='menu';
-function showLobby(){const P0=prof();if(!P0)return openCreate();G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
+function showLobby(){const P0=prof();if(!P0)return openCreate();if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
  sel.gender=P0.gender;sel.weapon=P0.weapon||'kiem';
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.tuyet;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
