@@ -2317,6 +2317,7 @@ const AM_BOSSES={nguudau:['Ngưu Đầu','boss'],madien:['Mã Diện','boss'],hu
 for(const k in AM_BOSSES){const[nm,tier]=AM_BOSSES[k],z=AM_SIZE[tier];ET[k]=Object.assign({},ET[tier==='boss'?'boss':'elite'],{name:nm,amgioi:1,r:z.r},tier==='mini'?{mini:1}:{});ESPR[k]=[tier==='boss'?'quytuong':'quysai',z.spr]}
 /* Hình: Ngưu Đầu = quytuong (Ngưu Ma Vương, chủ game chốt). Mã Diện tạm = ho (người-thú đầu hổ, đủ hoạt ảnh). Hắc/Bạch Vô Thường, Mạnh Bà, Phán Quan, Diêm Vương đang tạm quytuong, chờ PixelLab (chủ game duyệt). Tinh Anh tạm quysai. */
 ESPR.madien=['ho',1.5];
+ESPR.huyetsat=['quytuong',AM_SIZE.mini.spr];/* chủ game: hình Ngưu Ma Vương dùng làm quái (Huyết Sát Ma Tướng, mini-boss T4/5), không làm Ngưu Đầu */
 /* Quái theo chặng: pool = danh sách trọng số (lặp lại = nhiều hơn), elite = số Quỷ Sai mỗi tầng trong chặng (theo thứ tự tầng) */
 const AM_ZONES=[
  {id:'z1',f:[1,3],map:'am_hoangtuyen',pool:['tieu','tieu','tieu','hoa','can'],elite:[0,0,1]},
