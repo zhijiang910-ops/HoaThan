@@ -363,3 +363,8 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - Điện thoại ngang: đã thu gọn (tile avatar 26–30 px, ẩn bớt dòng thông tin) để nút Lưu nằm trong khung ở 667×375, 844×390, 932×430.
 - Danh sách `WEAPONS` (Kiếm, Đao, Thương, Côn, Phù Chú) và nút chọn vũ khí cũ không còn hiện ở màn này; `WEAPONS.kiem` vẫn dùng để lấy bộ chiêu của Mao Sơn.
 
+## Độ nét của 7 trùm Âm Giới (24/11, chủ game: "phải thật nét")
+- **Nguyên nhân vỡ nét:** sprite pixel art bị phóng bằng hệ số lẻ (`ESPR` × `DPR` × `ZOOM`, ví dụ 0,97 hoặc 1,56) với `imageSmoothingEnabled=false`, nên pixel này to 1 pixel màn hình, pixel kia to 2, nhìn lởm chởm. Đã đo bằng ảnh chụp ở DPR 1 và 1,5 (`cong_cu/claude/rec_lib.js` có thêm tham số `dsf`, ví dụ `L.open(ROOT,{dsf:2,mobile:true})`).
+- **Cách sửa (chỉ cho 7 trùm, `ESPR_PX`, hàm `espScale`, `hqSheet` trong `drawSpr`):** (1) nếu tỉ lệ nguyên n = làm tròn(hệ số×DPR×ZOOM) chỉ lệch kích cỡ dưới 15% thì vẽ ở tỉ lệ nguyên (mỗi pixel ảnh = n pixel màn hình): nét tuyệt đối; thường gặp trên máy tính (DPR 1). (2) Nếu không thì giữ kích cỡ, dùng sheet phóng sẵn ×4 rồi thu về bằng lọc chất lượng cao: pixel đều nhưng hơi mềm mép; thường gặp trên điện thoại (DPR 1,5 do game giới hạn). Muốn nét tuyệt đối trên điện thoại thì cần chỉnh `ZOOM` toàn game cho hệ số×DPR×ZOOM gần số nguyên (đụng mọi sprite, chưa làm).
+- **Chưa áp dụng cho:** quái thường, Tinh Anh, mini-boss, nhân vật (cùng bị phóng lẻ). Muốn nét hết thì mở rộng `ESPR_PX` hoặc làm tổng quát. Ảnh sau khi sửa: `nguon/tham_chieu/trum_net_sau_khi_sua.png`.
+

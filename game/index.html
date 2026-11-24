@@ -1791,9 +1791,20 @@ for(const id in CHM){const m=CHM[id];m.ay-=2;if(!m.anims.dash&&m.anims.run){cons
  h.img.src=m.src;CH[id]=h;setTimeout(()=>preDecode(h.img),0)}
 let HERO=CH.hero_nam;
 const useHero=(gender,weapon)=>{const ok_=outfitKey(),ho=ok_&&CH['hero_'+gender+'_'+ok_],h=ho&&ho.ok?ho:CH['hero_'+gender];if((weapon==='kiem'||weapon==='thuong'||weapon==='quyen')&&h&&h.ok){HERO=h;return true}return false};
-function drawSpr(c,h,an,fi,x,y,f,sc,flash,alpha){const M=h.meta,A=M.anims[an]||M.anims.idle||M.anims.run,fr=A.f[Math.max(0,Math.min(fi,A.f.length-1))];c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(f*sc,sc);if(alpha!=null)c.globalAlpha*=alpha;c.drawImage(flash&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore()}
+function hqSheet(h,flash){const k=flash&&h.flash?'hqf':'hq';let Q=h[k];if(Q)return Q;const src=flash&&h.flash?h.flash:h.img,K=h.meta.hq,w=src.naturalWidth||src.width,hh=src.naturalHeight||src.height;if(!w||!hh)return null;Q=document.createElement('canvas');Q.width=w*K;Q.height=hh*K;const g=Q.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(src,0,0,Q.width,Q.height);h[k]=Q;return Q}
+function drawSpr(c,h,an,fi,x,y,f,sc,flash,alpha){const M=h.meta,A=M.anims[an]||M.anims.idle||M.anims.run,fr=A.f[Math.max(0,Math.min(fi,A.f.length-1))];c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(f*sc,sc);if(alpha!=null)c.globalAlpha*=alpha;
+ const Q=M.hq&&!_hqOff?hqSheet(h,flash):null;
+ if(Q){const K=M.hq;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(Q,fr[0]*K,fr[1]*K,M.w*K,M.h*K,-M.ax,-M.ay,M.w,M.h)}
+ else c.drawImage(flash&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore()}
 /* quái dùng sprite gói Wuxia: [nhân vật, tỉ lệ] */
 const ESPR={boss:['quytuong',1.45],tieu:['vonghon',0.74],hoa:['matroi',0.62],can:['ambinh',0.78],xa:['oanhonxa',0.74],toc:['khuyen',0.8],elite:['quysai',0.95],tac:['daulap',0.8],tacdao:['hacphong',0.82],tacxa:['bachhoa',0.78],tacvuong:['hacphong',1.32],soi:['ho',0.78],langvuong:['ho',1.32]};
+/* 24/11 (chủ game: trùm phải thật nét). Phóng pixel art bằng hệ số lẻ làm pixel to nhỏ không đều, nhìn như vỡ nét. Với 7 trùm Âm Giới:
+   (1) nếu tỉ lệ NGUYÊN theo pixel màn hình (n = làm tròn của hệ số × DPR × ZOOM) chỉ lệch kích cỡ dưới 15% thì vẽ ở tỉ lệ nguyên, mỗi pixel ảnh = đúng n pixel màn hình (nét tuyệt đối);
+   (2) nếu không thì giữ kích cỡ, dùng sheet phóng sẵn ×4 rồi thu về bằng lọc chất lượng cao (đều pixel, hơi mềm mép). */
+const ESPR_PX=new Set(['nguudau','madien','hacvo','bachvo','manhba','phanquan','diemvuong']);
+for(const k of ESPR_PX)if(CHM[k])CHM[k].hq=4;
+let _hqOff=false;
+function espScale(m){if(!ESPR_PX.has(m[0])){_hqOff=false;return m[1]}const d=DPR*ZOOM,t=m[1]*d,n=Math.round(t);if(n>=1&&Math.abs(n/t-1)<=0.15){_hqOff=true;return n/d}_hqOff=false;return m[1]}
 function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=CH[m[0]];if(!h||!h.ok)return false;const A=h.meta.anims;let an='run',fi;
  if(e.stun>0&&A.hit){an='hit';fi=1}
  else if((wind||e.st==='dash'||e.st==='charge')&&A.attack){an='attack';fi=Math.floor((G.t*A.attack.fps*1.2+e.ph*7))%A.attack.f.length}
@@ -1801,8 +1812,8 @@ function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=
  if(h.meta.proc){const hv=h.meta.proc==='hover';let dx=0,dy=hv?-12+Math.sin(t*3+e.ph*5)*4:0,rot=0;
   if(an==='run'){if(hv){rot=Math.sin(t*3)*0.05}else{dy=-Math.abs(Math.sin(t*9))*2.5;rot=Math.sin(t*9)*0.035}}
   else if(an==='attack'){const k=Math.sin(((G.t*1.2+e.ph*7)%1)*Math.PI);dx=k*9;rot=k*0.09}
-  c.save();c.translate(dx,dy);c.rotate(rot);drawSpr(c,h,an,fi,0,0,1,m[1],F,null);c.restore();return true}
- drawSpr(c,h,an,fi,0,0,1,m[1],F,null);return true}
+  c.save();c.translate(dx,dy);c.rotate(rot);drawSpr(c,h,an,fi,0,0,1,espScale(m),F,null);c.restore();return true}
+ drawSpr(c,h,an,fi,0,0,1,espScale(m),F,null);return true}
 /* âm thanh gói Wuxia: WebAudio (giải mã trước, không giật khi phát) */
 const MOBILE=document.documentElement.classList.contains('touch-device');
 const portraitViewport=matchMedia('(orientation: portrait)');
@@ -3586,7 +3597,7 @@ function render(){
   for(const h of G.haz)drawHaz(h);
   for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);
   drawHeal(c);drawPhase2(c);drawChest(c);drawSkillAim(c);
-  for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,m[1],false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,m[1],false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
+  for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,espScale(m),false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,espScale(m),false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
   for(const o of G.orbs)drawOrb(o);
  }
  if(G){for(const f of G.fx)if(f.gr)drawFx(f)}
