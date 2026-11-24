@@ -4,7 +4,7 @@ Game hành động sinh tồn pixel art một file (`game/index.html` + `game/as
 
 Repo này để **riêng tư** và có chứa asset mua có giấy phép (`game/assets/`, `nguon/pack_wuxia/`). Chủ game đã đồng ý lưu ở đây và chịu trách nhiệm. Không công khai repo hay link game.
 
-Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`. Khi mâu thuẫn, file này và code game là bản đúng.
+Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây Du cũ (`BAT_DAU_CLAUDE.md`, `HANDOFF_CHATGPT.md`, `tai_lieu/`, `QA_*`, `demo/`) đã xóa 24/11, xem lại bằng lịch sử git. Khi mâu thuẫn, file này và code game là bản đúng.
 
 ## Luật làm việc của chủ game (bắt buộc)
 1. **Cái gì muốn sửa phải báo trước.** Đề xuất, chờ duyệt rồi mới làm. Ngoại lệ: chủ game ra lệnh trực tiếp.
