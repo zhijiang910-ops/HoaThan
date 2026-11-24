@@ -41,3 +41,9 @@ Quy trình: `/animate-with-skeleton-v3`, 12 khung C1–C12 từ bảng key pose 
 | Chuyển động chém quét | FAIL: C4–C8 chỉ là tay duỗi thẳng kiếm, đọc ra như đâm | FAIL: tương tự; C2 kiếm chĩa ra trước thay vì nâng cao |
 | Chiều dài kiếm / một thanh | Đạt (một thanh) | Đạt |
 Kết luận: **không dùng được frame PixelLab này**. Theo luật: dừng generate ngẫu nhiên, chuyển sang retarget/chỉnh khung có kiểm soát từ Master. Chưa đưa gì vào game.
+
+## Phát hiện: khung C hiện có trong game CŨNG lệch Master (24/11/2026)
+Ảnh: `QA_BEFORE_AFTER/BEFORE_C_frames_game_{nam,nu}.png` (10 khung C kèm ms và khung HIT), `MASTER_vs_TRIAL_PixelLab.png`.
+- Master (idle/run, `xt_nam_first.png`): thân nhìn nghiêng hẳn, áo choàng dài chấm gót có vạt trắng.
+- 10 khung C đang chạy trong game: lộ quần đen, thân xoay 3/4, tức cũng lệch Master giống kết quả thử PixelLab. Tư thế gần như không đổi giữa các khung (kiếm duỗi ngang trước ngực, chỉ đổi nhẹ góc kiếm); không có lấy đà, không có quét. HIT ở C2 (70 ms) khi kiếm đã duỗi sẵn.
+- Hệ quả: retarget từ khung C cũ sẽ kế thừa lệch nhận diện; không thể coi nó là "đúng Master".
