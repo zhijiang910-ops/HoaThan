@@ -3101,15 +3101,23 @@ function drawZone(z){
    if(tr.length>2){for(const [wd,col] of [[12,'rgba(186,217,255,.16)'],[1.6,'rgba(201,230,255,.7)']]){c.strokeStyle=col;c.lineCap='round';for(let i=1;i<tr.length;i++){c.lineWidth=wd*S0*(i/tr.length);c.beginPath();c.moveTo(tr[i-1][0],tr[i-1][1]);c.lineTo(tr[i][0],tr[i][1]);c.stroke()}}}
    c.save();c.translate(s.x,s.y);if(wart){c.rotate(s.ang);c.scale(wk,wk);c.translate(-WPN[wart][4]/2+WPN[wart][2]*0,0);drawWeaponOutline(c,wart,1.3/wk);drawWeaponArt(c,wart,0,0,1)}else{c.rotate(s.ang-Math.PI/2);c.scale(S0,S0);c.drawImage(VFX.hp_guard,-64,-64,128,128)}c.restore()}}
  else if(z.kind==='blades'){c.globalCompositeOperation='lighter';for(let i=0;i<z.n;i++){const an=z.rot+i*TAU/z.n,bx=z.x+Math.cos(an)*z.r,by=z.y-10+Math.sin(an)*z.r*0.8;c.save();c.translate(bx,by);c.rotate(an+Math.PI/2);if(vok('wanjian_sword')){c.globalCompositeOperation='source-over';c.drawImage(VFX.wanjian_sword,-30,-36,60,60);c.globalCompositeOperation='lighter';c.restore();continue}c.fillStyle='rgba(120,200,255,.35)';ell(0,0,7,20);c.fillStyle='#dff2ff';c.beginPath();c.moveTo(0,-18);c.lineTo(3,4);c.lineTo(0,9);c.lineTo(-3,4);c.fill();c.restore()}}
- else if(z.kind==='vkx'){/* Vạn Kiếm bằng CHÍNH thanh kiếm đang cầm (24/11): 16 kiếm xoay quanh người, mũi hướng làn ngắm, rồi bay thành 6 đợt khớp nhịp sát thương (1,2 s + 0,32 s/đợt) */
-  const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,wk=Math.max(0.8,58/WPN[art0][0])*Ar()*1.3,px=z.x,py=z.y-20,ca=z.ca,sa=z.sa;
-  for(let i=0;i<z.n;i++){const wave=Math.floor(i*6/z.n),tl=1.2+wave*0.32+(i%3)*0.035,fl=0.36,lat=((i%4)-1.5)*16;
-   const phi=i*TAU/z.n+z.t*1.6,rx=px+Math.cos(phi)*62,ry=py+Math.sin(phi)*46;let x,y,al=1;
-   if(z.t<tl){x=rx;y=ry;al=Math.min(1,z.t/0.55)}
-   else{const k=Math.min(1,(z.t-tl)/fl),e=k*k;const ph0=(tl*1.6+i*TAU/z.n),sx=px+Math.cos(ph0)*62,sy=py+Math.sin(ph0)*46;
-    const ex=px+ca*560-sa*lat,ey=py+sa*560+ca*lat;x=sx+(ex-sx)*e;y=sy+(ey-sy)*e;al=k<1?1:Math.max(0,1-(z.t-tl-fl)/0.18);
-    if(k>0.15&&k<1){c.save();c.globalAlpha=0.35*al;c.strokeStyle='#dff2ff';c.lineWidth=2;c.beginPath();c.moveTo(x-ca*70*k,y-sa*70*k);c.lineTo(x,y);c.stroke();c.restore()}}
-   if(al<=0.01)continue;c.save();c.globalAlpha=al;c.translate(x,y);c.rotate(Math.atan2(sa,ca));c.scale(wk,wk);c.translate(-WPN[art][4]/2,0);drawWeaponOutline(c,art,1.3/wk);drawWeaponArt(c,art,0,0,1);c.restore()}}
+ else if(z.kind==='vkx'){/* Vạn Kiếm (24/11, theo video mod kiếm băng của chủ game): kiếm CẦM TAY nhô lên từ đất theo vòng quanh người, nghiêng ra ngoài, chân có tia điện + vết nứt sáng; lơ lửng rồi bay theo làn ngắm thành 6 đợt (1,2 s + 0,32 s/đợt) khớp nhịp sát thương */
+  const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,wk=Math.max(0.8,58/WPN[art0][0])*Ar()*1.3,L=WPN[art][4]*wk,gy0=z.y+6,ca=z.ca,sa=z.sa,tt=z.t,N=z.n,order=[];
+  for(let i=0;i<N;i++){const phi=i*TAU/N+TAU/(2*N);order.push({i,phi,gx:z.x+Math.cos(phi)*72,gy:gy0+Math.sin(phi)*24})}
+  order.sort((a,b)=>a.gy-b.gy);
+  const rnd2=(s)=>{const x=Math.sin(s*12.9898)*43758.5453;return x-Math.floor(x)};
+  for(const o of order){const i=o.i,wave=Math.floor(i*6/N),tl=1.2+wave*0.32+(i%3)*0.035,fl=0.36,lat=((i%4)-1.5)*16,ri=0.05+i*0.06,rk=clamp((tt-ri)/0.45,0,1),re=1-Math.pow(1-rk,3),lean=Math.cos(o.phi)*0.32+(Math.sin(o.phi)>0?0:0),standA=-Math.PI/2+lean;
+   const bob=tt>ri+0.45&&tt<tl?Math.sin(tt*6+i)*2.5:0;let cx_,cy_,ang,al=1,clip=false;
+   if(tt<tl){const dx=Math.sin(lean),dy=-Math.cos(lean);cx_=o.gx+dx*L/2;cy_=o.gy+dy*L/2+(1-re)*L*0.95+bob;ang=standA;clip=rk<1;al=Math.min(1,rk*4)}
+   else{const k=Math.min(1,(tt-tl)/fl),e=k*k,dx=Math.sin(lean),dy=-Math.cos(lean),sx=o.gx+dx*L/2,sy=o.gy+dy*L/2,ex=z.x+ca*560-sa*lat,ey=z.y-20+sa*560+ca*lat;cx_=sx+(ex-sx)*e;cy_=sy+(ey-sy)*e;
+    const la=Math.atan2(sa,ca);let da=la-standA;da=Math.atan2(Math.sin(da),Math.cos(da));ang=standA+da*clamp(k*3,0,1);al=k<1?1:Math.max(0,1-(tt-tl-fl)/0.18);
+    if(k>0.15&&k<1){c.save();c.globalAlpha=0.35*al;c.strokeStyle='#dff2ff';c.lineWidth=2;c.beginPath();c.moveTo(cx_-ca*70*k,cy_-sa*70*k);c.lineTo(cx_,cy_);c.stroke();c.restore()}}
+   /* vết nứt sáng + tia điện ở chân (chỉ khi kiếm còn cắm ở đất) */
+   if(tt>ri&&tt<tl+0.1){const fa=Math.min(1,(tt-ri)/0.12)*(tt<tl?1:Math.max(0,1-(tt-tl)/0.1));c.save();c.globalAlpha=0.55*fa;c.strokeStyle='#bfe8ff';c.lineWidth=1.2;c.beginPath();
+    for(let q=0;q<5;q++){const a=q*TAU/5+i*1.3,r1=10+rnd2(i*7+q)*20;let x=o.gx,y=o.gy;c.moveTo(x,y);for(let s=1;s<=3;s++){x=o.gx+Math.cos(a)*r1*s/3*1.5+(rnd2(i*3+q*5+s)-0.5)*5;y=o.gy+Math.sin(a)*r1*s/3*0.55+(rnd2(i*11+q*2+s)-0.5)*2;c.lineTo(x,y)}}c.stroke();
+    if(rk<1){c.globalAlpha=0.5*(1-rk);c.fillStyle='#bfe8ff';c.beginPath();c.ellipse(o.gx,o.gy,16+14*rk,5+5*rk,0,0,TAU);c.fill()}
+    if(tt<tl&&Math.floor(tt*18+i)%2===0){c.globalAlpha=0.8*fa;c.fillStyle='#ffffff';for(let q=0;q<3;q++)c.fillRect(o.gx+(rnd2(Math.floor(tt*18)+i+q)-0.5)*26,o.gy-rnd2(i+q*3+Math.floor(tt*18))*18,1.5,1.5)}c.restore()}
+   if(al<=0.01)continue;c.save();if(clip){c.beginPath();c.rect(o.gx-120,o.gy-600,240,600+2);c.clip()}c.globalAlpha=al;c.translate(cx_,cy_);c.rotate(ang);c.scale(wk,wk);c.translate(-WPN[art][4]/2,0);drawWeaponOutline(c,art,1.3/wk);drawWeaponArt(c,art,0,0,1);c.restore()}}
  else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.3*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
   c.save();c.globalAlpha=0.5*ringA;c.strokeStyle='#6fa8e8';c.lineWidth=1.5;c.beginPath();c.ellipse(z.x,z.y,z.rx,z.ry,0,0,TAU);c.stroke();c.restore();
   for(let i=0;i<N;i++){const ph=i*TAU/N-0.6+(tt>z.land?(tt-z.land)*TAU/4.2:0),px=z.x+Math.cos(ph)*z.rx,py=z.y+Math.sin(ph)*z.ry,ti=0.1+i*0.14,k=clamp((tt-ti)/0.4,0,1);items.push({px,py,yo:-(1-k*k)*z.h-outk*outk*90,al:Math.min(1,k*3)*(1-outk),k})}
