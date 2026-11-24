@@ -56,7 +56,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #maps.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 4px}#maps .opt{padding:6px 4px;text-align:center;display:block}#maps .opt small{display:block}
 #startBtn{min-width:200px;font-size:20px;min-height:54px}
 .mhead{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.mhead p{color:var(--dim)}
+.mhead p{color:var(--dim)} /* Di động: nút quay lại ở đầu, luôn thấy khi cuộn */ #menu .mhead{position:sticky;top:0;z-index:8;align-items:center;background:#160e09;padding:8px 10px;border-bottom:1px solid var(--line)} #menu #backLobbyTop{margin-left:auto;flex-shrink:0;min-height:42px} #inv .invhead{position:sticky;top:0;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#1b120d;padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--line)} #inv .invhead h2{margin:0;flex:1;min-width:0} #inv #invBackTop{min-height:42px;flex-shrink:0}
 .toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--dim);min-height:44px}
 .toggle input{width:20px;height:20px;accent-color:#c8962e}
 @media(max-width:900px){.mcols{grid-template-columns:minmax(0,1fr)}.mapp{order:-1}.mfoot{position:sticky;bottom:-14px;background:linear-gradient(transparent,#0c0604 30%);padding:18px 0 14px}.mfoot .keys{display:none}#startBtn{flex:1}}
@@ -1482,7 +1482,7 @@ input,select,textarea,#crName{font-size:16px!important}
 </section>
 <section id="menu" class="screen" hidden>
  <div class="wrap">
-  <header class="mhead"><h1>Vượt Ải</h1><p>Chọn bản đồ, số sao và thần tướng mang theo</p></header>
+  <header class="mhead"><h1>Vượt Ải</h1><p>Chọn bản đồ, số sao và thần tướng mang theo</p><button id="backLobbyTop" class="btn" type="button" aria-label="Quay về sảnh từ màn Vượt Ải">← Về sảnh</button></header>
   <div class="mcols">
    <div class="panel">
     <h2>Người phàm</h2>
@@ -1582,7 +1582,7 @@ input,select,textarea,#crName{font-size:16px!important}
 <section id="inv" class="screen" hidden>
  <div class="wrap">
   <div class="panel">
-   <h2>Kho đồ</h2><p class="dim sm">Trang bị giữ lại qua mọi lượt chơi. Bấm vào món đồ để xem, mặc hoặc phân giải lấy Tiên ngọc.</p>
+   <div class="invhead"><h2>Kho đồ</h2><button id="invBackTop" class="btn" type="button" aria-label="Quay lại từ Kho đồ">← Quay lại</button></div><p class="dim sm">Trang bị giữ lại qua mọi lượt chơi. Bấm vào món đồ để xem, mặc hoặc phân giải lấy Tiên ngọc.</p>
    <div class="invg"><div><h3>Đang mặc</h3><div class="slots" id="slots"></div><div id="eqsum" class="istat" style="margin-top:10px"></div><div id="pendBox"></div><div id="bookBox"></div></div>
    <div><h3>Túi đồ <span id="bagn" class="dim sm"></span></h3><div class="bag" id="bag"></div><div id="idet" class="panel"></div></div></div>
    <div class="cbtns"><button id="invClose" class="btn gold">Đóng</button></div>
@@ -3948,7 +3948,7 @@ $('#lbBossChest').addEventListener('click',()=>{
  showBossChest(save.bossChest);
 });
 $('#lbCont').addEventListener('click',()=>{if(save.cp)resumeCP()});
-$('#backLobby').addEventListener('click',showLobby);
+$('#backLobby').addEventListener('click',showLobby); $('#backLobbyTop').addEventListener('click',()=>$('#backLobby').click());
 $('#routeBox').addEventListener('change',e=>{if(e.target.id==='keoChk'){sel.keo=e.target.checked;save.keo=sel.keo;persist()}});
 $('#lowfx3').addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist()});
 /* ================= CẤP TRANG BỊ · BÍ TỊCH · ĐAN DƯỢC ================= */
@@ -4379,7 +4379,7 @@ function renderInv(){const inv=invList(),eq=eqMap();
   $('#dsc').onclick=()=>{if(eqMap()[it.slot]===it.id)return;save.inv=inv.filter(x=>x.id!==it.id);save.ngoc=(save.ngoc||0)+TIERS[it.tier].v;invSel=null;persist();renderInv()}}
 }
 $('#inv').addEventListener('click',e=>{const d=e.target.closest('.item');if(d&&d.dataset.id&&!e.target.closest('#idet')){invSel=d.dataset.id;renderInv()}});
-$('#invClose').addEventListener('click',()=>{$('#inv').hidden=true;if(invFrom==='lobby'){showLobby();return}$('#menu').hidden=false;buildMenu();paintMap()});
+$('#invClose').addEventListener('click',()=>{$('#inv').hidden=true;if(invFrom==='lobby'){showLobby();return}$('#menu').hidden=false;buildMenu();paintMap()}); $('#invBackTop').addEventListener('click',()=>$('#invClose').click());
 $('#invBtn').addEventListener('click',openInv);
 /* ---- bảo rương sau boss ---- */
 function dropChest(x,y){G.chest={x:clamp(x,80,AW-80),y:clamp(y,80,AH-80),t:0,open:false};notice('Bảo rương xuất hiện','Đi tới rương để mở')}
