@@ -93,3 +93,15 @@ Bằng chứng: `AFTER_ABC_game_{nam,nu}_sheet.png`, `AFTER_ABC_game_khung_cham_
 - Chưa so khung-từng-khung với video Hovl (chưa có clip nguồn).
 - Chưa kiểm khi nhân vật đang di chuyển và đánh (run-swing) với khung mới, chưa kiểm bộ Huyền Giáp với combo mới (Huyền Giáp vẫn dùng khung đánh cũ), chưa kiểm iPhone thật.
 - Kiếm bay Hồi Phong to và dễ che nhân vật trong ảnh QA (đã thêm viền để nhìn rõ).
+
+## Các sửa khác trong phiên 24/11 (đo/chạy thật)
+| Mục | Kiểm | Kết quả |
+|---|---|---|
+| Hồi Phong mất kiếm | Chụp 60 FPS nam/nữ trước/sau | Kiếm bay có viền tối, thấy chuôi và lưỡi trên tuyết |
+| Thiên Xu | Đo sát thương theo thời gian, cấp 1/3/5 | Nổ ở 1,18 s; sau đó mỗi 1 s đúng 3/4/5 nhịp |
+| Vạn Kiếm | Ngắm 4 hướng (Đông, Tây, Bắc, Đông Nam), bấm X rồi click | Làn kiếm hiện trước khi thả, VFX và vùng trúng đi đúng hướng ngắm; rebake gốc khớp sheet cũ sai khác 0,0 |
+| Ngộ Không đi + đánh | Đếm `runPh` trong lúc đánh | Chân bước liên tục (67 giá trị khác nhau); chưa có video riêng |
+| UI/HUD | Audit 5 cỡ màn (667×375, 740×360, 844×390, 915×412, 932×430), 5 màn | Sửa: nút Xuất phát ở >900px; avatar nhỏ. Còn: nút "i" kỹ năng 12 px (chủ ý, tăng vùng bấm sẽ nuốt cú bấm vvào ô kỹ năng) |
+| Asset VFX | 40 mục SPX vs file | Không thiếu/hỏng kích thước |
+| Soak 3600 tick nam+nữ, bấm Q/F/X + click ngắm | Lỗi script | 0 |
+**Chưa kiểm:** Safari iPhone thật, Ngộ Không khi quay trái, bộ Huyền Giáp với combo mới, chạy với quái tinh anh/boss.

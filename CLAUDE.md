@@ -59,6 +59,18 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - **Rương Boss chờ nhận ĐÃ LÀM:** `recordBossVictory`, `showBossChest`, `claimChest`, nút `#lbBossChest` ở sảnh, `save.bossChest` (một rương, thưởng roll sẵn, trừ 15 thể lực lúc nhận). Hạ Boss lần nữa khi đang có rương chờ thì thưởng mới không cộng dồn. `cp.chestDone` = đã hạ Boss chưa kết toán; "Tiếp tục" hoặc "Vượt Ải" ở sảnh sẽ kết toán trước.
 - **Tạo nhân vật:** chọn avatar (8 mẫu mỗi giới, `portraits/avatar-*.webp`, `profile.avatar`), tranh cảnh theo avatar có xem toàn cảnh, nút "Thử chiêu" (`startTraining(true)`, `G.createPreview`), cột Binh khí bên phải. Nguồn gốc ảnh avatar/tranh cảnh cần chủ game xác nhận.
 
+## Cập nhật 24/11 (phiên làm tự động ban đêm)
+- **Combo Kiếm mới A7/B7/C12 ĐÃ VÀO GAME** (nam và nữ): thân không kiếm tạo bằng PixelLab `animate-with-skeleton-v3` (chân khép, thân trên làm chuyển động, bỏ 3 khớp kiếm khỏi rig), kiếm là lớp vũ khí gắn socket 'f' lấy từ khung xương. Ô mới ở hàng y=384/512 của `hero_{nam,nu}_ns.png` + `_hand.png`; ô cũ y=256 vẫn dùng cho lướt Huyết Ảnh (`cutC`) và bộ Huyền Giáp (Huyền Giáp vẫn dùng khung đánh cũ). Tổng thời lượng giữ **580/550/800 ms** (vì `dur` quyết định chu kỳ đánh = DPS); khung chạm A4/B5/C4. Chi tiết: `animation_manifest.json`, `QA_REPORT.md`, `ANIMATION_A_B_C/`.
+  - Rút kinh nghiệm: tạo kèm kiếm bằng PixelLab cho kiếm nhòe/ngắn/vỡ mũi/mất; chân rộng làm lộ quần (trôi khỏi Master). Cách đúng: ảnh gốc là khung idle không kiếm của `_ns`, chân khép.
+  - Còn thiếu: lớp bàn tay mới cho khung mới; VFX elip C vẫn hiện nguyên vòng ngay khung đầu (cần VFX có đầu nhọn); chưa có clip Hovl gốc để so từng khung; bộ Huyền Giáp chưa có combo mới.
+- **Đòn C:** bỏ slash `zs1` độc lập; elip `k5c_*` hai lớp cùng timeline, T 0,5 s, fade 0,2, tan trước hết động tác.
+- **Thiên Xu Kiếm Trận (F) làm lại:** một đòn nổ x1,2 khi kiếm chạm đất (1,2 s), rồi mỗi giây x0,6 trong 3 đến 5 giây (3 + 0,5/cấp, tối đa 5), bán kính 125.
+- **Vạn Kiếm Quy Tông (X):** có tầm ngắm (`aim:'lane'`: di chuột/chạm chọn hướng, hiện làn kiếm 560×140), VFX `vk_e` xuất lại từ Godot 4.7.1 còn 16 kiếm (gốc 36, bản cũ ở `nguon/vfx_goc/`, quy trình ở `cong_cu/claude/rebake_vankiem.md`; **bắt buộc `godot --headless --import` trước khi quay**).
+- **Hồi Phong:** kiếm bay có viền tối (trông như mất kiếm trên nền tuyết sáng).
+- **Ngộ Không:** đang di chuyển thì giữ khung chạy + nghiêng người theo nhịp đánh (hết trượt chân).
+- **UI:** nút Xuất phát/Về sảnh/Kho đồ ghim cả trên điện thoại ngang >900px; avatar 4 cột ở màn hẹp. Kiểm bố cục: `cong_cu/claude` + script audit (xem `QA_REPORT.md`).
+- PixelLab chạy được trong môi trường này (key lưu qua `request_credential`, host `api.pixellab.ai`, script `cong_cu/claude/pl.py`); mỗi lần 12 khung = 3 lượt.
+
 ## Đã chốt, CHƯA làm vào game (việc tiếp theo)
 1. **Thêm các bộ đồ khác** (đề xuất: Kim Lũ Y, Huyết Ma Bào) + hiệu ứng bộ mốc 2/4/6 món (nên đổi lối chơi). Mỗi bộ ~330 lượt PixelLab cho cả nam và nữ.
 2. Thêm dáng vũ khí (mỗi cây 1 lượt, pixflux, có thể lấy icon gói Wuxia `UI/Items_64` làm mẫu).
