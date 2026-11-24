@@ -419,3 +419,6 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 ## Phán Quan, Mạnh Bà vẽ lại ở cỡ nhỏ (24/11 đêm)
 - PixelLab `edit-images-v2` khung 192, thân cao ~155 px (script `nguon/pixellab/amgioi/gen_sync2.py`, kết quả `sy2/`, seed 7, 10 lượt/con = 20 lượt). Giữ nguyên thiết kế ChatGPT. `game/assets/phanquan_am.png` 118×155, `manhba_am.png` 131×152 (cắt sát viền).
 - Bỏ `BOSS_REL.manhba` (chỉ còn `nguudau:1.15`): cả 7 trùm giờ vẽ ở tỉ lệ nguyên (nét), cao ~141–190 px, Mạnh Bà và Phán Quan không còn to hơn các trùm khác. Đã kiểm game tải không lỗi; chưa chụp lại 3 loại màn. Còn ~2.353 lượt PixelLab.
+
+## Phán Quan, Mạnh Bà tạo lại từ master (24/11 đêm, chủ game ra lệnh: bỏ ảnh ChatGPT, lấy Hắc/Bạch Vô Thường, Ngưu Đầu, Mã Diện làm master)
+- `edit-images-v2`, đầu vào là sprite master (Phán Quan từ `hacvo`, Mạnh Bà từ `bachvo`), mô tả nhân vật mới + "same pixel art style/grid/outline/palette" (`nguon/pixellab/amgioi/gen_master.py`, kết quả `sy3/`, seed 7, 20 lượt). Thay `phanquan_am.png`, `manhba_am.png`. Bản ChatGPT 96×96 và bản `sy/`, `sy2/` bỏ. Ảnh so sánh: `nguon/tham_chieu/phanquan_manhba_tu_master_x3.png`. Chưa chụp kiểm độ nét ở 3 loại màn, chưa đăng artifact.
