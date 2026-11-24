@@ -8,7 +8,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
  document.documentElement.classList.add('touch-device');
 }
 </script>
-<title>Tây Du Sinh Tồn</title>
+<title>Khử Tà Diệt Ma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Noto+Serif:wght@600;800&family=Ma+Shan+Zheng&family=Silkscreen:wght@700&display=swap" rel="stylesheet">
 <style>
@@ -1564,7 +1564,7 @@ input,select,textarea,#crName{font-size:16px!important}
    <canvas id="lbHero" width="240" height="200"></canvas><div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbBossChest" class="lbbig" hidden><b>Rương Boss chờ nhận</b><small id="lbBossChestS"></small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
   </div>
   <div class="lbr">
-   <h1 class="lbtitle">Tây Du Sinh Tồn<small>西遊生存</small></h1>
+   <h1 class="lbtitle">Khử Tà Diệt Ma<small>驅邪滅魔</small></h1>
    <div class="lbgrid" id="lbGrid"></div>
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
@@ -2069,9 +2069,9 @@ function drawCutC(facing){
 const VAN_KIEM={range:420,radius:180,impact:58};
 const WEAPONS={
  kiem:{name:'Kiếm',g:'劍',role:'DPS linh hoạt',tr:'Liên kích, kiếm khí, chí mạng',kit:[
-  {id:'k0',name:'Liên Hoàn Kiếm',g:'劍',kind:'basic',cd:0.4,range:95,get desc(){return 'Combo Khởi Kiếm → Hồi Kiếm, mỗi nhát lao tới. Kiếm +6 mở nhát C Phá Thế Trảm: quét xoay 360°, trúng mọi phía. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
+  {id:'k0',name:'Đào Mộc Trảm Tà',g:'劍',kind:'basic',cd:0.4,range:95,get desc(){return 'Combo Khởi Kiếm → Hồi Kiếm, mỗi nhát lao tới. Kiếm +6 mở nhát C Phá Thế Trảm: quét xoay 360°, trúng mọi phía. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
    cast(tg,s){startSwordCut(tg,s)}},
-  {id:'k1',hotkey:'Q',power:22,name:'Huyết Ảnh Trảm',g:'血',kind:'active',cd:5,mp:18,range:320,desc:'Khóa mục tiêu, lướt xuyên qua để lại bóng mờ, rồi huyết kiếm xoáy chém 6 nhát quanh mục tiêu, kết thúc bằng vòng huyết quang.',up:'+25% sát thương, -6% hồi chiêu',
+  {id:'k1',hotkey:'Q',power:22,name:'Chu Sa Phá Tà Trảm',g:'血',kind:'active',cd:5,mp:18,range:320,desc:'Khóa mục tiêu, lướt xuyên qua để lại bóng mờ, rồi huyết kiếm xoáy chém 6 nhát quanh mục tiêu, kết thúc bằng vòng huyết quang.',up:'+25% sát thương, -6% hồi chiêu',
    /* VFX: PixelLab (vòng ngắm, xoáy huyết kiếm tách lớp trước/sau, vòng kết). Lướt dùng lại pha lướt + bóng mờ của Lướt Trảm */
    cast(tg,l){if(P.cutC)return;const x=tg.x,y=tg.y,a=angTo(tg),d=Math.hypot(x-P.x,y-P.y),dmg=this.power*lv(l)*pw(),sc=HERO.SC;
     if(vok('hv_mark'))fx({k:'sp',s:'hv_mark',x,y,sc:sc*1.5,T:0.85,gr:1});
@@ -2080,7 +2080,7 @@ const WEAPONS={
      if(vok('hv_vortex_b')){fx({k:'sp',s:'hv_vortex_b',x,y,sc:sc*1.35,T:0.6,gr:1});fx({k:'sp',s:'hv_vortex_f',x,y,sc:sc*1.35,T:1.17})}
      for(let i=0;i<6;i++)later(0.06+i*0.12,()=>{if(i%2==0)sfx('sword_slash',0.25,0.1);for(const e of enemiesIn(x,y,100)){if(e.dead)continue;hit(e,dmg*0.38,H({kb:i==5?90:6,stun:0.12,swordBasic:true}),x,y);e.flash=Math.max(e.flash,0.1)}G.shake=Math.max(G.shake||0,i==5?5:2)},'h')},'h');
     later(CUT_C_T3+0.02,()=>{if(vok('hv_ring'))fx({k:'sp',s:'hv_ring',x:P.x,y:P.y,sc:sc*1.3,T:0.8,follow:1})},'h')}},
-  {id:'k2',hotkey:'F',power:26,name:'Thiên Xu Kiếm Trận',g:'陣',kind:'active',cd:10,mp:20,range:320,desc:'Bảy thanh kiếm từ trời rơi xuống mục tiêu, gây một đòn nổ khi chạm đất. Kiếm trận xoay trong vùng đó và chém mọi quái mỗi giây trong 3 đến 5 giây.',up:'+0,5 giây trận (tối đa 5 giây), +25% sát thương',
+  {id:'k2',hotkey:'F',power:26,name:'Thiên Cương Trấn Ma Trận',g:'陣',kind:'active',cd:10,mp:20,range:320,desc:'Bảy thanh kiếm từ trời rơi xuống mục tiêu, gây một đòn nổ khi chạm đất. Kiếm trận xoay trong vùng đó và chém mọi quái mỗi giây trong 3 đến 5 giây.',up:'+0,5 giây trận (tối đa 5 giây), +25% sát thương',
    /* VFX gói Wuxia (Huyền Tiêu Kiếm Tông), xuất từ demo Godot: rơi kiếm 2s (chạm đất ~1,2s) -> vòng xoay lặp -> tan trận.
       Sát thương: 1 đòn nổ lúc kiếm chạm đất, sau đó mỗi 1 giây trong 3-5 giây (vùng bán kính 125). */
    cast(tg,l){const a=angTo(tg),d=Math.min(this.range,Math.hypot(tg.x-P.x,tg.y-P.y)),cx=clamp(P.x+Math.cos(a)*d,40,AW-40),cy=clamp(P.y+Math.sin(a)*d,40,AH-40),sc=1.08,base=this.power*lv(l)*pw(),dur=Math.min(5,3+0.5*(l-1)),LAND=1.42/* đo từ tx_in: mũi kiếm hạ xong ở ~1,45 s (trước 1,2 s nên nổ khi kiếm chưa chạm) */,end=LAND+dur;
@@ -2095,23 +2095,23 @@ const WEAPONS={
     if(vok('set_bolt')){let t0=LAND;while(t0<end-0.2){const T0=t0;later(T0,()=>{if(G.fx.length>=(MOBILE?60:150))return;const es=enemiesIn(cx,cy,135).filter(e=>!e.dead);for(let i=es.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[es[i],es[j]]=[es[j],es[i]]}const pick=es.slice(0,2+Math.floor(Math.random()*2));if(!pick.length)pick.push({x:cx+rnd(-60,60),y:cy+rnd(-20,20)});for(const e of pick){const bx=clamp(e.x,cx-110,cx+110),by=clamp(e.y,cy-48,cy+48);fx({k:'sp',s:'set_bolt',x:bx,y:by,sc:1.1,T:0.6,al:1})}sfx('sword_hit',0.2,0.15)},null);t0+=0.6+0.15+Math.random()*0.35}}
     later(LAND,()=>{G.shake=Math.max(G.shake||0,4);for(const e of enemiesIn(cx,cy,150)){if(e.dead)continue;hit(e,base*1.2,H({kb:22,stun:0.12}),cx,cy)}},null);
     for(let t=LAND+1;t<=end+0.001;t+=1)later(t,()=>{for(const e of enemiesIn(cx,cy,150)){if(e.dead)continue;hit(e,base*0.6,H({kb:8,stun:0.06}),cx,cy)}},null)}},
-  {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:0,range:260,desc:'Nội tại: mỗi đòn chí mạng hoặc mỗi 3 đòn đánh thường triệu hồi 1 phi kiếm (tối đa 3). Phi kiếm bay vòng quanh người, tự tìm quái gần lao tới chém rồi quay về, tồn tại 8 giây.',up:'+1 giây tồn tại, +25% sát thương',
+  {id:'k3',power:12,name:'Linh Kiếm Hộ Pháp',g:'旋',kind:'auto',cd:9,mp:0,range:260,desc:'Nội tại: mỗi đòn chí mạng hoặc mỗi 3 đòn đánh thường triệu hồi 1 phi kiếm (tối đa 3). Phi kiếm bay vòng quanh người, tự tìm quái gần lao tới chém rồi quay về, tồn tại 8 giây.',up:'+1 giây tồn tại, +25% sát thương',
    cast(tg,l){hpPassive()/* 24/11: nội tại, không còn tự thi triển 3 kiếm theo hồi chiêu; chỉ đảm bảo vùng phi kiếm tồn tại */}},
-  {id:'k6',hotkey:'X',power:38,name:'Vạn Kiếm Quy Tông',g:'萬',kind:'ult',cd:24,range:560,ground:true,aim:'lane',desc:'Kiếm hiện ra vây quanh người rồi lần lượt phóng thẳng theo hướng đã ngắm, xuyên mọi kẻ địch trong làn kiếm. Ngắm: di chuột hoặc chạm để chọn hướng, thấy rõ làn kiếm trước khi thả.',up:'+25% sát thương',
-   /* VFX gói Wuxia (Vạn Kiếm Quy Tông), xuất lại từ demo Godot 4.7.1 với 16 kiếm (bản gốc 36; bản cũ ở nguon/vfx_goc/vk_e_36kiem.png). Kiếm tụ quanh người ~1,2s rồi phóng, hết khoảng 2,9s */
+  {id:'k6',hotkey:'X',power:38,name:'Vạn Kiếm Tru Ma',g:'萬',kind:'ult',cd:24,range:560,ground:true,aim:'lane',desc:'Kiếm hiện ra vây quanh người rồi lần lượt phóng thẳng theo hướng đã ngắm, xuyên mọi kẻ địch trong làn kiếm. Ngắm: di chuột hoặc chạm để chọn hướng, thấy rõ làn kiếm trước khi thả.',up:'+25% sát thương',
+   /* VFX gói Wuxia (Vạn Kiếm Tru Ma), xuất lại từ demo Godot 4.7.1 với 16 kiếm (bản gốc 36; bản cũ ở nguon/vfx_goc/vk_e_36kiem.png). Kiếm tụ quanh người ~1,2s rồi phóng, hết khoảng 2,9s */
    cast(tg,l){const dd=Math.hypot(tg.x-P.x,tg.y-P.y),a=dd>24?Math.atan2(tg.y-P.y,tg.x-P.x):(P.facing===-1?Math.PI:0),f=Math.cos(a)<0?-1:1;if(Math.abs(Math.cos(a))>0.15)P.facing=f;const x0=P.x,y0=P.y,dmg=this.power*lv(l)*pw()*0.6,ca=Math.cos(a),sa=Math.sin(a);
     /* sprite gốc phóng sang phải; hướng trái thì lật ngang rồi xoay phần còn lại để kiếm không bị ngược */
     sfx('wanjian_launch',0.6,0.15);const wartV=HERO&&HERO.wg?heroWeaponArt(HERO.wg):null;if(wartV&&WPN[wartV]&&WIMG[wartV]&&WIMG[wartV].complete)addZone({kind:'vkx',T:4.1,src:'h',x:x0,y:y0,a,ca,sa,n:8,art:wartV});else fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
     for(let i=0;i<6;i++)later(1.2+i*0.32,()=>{const ax=x0,ay=y0-20,bx=x0+ca*560,by=ay+sa*560,mx=(ax+bx)/2,my=(ay+by)/2,hl=280;
      for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70){const dl=clamp(((e.x-ax)*ca+(e.y-ay)*sa)/560,0,1)*0.34;/* kiếm bay tới đâu thì trúng tới đó: trễ theo khoảng cách dọc làn */later(dl,()=>{if(e.dead)return;hit(e,dmg,H({kb:40}),ax,ay);vkHit(e,a);G.shake=Math.max(G.shake||0,2)},null)}}
      },null);
-    notice('Vạn Kiếm Quy Tông')}},
-  {id:'k7',hotkey:'C',power:52,name:'Thiên Kiếm Giáng Thế',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Triệu một cự kiếm từ trời giáng xuống chỗ đông quái nhất, cắm xuống gây sát thương diện rộng, choáng quái trong vùng và nổ sét đen đỏ lan quanh mặt đất.',up:'+25% sát thương, +10 bán kính',
+    notice('Vạn Kiếm Tru Ma')}},
+  {id:'k7',hotkey:'C',power:52,name:'Thái Thượng Trảm Ma',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Triệu một cự kiếm từ trời giáng xuống chỗ đông quái nhất, cắm xuống gây sát thương diện rộng, choáng quái trong vùng và nổ sét đen đỏ lan quanh mặt đất.',up:'+25% sát thương, +10 bán kính',
    /* skill RIÊNG (24/11, chủ game): cự kiếm `cukiem.png` rơi 0,55 s, nổ sét đen đỏ `set_no_do`, trước là đòn kết của Vạn Kiếm */
    cast(tg,l){const t0=densest(P.x,P.y,this.range)||tg,tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw(),R=150+10*(l-1);sfx('wanjian_launch',0.55,0.12);
     addZone({kind:'vkbig',T:1.7,src:'h',x:tx,y:ty,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
     later(0.55,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:0.72});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.6})},null)}sfx('sword_hit',0.7,0.1)},null);
-    notice('Thiên Kiếm Giáng Thế')}},
+    notice('Thái Thượng Trảm Ma')}},
  ]},
  dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
   {id:'d0',name:'Trảm Kích',g:'刀',kind:'basic',cd:0.72,range:100,desc:'Nhát chém nặng trước mặt.',
@@ -2862,7 +2862,7 @@ function updZones(dt){
  for(const z of G.zones){
   z.t+=dt;if(z.follow){z.x=P.x;z.y=P.y}
   if(z.kind==='blades'&&!z.sw){z.rot+=dt*5;for(let i=0;i<z.n;i++){const a=z.rot+i*TAU/z.n,bx=z.x+Math.cos(a)*z.r,by=z.y-10+Math.sin(a)*z.r*0.8;for(const e of enemiesIn(bx,by,16)){if((z.hm.get(e)||0)>G.t)continue;z.hm.set(e,G.t+0.35);hit(e,z.dmg,z.o,z.x,z.y)}}}
-  else if(z.kind==='blades'){/* Hồi Phong Quy Sao: phi kiếm bay vòng (chu kỳ 3,2s như bản gốc), thấy quái gần thì lao tới chém rồi quay về */
+  else if(z.kind==='blades'){/* Linh Kiếm Hộ Pháp: phi kiếm bay vòng (chu kỳ 3,2s như bản gốc), thấy quái gần thì lao tới chém rồi quay về */
    z.rot+=dt*TAU/3.2;const RX=92*Ar(),RY=55*Ar();
    for(let i=0;i<z.n;i++){const s=z.sw[i],a=z.rot+i*TAU/z.n,ox=z.x+Math.cos(a)*RX,oy=z.y-28+Math.sin(a)*RY;if(z.passive){if(!s.on)continue;s.life-=dt;if(s.life<=0&&s.st===0){s.on=0;fx({k:'ring',x:s.x,y:s.y,r0:6,r1:26,c:'#bfe2ff',T:0.22});continue}}s.t=(s.t||0)+dt;s.tr=s.tr||[];s.tr.push([s.x,s.y]);if(s.tr.length>14)s.tr.shift();
     if(s.st===0){const px=s.x,py=s.y;s.x=ox;s.y=oy;s.ang=a+Math.PI/2;
