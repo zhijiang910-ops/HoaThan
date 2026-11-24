@@ -123,3 +123,8 @@ Timing giữ tổng 800 ms; **khung chạm C9 bắt đầu ở 560 ms (70%)** (H
 ## Chuỗi A-B-C liền theo Hovl, dùng lại khung có sẵn (24/11/2026)
 Không gọi PixelLab. A 6 khung (580 ms, chạm A4), B 5 khung (550 ms, chạm B3), C 6 khung (800 ms, chạm C3). VFX trả về bản đã duyệt: zs3 (A), zs2 (B), elip k5c_* (C, sống 0,6 s, tan trước hết đòn). Đo 60 FPS nam và nữ: attack 0–583, attack2 583–1133, attack3 1133–1933 ms, không reset về idle, elip tan ở 1833 ms, không nhát dư. Ảnh/video: `QA_BEFORE_AFTER/CHUOI_ABC_*`.
 Còn lại: khung nối A→B và B→C dùng khung của các đòn khác nên có chỗ nhảy tư thế nhẹ; HIT mới (A 280 ms, B 170 ms, C 190 ms trong đòn) cần mày cảm nhận; chưa có lớp bàn tay; Huyền Giáp vẫn khung cũ.
+
+## Combo theo Sword Combo Keyframe Guide: khung A7/B7/C12 + VFX mới tạo theo ảnh (24/11/2026)
+Khung: dùng lại 26 khung đã tạo theo đúng thứ tự guide (A1–A7, B1–B7, C1–C12; thân PixelLab không kiếm, kiếm gắn socket). VFX: PixelLab pro, 3 lần (A 10 lượt, B 10, C 12), mô tả bám hình guide: A chém chéo xuống từ trên-sau xuống dưới-trước, đỉnh A4, tia lửa mũi; B quét ngang rộng thấp, đỉnh B5; C nhát nhọn rơi xuống C4 rồi mở thành MỘT elip quanh chân (trước/bên/sau, lớp sau/trước tách) rồi mờ thành vệt, không còn gì sau đó. Nhịp giữ 580/550/800 ms, chạm A4/B5/C4.
+Đo 60 FPS nam và nữ: A vệt bật 183–567 ms (A3 → đỉnh A4); B bật ~733 ms, tắt trước khi C bắt đầu (đã rút T còn 0,34 s); C bật tại C4 (1333 ms), tan trước 1933 ms; không còn zs1/zs2/zs3/k5c, không nhát dư.
+Chưa làm: lớp bàn tay; Huyền Giáp; so từng khung với Hovl; chơi iPhone thật. Vệt A khá lớn, che một phần nhân vật khi đỉnh (giống guide).
