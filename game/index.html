@@ -2039,7 +2039,7 @@ const WEAPONS={
   {id:'k2',hotkey:'F',power:26,name:'Thiên Xu Kiếm Trận',g:'陣',kind:'active',cd:10,mp:20,range:320,desc:'Bảy thanh kiếm từ trời rơi xuống mục tiêu, gây một đòn nổ khi chạm đất. Kiếm trận xoay trong vùng đó và chém mọi quái mỗi giây trong 3 đến 5 giây.',up:'+0,5 giây trận (tối đa 5 giây), +25% sát thương',
    /* VFX gói Wuxia (Huyền Tiêu Kiếm Tông), xuất từ demo Godot: rơi kiếm 2s (chạm đất ~1,2s) -> vòng xoay lặp -> tan trận.
       Sát thương: 1 đòn nổ lúc kiếm chạm đất, sau đó mỗi 1 giây trong 3-5 giây (vùng bán kính 125). */
-   cast(tg,l){const a=angTo(tg),d=Math.min(this.range,Math.hypot(tg.x-P.x,tg.y-P.y)),cx=clamp(P.x+Math.cos(a)*d,40,AW-40),cy=clamp(P.y+Math.sin(a)*d,40,AH-40),sc=0.88,base=this.power*lv(l)*pw(),dur=Math.min(5,3+0.5*(l-1)),LAND=1.2,end=LAND+dur;
+   cast(tg,l){const a=angTo(tg),d=Math.min(this.range,Math.hypot(tg.x-P.x,tg.y-P.y)),cx=clamp(P.x+Math.cos(a)*d,40,AW-40),cy=clamp(P.y+Math.sin(a)*d,40,AH-40),sc=0.88,base=this.power*lv(l)*pw(),dur=Math.min(5,3+0.5*(l-1)),LAND=1.42/* đo từ tx_in: mũi kiếm hạ xong ở ~1,45 s (trước 1,2 s nên nổ khi kiếm chưa chạm) */,end=LAND+dur;
     sfx('wanjian_launch',0.5,0.15);fx({k:'sp',s:'tx_in',x:cx,y:cy,sc,T:2,gr:0});
     /* vòng kiếm xoay chỉ phát đến lúc hết trận (loop gốc 60 khung / 4 s = 15 khung/s), rồi tan */
     const loopT=Math.max(0.5,end-2),loopN=Math.min(60,Math.round(loopT*15));
