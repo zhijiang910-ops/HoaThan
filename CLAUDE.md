@@ -252,3 +252,4 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - CHƯA là món đồ trong game (chưa có chỉ số/phẩm/tên rơi): chỉ thử được ở Luyện Công, nút "Kiếm" (có mục Mực Ảnh); Vạn Kiếm dùng được. Cần chủ game duyệt tên, phẩm, chỉ số trước khi thêm vào kho. Chỉ lấy phong cách concept, không chép nguyên tranh. Ảnh kiểm: `nguon/tham_chieu/mucanh_vankiem2.png`.
 - (24/11 đêm) Vạn Kiếm bằng kiếm cầm tay: giảm 16→8 thanh cho đỡ rối mắt (chủ game góp ý). `n` ở zone `vkx` trong cast `k6`. Ảnh: `nguon/tham_chieu/mucanh_vankiem3.png`.
 - (24/11 đêm) Vạn Kiếm bằng kiếm cầm tay: BỎ aura (cả aura Mực Ảnh lẫn aura cường hóa) cho đỡ rối mắt; `drawWeaponArt(c,art,lvl,t,noAura)` tham số thứ 5. Kiếm cầm tay và Hồi Phong vẫn giữ aura. Ảnh: `nguon/tham_chieu/mucanh_vankiem4.png`.
+- (24/11 đêm) Aura chỉ hiện ở vũ khí cầm trên người (chủ game): Hồi Phong và Vạn Kiếm bay không còn aura (`drawWeaponArt(...,noAura)`).
