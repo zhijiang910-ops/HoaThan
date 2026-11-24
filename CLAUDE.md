@@ -245,3 +245,8 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - Vạn Kiếm (X, `k6`): zone `vkx` vẽ 16 kiếm bằng chính vũ khí đang cầm + hào quang, xoay quanh người rồi lao theo làn ngắm 6 đợt (1,2 s + 0,32 s/đợt). Không có ảnh vũ khí thì dùng `vk_e`. Ảnh kiểm: `nguon/tham_chieu/vankiem_kiem_cam.png` (bản trước khi phóng kiếm ×1,3).
 
 - (24/11 đêm) **Chuôi kiếm bay:** 4 kiếm Hàn Thiết/Thái A/Tử Điện/Trảm Yêu vốn đã vẽ đủ chuôi; chỉ kiếm mặc định (Thanh Phong/Long Tuyền) bị mất chuôi khi bay. Vạn Kiếm nay dùng `thanhphong_nu_f` (hộ thủ đồng, cán da quấn dây tím, đầu chuôi ngọc tím — TỰ VẼ bằng PIL, không PixelLab; gốc ở `nguon/vfx_goc/thanhphong_nu_f_goc.png`). Hồi Phong cũng dùng ảnh này. Ảnh kiểm: `nguon/tham_chieu/vankiem_chuoi_moi.png`. Chủ game thích Runeknife/Selfence (tranh concept của @magical_scope, chỉ lấy phong cách, KHÔNG chép hình).
+
+## Kiếm Mực Ảnh (24/11 đêm, chủ game ra lệnh: kiếm + aura "y chang" concept Selfence của @magical_scope)
+- Hình kiếm: PixelLab `create-image-pixflux` 80x28 (3 lượt gồm 2 mẫu thử + 1 mẫu 128x40 bỏ), đổi màu lưỡi xanh đen mực và cán da nâu bằng PIL. `game/assets/wpn/mucanh.png`, `WPN.mucanh=[77,18,15,9,50]`. Nguồn: `nguon/pixellab/mucxanh/`.
+- Aura mực: PixelLab VFX pro 1 lần (10 lượt), `game/assets/vfx/mc_aura.png` (sheet 6x6, ô 93x67, 32 khung 16 fps, thanh kiếm nằm sẵn ở (3,26) trong ô, khớp pixel). `drawWeaponArt` vẽ khung này thay ảnh tĩnh khi art là `mucanh` (aura riêng, không chồng aura cường hóa).
+- CHƯA là món đồ trong game (chưa có chỉ số/phẩm/tên rơi): chỉ thử được ở Luyện Công, nút "Kiếm" (có mục Mực Ảnh); Vạn Kiếm dùng được. Cần chủ game duyệt tên, phẩm, chỉ số trước khi thêm vào kho. Chỉ lấy phong cách concept, không chép nguyên tranh. Ảnh kiểm: `nguon/tham_chieu/mucanh_vankiem2.png`.

@@ -1,0 +1,859 @@
+{
+ "frames": [
+  {
+   "filename": "mc-aura 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 1.png",
+   "frame": {
+    "x": 93,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 2.png",
+   "frame": {
+    "x": 186,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 3.png",
+   "frame": {
+    "x": 279,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 4.png",
+   "frame": {
+    "x": 372,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 5.png",
+   "frame": {
+    "x": 465,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 6.png",
+   "frame": {
+    "x": 0,
+    "y": 67,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 7.png",
+   "frame": {
+    "x": 93,
+    "y": 67,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 8.png",
+   "frame": {
+    "x": 186,
+    "y": 67,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 9.png",
+   "frame": {
+    "x": 279,
+    "y": 67,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 10.png",
+   "frame": {
+    "x": 372,
+    "y": 67,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 11.png",
+   "frame": {
+    "x": 465,
+    "y": 67,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 12.png",
+   "frame": {
+    "x": 0,
+    "y": 134,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 13.png",
+   "frame": {
+    "x": 93,
+    "y": 134,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 14.png",
+   "frame": {
+    "x": 186,
+    "y": 134,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 15.png",
+   "frame": {
+    "x": 279,
+    "y": 134,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 16.png",
+   "frame": {
+    "x": 372,
+    "y": 134,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 17.png",
+   "frame": {
+    "x": 465,
+    "y": 134,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 18.png",
+   "frame": {
+    "x": 0,
+    "y": 201,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 19.png",
+   "frame": {
+    "x": 93,
+    "y": 201,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 20.png",
+   "frame": {
+    "x": 186,
+    "y": 201,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 21.png",
+   "frame": {
+    "x": 279,
+    "y": 201,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 22.png",
+   "frame": {
+    "x": 372,
+    "y": 201,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 23.png",
+   "frame": {
+    "x": 465,
+    "y": 201,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 24.png",
+   "frame": {
+    "x": 0,
+    "y": 268,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 25.png",
+   "frame": {
+    "x": 93,
+    "y": 268,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 26.png",
+   "frame": {
+    "x": 186,
+    "y": 268,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 27.png",
+   "frame": {
+    "x": 279,
+    "y": 268,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 28.png",
+   "frame": {
+    "x": 372,
+    "y": 268,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 29.png",
+   "frame": {
+    "x": 465,
+    "y": 268,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 30.png",
+   "frame": {
+    "x": 0,
+    "y": 335,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  },
+  {
+   "filename": "mc-aura 31.png",
+   "frame": {
+    "x": 93,
+    "y": 335,
+    "w": 93,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 67
+   },
+   "pivot": {
+    "x": 0.44086021505376344,
+    "y": 0.6567164179104478
+   },
+   "duration": 63
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "mc-aura.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 558,
+   "h": 402
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "feet",
+   "x": 41,
+   "y": 44
+  },
+  "frameTags": [
+   {
+    "name": "mc-aura",
+    "from": 0,
+    "to": 31,
+    "direction": "forward"
+   }
+  ]
+ }
+}
