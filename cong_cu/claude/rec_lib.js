@@ -1,7 +1,7 @@
 // Thư viện dựng trang game với đồng hồ ảo để chụp từng khung
 const {chromium}=require('playwright');const fs=require('fs'),path=require('path');
-exports.open=async(ROOT,{gender='nam',forge=6,w=1280,h=720,mobile=false,seed=true}={})=>{
- const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:w,height:h},isMobile:mobile,hasTouch:mobile});const pg=await ctx.newPage();
+exports.open=async(ROOT,{gender='nam',forge=6,w=1280,h=720,mobile=false,seed=true,dsf=1}={})=>{
+ const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:w,height:h},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:dsf});const pg=await ctx.newPage();
  const errs=[];pg.on('pageerror',e=>errs.push(e.message));pg.on('console',m=>{if(m.type()==='error')errs.push('console:'+m.text())});
  await pg.route('http://game.test/**',r=>{const u=new URL(r.request().url());let f=path.join(ROOT,decodeURIComponent(u.pathname));if(u.pathname==='/')f=path.join(ROOT,'index.html');
   if(!fs.existsSync(f))return r.fulfill({status:404,body:''});const ext=path.extname(f);let body=fs.readFileSync(f);if(ext==='.html')body=body.toString().replace('window.TDST={hit,','window.TDST={spawnEnemy,ET:()=>ET,GG:()=>G,hit,');

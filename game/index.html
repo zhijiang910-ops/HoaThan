@@ -1126,11 +1126,22 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .crscene-dialog::backdrop{background:#090605e8}
 .crscene-dialog img{display:block;max-width:86vw;max-height:85vh;width:auto;height:auto;object-fit:contain;image-rendering:pixelated}
 .crscene-dialog button{position:absolute;top:6px;right:6px}
-.cxavatars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;flex-shrink:0}
-@media (max-width:760px){.cxavatars{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}}
+.cxavatars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;flex-shrink:0}
+@media (max-width:760px){.cxavatars{grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}}
 .cxavatar{background-size:400% 200%;image-rendering:pixelated}
 .cxavatar{padding:0;min-width:0;aspect-ratio:1;border:1px solid rgba(255,236,190,.42);border-radius:2px;background-color:#241b12;cursor:pointer;box-sizing:border-box;box-shadow:inset 0 0 0 1px rgba(10,6,3,.55),inset 0 0 0 2px rgba(255,236,190,.14)}
 /* ô đang chọn: cùng kích thước với ô khác, vòng sáng nằm TRONG ô (không phình ra ngoài) */
+.cxavatar.sect{border-color:rgba(255,214,140,.75);image-rendering:auto}
+.cxsect{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px}
+.cxsb{align-items:center;text-align:center;min-width:0}.cxsb .sav{width:100%;max-width:56px;aspect-ratio:1;border-radius:4px;background-size:cover;background-position:50% 8%;box-shadow:inset 0 0 0 1px rgba(255,236,190,.4);image-rendering:auto}
+.cxsb b{font-size:10.5px;line-height:1.15;white-space:normal}.cxsb small{display:block;font:600 9.5px "Be Vietnam Pro",sans-serif;color:#a8987a}
+.cxsb.on .sav{box-shadow:inset 0 0 0 2px #ffd36a}
+@media (max-height:680px){#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}}
+@media (max-height:440px){.cxsect{gap:3px}.cxsb{padding:2px 1px 1px}.cxsb .sav{max-width:30px}.cxsb b{font-size:8.5px;line-height:1.1}.cxsb small{font-size:8px}.cxsb .lk{font-size:9px}#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}.cxR h3.cxh{margin:2px 0}}
+@media (max-height:440px){.cxR .cxinfo div:nth-child(2){display:none}.cxR #crSkD{max-height:28px;overflow:auto}}
+@media (max-height:400px){.cxsb .sav{max-width:26px}.cxR .cxs{width:25px!important;height:25px!important;font-size:14px!important}.cxR .cxskr>span{font-size:9px!important}.cxR #crSkD{max-height:22px}.cxR #crSkH{display:none}}
+.cxill #crBg.sect,#crBg.sect{image-rendering:auto!important}
+#lbAva,#avaC{image-rendering:auto!important}/* chân dung phái không phải pixel art thật: làm mịn thay vì phóng ô cứng */
 .cxavatar[aria-pressed="true"]{border-color:#ffd47a;box-shadow:inset 0 0 0 1px #ffd47a,inset 0 0 0 2px rgba(10,6,3,.6),0 0 7px rgba(199,140,66,.65)}
 .cxavatar:focus-visible{outline:2px solid #fff1c5;outline-offset:-3px}
 #crBg{image-rendering:pixelated}
@@ -1536,7 +1547,6 @@ input,select,textarea,#crName{font-size:16px!important}
    <label for="crName" class="cxh">Tên nhân vật</label>
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
-   <h3 class="cxh">Chọn ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
     <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
@@ -1549,9 +1559,9 @@ input,select,textarea,#crName{font-size:16px!important}
    </div>
   </div>
   <div class="cxp cxR">
-   <h3 class="cxh">Binh khí</h3><div id="crWeapon" class="cxw"></div>
+   <h3 class="cxh">Môn phái</h3><div id="crSect" class="cxw cxsect" role="group" aria-label="Chọn môn phái"></div>
    <div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
-   <h3 class="cxh">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd" tabindex="0" role="region" aria-label="Mô tả võ học"></div>
+   <h3 class="cxh" id="crSkH">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd" tabindex="0" role="region" aria-label="Mô tả võ học"></div>
   <div class="cxbar"><span class="crerr" id="crErr" role="status"></span><button id="crGo" class="btn gold">Khởi hành</button></div>
   </div>
   <dialog id="crSceneDialog" class="crscene-dialog" aria-label="Tranh toàn cảnh"><img id="crSceneFull" alt=""><button id="crSceneClose" class="btn" type="button">Đóng</button></dialog>
@@ -1723,6 +1733,12 @@ const CHM={"hero_nam":{"w":131,"h":138,"ax":57,"ay":119,"anims":{"idle":{"fps":4
 Object.assign(CHM,{quytuong:{"w": 145, "h": 149, "ax": 49, "ay": 137, "anims": {"idle": {"fps": 4.0, "f": [[0, 0], [145, 0], [290, 0], [435, 0]]}, "run": {"fps": 8.0, "f": [[580, 0], [725, 0], [870, 0], [1015, 0], [1160, 0], [1305, 0], [1450, 0], [1595, 0]]}, "attack": {"fps": 10.0, "f": [[1740, 0], [1885, 0], [2030, 0], [2175, 0], [0, 149], [145, 149], [290, 149], [435, 149]]}, "attack2": {"fps": 10.53, "f": [[580, 149], [725, 149], [870, 149], [1015, 149], [1160, 149], [1305, 149], [1450, 149], [1595, 149]]}, "hit": {"fps": 8.7, "f": [[1740, 149], [1885, 149], [2030, 149], [2175, 149]]}, "death": {"fps": 2.38, "f": [[0, 298], [145, 298], [290, 298], [435, 298]]}}, "src": "assets/quytuong.png", "realRun": true, "wuxia": "蓝灰獠牙鬼战士像"}});
 /* quái Âm Giới (24/11): ambinh = hoạt ảnh PixelLab; còn lại ảnh tĩnh + chuyển động bằng code (meta.proc: hover = lơ lửng, walk = đi) */
 Object.assign(CHM,{"ambinh": {"w": 187, "h": 146, "ax": 95, "ay": 139, "src": "assets/ambinh.png", "anims": {"idle": {"fps": 6, "f": [[0, 0], [187, 0], [374, 0], [561, 0], [748, 0], [935, 0], [1122, 0]]}, "run": {"fps": 12, "f": [[0, 146], [187, 146], [374, 146], [561, 146], [748, 146], [935, 146], [1122, 146], [1309, 146], [1496, 146]]}, "attack": {"fps": 10, "f": [[0, 292], [187, 292], [374, 292], [561, 292], [748, 292], [935, 292], [1122, 292], [1309, 292], [1496, 292]]}, "hit": {"fps": 8, "f": [[0, 438], [187, 438], [374, 438], [561, 438], [748, 438]]}, "death": {"fps": 10, "f": [[0, 584], [187, 584], [374, 584], [561, 584], [748, 584], [935, 584], [1122, 584], [1309, 584], [1496, 584]]}}}, "vonghon": {"w": 133, "h": 122, "ax": 65, "ay": 114, "src": "assets/vonghon_am.png", "proc": "hover", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}, "matroi": {"w": 62, "h": 65, "ax": 31, "ay": 61, "src": "assets/matroi_am.png", "proc": "hover", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}, "oanhonxa": {"w": 198, "h": 117, "ax": 94, "ay": 109, "src": "assets/oanhonxa_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}, "khuyen": {"w": 175, "h": 121, "ax": 89, "ay": 116, "src": "assets/khuyen_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}, "quysai": {"w": 145, "h": 149, "ax": 49, "ay": 137, "src": "assets/quysai_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
+/* trùm Âm Giới tạo bằng PixelLab (24/11): Ngưu Đầu, Mã Diện, ảnh tĩnh 1 khung, chuyển động bằng code */
+Object.assign(CHM,{"nguudau": {"w": 145, "h": 141, "ax": 72, "ay": 138, "src": "assets/nguudau_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"madien": {"w": 157, "h": 160, "ax": 78, "ay": 157, "src": "assets/madien_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
+/* Hắc/Bạch Vô Thường: thiết kế ChatGPT, chuyển sang nét pixel game bằng PixelLab (24/11) */
+Object.assign(CHM,{"hacvo": {"w": 135, "h": 159, "ax": 67, "ay": 156, "src": "assets/hacvo_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"bachvo": {"w": 141, "h": 165, "ax": 70, "ay": 162, "src": "assets/bachvo_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
+/* Diêm Vương, Phán Quan, Mạnh Bà: ảnh chủ game đưa (ChatGPT, 192x192 nền trong suốt, lưới pixel sạch) */
+Object.assign(CHM,{"diemvuong": {"w": 190, "h": 245, "ax": 95, "ay": 242, "src": "assets/diemvuong_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"phanquan": {"w": 145, "h": 188, "ax": 72, "ay": 185, "src": "assets/phanquan_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"manhba": {"w": 158, "h": 186, "ax": 79, "ay": 183, "src": "assets/manhba_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
 // Nhân vật chính lấy từ gói Wuxia Vol.2 (cong_cu/wuxia_sheet.py): nam = Huyền Tiêu Kiếm Tông · Nam đệ tử,
 // nữ = Xích Diễm Đao Môn · Nữ đệ tử. Cả hai cầm kiếm cùng một kiểu khi đứng, đi và chém.
 // Thần Giáng Tôn Ngộ Không: sprite PixelLab (vẽ lại cỡ 144, khung xương có gậy + đuôi), đã kiểm từng frame.
@@ -1749,13 +1765,14 @@ CHM.hero_nam.runStride=16;CHM.hero_nu.runStride=16;
    WPN: [rộng, cao, chuôi x, chuôi y, dài từ chuôi tới mũi] (ảnh nằm ngang, mũi sang phải)
    WSOCK[giới]["x,y" của khung]: [chuôi x, chuôi y (toạ độ ô 160x128), góc độ, 'b' sau thân | 'f' trước thân]
    WAURA[mốc]: [khung rộng, cao, số cột, số khung, fps, lệch x, lệch y so với chuôi] (tạo trên cây đại kiếm dài 56) */
-const WPN={"thuong1":[96,10,40,3,56],"thanhphong_nam":[38,5,10,2,28],"thanhphong_nu":[42,5,10,2,32],"thaia":[40,10,5,4,34],"tudien":[40,8,5,3,33],"hanthiet":[64,15,8,8,56],"tramyeu":[64,14,9,7,52],"mucanh":[77,18,15,9,50],"thanhphong_nam_f":[36,11,6,5,28],"thanhphong_nu_f":[44,11,10,5,32]};
+const WPN={"thuong1":[96,10,40,3,56],"thanhphong_nam":[38,5,10,2,28],"thanhphong_nu":[42,5,10,2,32],"thaia":[40,10,5,4,34],"tudien":[40,8,5,3,33],"hanthiet":[64,15,8,8,56],"tramyeu":[64,14,9,7,52],"mucanh":[77,18,15,9,50],/* vũ khí 6 phái (24/11, PixelLab pixflux, ảnh KHÔNG có tay; tay nắm là lớp riêng): [dài,cao,gripX,gripY,dài lưỡi] */"daoquy":[76,19,15,8,60],"tichtruong":[98,12,45,5,98],"quyengang":[30,17,10,9,30],"quatban":[31,44,3,22,44],"cungluc":[27,95,13,47,95],"thanhphong_nam_f":[36,11,6,5,28],"thanhphong_nu_f":[44,11,10,5,32]};
 const WSOCK={"nam":{"0,0":[91.7,77.7,32.9,"b"],"0,128":[102.2,77.0,57.4,"b"],"0,256":[96.9,42.3,-55.0,"b"],"160,0":[91.4,78.2,30.1,"b"],"160,256":[98.9,37.3,-40.0,"b"],"320,0":[91.1,78.7,30.1,"b"],"320,128":[71.9,70.0,166.9,"b"],"320,256":[108.9,50.3,15.0,"b"],"480,0":[90.6,77.9,32.3,"b"],"480,256":[112.4,58.3,0.0,"b"],"640,0":[94.6,80.0,30.5,"b"],"640,256":[109.4,63.3,25.0,"b"],"800,0":[94.6,79.9,32.7,"b"],"800,256":[107.4,65.3,35.0,"b"],"960,0":[99.7,80.8,33.7,"b"],"960,256":[107.4,65.3,35.0,"b"],"1120,0":[95.7,79.6,25.0,"b"],"1120,128":[90.6,77.9,31.4,"f"],"1120,256":[104.4,70.3,65.0,"b"],"1280,0":[95.6,79.9,32.0,"b"],"1280,128":[90.6,77.4,29.0,"f"],"1280,256":[111.0,60.5,6.7,"b"],"1440,0":[95.7,79.7,34.5,"b"],"1440,128":[90.8,77.7,30.0,"f"],"1440,256":[112,53,-38.8,"b"],"1600,0":[99.7,80.8,33.7,"b"],"1600,128":[91.5,78.1,29.1,"f"],"1600,256":[106.4,41.3,-60.0,"b"],"1760,0":[100.6,78.9,32.5,"b"],"1760,128":[92.5,79.0,32.0,"b"],"1760,256":[110.3,40.0,-47.7,"b"],"1920,128":[97.2,94.6,24.0,"b"],"1920,256":[109.9,51.3,-20.0,"b"],"2080,128":[118,111,0.0,"b"],"2080,256":[109.9,55.3,-5.0,"b"],"2240,0":[107,49,-13.1,"b"],"2240,128":[110,112,0.0,"f"],"2240,256":[103.4,71.3,-75,"b"],"2400,0":[113.4,71.0,46.8,"b"],"2400,256":[112.9,57.3,-95,"b"],"2560,256":[110.9,51.3,-75,"b"],"2720,256":[111.9,54.3,-35,"b"],"2880,256":[112.9,58.3,0,"b"],"3040,256":[107.9,67.3,30,"b"],"3200,256":[103.4,71.3,52,"b"],"3360,256":[115.4,57.3,62,"b"],"3520,256":[111.4,63.3,50,"b"],"3680,256":[108.0,66.3,38,"b"]},"nu":{"0,0":[89.7,74.8,34.2,"b"],"0,128":[102.1,76.4,57.4,"b"],"0,256":[95.6,44.0,-55.0,"b"],"160,0":[91.6,72.8,26.6,"b"],"160,256":[96,38,-28.3,"b"],"320,0":[92.3,72.6,16.7,"b"],"320,128":[62.7,72.5,164.1,"b"],"320,256":[106.4,52.0,15.0,"b"],"480,0":[93.1,73.1,13.1,"b"],"480,256":[107.4,61.0,8.0,"b"],"640,0":[93.7,76.7,35.3,"b"],"640,256":[107.4,65.0,25.0,"b"],"800,0":[93.7,76.7,35.3,"b"],"800,256":[107.3,67.0,35.0,"b"],"960,0":[94.7,75.7,34.8,"b"],"960,256":[101,65,37.6,"b"],"1120,0":[94.8,72.6,36.5,"b"],"1120,128":[90.7,74.7,35.3,"b"],"1120,256":[104.3,72.0,65.0,"b"],"1280,0":[94.8,76.6,36.5,"b"],"1280,128":[88.3,72.5,22.2,"b"],"1280,256":[107.1,63.1,13.6,"b"],"1440,0":[94.8,76.6,36.5,"b"],"1440,128":[90.5,74.2,27.5,"b"],"1440,256":[110.0,48.7,-41.8,"b"],"1600,0":[93.5,76.0,33.7,"b"],"1600,128":[91.3,75.4,32.0,"b"],"1600,256":[105.5,43.0,-60.0,"b"],"1760,0":[94.8,72.6,36.5,"b"],"1760,128":[90.7,74.7,35.3,"b"],"1760,256":[108.7,46.3,-45.0,"b"],"1920,128":[103.1,92.9,15.6,"b"],"1920,256":[109.4,53.0,-20.0,"b"],"2080,128":[106,111,-3.9,"f"],"2080,256":[109.0,58.7,4.2,"b"],"2240,0":[112.2,51.1,-16.5,"b"],"2240,128":[113,113,-4.2,"f"],"2240,256":[102.5,73.0,-75,"b"],"2400,0":[111.2,72.1,46.3,"b"],"2400,256":[110.5,59.0,-95,"b"],"2560,256":[110.5,53.0,-75,"b"],"2720,256":[109.5,56.0,-35,"b"],"2880,256":[110.5,60.0,0,"b"],"3040,256":[107.4,69.0,30,"b"],"3200,256":[102.5,73.0,52,"b"],"3360,256":[113.3,59.0,62,"b"],"3520,256":[101,61,50,"b"],"3680,256":[101.5,69.0,38,"b"]}};
 const WAURA={"3":[39,15,4,16,16,17,-11],"6":[39,15,4,16,16,17,-11],"9":[39,15,4,16,16,17,-11],"12":[46,28,4,16,16,15,-16]};
 const WIMG={},AIMG={};for(const n in WPN){const i=new Image();i.src='assets/wpn/'+n+'.png';WIMG[n]=i}for(const k in WAURA){const i=new Image();i.src='assets/vfx/aura_'+k+'.png';AIMG[k]=i}
 const WART={'Thanh Phong Kiếm':'thanhphong','Hàn Thiết Kiếm':'hanthiet','Long Tuyền Kiếm':'thanhphong','Tử Điện Kiếm':'tudien','Trảm Yêu Kiếm':'tramyeu','Thái A Kiếm':'thaia'};
 /* Thương: cây thương (cầm ở 40% cán); Song Quyền: tay không */
-const WCLASS_ART={thuong:'thuong1',quyen:null};
+const MELEE_ANIM=new Set(['kiem','dao','truong','quat']);/* lớp dùng khung đánh của Kiếm (chưa có khung riêng) */
+const WCLASS_ART={thuong:'thuong1',quyen:null,dao:'daoquy',truong:'tichtruong',quat:'quatban',cung:'cungluc'};
 function heroWeaponArt(g){let n='thanhphong';if(G&&G.training&&TR.wpn)n=TR.wpn;else{const wc=G&&G.cfg&&G.cfg.weapon;if(wc&&wc in WCLASS_ART)return WCLASS_ART[wc]}if(n==='none')return null;if(n!=='thanhphong'&&WPN[n])return n;if(n==='thanhphong'&&!(G&&G.training&&TR.wpn))try{const it=invList().find(x=>x.id===eqMap().vk);if(it&&!it.damaged&&WART[it.name])n=WART[it.name]}catch(e){}return n==='thanhphong'?'thanhphong_nu':n}/* nam và nữ dùng chung một thanh kiếm (bản nữ, chủ game chọn 24/11) */
 function auraLv(){const f=weaponForge();return f>=12?12:f>=9?9:f>=6?6:f>=3?3:0}
 /* Viền tối quanh kiếm bay (Hồi Phong): ảnh kiếm xám mỏng chìm vào nền tuyết sáng nên trông như mất kiếm. Bóng lấy từ chính ảnh kiếm, lưu sẵn */
@@ -1777,9 +1794,20 @@ for(const id in CHM){const m=CHM[id];m.ay-=2;if(!m.anims.dash&&m.anims.run){cons
  h.img.src=m.src;CH[id]=h;setTimeout(()=>preDecode(h.img),0)}
 let HERO=CH.hero_nam;
 const useHero=(gender,weapon)=>{const ok_=outfitKey(),ho=ok_&&CH['hero_'+gender+'_'+ok_],h=ho&&ho.ok?ho:CH['hero_'+gender];if((weapon==='kiem'||weapon==='thuong'||weapon==='quyen')&&h&&h.ok){HERO=h;return true}return false};
-function drawSpr(c,h,an,fi,x,y,f,sc,flash,alpha){const M=h.meta,A=M.anims[an]||M.anims.idle||M.anims.run,fr=A.f[Math.max(0,Math.min(fi,A.f.length-1))];c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(f*sc,sc);if(alpha!=null)c.globalAlpha*=alpha;c.drawImage(flash&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore()}
+function hqSheet(h,flash){const k=flash&&h.flash?'hqf':'hq';let Q=h[k];if(Q)return Q;const src=flash&&h.flash?h.flash:h.img,K=h.meta.hq,w=src.naturalWidth||src.width,hh=src.naturalHeight||src.height;if(!w||!hh)return null;Q=document.createElement('canvas');Q.width=w*K;Q.height=hh*K;const g=Q.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(src,0,0,Q.width,Q.height);h[k]=Q;return Q}
+function drawSpr(c,h,an,fi,x,y,f,sc,flash,alpha){const M=h.meta,A=M.anims[an]||M.anims.idle||M.anims.run,fr=A.f[Math.max(0,Math.min(fi,A.f.length-1))];c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(f*sc,sc);if(alpha!=null)c.globalAlpha*=alpha;
+ const Q=M.hq&&!_hqOff?hqSheet(h,flash):null;
+ if(Q){const K=M.hq;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(Q,fr[0]*K,fr[1]*K,M.w*K,M.h*K,-M.ax,-M.ay,M.w,M.h)}
+ else c.drawImage(flash&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore()}
 /* quái dùng sprite gói Wuxia: [nhân vật, tỉ lệ] */
 const ESPR={boss:['quytuong',1.45],tieu:['vonghon',0.74],hoa:['matroi',0.62],can:['ambinh',0.78],xa:['oanhonxa',0.74],toc:['khuyen',0.8],elite:['quysai',0.95],tac:['vonghon',0.8],tacdao:['ambinh',0.82],tacxa:['oanhonxa',0.78],tacvuong:['quysai',1.3],soi:['khuyen',0.78],langvuong:['khuyen',1.35]};
+/* 24/11 (chủ game: trùm phải thật nét). Phóng pixel art bằng hệ số lẻ làm pixel to nhỏ không đều, nhìn như vỡ nét. Với 7 trùm Âm Giới:
+   (1) nếu tỉ lệ NGUYÊN theo pixel màn hình (n = làm tròn của hệ số × DPR × ZOOM) chỉ lệch kích cỡ tối đa 20% thì vẽ ở tỉ lệ nguyên, mỗi pixel ảnh = đúng n pixel màn hình (nét tuyệt đối);
+   (2) nếu không thì giữ kích cỡ, dùng sheet phóng sẵn ×4 rồi thu về bằng lọc chất lượng cao (đều pixel, hơi mềm mép). */
+const ESPR_PX=new Set(['nguudau','madien','hacvo','bachvo','manhba','phanquan','diemvuong']);
+for(const k of ESPR_PX)if(CHM[k])CHM[k].hq=4;
+let _hqOff=false;
+function espScale(m){if(!ESPR_PX.has(m[0])){_hqOff=false;return m[1]}const d=DPR*ZOOM,t=m[1]*d,n=Math.round(t);if(n>=1&&Math.abs(n/t-1)<=0.2){_hqOff=true;return n/d}_hqOff=false;return m[1]}
 function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=CH[m[0]];if(!h||!h.ok)return false;const A=h.meta.anims;let an='run',fi;
  if(e.stun>0&&A.hit){an='hit';fi=1}
  else if((wind||e.st==='dash'||e.st==='charge')&&A.attack){an='attack';fi=Math.floor((G.t*A.attack.fps*1.2+e.ph*7))%A.attack.f.length}
@@ -1787,8 +1815,8 @@ function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=
  if(h.meta.proc){const hv=h.meta.proc==='hover';let dx=0,dy=hv?-12+Math.sin(t*3+e.ph*5)*4:0,rot=0;
   if(an==='run'){if(hv){rot=Math.sin(t*3)*0.05}else{dy=-Math.abs(Math.sin(t*9))*2.5;rot=Math.sin(t*9)*0.035}}
   else if(an==='attack'){const k=Math.sin(((G.t*1.2+e.ph*7)%1)*Math.PI);dx=k*9;rot=k*0.09}
-  c.save();c.translate(dx,dy);c.rotate(rot);drawSpr(c,h,an,fi,0,0,1,m[1],F,null);c.restore();return true}
- drawSpr(c,h,an,fi,0,0,1,m[1],F,null);return true}
+  c.save();c.translate(dx,dy);c.rotate(rot);drawSpr(c,h,an,fi,0,0,1,espScale(m),F,null);c.restore();return true}
+ drawSpr(c,h,an,fi,0,0,1,espScale(m),F,null);return true}
 /* âm thanh gói Wuxia: WebAudio (giải mã trước, không giật khi phát) */
 const MOBILE=document.documentElement.classList.contains('touch-device');
 const portraitViewport=matchMedia('(orientation: portrait)');
@@ -1808,7 +1836,7 @@ const preDecode=i=>{try{i.decode&&i.decode().catch(()=>{})}catch(e){}};
 /* hiệu ứng gói Wuxia */
 const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_slash','ink_impact','ink_trail'].forEach(n=>{const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i});
 // VFX Tôn Ngộ Không (PixelLab pro): lưới đều, khung theo hàng; px,py = tâm (người/điểm nện/điểm trúng)
-const SPX={wk_arc:{w:187,h:302,c:3,n:9,px:66,py:246},wk_puff2:{w:35,h:24,c:3,n:7,px:20,py:17},wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
+const SPX={hl_petals:{w:338,h:183,c:8,n:23,px:-74,py:131},hl_decoy:{w:85,h:106,c:8,n:25,px:40,py:95},hl_heal:{w:304,h:179,c:8,n:28,px:149,py:89},th_bind:{w:412,h:124,c:6,n:27,px:57,py:85},th_dash:{w:406,h:183,c:6,n:20,px:57,py:150},th_eclipse:{w:465,h:168,c:6,n:28,px:57,py:113},pm_bell:{w:202,h:225,c:8,n:34,px:101,py:209},pm_palm:{w:293,h:207,c:8,n:17,px:11,py:158},pm_guard:{w:312,h:321,c:8,n:25,px:159,py:307},pm_slash:{w:96,h:96,c:4,n:8,px:48,py:48},dq_cleave:{w:272,h:326,c:8,n:16,px:3,py:301},dq_triple:{w:285,h:338,c:8,n:23,px:-13,py:301},dq_ring:{w:460,h:232,c:6,n:17,px:230,py:141},wk_arc:{w:187,h:302,c:3,n:9,px:66,py:246},wk_puff2:{w:35,h:24,c:3,n:7,px:20,py:17},wk_slash:{w:192,h:193,c:3,n:9,px:75,py:107},wk_thrust:{w:232,h:80,c:3,n:7,px:29,py:19},wk_hit:{w:85,h:84,c:3,n:9,px:40,py:43},
  wk_stomp:{w:159,h:176,c:8,n:8,px:80,py:112},wk_roar:{w:260,h:275,c:8,n:8,px:41,py:194},wk_summon:{w:251,h:259,c:8,n:8,px:125,py:202},wk_whirl:{w:197,h:213,c:8,n:8,px:101,py:121},wk_cloud:{w:140,h:104,c:4,n:10,px:70,py:52},wk_puff:{w:97,h:92,c:3,n:9,px:52,py:44},
  sw_a:{w:140,h:45,c:3,n:8,px:68,py:44},swhit:{w:64,h:64,c:3,n:6,px:32,py:32},k5a_front:{w:82,h:103,c:3,n:6,px:-36,py:106},k5b_front:{w:124,h:163,c:3,n:6,px:22,py:151},wanjian_sword:{w:96,h:96,c:1,n:1,px:48,py:48},set_ring:{w:190,h:80,c:4,n:12,px:95,py:40},set_bolt:{w:80,h:240,c:4,n:12,px:40,py:228},set_bolt_do:{w:80,h:240,c:4,n:12,px:40,py:228},set_no_do:{w:240,h:140,c:4,n:12,px:120,py:100},set_len_do:{w:240,h:230,c:4,n:12,px:120,py:208},k5c_pro:{w:196,h:202,c:4,n:15,px:89,py:104},k5c_behind:{w:360,h:224,c:4,n:15,px:180,py:154},k5c_front:{w:360,h:224,c:4,n:15,px:180,py:154},hv_mark:{w:128,h:66,c:5,n:17,px:64,py:33},hv_vortex_b:{w:191,h:92,c:4,n:14,px:96,py:98},hv_vortex_f:{w:209,h:100,c:6,n:28,px:106,py:100},hv_ring:{w:137,h:131,c:5,n:19,px:69,py:83},tx_in:{w:365,h:604,c:11,n:30,px:215,py:520},tx_loop:{w:309,h:278,c:13,n:60,px:155,py:196},tx_out:{w:304,h:269,c:11,n:11,px:153,py:187},vk_e:{w:838,h:316,c:4,n:46,px:198,py:213},hp_guard:{w:128,h:128,c:1,n:1,px:64,py:64},hp_imp:{w:48,h:48,c:8,n:8,px:24,py:24},hp_star:{w:64,h:64,c:10,n:10,px:32,py:32},wx_slash:{w:96,h:96,c:4,n:8,px:48,py:48},zs1:{w:101,h:87,c:3,n:9,px:44,py:102},zs2:{w:108,h:122,c:3,n:7,px:32,py:117},zs3:{w:87,h:88,c:3,n:9,px:30,py:90},slash_el:{w:48,h:80,c:3,n:8,px:24,py:40},swqi:{w:64,h:48,c:3,n:6,px:36,py:24},sw_arc:{w:96,h:96,c:3,n:7,px:46,py:49},
  cA_behind:{w:132,h:128,c:3,n:6,px:74,py:136},cA_front:{w:73,h:14,c:2,n:4,px:-39,py:57},cB_behind:{w:90,h:124,c:3,n:6,px:17,py:130},cB_front:{w:104,h:162,c:3,n:6,px:13,py:148},cC_behind:{w:151,h:23,c:3,n:7,px:76,py:62},cC_front:{w:191,h:72,c:3,n:7,px:100,py:65},sw_b:{w:62,h:90,c:3,n:9,px:6,py:79},sw_c:{w:176,h:148,c:4,n:10,px:88,py:74}};  // combo kiếm: cA/cB/cC theo ảnh chủ game, lớp behind (sau người) + front (trước người), mốc = chân
@@ -1833,14 +1861,34 @@ function hitFx(x,y,ang,sc,sy,T){if(!vok('wx_slash'))return;fx({k:'sp',s:'wx_slas
 const vok=n=>VFX[n]&&VFX[n].complete&&VFX[n].naturalWidth>0;
 function arcCell(c,row,fi,sc){c.drawImage(VFX.arc_sheet,Math.max(0,Math.min(7,fi))*96,row*96,96,96,-48*sc,-48*sc,96*sc,96*sc)}
 /* bản đồ gói Wuxia */
-const MM={"Snow_pine_a":{"src":"assets/map/Snow_pine_a.png","w":268,"h":317,"ax":124,"ay":307,"col":[-21,-13,21,0]},"Snow_pine_b":{"src":"assets/map/Snow_pine_b.png","w":256,"h":276,"ax":128,"ay":267,"col":[-19,-12,19,0]},"Snow_bare":{"src":"assets/map/Snow_bare.png","w":202,"h":223,"ax":93,"ay":214,"col":[-17,-10,17,0]},"Snow_boulder":{"src":"assets/map/Snow_boulder.png","w":153,"h":132,"ax":81,"ay":131,"col":[-62,-32,62,0]},"Snow_cliff":{"src":"assets/map/Snow_cliff.png","w":407,"h":243,"ax":204,"ay":239,"col":[-170,-73,170,0]},"Snow_pavilion":{"src":"assets/map/Snow_pavilion.png","w":255,"h":275,"ax":117,"ay":279,"col":[-116,-11,-93,6]},"Forest_oak_0":{"src":"assets/map/Forest_oak_0.png","w":296,"h":295,"ax":144,"ay":293,"col":[-27,-14,27,0]},"Forest_oak_1":{"src":"assets/map/Forest_oak_1.png","w":275,"h":272,"ax":140,"ay":271,"col":[-25,-13,25,0]},"Forest_oak_2":{"src":"assets/map/Forest_oak_2.png","w":268,"h":274,"ax":134,"ay":269,"col":[-25,-13,25,0]},"Forest_oak_3":{"src":"assets/map/Forest_oak_3.png","w":271,"h":272,"ax":131,"ay":273,"col":[-25,-13,25,0]},"Forest_oak_5":{"src":"assets/map/Forest_oak_5.png","w":268,"h":259,"ax":140,"ay":261,"col":[-25,-13,25,0]},"Forest_bamboo":{"src":"assets/map/Forest_bamboo.png","w":263,"h":256,"ax":134,"ay":255,"col":[-42,-22,42,0]},"Forest_boulder":{"src":"assets/map/Forest_boulder.png","w":172,"h":130,"ax":83,"ay":134,"col":[-63,-33,63,0]},"Forest_willow":{"src":"assets/map/Forest_willow.png","w":233,"h":231,"ax":114,"ay":238,"col":[-13,-14,13,0]},"Forest_reeds":{"src":"assets/map/Forest_reeds.png","w":87,"h":68,"ax":45,"ay":68,"col":null},"Forest_pavilion":{"src":"assets/map/Forest_pavilion.png","w":296,"h":233,"ax":144,"ay":228,"col":[-89,-9,-69,2]},"Forest_stone_lantern":{"src":"assets/map/Forest_stone_lantern.png","w":24,"h":46,"ax":12,"ay":43,"col":null},"Forest_stone_shrine":{"src":"assets/map/Forest_stone_shrine.png","w":48,"h":43,"ax":24,"ay":41,"col":null},"Forest_wood_barrel":{"src":"assets/map/Forest_wood_barrel.png","w":26,"h":28,"ax":12,"ay":25,"col":[-9,-12,9,-1]},"Forest_wood_cart":{"src":"assets/map/Forest_wood_cart.png","w":72,"h":52,"ax":36,"ay":50,"col":[-33,-19,33,-1]},"Forest_wood_fence":{"src":"assets/map/Forest_wood_fence.png","w":56,"h":29,"ax":28,"ay":27,"col":[-25,-5,25,0]},"Forest_wood_sign":{"src":"assets/map/Forest_wood_sign.png","w":25,"h":47,"ax":12,"ay":44,"col":null},"Forest_cliff":{"src":"assets/map/Forest_cliff.png","w":314,"h":221,"ax":164,"ay":214,"col":[-125,-67,125,0]},"City_martial_hall":{"src":"assets/map/City_martial_hall.png","w":487,"h":443,"ax":243,"ay":318,"col":[-159,-78,159,-6]},"City_inn":{"src":"assets/map/City_inn.png","w":476,"h":443,"ax":237,"ay":321,"col":[-159,-78,159,-6]},"City_tea_house":{"src":"assets/map/City_tea_house.png","w":460,"h":437,"ax":232,"ay":319,"col":[-159,-78,159,-6]},"City_weapon_shop":{"src":"assets/map/City_weapon_shop.png","w":477,"h":432,"ax":238,"ay":313,"col":[-159,-78,159,-6]},"City_apothecary":{"src":"assets/map/City_apothecary.png","w":478,"h":436,"ax":242,"ay":315,"col":[-159,-78,159,-6]},"City_escort_agency":{"src":"assets/map/City_escort_agency.png","w":471,"h":432,"ax":236,"ay":313,"col":[-200,-78,200,-6]},"City_warehouse":{"src":"assets/map/City_warehouse.png","w":482,"h":434,"ax":240,"ay":312,"col":[-159,-78,159,-6]},"City_street_gate":{"src":"assets/map/City_street_gate.png","w":487,"h":423,"ax":243,"ay":310,"col":null},"City_market_stall":{"src":"assets/map/City_market_stall.png","w":120,"h":119,"ax":60,"ay":123,"col":[-48,-37,48,-5]},"City_market_stall_small":{"src":"assets/map/City_market_stall_small.png","w":66,"h":71,"ax":33,"ay":68,"col":[-37,-23,37,-1]},"City_market_food":{"src":"assets/map/City_market_food.png","w":208,"h":189,"ax":104,"ay":188,"col":[-86,-48,88,-3]},"City_market_jars":{"src":"assets/map/City_market_jars.png","w":222,"h":211,"ax":111,"ay":211,"col":[-96,-47,97,-2]},"City_market_produce":{"src":"assets/map/City_market_produce.png","w":261,"h":184,"ax":130,"ay":183,"col":[-115,-41,106,-3]},"City_market_textiles":{"src":"assets/map/City_market_textiles.png","w":276,"h":197,"ax":138,"ay":196,"col":[-122,-46,122,-2]},"City_market_tools":{"src":"assets/map/City_market_tools.png","w":233,"h":156,"ax":116,"ay":155,"col":[-100,-41,98,-2]},"City_standing_lantern":{"src":"assets/map/City_standing_lantern.png","w":22,"h":54,"ax":11,"ay":52,"col":null},"City_stone_lion":{"src":"assets/map/City_stone_lion.png","w":53,"h":70,"ax":26,"ay":68,"col":[-28,-16,28,0]},"City_stone_well":{"src":"assets/map/City_stone_well.png","w":60,"h":61,"ax":29,"ay":58,"col":[-27,-30,27,-2]},"City_stone_stele":{"src":"assets/map/City_stone_stele.png","w":57,"h":83,"ax":28,"ay":80,"col":null},"City_wood_cart":{"src":"assets/map/City_wood_cart.png","w":72,"h":52,"ax":36,"ay":50,"col":[-33,-19,33,-1]},"City_loaded_wagon":{"src":"assets/map/City_loaded_wagon.png","w":94,"h":69,"ax":47,"ay":66,"col":[-28,-16,28,0]},"City_barrels_on_rack":{"src":"assets/map/City_barrels_on_rack.png","w":62,"h":59,"ax":30,"ay":58,"col":[-28,-16,28,0]},"City_crate_stack":{"src":"assets/map/City_crate_stack.png","w":77,"h":83,"ax":38,"ay":84,"col":[-34,-18,34,-5]},"City_wood_barrel":{"src":"assets/map/City_wood_barrel.png","w":26,"h":28,"ax":12,"ay":25,"col":[-9,-12,9,-1]},"City_clay_jar":{"src":"assets/map/City_clay_jar.png","w":50,"h":64,"ax":24,"ay":59,"col":[-17,-22,17,-2]},"City_banner":{"src":"assets/map/City_banner.png","w":35,"h":86,"ax":17,"ay":83,"col":null},"City_reference_banner":{"src":"assets/map/City_reference_banner.png","w":57,"h":107,"ax":29,"ay":104,"col":null},"City_road_tree":{"src":"assets/map/City_road_tree.png","w":77,"h":105,"ax":38,"ay":102,"col":[-7,-9,7,0]},"City_broadleaf_tree":{"src":"assets/map/City_broadleaf_tree.png","w":77,"h":105,"ax":38,"ay":102,"col":[-7,-10,7,-1]},"City_willow_tree":{"src":"assets/map/City_willow_tree.png","w":118,"h":136,"ax":58,"ay":130,"col":null},"City_potted_shrub":{"src":"assets/map/City_potted_shrub.png","w":64,"h":86,"ax":32,"ay":86,"col":[-24,-16,24,-3]},"City_training_wood_dummy":{"src":"assets/map/City_training_wood_dummy.png","w":45,"h":83,"ax":22,"ay":80,"col":[-12,-16,12,0]},"City_market_horse_cargo_cart":{"src":"assets/map/City_market_horse_cargo_cart.png","w":180,"h":136,"ax":88,"ay":133,"col":[-82,-58,87,0]},"City_stone_cluster":{"src":"assets/map/City_stone_cluster.png","w":27,"h":24,"ax":13,"ay":22,"col":null},"City_market_notice_board":{"src":"assets/map/City_market_notice_board.png","w":87,"h":79,"ax":43,"ay":75,"col":[-34,-7,34,0]},"City_wood_fence":{"src":"assets/map/City_wood_fence.png","w":73,"h":38,"ax":36,"ay":36,"col":[-33,-7,33,0]},"g_snow":{"src":"assets/map/g_snow.jpg","w":978,"h":978},"g_snowgrass":{"src":"assets/map/g_snowgrass.jpg","w":399,"h":399},"g_meadow":{"src":"assets/map/g_meadow.jpg","w":978,"h":978},"g_dirt":{"src":"assets/map/g_dirt.jpg","w":399,"h":399},"g_pave":{"src":"assets/map/g_pave.jpg","w":399,"h":399},"Am_quantai1":{"src":"assets/map/Am_quantai1.png","w":94,"h":68,"ax":47,"ay":63,"col":[-37, -21, 37, -2]},"Am_quantai2":{"src":"assets/map/Am_quantai2.png","w":86,"h":66,"ax":43,"ay":61,"col":[-34, -21, 34, -2]},"Am_quantai3":{"src":"assets/map/Am_quantai3.png","w":46,"h":99,"ax":23,"ay":94,"col":[-18, -31, 18, -2]},"Am_denlong":{"src":"assets/map/Am_denlong.png","w":32,"h":101,"ax":16,"ay":96,"col":[-4, -6, 4, 0]},"Am_denlong2":{"src":"assets/map/Am_denlong2.png","w":115,"h":88,"ax":57,"ay":83,"col":null},"Am_bia1":{"src":"assets/map/Am_bia1.png","w":61,"h":84,"ax":30,"ay":79,"col":[-18, -11, 18, 0]},"Am_bia2":{"src":"assets/map/Am_bia2.png","w":84,"h":76,"ax":42,"ay":71,"col":[-25, -10, 25, 0]},"Am_nha1":{"src":"assets/map/Am_nha1.png","w":218,"h":183,"ax":109,"ay":178,"col":[-82, -51, 82, -2]},"Am_nha2":{"src":"assets/map/Am_nha2.png","w":194,"h":180,"ax":97,"ay":175,"col":[-73, -50, 73, -2]},"Am_caykho1":{"src":"assets/map/Am_caykho1.png","w":143,"h":159,"ax":71,"ay":154,"col":[-10, -9, 10, 0]},"Am_caykho2":{"src":"assets/map/Am_caykho2.png","w":91,"h":137,"ax":45,"ay":132,"col":[-10, -9, 10, 0]},"g_amdia":{"src":"assets/map/g_amdia.jpg","w":399,"h":399},"g_amdia_co":{"src":"assets/map/g_amdia_co.jpg","w":399,"h":399},"g_mieu":{"src":"assets/map/g_mieu.jpg","w":399,"h":399},"Mi_luhuong":{"src":"assets/map/Mi_luhuong.png","w":74,"h":93,"ax":37,"ay":88,"col":[-29, -27, 29, -2]},"Mi_tuongphat":{"src":"assets/map/Mi_tuongphat.png","w":102,"h":132,"ax":51,"ay":127,"col":[-35, -33, 35, -2]},"Mi_phuon":{"src":"assets/map/Mi_phuon.png","w":28,"h":120,"ax":14,"ay":115,"col":null},"Mi_cotda":{"src":"assets/map/Mi_cotda.png","w":58,"h":122,"ax":29,"ay":117,"col":[-17, -17, 17, 0]},"Mi_denda":{"src":"assets/map/Mi_denda.png","w":55,"h":87,"ax":27,"ay":82,"col":[-16, -17, 16, 0]},"Mi_cayphong":{"src":"assets/map/Mi_cayphong.png","w":167,"h":181,"ax":83,"ay":176,"col":[-10, -9, 10, 0]}};const MIMG={};let mapLoad=0;
+const MM={"Snow_pine_a":{"src":"assets/map/Snow_pine_a.png","w":268,"h":317,"ax":124,"ay":307,"col":[-21,-13,21,0]},"Snow_pine_b":{"src":"assets/map/Snow_pine_b.png","w":256,"h":276,"ax":128,"ay":267,"col":[-19,-12,19,0]},"Snow_bare":{"src":"assets/map/Snow_bare.png","w":202,"h":223,"ax":93,"ay":214,"col":[-17,-10,17,0]},"Snow_boulder":{"src":"assets/map/Snow_boulder.png","w":153,"h":132,"ax":81,"ay":131,"col":[-62,-32,62,0]},"Snow_cliff":{"src":"assets/map/Snow_cliff.png","w":407,"h":243,"ax":204,"ay":239,"col":[-170,-73,170,0]},"Snow_pavilion":{"src":"assets/map/Snow_pavilion.png","w":255,"h":275,"ax":117,"ay":279,"col":[-116,-11,-93,6]},"Forest_oak_0":{"src":"assets/map/Forest_oak_0.png","w":296,"h":295,"ax":144,"ay":293,"col":[-27,-14,27,0]},"Forest_oak_1":{"src":"assets/map/Forest_oak_1.png","w":275,"h":272,"ax":140,"ay":271,"col":[-25,-13,25,0]},"Forest_oak_2":{"src":"assets/map/Forest_oak_2.png","w":268,"h":274,"ax":134,"ay":269,"col":[-25,-13,25,0]},"Forest_oak_3":{"src":"assets/map/Forest_oak_3.png","w":271,"h":272,"ax":131,"ay":273,"col":[-25,-13,25,0]},"Forest_oak_5":{"src":"assets/map/Forest_oak_5.png","w":268,"h":259,"ax":140,"ay":261,"col":[-25,-13,25,0]},"Forest_bamboo":{"src":"assets/map/Forest_bamboo.png","w":263,"h":256,"ax":134,"ay":255,"col":[-42,-22,42,0]},"Forest_boulder":{"src":"assets/map/Forest_boulder.png","w":172,"h":130,"ax":83,"ay":134,"col":[-63,-33,63,0]},"Forest_willow":{"src":"assets/map/Forest_willow.png","w":233,"h":231,"ax":114,"ay":238,"col":[-13,-14,13,0]},"Forest_reeds":{"src":"assets/map/Forest_reeds.png","w":87,"h":68,"ax":45,"ay":68,"col":null},"Forest_pavilion":{"src":"assets/map/Forest_pavilion.png","w":296,"h":233,"ax":144,"ay":228,"col":[-89,-9,-69,2]},"Forest_stone_lantern":{"src":"assets/map/Forest_stone_lantern.png","w":24,"h":46,"ax":12,"ay":43,"col":null},"Forest_stone_shrine":{"src":"assets/map/Forest_stone_shrine.png","w":48,"h":43,"ax":24,"ay":41,"col":null},"Forest_wood_barrel":{"src":"assets/map/Forest_wood_barrel.png","w":26,"h":28,"ax":12,"ay":25,"col":[-9,-12,9,-1]},"Forest_wood_cart":{"src":"assets/map/Forest_wood_cart.png","w":72,"h":52,"ax":36,"ay":50,"col":[-33,-19,33,-1]},"Forest_wood_fence":{"src":"assets/map/Forest_wood_fence.png","w":56,"h":29,"ax":28,"ay":27,"col":[-25,-5,25,0]},"Forest_wood_sign":{"src":"assets/map/Forest_wood_sign.png","w":25,"h":47,"ax":12,"ay":44,"col":null},"Forest_cliff":{"src":"assets/map/Forest_cliff.png","w":314,"h":221,"ax":164,"ay":214,"col":[-125,-67,125,0]},"City_martial_hall":{"src":"assets/map/City_martial_hall.png","w":487,"h":443,"ax":243,"ay":318,"col":[-159,-78,159,-6]},"City_inn":{"src":"assets/map/City_inn.png","w":476,"h":443,"ax":237,"ay":321,"col":[-159,-78,159,-6]},"City_tea_house":{"src":"assets/map/City_tea_house.png","w":460,"h":437,"ax":232,"ay":319,"col":[-159,-78,159,-6]},"City_weapon_shop":{"src":"assets/map/City_weapon_shop.png","w":477,"h":432,"ax":238,"ay":313,"col":[-159,-78,159,-6]},"City_apothecary":{"src":"assets/map/City_apothecary.png","w":478,"h":436,"ax":242,"ay":315,"col":[-159,-78,159,-6]},"City_escort_agency":{"src":"assets/map/City_escort_agency.png","w":471,"h":432,"ax":236,"ay":313,"col":[-200,-78,200,-6]},"City_warehouse":{"src":"assets/map/City_warehouse.png","w":482,"h":434,"ax":240,"ay":312,"col":[-159,-78,159,-6]},"City_street_gate":{"src":"assets/map/City_street_gate.png","w":487,"h":423,"ax":243,"ay":310,"col":null},"City_market_stall":{"src":"assets/map/City_market_stall.png","w":120,"h":119,"ax":60,"ay":123,"col":[-48,-37,48,-5]},"City_market_stall_small":{"src":"assets/map/City_market_stall_small.png","w":66,"h":71,"ax":33,"ay":68,"col":[-37,-23,37,-1]},"City_market_food":{"src":"assets/map/City_market_food.png","w":208,"h":189,"ax":104,"ay":188,"col":[-86,-48,88,-3]},"City_market_jars":{"src":"assets/map/City_market_jars.png","w":222,"h":211,"ax":111,"ay":211,"col":[-96,-47,97,-2]},"City_market_produce":{"src":"assets/map/City_market_produce.png","w":261,"h":184,"ax":130,"ay":183,"col":[-115,-41,106,-3]},"City_market_textiles":{"src":"assets/map/City_market_textiles.png","w":276,"h":197,"ax":138,"ay":196,"col":[-122,-46,122,-2]},"City_market_tools":{"src":"assets/map/City_market_tools.png","w":233,"h":156,"ax":116,"ay":155,"col":[-100,-41,98,-2]},"City_standing_lantern":{"src":"assets/map/City_standing_lantern.png","w":22,"h":54,"ax":11,"ay":52,"col":null},"City_stone_lion":{"src":"assets/map/City_stone_lion.png","w":53,"h":70,"ax":26,"ay":68,"col":[-28,-16,28,0]},"City_stone_well":{"src":"assets/map/City_stone_well.png","w":60,"h":61,"ax":29,"ay":58,"col":[-27,-30,27,-2]},"City_stone_stele":{"src":"assets/map/City_stone_stele.png","w":57,"h":83,"ax":28,"ay":80,"col":null},"City_wood_cart":{"src":"assets/map/City_wood_cart.png","w":72,"h":52,"ax":36,"ay":50,"col":[-33,-19,33,-1]},"City_loaded_wagon":{"src":"assets/map/City_loaded_wagon.png","w":94,"h":69,"ax":47,"ay":66,"col":[-28,-16,28,0]},"City_barrels_on_rack":{"src":"assets/map/City_barrels_on_rack.png","w":62,"h":59,"ax":30,"ay":58,"col":[-28,-16,28,0]},"City_crate_stack":{"src":"assets/map/City_crate_stack.png","w":77,"h":83,"ax":38,"ay":84,"col":[-34,-18,34,-5]},"City_wood_barrel":{"src":"assets/map/City_wood_barrel.png","w":26,"h":28,"ax":12,"ay":25,"col":[-9,-12,9,-1]},"City_clay_jar":{"src":"assets/map/City_clay_jar.png","w":50,"h":64,"ax":24,"ay":59,"col":[-17,-22,17,-2]},"City_banner":{"src":"assets/map/City_banner.png","w":35,"h":86,"ax":17,"ay":83,"col":null},"City_reference_banner":{"src":"assets/map/City_reference_banner.png","w":57,"h":107,"ax":29,"ay":104,"col":null},"City_road_tree":{"src":"assets/map/City_road_tree.png","w":77,"h":105,"ax":38,"ay":102,"col":[-7,-9,7,0]},"City_broadleaf_tree":{"src":"assets/map/City_broadleaf_tree.png","w":77,"h":105,"ax":38,"ay":102,"col":[-7,-10,7,-1]},"City_willow_tree":{"src":"assets/map/City_willow_tree.png","w":118,"h":136,"ax":58,"ay":130,"col":null},"City_potted_shrub":{"src":"assets/map/City_potted_shrub.png","w":64,"h":86,"ax":32,"ay":86,"col":[-24,-16,24,-3]},"City_training_wood_dummy":{"src":"assets/map/City_training_wood_dummy.png","w":45,"h":83,"ax":22,"ay":80,"col":[-12,-16,12,0]},"City_market_horse_cargo_cart":{"src":"assets/map/City_market_horse_cargo_cart.png","w":180,"h":136,"ax":88,"ay":133,"col":[-82,-58,87,0]},"City_stone_cluster":{"src":"assets/map/City_stone_cluster.png","w":27,"h":24,"ax":13,"ay":22,"col":null},"City_market_notice_board":{"src":"assets/map/City_market_notice_board.png","w":87,"h":79,"ax":43,"ay":75,"col":[-34,-7,34,0]},"City_wood_fence":{"src":"assets/map/City_wood_fence.png","w":73,"h":38,"ax":36,"ay":36,"col":[-33,-7,33,0]},"g_snow":{"src":"assets/map/g_snow.jpg","w":978,"h":978},"g_snowgrass":{"src":"assets/map/g_snowgrass.jpg","w":399,"h":399},"g_meadow":{"src":"assets/map/g_meadow.jpg","w":978,"h":978},"g_dirt":{"src":"assets/map/g_dirt.jpg","w":399,"h":399},"g_pave":{"src":"assets/map/g_pave.jpg","w":399,"h":399},"Am_quantai1":{"src":"assets/map/Am_quantai1.png","w":94,"h":68,"ax":47,"ay":63,"col":[-37, -21, 37, -2]},"Am_quantai2":{"src":"assets/map/Am_quantai2.png","w":86,"h":66,"ax":43,"ay":61,"col":[-34, -21, 34, -2]},"Am_quantai3":{"src":"assets/map/Am_quantai3.png","w":46,"h":99,"ax":23,"ay":94,"col":[-18, -31, 18, -2]},"Am_denlong":{"src":"assets/map/Am_denlong.png","w":32,"h":101,"ax":16,"ay":96,"col":[-4, -6, 4, 0]},"Am_denlong2":{"src":"assets/map/Am_denlong2.png","w":115,"h":88,"ax":57,"ay":83,"col":null},"Am_bia1":{"src":"assets/map/Am_bia1.png","w":61,"h":84,"ax":30,"ay":79,"col":[-18, -11, 18, 0]},"Am_bia2":{"src":"assets/map/Am_bia2.png","w":84,"h":76,"ax":42,"ay":71,"col":[-25, -10, 25, 0]},"Am_nha1":{"src":"assets/map/Am_nha1.png","w":218,"h":183,"ax":109,"ay":178,"col":[-82, -51, 82, -2]},"Am_nha2":{"src":"assets/map/Am_nha2.png","w":194,"h":180,"ax":97,"ay":175,"col":[-73, -50, 73, -2]},"Am_caykho1":{"src":"assets/map/Am_caykho1.png","w":143,"h":159,"ax":71,"ay":154,"col":[-10, -9, 10, 0]},"Am_caykho2":{"src":"assets/map/Am_caykho2.png","w":91,"h":137,"ax":45,"ay":132,"col":[-10, -9, 10, 0]},"g_amdia":{"src":"assets/map/g_amdia.jpg","w":399,"h":399},"g_amdia_co":{"src":"assets/map/g_amdia_co.jpg","w":399,"h":399},"g_mieu":{"src":"assets/map/g_mieu.jpg","w":399,"h":399},"Mi_luhuong":{"src":"assets/map/Mi_luhuong.png","w":74,"h":93,"ax":37,"ay":88,"col":[-29, -27, 29, -2]},"Mi_tuongphat_lon":{"src":"assets/map/Mi_tuongphat_lon.png","w":291,"h":336,"ax":145,"ay":330,"col":[-95,-60,95,-2]},"Mi_tuongphat":{"src":"assets/map/Mi_tuongphat.png","w":102,"h":132,"ax":51,"ay":127,"col":[-35, -33, 35, -2]},"Mi_phuon":{"src":"assets/map/Mi_phuon.png","w":28,"h":120,"ax":14,"ay":115,"col":null},"Mi_cotda":{"src":"assets/map/Mi_cotda.png","w":58,"h":122,"ax":29,"ay":117,"col":[-17, -17, 17, 0]},"Mi_denda":{"src":"assets/map/Mi_denda.png","w":55,"h":87,"ax":27,"ay":82,"col":[-16, -17, 16, 0]},"Mi_cayphong":{"src":"assets/map/Mi_cayphong.png","w":167,"h":181,"ax":83,"ay":176,"col":[-10, -9, 10, 0]}};const MIMG={};let mapLoad=0;
 for(const k in MM){const i=new Image();i.onload=()=>{mapLoad++;if(!G&&mapLoad%8===0)paintMap()};i.src=MM[k].src;MIMG[k]=i}
 const mok=k=>MIMG[k]&&MIMG[k].complete&&MIMG[k].naturalWidth>0;
 const MAPS={
  amdia:{name:'Hoang Thôn Nghĩa Địa',zh:'荒村義地',desc:'Thôn trang bỏ hoang bên nghĩa địa: nhà đổ nát, bia mộ, quan tài đỏ và đèn lồng trắng leo lét. Âm khí nặng, quỷ hồn lảng vảng.',ground:'g_amdia',patch:'g_amdia_co',edge:'#12100f',dens:1.7,
-  border:['Am_caykho1','Am_caykho2','Am_caykho1','Am_denlong2','Am_caykho2','Am_nha2'],inner:[['Am_nha1',3],['Am_nha2',3],['Am_quantai1',6],['Am_quantai2',5],['Am_quantai3',4],['Am_bia1',12],['Am_bia2',8],['Am_denlong',14],['Am_denlong2',3],['Am_caykho1',6],['Am_caykho2',6],['City_wood_fence',9],['Forest_reeds',12],['City_clay_jar',4],['City_wood_cart',2]]},
+  border:['Am_caykho1','Am_caykho2','Am_caykho1','Am_denlong2','Am_caykho2','Am_nha2'],inner:[['Am_caykho1',3],['Am_caykho2',3],['Forest_reeds',5],['Am_bia2',2]],
+  /* bố cục 24/11: làng bỏ hoang ở phía tây, nghĩa địa ở phía đông, đường đèn lồng ở giữa */
+  layout(add){
+   add('Am_nha1',480,560,1.25);add('Am_nha2',520,1140,1.25);add('Am_nha1',470,1730,1.25);add('Am_nha2',960,400,1.15);add('Am_nha1',980,1900,1.15);
+   for(let x=330;x<=640;x+=62)add('City_wood_fence',x,880,1);
+   add('Am_denlong',720,820);add('Am_denlong',720,1460);add('City_clay_jar',700,640);add('City_clay_jar',690,1250);add('City_wood_cart',800,1720);add('City_clay_jar',300,1400);
+   for(let x=900;x<=2300;x+=250){if(Math.abs(x-1600)<180)continue;add('Am_denlong',x,1000)}
+   for(let r=0;r<5;r++)for(let c=0;c<4;c++){if(Math.random()<0.12)continue;add((r+c)%2?'Am_bia2':'Am_bia1',2250+c*190,620+r*210,1,16)}
+   add('Am_quantai1',2220,1780);add('Am_quantai2',2480,1800);add('Am_quantai3',2740,1760);add('Am_quantai1',860,2000,1);
+   add('Am_caykho1',2950,500,1.2);add('Am_caykho2',2950,1050);add('Am_caykho1',2950,1650,1.2);add('Am_caykho2',2200,400);add('Am_caykho1',1600,320,1.2);add('Am_caykho2',1600,1990);add('Am_caykho1',300,420,1.2);add('Am_caykho2',300,1960);
+   add('Am_denlong2',2150,1150)}},
  mieu:{name:'Cổ Miếu Hoang',zh:'古廟荒',desc:'Ngôi cổ miếu bị bỏ hoang trên đồi, tượng Phật phủ rêu, lư hương nguội lạnh, phướn bùa vàng rách và cột đá quấn dải đỏ. Nơi tà khí tụ lại.',ground:'g_mieu',patch:null,edge:'#0e0f13',dens:1.7,
-  border:['Mi_cayphong','Mi_cotda','Mi_denda','Mi_cayphong','Mi_phuon','Mi_cotda'],inner:[['Forest_pavilion',1],['Mi_tuongphat',5],['Mi_luhuong',5],['Mi_phuon',9],['Mi_cotda',10],['Mi_denda',8],['Mi_cayphong',4],['Forest_stone_shrine',3],['City_stone_lion',4],['City_stone_stele',5],['Forest_reeds',6],['Forest_stone_lantern',4]]},
+  border:['Mi_cayphong','Mi_cotda','Mi_denda','Mi_cayphong','Mi_phuon','Mi_cotda'],inner:[['Forest_reeds',3],['Mi_phuon',2],['Mi_cayphong',2]],
+  /* bố cục 24/11: một tượng Phật lớn ở chính điện phía bắc, lư hương + sư tử trước tượng, hai hàng đèn đá dọc lối đi */
+  layout(add){
+   add('Mi_tuongphat_lon',1600,640,1.3);add('Mi_luhuong',1600,820,1.7);
+   add('City_stone_lion',1450,800,1.9);add('City_stone_lion',1750,800,1.9);
+   add('Mi_phuon',1280,720,1.4);add('Mi_phuon',1920,720,1.4);
+   add('Mi_cotda',1250,980,1.3);add('Mi_cotda',1950,980,1.3);add('Mi_cotda',1250,1560,1.3);add('Mi_cotda',1950,1560,1.3);
+   for(let y=1000;y<=2000;y+=200){if(y>1060&&y<1260)continue;add('Mi_denda',1410,y);add('Mi_denda',1790,y)}
+   add('Forest_pavilion',560,1150,1.25);add('Forest_stone_shrine',2650,1150,1.7);
+   add('City_stone_stele',900,640);add('City_stone_stele',2300,640);add('City_stone_stele',900,1750);add('City_stone_stele',2300,1750);
+   add('Mi_cayphong',480,480,1.15);add('Mi_cayphong',2720,480,1.15);add('Mi_cayphong',480,1950,1.15);add('Mi_cayphong',2720,1950,1.15);add('Mi_cayphong',1000,2000);add('Mi_cayphong',2200,2000)}},
 };
 const curMap=()=>G?G.cfg.map:sel.map;
 let groundPats={};
@@ -1853,6 +1901,7 @@ function buildDecor(id){decor.length=0;patches.length=0;const M=MAPS[id];
   for(let y=520;y<AH-200;y+=520){decor.push(makeProp(M.houses[i++%M.houses.length],-150,y));decor.push(makeProp(M.houses[i++%M.houses.length],AW+150,y))}}
  else{for(let x=-40;x<AW+80;x+=rnd(110,190)){decor.push(makeProp(pick(M.border),x,rnd(-30,60)));decor.push(makeProp(pick(M.border),x+rnd(-40,40),AH+rnd(80,190)))}
   for(let y=150;y<AH+100;y+=rnd(110,180)){decor.push(makeProp(pick(M.border),rnd(-110,-20),y));decor.push(makeProp(pick(M.border),AW+rnd(20,110),y))}}
+ if(M.layout){const add=(n,x,y,sc,j)=>{const d=makeProp(n,x+(j?rnd(-j,j):0),y+(j?rnd(-j,j):0));if(sc&&sc!==1){d.sc=sc;if(d.col)d.col=d.col.map(v=>v*sc)}decor.push(d)};M.layout(add)}
  for(const[n,cnt]of M.inner)for(let i=0,N=Math.round(cnt*(M.dens||1));i<N;i++){for(let tr=0;tr<30;tr++){const x=rnd(140,AW-140),y=rnd(200,AH-120);if(ok(x,y,320)){decor.push(makeProp(n,x,y));break}}}
  if(M.patch)for(let i=0;i<26;i++)patches.push({x:rnd(0,AW),y:rnd(0,AH),r:rnd(90,230),seed:Math.random()*1000})
 }
@@ -1861,8 +1910,8 @@ function solidPush(o,r){if(!G||!MAPS[G.cfg.map].ground)return;for(const d of dec
  const x0=d.x+d.col[0]-r,x1=d.x+d.col[2]+r,y0=d.y+d.col[1]-r*0.6,y1=d.y+d.col[3]+r*0.6;
  if(o.x>x0&&o.x<x1&&o.y>y0&&o.y<y1){const l=o.x-x0,rr=x1-o.x,t=o.y-y0,b=y1-o.y,mn=Math.min(l,rr,t,b);if(mn===l)o.x=x0;else if(mn===rr)o.x=x1;else if(mn===t)o.y=y0;else o.y=y1}}}
 function drawProp(d){const m=MM[d.n],im=MIMG[d.n];if(!im||!im.complete||!im.naturalWidth)return;const c=X;
- const behind=P&&G&&P.y<d.y-6&&P.y>d.y-m.ay*PS+20&&Math.abs(P.x-d.x)<m.w*PS*0.42&&m.h*PS>110;
- c.save();if(behind)c.globalAlpha=0.5;c.drawImage(im,Math.round(d.x-m.ax*PS),Math.round(d.y-m.ay*PS),Math.round(m.w*PS),Math.round(m.h*PS));c.restore()}
+ const S=PS*(d.sc||1);const behind=P&&G&&P.y<d.y-6&&P.y>d.y-m.ay*S+20&&Math.abs(P.x-d.x)<m.w*S*0.42&&m.h*S>110;
+ c.save();if(behind)c.globalAlpha=0.5;c.drawImage(im,Math.round(d.x-m.ax*S),Math.round(d.y-m.ay*S),Math.round(m.w*S),Math.round(m.h*S));c.restore()}
 let patchCv=null;
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
@@ -1883,7 +1932,7 @@ function heroFrame(){
  if(P.cutC&&HERO.meta.anims.cutC)return['cutC',cutCPose(P.cutC.t).fi];
  if(P.hurt>0&&!(P.av>0)&&HERO.meta.anims.hit)return['hit',Math.min(HERO.meta.anims.hit.f.length-1,Math.floor((1-P.hurt/0.2)*4))];
  if(P.dashT>0)return['dash',Math.floor(P.t*15)%3];
- if(P.av>0&&!(G&&G.cfg&&G.cfg.weapon!=='kiem')){ /* Thương/Song Quyền chưa có động tác đánh: giữ đứng/chạy */
+ if(P.av>0&&!(G&&G.cfg&&!MELEE_ANIM.has(G.cfg.weapon))){ /* Thương/Song Quyền chưa có động tác đánh: giữ đứng/chạy */
   const progress=swingProgress();
   // Keep the impact pose, then let running take over the recovery.
   if(!P.moving||!P.runSwing||progress<RUN_SWING_RETURN){
@@ -2074,6 +2123,9 @@ function drawCutC(facing){
  }
 }
 const VAN_KIEM={range:420,radius:180,impact:58};
+/* VFX Xích Diễm Đao Môn (gói Wuxia, hướng bake = đông): lật theo hướng chém, xoay theo góc a (noRot: không xoay, dùng cho vòng lửa) */
+function dqAt(name,tx,ty,a,sc,T,f0,f1,o,dist){const d=(dist==null?240:dist)*sc;return dqFx(name,tx-Math.cos(a)*d,ty-Math.sin(a)*d,a,sc,T,f0,f1,o)}
+function dqFx(name,x,y,a,sc,T,f0,f1,o){if(!vok(name))return;const f=Math.cos(a)<0?-1:1,r=!!(o&&o.noRot);fx(Object.assign({k:'sp',s:name,x,y,sc,fx:f,ang:r?0:(f===1?a:a-Math.PI),T,f0,f1},o||{}))}
 const WEAPONS={
  kiem:{name:'Kiếm',g:'劍',role:'DPS linh hoạt',tr:'Liên kích, kiếm khí, chí mạng',kit:[
   {id:'k0',name:'Đào Mộc Trảm Tà',g:'劍',kind:'basic',cd:0.4,range:95,get desc(){return 'Combo Khởi Kiếm → Hồi Kiếm, mỗi nhát lao tới. Kiếm +6 mở nhát C Phá Thế Trảm: quét xoay 360°, trúng mọi phía. Cường hóa Kiếm có thể lĩnh ngộ thêm thế đòn.'+''},
@@ -2120,19 +2172,72 @@ const WEAPONS={
     later(0.55,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:0.72});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.6})},null)}sfx('sword_hit',0.7,0.1)},null);
     notice('Thái Thượng Trảm Ma')}},
  ]},
- dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
-  {id:'d0',name:'Trảm Kích',g:'刀',kind:'basic',cd:0.72,range:100,desc:'Nhát chém nặng trước mặt.',
-   cast(tg,s){const a=angTo(tg);s.step=((s.step||0)+1)%2;swing(a,s.step?1:-1);arc(P.x,P.y-8,a,94*Ar(),2.2,17*pw()*(P.pf.badao?1.3:1),H({kb:60}),'#ffd9a0',s.step?1:-1)}},
-  {id:'d1',name:'Liệt Địa Trảm',g:'裂',kind:'active',cd:2.8,mp:12,range:420,desc:'Sóng chém sát đất xuyên qua mọi kẻ địch trên đường.',up:'+25% sát thương, sóng rộng hơn',
-   cast(tg,l){const a=angTo(tg);swing(a,1);shoot(P.x,P.y,a,400,{dmg:24*lv(l)*pw(),pierce:99,r:(28+3*l)*Ar(),life:0.95,kind:'wave',c:'#ffb35a',o:H({kb:40})})}},
-  {id:'d2',name:'Cuồng Phong Đao',g:'風',kind:'active',cd:6.5,mp:20,range:140,desc:'Xoay đao liên tục quanh người.',up:'+0.3 giây, +25% sát thương',
-   cast(tg,l){addZone({kind:'whirl',follow:1,T:2.4+0.3*(l-1),r:108*Ar(),tick:0.25,dmg:8*lv(l)*pw(),o:H({kb:30}),c:'#ffcf8a'})}},
+ dao:{name:'Đao',g:'刀',role:'Bạo kích, diện rộng',tr:'Hỏa đao nặng, chém xuyên, quét rộng',kit:[
+  /* Trảm Yêu Môn (24/11): VFX gói Wuxia Xích Diễm Đao Môn (xuất từ Godot: dq_cleave, dq_triple, dq_ring). Hướng bake: đông; dqFx lật theo hướng chém. */
+  {id:'d0',name:'Quỷ Đầu Trảm',g:'刀',kind:'basic',cd:0.62,range:105,desc:'Nhát đao nặng trước mặt, hai nhát luân phiên, kèm vệt lửa nhỏ. Bá Đao tăng sát thương đánh thường.',
+   cast(tg,s){const a=angTo(tg);s.step=((s.step||0)+1)%2;swing(a,s.step?1:-1);dqFx('dq_triple',P.x,P.y-6,a,0.6,0.4,0,5,{al:0.95});arc(P.x,P.y-8,a,100*Ar(),2.2,17*pw()*(P.pf.badao?1.3:1),H({kb:60,nofx:1}),null,s.step?1:-1)}},
+  {id:'d1',hotkey:'Q',power:26,name:'Xích Long Đoạn Nhạc',g:'龍',kind:'active',cd:5,mp:18,range:340,desc:'Hỏa long bổ xuống một nhát dài trước mặt, chém xuyên mọi quái trên đường, đẩy lùi và làm choáng ngắn.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();swing(a,1);dqFx('dq_cleave',P.x,P.y-14,a,1.12,0.55);sfx('sword_wave',0.5,0.1);
+    later(0.2,()=>{line(P.x,P.y-10,a,330*Ar(),120*Ar(),dmg,H({kb:90,stun:0.15}),null);G.shake=Math.max(G.shake||0,6)},'h')}},
+  {id:'d2',hotkey:'F',power:20,name:'Liệu Nguyên Tam Điệp',g:'燎',kind:'active',cd:9,mp:22,range:300,desc:'Ba đợt đao hỏa liên tiếp trước mặt, mỗi đợt rộng và mạnh hơn đợt trước, đợt cuối bùng thành sóng lửa lớn.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),base=this.power*lv(l)*pw();dqFx('dq_triple',P.x,P.y-14,a,1.0,1.55,0,22,{follow:1});sfx('sword_wave',0.4,0.12);
+    const hits=[[0.45,120,1.7,0.7],[0.9,150,2.0,0.9],[1.12,210,2.5,1.5]];
+    for(const [t,r,sp,m] of hits)later(t,()=>{const a2=angTo(nearest(P.x,P.y,360)||tg);arc(P.x,P.y-8,a2,r*Ar(),sp,base*m,H({kb:t>1?120:50,nofx:1}),null,1);G.shake=Math.max(G.shake||0,t>1?9:3);sfx('sword_hit',0.3,0.1)},'h')}},
   {id:'d3',name:'Phá Giáp Trảm',g:'破',kind:'active',cd:4.5,mp:14,range:130,desc:'Chém mạnh, giảm 15 giáp và khiến mục tiêu nhận thêm 20% sát thương trong 5 giây.',up:'+25% sát thương',
-   cast(tg,l){const a=angTo(tg);swing(a,-1);arc(P.x,P.y-8,a,122*Ar(),1.7,30*lv(l)*pw(),H({kb:40,brk:15}),'#ff6a4a',-1)}},
+   cast(tg,l){const a=angTo(tg);swing(a,-1);dqFx('dq_triple',P.x,P.y-6,a,0.8,0.5,2,9,{al:0.95});arc(P.x,P.y-8,a,122*Ar(),1.7,30*lv(l)*pw(),H({kb:40,brk:15,nofx:1}),null,-1)}},
   {id:'badao',name:'Bá Đao',g:'霸',kind:'passive',desc:'Đánh thường +30% sát thương.'},
   {id:'huyetchien',name:'Huyết Chiến',g:'血',kind:'passive',desc:'Khí huyết càng thấp sát thương càng cao, tối đa +50%.'},
-  {id:'d6',name:'Thiên Địa Nhất Đao',g:'天',kind:'ult',cd:25,range:420,desc:'Một nhát chém khổng lồ xẻ đôi chiến trường.',up:'+25% sát thương',
-   cast(tg,l){const t=densest(P.x,P.y,420)||tg;const a=angTo(t);swing(a,1);notice('Thiên Địa Nhất Đao');fx({k:'line',x:P.x,y:P.y,ang:a,len:640*Ar(),w:20,c:'#ffeecc',T:0.3});later(0.25,()=>{line(P.x,P.y,a,640*Ar(),130*Ar(),110*lv(l)*pw(),H({kb:160}),'#ffb35a');G.shake=14},'h')}}
+  {id:'d6',hotkey:'X',power:60,name:'Tẫn Hỏa Hồi Thân',g:'燼',kind:'ult',cd:22,range:240,desc:'Xoay đao bung vòng lửa tàn quanh người, thiêu mọi quái xung quanh và đẩy lùi mạnh.',up:'+25% sát thương',
+   cast(tg,l){const dmg=this.power*lv(l)*pw();swing(angTo(tg),1);notice('Tẫn Hỏa Hồi Thân');dqFx('dq_ring',P.x,P.y+2,0,1.0,1.1,0,16,{follow:1,gr:1,noRot:1});sfx('sword_wave',0.6,0.1);
+    later(0.35,()=>{circ(P.x,P.y,190*Ar(),dmg*0.5,H({kb:110}),null);G.shake=Math.max(G.shake||0,6)},'h');later(0.7,()=>{circ(P.x,P.y,215*Ar(),dmg,H({kb:200,stun:0.3}),null);G.shake=Math.max(G.shake||0,12)},'h')}}
+ ]},
+ truong:{name:'Trượng',g:'杖',role:'Phòng ngự, hộ thể, trấn ma',tr:'Kim chung hộ thể, chưởng trấn sơn, Minh Vương bất động',kit:[
+  /* Phục Ma Tự (24/11): VFX gói Wuxia Kim Cương Tự (pm_bell, pm_palm, pm_guard xuất từ Godot) + pm_slash (vệt gói Wuxia nhuộm vàng). Số liệu TẠM, chưa cân bằng. */
+  {id:'p0',name:'Hàng Ma Trượng',g:'杖',kind:'basic',cd:0.7,range:110,desc:'Quét tích trượng trước mặt, hai nhát luân phiên, đẩy lùi nhẹ.',
+   cast(tg,s){const a=angTo(tg);s.step=((s.step||0)+1)%2;swing(a,s.step?1:-1);if(vok('pm_slash'))fx({k:'sp',s:'pm_slash',x:P.x+Math.cos(a)*38,y:P.y-12+Math.sin(a)*38*0.6,sc:0.95,ang:a,T:0.26,al:0.95,fx:1,fl:s.step?1:-1});arc(P.x,P.y-8,a,108*Ar(),2.0,15*pw(),H({kb:75,nofx:1}),null,s.step?1:-1)}},
+  {id:'p1',hotkey:'Q',power:22,name:'Kim Chung Chấn Nhạc',g:'鐘',kind:'active',cd:7,mp:18,range:200,desc:'Kim chung úp xuống quanh người: miễn thương 1 giây, rồi chấn động hất văng và làm choáng mọi quái xung quanh.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const dmg=this.power*lv(l)*pw();P.inv=Math.max(P.inv,1.0);dqFx('pm_bell',P.x,P.y+6,0,1.0,1.4,0,33,{follow:1,noRot:1,al:0.92});sfx('rulai_impact',0.5,0.08);
+    later(0.45,()=>{circ(P.x,P.y,185*Ar(),dmg,H({kb:210,stun:0.5}),null);G.shake=Math.max(G.shake||0,9)},'h')}},
+  {id:'p2',hotkey:'F',power:32,name:'Phục Ma Trấn Sơn Chưởng',g:'掌',kind:'active',cd:9,mp:22,range:320,desc:'Bàn tay Phật vàng giáng xuống trước mặt, đè nát một vùng rộng, hất lùi và làm choáng mạnh.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();swing(a,1);dqFx('pm_palm',P.x,P.y-6,a,1.0,0.85,0,16);sfx('rulai_impact',0.55,0.1);
+    later(0.38,()=>{const cx=P.x+Math.cos(a)*165,cy=P.y+Math.sin(a)*165;circ(cx,cy,155*Ar(),dmg,H({kb:260,stun:0.45}),null);G.shake=Math.max(G.shake||0,12)},'h')}},
+  {id:'p3',name:'Hộ Thể Kim Cương',g:'護',kind:'active',cd:12,mp:16,range:140,desc:'Tự kích hoạt khi bị vây: sóng vàng đẩy lùi quái sát người.',up:'+25% sát thương',
+   cast(tg,l){swing(0,1);fx({k:'ring',x:P.x,y:P.y,r0:20,r1:130,c:'#ffd36a',T:0.35});circ(P.x,P.y,125*Ar(),14*lv(l)*pw(),H({kb:230}),null)}},
+  {id:'p6',hotkey:'X',power:40,name:'Bất Động Minh Vương Thân',g:'王',kind:'ult',cd:26,range:240,desc:'Minh Vương hiện thân hộ pháp: miễn thương 3,5 giây, mỗi 0,7 giây chấn một vòng đẩy lùi và làm choáng ngắn quái xung quanh.',up:'+25% sát thương, +0,5 giây',
+   cast(tg,l){const dmg=this.power*lv(l)*pw(),dur=3.5+0.5*(l-1);P.inv=Math.max(P.inv,dur);notice('Bất Động Minh Vương Thân');dqFx('pm_guard',P.x,P.y+8,0,1.05,dur,0,24,{follow:1,noRot:1,gr:1,al:0.9});sfx('rulai_fall',0.5,0.1);
+    for(let t=0.5;t<dur;t+=0.7)later(t,()=>{circ(P.x,P.y,200*Ar(),dmg,H({kb:150,stun:0.2}),null);fx({k:'ring',x:P.x,y:P.y,r0:30,r1:200,c:'#ffe08a',T:0.4});G.shake=Math.max(G.shake||0,5)},'h')}}
+ ]},
+ quat:{name:'Quạt',g:'扇',magic:1,role:'Pháp thuật, khống chế, hỗ trợ',tr:'Gió quạt, bão hoa kéo tụ, hoa ảnh phân thân, hồi xuân',kit:[
+  /* Huyền Linh Các (24/11): VFX gói Wuxia Bách Hoa Cốc (hl_petals, hl_decoy, hl_heal xuất từ Godot). Số liệu TẠM, chưa cân bằng. */
+  {id:'q0',name:'Phiến Phong',g:'扇',kind:'basic',cd:0.55,range:300,desc:'Phẩy quạt phóng luồng gió sắc xuyên qua hai kẻ địch.',
+   cast(tg){const a=angTo(tg);swing(a,1);shoot(P.x,P.y-16,a,460,{dmg:13*pw(),pierce:2,r:16,life:0.65,kind:'crescent',c:'#d8c8ff',o:H({kb:20,t:'m'})})}},
+  {id:'q1',hotkey:'Q',power:24,name:'Thiên Biện Quy Tâm',g:'瓣',kind:'active',cd:8,mp:20,range:340,desc:'Bão cánh hoa cuộn tới mục tiêu, hút mọi quái xung quanh về tâm rồi nở bung làm choáng.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),tx=tg.x,ty=tg.y,dmg=this.power*lv(l)*pw();swing(a,1);dqAt('hl_petals',tx,ty,a,1.0,1.7,0,22,{al:0.95},150);sfx('taiji_open',0.35,0.12);
+    for(const t of [0.3,0.55,0.8])later(t,()=>{for(const e of enemiesIn(tx,ty,200*Ar())){if(e.boss||e.dead)continue;const an=Math.atan2(ty-e.y,tx-e.x);e.kx+=Math.cos(an)*120;e.ky+=Math.sin(an)*120}},'h');
+    later(1.1,()=>{circ(tx,ty,150*Ar(),dmg,H({kb:80,stun:0.6,t:'m'}),null);G.shake=Math.max(G.shake||0,6)},'h')}},
+  {id:'q2',hotkey:'F',power:22,name:'Hoa Ảnh Di Hương',g:'影',kind:'active',cd:10,mp:16,range:300,desc:'Lướt lùi khỏi quái gần nhất, để lại hoa ảnh. Sau 1,2 giây hoa ảnh nổ, làm chậm và gây sát thương xung quanh.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const dmg=this.power*lv(l)*pw(),ox=P.x,oy=P.y,a=Math.atan2(P.y-tg.y,P.x-tg.x);P.inv=Math.max(P.inv,0.5);
+    dqFx('hl_decoy',ox,oy+4,0,1.1,1.25,0,24,{noRot:1,al:0.9,gr:1});
+    P.x=clamp(P.x+Math.cos(a)*170,40,AW-40);P.y=clamp(P.y+Math.sin(a)*170,40,AH-40);if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;
+    later(1.2,()=>{circ(ox,oy,150*Ar(),dmg,H({kb:150,slow:0.5,slowT:2,t:'m'}),null);fx({k:'ring',x:ox,y:oy,r0:20,r1:150,c:'#ffb6d0',T:0.4})},'h')}},
+  {id:'q6',hotkey:'X',power:18,name:'Hồi Xuân Hoa Trận',g:'春',kind:'ult',cd:28,range:240,desc:'Trận hoa nở quanh người trong 4 giây: mỗi 0,5 giây hồi khí huyết cho bản thân và gây sát thương, làm chậm mọi quái trong trận.',up:'+25% sát thương, +0,5 giây',
+   cast(tg,l){const dmg=this.power*lv(l)*pw(),dur=4+0.5*(l-1);notice('Hồi Xuân Hoa Trận');dqFx('hl_heal',P.x,P.y+4,0,1.0,dur,0,27,{follow:1,noRot:1,gr:1,al:0.9});sfx('taiji_absorb',0.45,0.1);
+    for(let t=0.5;t<=dur;t+=0.5)later(t,()=>{heal(S.hp*0.035,true);num(P.x,P.y-60,'+'+Math.round(S.hp*0.035),'h');circ(P.x,P.y,150*Ar(),dmg*0.25,H({kb:10,slow:0.45,slowT:1,t:'m'}),null)},'h')}}
+ ]},
+ cung:{name:'Cung',g:'弓',role:'Tầm xa, xuyên thấu, truy hồn',tr:'Tiễn truy hồn, tỏa hồn, lướt bóng, trăng nuốt',kit:[
+  /* Truy Hồn Cốc (24/11): VFX gói Wuxia U Minh Giáo (th_bind, th_dash, th_eclipse xuất từ Godot). Mũi tên dùng kiểu đạn 'spear' có sẵn (tạm). Số liệu TẠM, chưa cân bằng. */
+  {id:'c0',name:'Truy Hồn Tiễn',g:'弓',kind:'basic',cd:0.5,range:340,desc:'Bắn mũi tên truy hồn thẳng tới mục tiêu, xuyên một kẻ địch.',
+   cast(tg){const a=angTo(tg);if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;shoot(P.x,P.y-30,a,720,{dmg:14*pw(),pierce:2,r:9,life:0.7,kind:'spear',c:'#cfe0ff',o:H({kb:15})})}},
+  {id:'c1',hotkey:'Q',power:20,name:'Minh Ảnh Tỏa Hồn',g:'鎖',kind:'active',cd:8,mp:18,range:360,desc:'Xoáy bóng tối khóa mục tiêu: mọi quái trong vùng bị choáng 1,4 giây và nhận sát thương.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),tx=tg.x,ty=tg.y,dmg=this.power*lv(l)*pw();dqAt('th_bind',tx,ty,a,1.0,1.1,0,26,{add:1,al:1});sfx('taiji_open',0.35,0.12);
+    later(0.3,()=>{circ(tx,ty,140*Ar(),dmg,H({kb:5,stun:1.4}),null);G.shake=Math.max(G.shake||0,4)},'h')}},
+  {id:'c2',hotkey:'F',power:16,name:'Dạ Độ Vô Thanh',g:'渡',kind:'active',cd:9,mp:14,range:300,desc:'Lướt bóng 200 px lùi khỏi quái gần nhất, miễn thương ngắn, quét sát thương dọc đường lướt.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const dmg=this.power*lv(l)*pw(),a=Math.atan2(P.y-tg.y,P.x-tg.x),x0=P.x,y0=P.y;P.inv=Math.max(P.inv,0.5);dqFx('th_dash',x0,y0,a,0.8,0.65,0,19,{add:1,al:1});
+    P.x=clamp(P.x+Math.cos(a)*200,40,AW-40);P.y=clamp(P.y+Math.sin(a)*200,40,AH-40);if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;
+    line(x0,y0,a,200,90,dmg,H({kb:60}),null)}},
+  {id:'c6',hotkey:'X',power:55,name:'Thực Nguyệt Quy Khư',g:'蝕',kind:'ult',cd:25,range:380,desc:'Trăng khuyết nuốt trọn vùng chỉ định: ba đợt chém trăng liên tiếp, làm chậm và gây sát thương lớn.',up:'+25% sát thương',
+   cast(tg,l){const t0=densest(P.x,P.y,380)||tg,a=angTo(t0),tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw();notice('Thực Nguyệt Quy Khư');dqAt('th_eclipse',tx,ty,a,1.15,1.35,0,27,{add:1,al:1});sfx('rulai_fall',0.4,0.1);
+    for(const [t,m] of [[0.35,0.7],[0.7,0.9],[1.0,1.6]])later(t,()=>{circ(tx,ty,200*Ar(),dmg*m,H({kb:100,slow:0.5,slowT:2}),null);G.shake=Math.max(G.shake||0,t>0.9?10:4)},'h')}}
  ]},
  thuong:{name:'Thương',g:'槍',role:'DPS tầm trung',tr:'Đâm xuyên, tầm đánh dài',kit:[
   {id:'t0',name:'Liên Thứ',g:'槍',kind:'basic',cd:0.42,range:150,desc:'Đâm thương liên tiếp theo đường thẳng.',
@@ -2232,6 +2337,95 @@ ET.tacvuong={name:'Quỷ Tướng',hp:520,spd:72,dmg:22,r:30,xp:30,armor:18,ai:'
 ET.soi={name:'Ma khuyển',hp:26,spd:160,dmg:11,r:14,xp:2,ai:'charger'};
 ET.langvuong={name:'Ma Khuyển Vương',hp:600,spd:92,dmg:24,r:30,xp:30,armor:14,ai:'charger',elite:1};
 ET.coc={name:'Cọc gỗ',hp:1e9,spd:0,dmg:0,r:16,xp:0,ai:'dummy'};
+/* ===== ÂM GIỚI 18 TẦNG: DỮ LIỆU VÀ CẤU HÌNH (24/11) =====
+   Chỉ là dữ liệu: map, boss, quái theo chặng. CHƯA nối vào luồng chơi (chưa có màn Âm Giới, chưa có ô ở sảnh).
+   Không có ảnh mới: map dùng lại nền và vật trang trí đã có; boss tạm mượn hình quytuong (boss) và quysai (mini-boss).
+   Chỉ số boss tạm sao chép nguyên ET.boss / ET.elite, CHƯA cân bằng (chủ game dặn cân bằng sau). */
+const AM_RULES={floors:18,stars:[1,3,5],dailyRuns:2,resetAt:'0h giờ Việt Nam',deathLoses:true};
+const amSkip=(x,y)=>Math.abs(x-AW/2)<240&&Math.abs(y-AH/2)<240;/* giữ trống chỗ xuất phát */
+const amRow=(add,n,x0,y0,dx,dy,c,sc,j)=>{for(let i=0;i<c;i++){const x=x0+dx*i,y=y0+dy*i;if(!amSkip(x,y))add(n,x,y,sc,j)}};
+const amMap=(o)=>Object.assign({hidden:1,am:1,dens:1.2},o);
+MAPS.am_hoangtuyen=amMap({name:'Hoàng Tuyền & Quỷ Môn Quan',zh:'黃泉・鬼門關',desc:'Con đường vàng đục dẫn xuống âm phủ, cuối đường là cổng Quỷ Môn Quan. Đèn lồng trắng dẫn lối, bia mộ dọc hai bên.',ground:'g_amdia',patch:'g_amdia_co',edge:'#12100f',dark:.1,
+ border:['Am_caykho1','Am_caykho2','Am_denlong2','Am_caykho1'],inner:[['Forest_reeds',5],['Am_caykho2',2],['Am_bia2',2]],
+ layout(add){add('City_street_gate',1600,500,1);
+  amRow(add,'Am_denlong',1430,780,0,190,6,1);amRow(add,'Am_denlong',1770,780,0,190,6,1);
+  amRow(add,'Am_bia1',760,620,0,230,7,1,14);amRow(add,'Am_bia2',2440,620,0,230,7,1,14);
+  add('Am_quantai1',1000,1900);add('Am_quantai2',2200,1900);add('Am_quantai3',620,1000);add('Am_quantai3',2580,1300);
+  add('Am_caykho1',520,420,1.2);add('Am_caykho2',2680,420);add('Am_caykho1',520,1950,1.2);add('Am_caykho2',2680,1950)}});
+MAPS.am_biangan=amMap({name:'Bỉ Ngạn & Vọng Hương Đài',zh:'彼岸・望鄉臺',desc:'Bờ bên kia của sông, lau sậy mọc kín. Trên Vọng Hương Đài, kẻ chết nhìn lần cuối về quê nhà.',ground:'g_mieu',edge:'#0e0f13',dark:.15,
+ border:['Mi_cayphong','Mi_phuon','Mi_cayphong','Mi_cotda'],inner:[['Forest_reeds',14],['Mi_phuon',3],['Am_bia1',2]],
+ layout(add){add('Forest_pavilion',1600,560,1.3);add('Forest_stone_shrine',1600,800,1.5);
+  amRow(add,'Mi_phuon',1200,700,0,160,6,1.2);amRow(add,'Mi_phuon',2000,700,0,160,6,1.2);
+  amRow(add,'Mi_denda',1400,1500,0,160,4,1);amRow(add,'Mi_denda',1800,1500,0,160,4,1);
+  add('City_stone_stele',800,700);add('City_stone_stele',2400,700);add('City_stone_stele',800,1700);add('City_stone_stele',2400,1700);
+  add('Mi_cayphong',520,500,1.15);add('Mi_cayphong',2680,500,1.15);add('Mi_cayphong',520,1900,1.15);add('Mi_cayphong',2680,1900,1.15)}});
+MAPS.am_nghiepkinh=amMap({name:'Nghiệt Kính & Sâm La Điện',zh:'孽鏡・森羅殿',desc:'Điện đá lạnh lẽo, nơi gương nghiệt chiếu rõ tội nghiệt cả đời. Cột đá và đèn đá xếp thành hàng.',ground:'g_pave',edge:'#0c0d12',dark:.22,
+ border:['Mi_cotda','Mi_denda','Mi_cotda','Mi_phuon'],inner:[['Mi_denda',3],['City_stone_stele',3]],
+ layout(add){add('City_martial_hall',1600,560,1);
+  add('City_stone_lion',1450,860,1.5);add('City_stone_lion',1750,860,1.5);
+  amRow(add,'Mi_cotda',1180,980,0,200,5,1.3);amRow(add,'Mi_cotda',2020,980,0,200,5,1.3);
+  amRow(add,'Mi_denda',1400,1500,0,150,4,1);amRow(add,'Mi_denda',1800,1500,0,150,4,1);
+  add('Mi_luhuong',760,1100,1.2);add('Mi_luhuong',2440,1100,1.2);
+  add('City_stone_stele',800,600);add('City_stone_stele',2400,600);add('City_stone_stele',800,1800);add('City_stone_stele',2400,1800)}});
+MAPS.am_uongtu=amMap({name:'Uổng Tử Thành & Vạc Dầu',zh:'枉死城・油鍋',desc:'Thành của những kẻ chết oan, nhà cửa đổ nát, đèn lồng trắng. Giữa phố là hàng vạc đồng nguội lạnh.',ground:'g_amdia',patch:'g_amdia_co',edge:'#140e0c',dark:.18,
+ border:['Am_nha2','Am_caykho1','Am_denlong2','Am_nha1'],inner:[['Am_denlong',4],['City_clay_jar',3],['City_wood_cart',2]],
+ layout(add){amRow(add,'City_inn',700,520,0,0,1,0.9);add('City_tea_house',1100,430,0.9);add('City_warehouse',2100,430,0.9);add('City_escort_agency',2500,560,0.9);
+  add('Am_nha1',520,1250,1.2);add('Am_nha2',480,1800,1.2);add('Am_nha1',2700,1250,1.2);add('Am_nha2',2740,1800,1.2);
+  amRow(add,'Mi_luhuong',1000,1000,300,0,7,1.2);amRow(add,'Am_denlong',1000,1380,300,0,7,1);
+  amRow(add,'Am_bia1',900,1950,260,0,6,1,10);add('City_wood_cart',1500,420);add('City_clay_jar',1700,430)}});
+MAPS.am_vongxuyen=amMap({name:'Vong Xuyên & Cầu Nại Hà',zh:'忘川・奈何橋',desc:'Dòng sông quên lãng, bờ sậy và liễu rủ. Cầu Nại Hà bắc qua, nơi Mạnh Bà đứng canh.',ground:'g_dirt',patch:null,edge:'#0b0f14',dark:.2,
+ border:['Forest_willow','Forest_reeds','Forest_willow','Am_caykho2'],inner:[['Forest_reeds',16],['Forest_willow',3],['Am_bia2',3]],
+ layout(add){amRow(add,'Forest_willow',700,560,300,0,3,1,20);amRow(add,'Forest_willow',2200,560,300,0,3,1,20);
+  amRow(add,'Forest_reeds',700,1000,150,0,14,1,12);amRow(add,'Forest_reeds',700,1300,150,0,14,1,12);
+  add('Forest_stone_shrine',1600,520,1.6);amRow(add,'Am_denlong',1430,700,0,200,6,1);amRow(add,'Am_denlong',1770,700,0,200,6,1);
+  add('Am_nha2',560,1850,1.2);add('Am_nha1',2640,1850,1.2);add('Forest_stone_lantern',900,1750,1.6);add('Forest_stone_lantern',2300,1750,1.6)}});
+MAPS.am_diemla=amMap({name:'Diêm La Bảo Điện',zh:'閻羅寶殿',desc:'Đại điện của Diêm La, cột đá cao, phướn bùa phủ kín. Mỗi bước tiến là một bước gần phán quyết.',ground:'g_pave',edge:'#0a0a0e',dark:.28,
+ border:['Mi_cotda','Mi_phuon','Mi_cotda','Mi_denda'],inner:[['Mi_phuon',3],['Mi_denda',3]],
+ layout(add){add('City_martial_hall',1600,540,1.15);add('City_street_gate',1600,300,0.8);
+  add('City_stone_lion',1420,880,1.7);add('City_stone_lion',1780,880,1.7);
+  amRow(add,'Mi_cotda',1130,860,0,220,6,1.4);amRow(add,'Mi_cotda',2070,860,0,220,6,1.4);
+  amRow(add,'Mi_phuon',1300,700,0,0,1,1.4);add('Mi_phuon',1900,700,1.4);
+  amRow(add,'Mi_luhuong',1450,1560,300,0,2,1.4);
+  add('Mi_luhuong',700,1100,1.3);add('Mi_luhuong',2500,1100,1.3);add('City_banner',900,600,1.5);add('City_banner',2300,600,1.5)}});
+MAPS.am_luanhoi=amMap({name:'Luân Hồi Đài',zh:'輪迴臺',desc:'Đài tròn cuối cùng của âm phủ. Vòng cột đá bao quanh, đèn đá chỉ đường vào giữa đài, nơi luân hồi bắt đầu.',ground:'g_mieu',edge:'#08080c',dark:.3,
+ border:['Mi_cotda','Mi_denda','Mi_phuon','Mi_cotda'],inner:[['Mi_denda',2]],
+ layout(add){for(let i=0;i<16;i++){const a=i*TAU/16,x=AW/2+Math.cos(a)*620,y=AH/2+Math.sin(a)*420;add('Mi_cotda',x,y,1.3)}
+  for(let i=0;i<8;i++){const a=i*TAU/8+TAU/16,x=AW/2+Math.cos(a)*400,y=AH/2+Math.sin(a)*270;add('Mi_denda',x,y,1.1)}
+  add('Mi_luhuong',AW/2-880,AH/2,1.3);add('Mi_luhuong',AW/2+880,AH/2,1.3);add('Mi_luhuong',AW/2,AH/2-640,1.3);add('Mi_luhuong',AW/2,AH/2+640,1.3);
+  add('City_stone_lion',1450,420,1.6);add('City_stone_lion',1750,420,1.6)}});
+/* Trùm (tier 'boss': ET.boss) và mini-boss (tier 'mini': luật Tinh Anh ET.elite, to hơn Tinh Anh). Tên theo chủ game; số chưa cân bằng. */
+/* tier 'boss' = trùm (ET.boss); tier 'elite' = Tinh Anh (ET.elite, cờ elite:1, chạy qua mọi luật Tinh Anh sẵn có: khiên ★3, đẩy lùi/choáng giảm...) */
+/* Thứ bậc kích cỡ: quái thường < Tinh Anh (Quỷ Sai, r28, hình 0,95) < mini-boss (r36, hình 1,2) < trùm (r46, hình 1,45). Mini-boss chạy luật Tinh Anh (elite:1) nhưng to hơn (mini:1). */
+const AM_SIZE={mini:{r:36,spr:1.2},boss:{r:46,spr:1.45}};
+const AM_BOSSES={nguudau:['Ngưu Đầu','boss'],madien:['Mã Diện','boss'],huyetsat:['Huyết Sát Ma Tướng','mini'],hacvo:['Hắc Vô Thường','boss'],nghiethoa:['Nghiệt Hỏa Quỷ Vương','mini'],bachvo:['Bạch Vô Thường','boss'],thietlao:['Thiết Lao Ma Tướng','mini'],manhba:['Mạnh Bà','boss'],vongxuyenqt:['Vong Xuyên Quỷ Tướng','mini'],phanquan:['Phán Quan','boss'],dethinh:['Đế Thính','mini'],diemvuong:['Diêm Vương','boss']};
+for(const k in AM_BOSSES){const[nm,tier]=AM_BOSSES[k],z=AM_SIZE[tier];ET[k]=Object.assign({},ET[tier==='boss'?'boss':'elite'],{name:nm,amgioi:1,r:z.r},tier==='mini'?{mini:1}:{});ESPR[k]=[tier==='boss'?'quytuong':'quysai',z.spr]}
+/* Hình: Ngưu Đầu và Mã Diện = PixelLab (24/11). Hắc/Bạch Vô Thường, Mạnh Bà, Phán Quan, Diêm Vương đều đã có hình riêng. Mini-boss tạm quysai, riêng Huyết Sát dùng quytuong. */
+ESPR.nguudau=['nguudau',1.25];ESPR.diemvuong=['diemvuong',1.07];ET.diemvuong.r=58;/* trùm cuối: vẽ lại bằng PixelLab, to hơn và có aura lửa (chủ game) */ESPR.phanquan=['phanquan',0.94];ESPR.manhba=['manhba',0.95];ESPR.hacvo=['hacvo',1.11];ESPR.bachvo=['bachvo',1.07];ESPR.madien=['madien',1.1];/* hình PixelLab. Ảnh Ngưu Đầu thấp hơn Mã Diện (sừng 141 px so với đầu ngựa 147 px, chưa tính chùy 160), nên phóng 1,25 để Ngưu Đầu cao hơn một chút; cả hai vẫn cao hơn mini-boss */
+ESPR.huyetsat=['quytuong',AM_SIZE.mini.spr];/* chủ game: hình Ngưu Ma Vương dùng làm quái (Huyết Sát Ma Tướng, mini-boss T4/5), không làm Ngưu Đầu */
+/* Quái theo chặng: pool = danh sách trọng số (lặp lại = nhiều hơn), elite = số Quỷ Sai mỗi tầng trong chặng (theo thứ tự tầng) */
+const AM_ZONES=[
+ {id:'z1',f:[1,3],map:'am_hoangtuyen',pool:['tieu','tieu','tieu','hoa','can'],elite:[0,0,1]},
+ {id:'z2',f:[4,6],map:'am_biangan',pool:['tieu','tieu','hoa','can','xa'],elite:[1,1,1]},
+ {id:'z3',f:[7,9],map:'am_nghiepkinh',pool:['tieu','hoa','can','xa','toc'],elite:[1,2,2]},
+ {id:'z4',f:[10,11],map:'am_uongtu',pool:['tieu','hoa','can','can','xa','toc'],elite:[2,2]},
+ {id:'z5',f:[12,14],map:'am_vongxuyen',pool:['tieu','hoa','hoa','xa','xa','toc'],elite:[2,2,3]},
+ {id:'z6',f:[15,17],map:'am_diemla',pool:['hoa','can','can','xa','xa','toc'],elite:[3,3,3]},
+ {id:'z7',f:[18,18],map:'am_luanhoi',pool:['can','xa','toc','hoa'],elite:[3]}
+];
+/* Boss/mini-boss theo tầng. pair:1 = hai trùm cùng lúc (Ngưu Đầu và Mã Diện), engine hiện chỉ có một G.boss nên cần code riêng sau. */
+const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'mini',types:['huyetsat']},5:{tier:'mini',types:['huyetsat']},6:{tier:'boss',types:['hacvo']},7:{tier:'mini',types:['nghiethoa']},8:{tier:'mini',types:['nghiethoa']},9:{tier:'boss',types:['bachvo']},10:{tier:'mini',types:['thietlao']},11:{tier:'mini',types:['thietlao']},12:{tier:'boss',types:['manhba']},13:{tier:'mini',types:['vongxuyenqt']},14:{tier:'mini',types:['vongxuyenqt']},15:{tier:'boss',types:['phanquan']},16:{tier:'mini',types:['dethinh']},17:{tier:'mini',types:['dethinh']},18:{tier:'boss',types:['diemvuong']}};
+/* ===== 6 MÔN PHÁI (chủ game chốt 24/11): chỉ là dữ liệu, CHƯA nối vào game (chưa có màn chọn phái, chưa có bộ chiêu ngoài Kiếm) =====
+   avatar = chân dung đại diện nam/nữ (ảnh ChatGPT do chủ game đưa, cắt từ tấm tổng hợp). Chỉ Mao Sơn Phái (Kiếm) đã có trong game. */
+const SECTS={
+ maoson:{n:'Mao Sơn Phái',zh:'茅山派',weapon:'Kiếm',role:'Đạo thuật, phù chú, trấn tà',color:'Xanh đậm, vàng'},
+ tramyeu:{n:'Trảm Yêu Môn',zh:'斬妖門',weapon:'Đao',role:'Bạo kích, sát thương diện rộng',color:'Đỏ, đen, vàng đồng'},
+ phucma:{n:'Phục Ma Tự',zh:'伏魔寺',weapon:'Trượng',role:'Phòng ngự, hộ thể, trấn ma',color:'Nâu, vàng đồng'},
+ thiencuong:{n:'Thiên Cương Môn',zh:'天罡門',weapon:'Quyền',role:'Cận chiến, liên kích, cương khí',color:'Trắng, đỏ sẫm'},
+ huyenlinh:{n:'Huyền Linh Các',zh:'玄靈閣',weapon:'Quạt',role:'Pháp thuật, khống chế, hỗ trợ',color:'Tím, bạc'},
+ truyhon:{n:'Truy Hồn Cốc',zh:'追魂谷',weapon:'Cung',role:'Tầm xa, xuyên thấu, truy hồn',color:'Xanh rêu, đen'}
+};
+for(const k in SECTS)SECTS[k].avatar={nam:'assets/portraits/phai-'+k+'-nam.webp',nu:'assets/portraits/phai-'+k+'-nu.webp'};
+function amFloor(n){const z=AM_ZONES.find(z=>n>=z.f[0]&&n<=z.f[1]);if(!z)return null;const e=AM_ENC[n]||null;return{n,zone:z.id,map:z.map,pool:z.pool.slice(),elites:z.elite[n-z.f[0]],boss:e&&{tier:e.tier,types:e.types.slice(),pair:!!e.pair}}}
 const WAVE_DUR=[22,26,30,32,35,38,40,42,45];
 const WAVE_TYPES=[['tieu','tieu','tieu','tieu','can'],['tieu','tieu','hoa','toc'],['tieu','hoa','can'],['tieu','hoa','can','xa'],['tieu','hoa','can','xa','toc'],['tieu','hoa','can','xa','toc'],['tieu','hoa','can','xa','toc','toc'],['tieu','hoa','can','can','xa','toc'],['tieu','hoa','can','xa','xa','toc'],['tieu','hoa','can','xa','toc']];
 const ELITES=[0,0,0,0,1,1,2,2,3,0];
@@ -2288,13 +2482,13 @@ function warmGPU(){const c=ctx;c.save();c.globalAlpha=0.003;const L=[...Object.v
 function newRun(skip){
  G=null;
  for(const k of['lobby','create','menu','inv'])$('#'+k).hidden=true;
- if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon='kiem';if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
+ if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
  const W=WEAPONS[sel.weapon],Gd=GODS[sel.god];buildDecor(sel.map);warmGPU();
  G={cfg:{...sel},diff:STARS[sel.star],route:'tuyet',rmap:sel.map,star:sel.star,keo:!!sel.keo,keoN:0,keoDone:false,path:null,matRun:{duoc:0,hiem:0},wave:0,t:0,waveT:0,waveDur:0,enemies:[],corpses:[],decals:[],stage:sel.star,sw:1,chest:null,nextStage:false,eproj:[],pproj:[],zones:[],haz:[],fx:[],nums:[],orbs:[],allies:[],spawnQ:[],later:[],parts:[],
   kills:0,coins:0,dmgDealt:0,level:1,xp:0,picks:0,lvWave:0,reroll:3,shake:0,freeze:0,slow:0,paused:false,over:false,cam:{x:AW/2,y:AH/2},spawnAcc:0,packT:6,eliteT:[],clearing:0,qs:[],ev:null,evT:40,noHit:0,mk:[],mkRe:0,brk:[],brkT:4,wTarget:30,wK:0,wC:0,wD:0,wT:0,flash:0};
  P={x:AW/2,y:AH/2,r:14,facing:1,moveAng:0,aimAng:0,t:0,moving:false,av:0,atkT:0,atkAng:0,swingDir:1,thrust:0,dashT:0,dashCd:0,dashAng:0,inv:0,hurt:0,kx:0,ky:0,
   form:'human',rage:0,godCd:0,refund:0,transT:0,godDur:Gd.dur,combo:0,comboT:0,comboAtHit:0,comboPeak:0,hidden:0,buffSpd:0,trail:0,trailAcc:0,mods:{},stacks:{},pf:{},hp:100,mp:60,
-  kit:{w:sel.weapon,basic:{def:W.kit.find(d=>d.kind==='basic'),cd:0},act:W.kit.filter(d=>d.kind==='active'||d.kind==='auto').map((d,i)=>({def:d,lvl:i===0||d.id==='k2'||(sel.weapon==='kiem'&&d.id==='k3')?1:0,cd:d.hotkey?0:0.5})),pas:W.kit.filter(d=>d.kind==='passive').map(d=>({def:d,on:false})),ult:{def:W.kit.find(d=>d.kind==='ult'),lvl:0,cd:3}},
+  kit:{w:sel.weapon,basic:{def:W.kit.find(d=>d.kind==='basic'),cd:0},act:W.kit.filter(d=>d.kind==='active'||d.kind==='auto').map((d,i)=>({def:d,lvl:i===0||d.hotkey==='F'||(sel.weapon==='kiem'&&d.id==='k3')?1:0,cd:d.hotkey?0:0.5})),pas:W.kit.filter(d=>d.kind==='passive').map(d=>({def:d,on:false})),ult:{def:W.kit.find(d=>d.kind==='ult'),lvl:0,cd:3}},
   god:{def:Gd,basic:{cd:0},sk:Gd.skills.map(d=>({def:d,cd:1})),ult:Gd.ult?{def:Gd.ult,cd:2}:null}};
  recalc();P.hp=S.hp;P.mp=S.mp*0.6;
  paintGodIcon();
@@ -2963,7 +3157,7 @@ function hudFit(){const hud=$('#hud');if(!hud||hud.hidden)return;const vb=$('#vb
 setInterval(hudFit,300);addEventListener('resize',()=>setTimeout(hudFit,50));
 
 function resize(){
- DPR=Math.min(devicePixelRatio||1,MOBILE?1.5:2);VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
+ DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);/* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
  ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700),0.5,1.5);
  vign=document.createElement('canvas');vign.width=VW;vign.height=VH;const v=vign.getContext('2d');const g=v.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*0.3,VW/2,VH/2,Math.max(VW,VH)*0.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(12,3,0,.78)');v.fillStyle=g;v.fillRect(0,0,VW,VH);
 }
@@ -3199,7 +3393,7 @@ function drawFx(f){
   case'sword':{const fall=Math.min(1,k/0.45);const y=f.y-260*(1-fall);c.globalAlpha=fall<1?1:a*2;c.translate(f.x,y);c.fillStyle=f.spear?'rgba(160,200,255,.4)':'rgba(140,210,255,.45)';ell(0,-30,8,40);c.fillStyle='#eaf6ff';if(f.spear){c.fillRect(-1.5,-70,3,60);c.beginPath();c.moveTo(-4,-10);c.lineTo(0,4);c.lineTo(4,-10);c.fill()}else{c.beginPath();c.moveTo(-3,-50);c.lineTo(3,-50);c.lineTo(2.5,-6);c.lineTo(0,4);c.lineTo(-2.5,-6);c.fill();c.fillStyle='#ffd36a';c.fillRect(-7,-52,14,3)}break}
   case'scorch':{/* vết cháy dưới đất: mờ dần ra rìa (không viền cứng), nhạt, tan nhanh; trước là hai elip đặc nhìn như cái đĩa đen */c.globalCompositeOperation='source-over';c.globalAlpha=0.34*Math.min(1,(1-k)*2.6)*Math.min(1,k*12+0.4);c.save();c.translate(f.x,f.y);c.scale(1,0.42);const g=c.createRadialGradient(0,0,0,0,0,f.r);g.addColorStop(0,'rgba(30,18,10,.9)');g.addColorStop(0.45,'rgba(42,28,18,.55)');g.addColorStop(1,'rgba(42,28,18,0)');c.fillStyle=g;c.beginPath();c.arc(0,0,f.r,0,TAU);c.fill();c.restore();break}
   case'el':{if(!vok('slash_el'))break;const m=SPX.slash_el,i=Math.min(m.n-1,Math.floor(k*m.n));if(f.follow&&P){f.x=P.x+(f.ox||0);f.y=P.y+(f.oy||0)}c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.translate(Math.round(f.x),Math.round(f.y));c.scale(f.sx,f.sy);c.rotate(f.back?-Math.PI/2:Math.PI/2);c.drawImage(VFX.slash_el,(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
-  case'sp':{if(f.follow&&P){f.x=P.x;f.y=P.y}const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x+(f.dx||0)*(f.fx||1)),Math.round(f.y+(f.dy||0)+(f.oy||0)*f.sc));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
+  case'sp':{if(f.follow&&P){f.x=P.x;f.y=P.y}const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation=f.add?'lighter':'source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x+(f.dx||0)*(f.fx||1)),Math.round(f.y+(f.dy||0)+(f.oy||0)*f.sc));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
   case'staff':{const fall=Math.min(1,k/0.56),ez=fall*fall;c.globalCompositeOperation='source-over';const A0=k>0.66?Math.max(0,(1-k)/0.34):1;c.translate(f.x,f.y);
    /* Định Hải Trấn Thiên: bóng đổ mềm lớn dần khi gậy rơi (24/11), gậy rơi chậm, đáp xong tan từ từ */
    {c.save();c.scale(1,0.42);const R=40+150*ez,g=c.createRadialGradient(0,0,R*0.1,0,0,R);g.addColorStop(0,'rgba(20,10,0,'+(0.55*ez*A0)+')');g.addColorStop(0.6,'rgba(30,16,4,'+(0.28*ez*A0)+')');g.addColorStop(1,'rgba(30,16,4,0)');c.fillStyle=g;c.beginPath();c.arc(0,0,R,0,TAU);c.fill();c.restore()}
@@ -3424,7 +3618,7 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
  <button data-t="mob">+ Quái thật</button>
  <button data-t="reset">Đặt lại cọc</button>
  <button data-t="ao">Áo: ${TR.outfit==='hg'?'Huyền Giáp':'Mặc định'}</button>
- <button data-t="wpn">Kiếm: ${({thanhphong:'Thanh Phong',thaia:'Thái A',tudien:'Tử Điện',hanthiet:'Hàn Thiết',tramyeu:'Trảm Yêu',thuong1:'Thương',mucanh:'Mực Ảnh',none:'Tay không (Song Quyền)'})[TR.wpn||'thanhphong']}</button>
+ <button data-t="wpn">Kiếm: ${({thanhphong:'Thanh Phong',thaia:'Thái A',tudien:'Tử Điện',hanthiet:'Hàn Thiết',tramyeu:'Trảm Yêu',thuong1:'Thương',mucanh:'Mực Ảnh',daoquy:'Quỷ Đầu Đao (Trảm Yêu Môn)',tichtruong:'Tích Trượng (Phục Ma Tự)',quyengang:'Găng Quyền (Thiên Cương Môn)',quatban:'Quạt Sắt (Huyền Linh Các)',cungluc:'Cung Truy Hồn (Truy Hồn Cốc)',none:'Tay không (Song Quyền)'})[TR.wpn||'thanhphong']}</button>
  <span id="trDps">ST/giây: 0</span>
  <button data-t="exit">Ra sảnh</button>`;
  document.body.appendChild(b);b.classList.toggle('fold',!!TR.fold);
@@ -3441,7 +3635,7 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
   else if(k==='mob'){for(let i=0;i<4;i++){const a=rnd(0,TAU);spawnEnemy(i===3?'can':'tieu',clamp(P.x+Math.cos(a)*260,40,AW-40),clamp(P.y+Math.sin(a)*200,40,AH-40))}}
   else if(k==='reset'){trPlaceDummies()}
   else if(k==='ao'){TR.outfit=TR.outfit==='hg'?'':'hg';const g=HERO.wg||'nam';useHero(g,'kiem');t.textContent='Áo: '+(TR.outfit==='hg'?'Huyền Giáp':'Mặc định')}
-  else if(k==='wpn'){const L=['thanhphong','thaia','tudien','hanthiet','tramyeu','mucanh','thuong1','none'],N={mucanh:'Mực Ảnh',thanhphong:'Thanh Phong',thaia:'Thái A',tudien:'Tử Điện',hanthiet:'Hàn Thiết',tramyeu:'Trảm Yêu',thuong1:'Thương',none:'Tay không (Song Quyền)'};TR.wpn=L[(L.indexOf(TR.wpn||'thanhphong')+1)%L.length];t.textContent='Kiếm: '+N[TR.wpn]}
+  else if(k==='wpn'){const L=['thanhphong','thaia','tudien','hanthiet','tramyeu','mucanh','thuong1','daoquy','tichtruong','quyengang','quatban','cungluc','none'],N={mucanh:'Mực Ảnh',thanhphong:'Thanh Phong',thaia:'Thái A',tudien:'Tử Điện',hanthiet:'Hàn Thiết',tramyeu:'Trảm Yêu',thuong1:'Thương',daoquy:'Quỷ Đầu Đao (Trảm Yêu Môn)',tichtruong:'Tích Trượng (Phục Ma Tự)',quyengang:'Găng Quyền (Thiên Cương Môn)',quatban:'Quạt Sắt (Huyền Linh Các)',cungluc:'Cung Truy Hồn (Truy Hồn Cốc)',none:'Tay không (Song Quyền)'};TR.wpn=L[(L.indexOf(TR.wpn||'thanhphong')+1)%L.length];t.textContent='Kiếm: '+N[TR.wpn]}
   else if(k==='exit'){b.remove();showLobby();return}
   trSave()})}
 const _showLobby=showLobby;showLobby=function(){const b=document.getElementById('trP');if(b)b.remove();return _showLobby.apply(this,arguments)};
@@ -3462,7 +3656,7 @@ function render(){
   for(const h of G.haz)drawHaz(h);
   for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);
   drawHeal(c);drawPhase2(c);drawChest(c);drawSkillAim(c);
-  for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,m[1],false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,m[1],false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
+  for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,espScale(m),false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,espScale(m),false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
   for(const o of G.orbs)drawOrb(o);
  }
  if(G){for(const f of G.fx)if(f.gr)drawFx(f)}
@@ -4093,7 +4287,7 @@ function resumeCP(){const cp=save.cp;if(!cp)return;sel.map=ROUTE_MAPS.includes(c
  newRun(true);
  Object.assign(G,{path:cp.path||null,coins:cp.coins|0,kills:cp.kills|0,level:cp.level||1,xp:cp.xp||0,dmgDealt:cp.dmg||0,t:cp.t||0,reroll:cp.reroll??3,matRun:{...(cp.matRun||{duoc:0,hiem:0})},danNext:cp.danNext||null});
  P.mods={...(cp.mods||{})};P.stacks={...(cp.stacks||{})};(cp.act||[]).forEach((l,i)=>{if(P.kit.act[i])P.kit.act[i].lvl=l});(cp.pas||[]).forEach((o,i)=>{if(P.kit.pas[i])P.kit.pas[i].on=o});P.kit.ult.lvl=cp.ult||0;
- if(P.kit.act[1]?.def.id==='k2')P.kit.act[1].lvl=Math.max(1,P.kit.act[1].lvl);if(P.kit.w==='kiem'){const h=P.kit.act.find(q=>q.def.id==='k3');if(h)h.lvl=Math.max(1,h.lvl)}
+ if(P.kit.act[1]?.def.hotkey==='F')P.kit.act[1].lvl=Math.max(1,P.kit.act[1].lvl);if(P.kit.w==='kiem'){const h=P.kit.act.find(q=>q.def.id==='k3');if(h)h.lvl=Math.max(1,h.lvl)}
  recalc();
  P.hp=Number.isFinite(cp.hp)?clamp(cp.hp,0,S.hp):S.hp;
  P.mp=Number.isFinite(cp.mp)?clamp(cp.mp,0,S.mp):S.mp*0.6;
@@ -4120,56 +4314,43 @@ function mmss(ms){const t=Math.ceil(ms/1000),m=Math.floor(t/60),x=t%60;return (m
 function showOnly(id){for(const k of['menu','lobby','create','inv','end'])$('#'+k).hidden=k!==id}
 /* --- tạo nhân vật (3 cột: binh khí · ngoại hình · võ học) --- */
 const WICON={kiem:{g:0},phu:{g:10},dao:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADGElEQVR4Xu2bPWsVQRSGV7GyUAsL0cIPLOSWFiGEEPwBgh/4A1KnChb5CRYpxEos7w8QFQtbQwjBWFjpJUXQpFCCBBRB28i74Vxmz87szOyc3Z0Z7tOEGNjL854zZ3YmsSgy5vKFs8cfPu8f46tJ83Su/pD+/uuvVS/bAFyZBeCaVErw9n+1NSn/TeeQZQA+ZBeAbvi9fbdhzCSrALj8zpcDazNkE0AbeZBFAG3lswggRD75AFzkmwZg0gG4yBPjJyvFj9//TmXzHuAjbyO5ISgpn9wS8JW3rf+kAvCVdyWJJdCVfBIdYJLf3P7UWGSX9o8+AJu8KQRVvmkLjDoAmzxYWrhd6wIf+WgD6EsenHGdln1AtzbqZSYdadV2t1XeB+3r4RDoLjLaytvWvUoU22CIPMdHPooZECrvO/Q4g3bA0PKDdkAM8oMFICkfSu9LQFred+gNOgNik+91CcQoD3p5EQqR153qQttepfMAJOUhDkwXnG3oNABpeUlxorMA2sp33fIckQAgq1ZHSr6LlhffBkvZ/efTo6ykPELtou3FhiDJE1eurVTO8sB2pO275TmiFyL8r7J85ftoebEZwKt/sDEun3313nunyqugCyT3dh+ChiCFQPIUAP/LDFxn6a6xwMPFkfje7kNQAAAhbI/nap95ePOkI5qAfNdDzobIaXB9fbf2OZf2lo2fDfEY5EFQAKj+00c3yge5hkDiQ1eeaL0EVHlic3JUrK3d0i6Hode6iVYBQP7+6Nz0mUuji5Xnz9+tfg8Wlj8Ovt51eC8BU+VRffD45ddSloNBSb/4iAmvDjDJE28mf6ZV5rtDrB3gHICt7VF5PtgohFjlgVMAVHlqcxWsf508wU+KsWEMQF2vtNWp017X9imiDQDyr5/NFd+2jipV59O+qfKpUAuA5AmEANT2t7V9SlQC4PKmENRpnzqV9wBM8Qer9T38+uLJiw0qz5dB6jTOAA6FE8t7vAS1N8Hd+VF5wXn+xc/a8zEYc6PxPYDPBHRATtXXgg7AD+grQtgZ32n876fZE+MhZsaMGSL8B07LqUJFTemzAAAAAElFTkSuQmCC'},thuong:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACcUlEQVR4Xu2bLU8DQRCGr4SQBnWKEAwNQZBgGhISLBUIDPyEaiSK8AsIJEgEmCokeAS1BEFKFQKBoZAazkBwJbNkyHbZvdtr725n5/qaI8dXn2d2drq0BAHzLISzA1OOz68GU5z5Af7141OLeHJxLe6zFmAKwrMWYKq+DL+1ucFzBdjCs1wBaeBZCQBwm56HZS+HxSYI8LcrNW311Z6Xs72+HFR8H4MID6kezInr4k5bXB+f38T1pn03VHkAh/Sir4rXAnTwKADh1QA8gON9LwVgv8Oyl4MrABOtXv59LFdd/h7vBAD8aRgG9flQ2706CWrVWWyCnfdIK+D7qP9vo5OXvBqvpgBWH5MkAWTgdNDa4nAWSJLQeHqJXQHe7AFq9XVR94UkeK9WAPTxfqTve11L2MB7JQBT3R0efWqgJWzhvRIALXDWrIsH3V2aMe1pIjAm484GcqZjfxKRyPD33V7so8I2iRt9csiPQRO8bj+AewBuCw8hPQVM8K2HvgDFyZC26nLICkiCRwj4ujQVV0NSgC18FiG3BxQJT24MFg1PSoALeDICXMGTEOAS3rkA1/BOBVCAdyaACnzhT4XxhIanOvlgg09vs3hykyaF/UK56hAK8IW1AFX4QgRQhs9dQBw8leR2GEqCd7XpqclFgC/wubSAT/CZC/ANPlMBPsJnJsBX+EwE+Aw/tgDf4ccSwAF+ZAFc4EcSwAk+tQBu8KkEcIS3FsAV3koAZ/hEAdzhYwWUAd4ooCzwWgFlgtcKgHdb7LU64pPqG5Ko/BkryxhfF4CV0Fz7/QcECEf4xICEw0ZtgK/olDKlhp9kkknY5wdYw0BHqJ6/PgAAAABJRU5ErkJggg=='},con:{src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACdUlEQVR4Xu2br04DQRDGWyQKScAgkchqXoA3IKiG8BR9ioZUERQWxzMgEFXgMDQEhUJS8l0yZG+7f653s3M7e/2ZOpLvm9m53W/CeDQgjg721x/v83/Fj7PFaDwE/RAOnbb45+WqfAPsqr893dZqvld6B6y+f8bHJzeVTFs8KP4IoAPmV2eV2NPJ70a9i+4AUzy4X3zWDDi/XpZrgC0eA880AeJxPIo8Aj7x4O7lq/qF+CJnQEw8CSeKmgHbigfFGNBGfDEGtBVfhAFdxKs3oKt41QZwiFdrAJd4lQZwildnALd4FQZQmJFCfPYGUJiRSnzWBphJjhll0auOHjb23X5bsnwN+mIs8z2PV11X8Vl2QCjDu5weslU+y9dgLMAEZAIX2bwGIT4WYAJKcrgMYPtDXaDKI70NBZjc4rOYAb5p7wowOYaeTa8d0GTa48ynqDzRmwGxgYcOsAPMFPQ6BLGcBK6NDU37FG1v0ksH2Fdb18YmZdubiHeA614vNfBciBoQetSQCVKVFx+CIfFAYuC5EJkBTcSnHnY+kh+BnMUnvwnmLj6pARrEJzNAi/gkBmgSz26ANvGsBmgUz2aAVvEsBmgWD1rfBGljQxEWMDN7ut72dcNrSqubIIUZ2sW3OgJmknMxm6qtPLFVB7hiLDvM4NrYSNHYAOmNjRSNDIgFmIB7YyNF1ACa9qEAE0gnOVwEP4NUeRIP+gwwU+A0gKru+hcTu921Vp7YMMA+74ByezO9Tb2xkaJmQEg8IbWxkaI2BM31tA+pjY0UG1+B2I5e+5m3cX4GfZ1QmnjgvQfABAgePBiMrw+TNX0aB8mgxe/YUTZ/sWBSRI5S+3QAAAAASUVORK5CYII='}};
-const PLAYER_AVATAR_SHEETS={};
-for(const gender of ['nam','nu']){
- const img=new Image();
- PLAYER_AVATAR_SHEETS[gender]=img;
- img.onload=()=>{
-  const profile=prof();
-  if(profile?.gender===gender&&!$('#lobby').hidden)paintLobbyAvatar(profile);
-  if(G?.cfg.gender===gender)paintAva();
- };
- img.src='assets/portraits/avatar-'+gender+'.webp';
-}
-function avatarIndex(value){return Number.isInteger(value)&&value>=1&&value<=8?value:0}
+/* 24/11: bỏ sheet avatar cũ (avatar-nam/nu.webp) và 8 tranh cảnh; chỉ còn chân dung 6 phái */
+/* avatar 1-8: tấm ảnh nhỏ cũ (avatar-nam/nu.webp, có tranh cảnh); avatar 9-14: chân dung đại diện 6 môn phái (SECTS, ảnh rời) */
+/* môn phái chơi được và lớp vũ khí tương ứng (24/11): Mao Sơn = Kiếm, Trảm Yêu Môn = Đao */
+const SECT_WEAPON={maoson:'kiem',tramyeu:'dao',phucma:'truong',huyenlinh:'quat',truyhon:'cung'};
+function profWeapon(){const P0=prof();return P0&&P0.sect&&SECT_WEAPON[P0.sect]||'kiem'}
+const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon'];
+const SECT_AVATAR_IMGS={nam:{},nu:{}};
+for(const g of['nam','nu'])for(const k of SECT_KEYS){const im=new Image();im.onload=()=>{const profile=prof();if(profile?.gender===g&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===g)paintAva()};im.src=SECTS[k].avatar[g];SECT_AVATAR_IMGS[g][k]=im}
+const sectOfAvatar=n=>n>8&&n<=8+SECT_KEYS.length?SECT_KEYS[n-9]:null;
+/* 24/11: bỏ 8 avatar cũ (chủ game). Hồ sơ cũ có avatar 1-8 tự chuyển sang avatar Mao Sơn Phái (9). */
+function avatarIndex(value){return Number.isInteger(value)&&value>=9&&value<=8+SECT_KEYS.length?value:Number.isInteger(value)&&value>=1&&value<=8?9:0}
 function drawPlayerAvatar(g,gender,value,size){
- const tile=avatarIndex(value),img=PLAYER_AVATAR_SHEETS[gender];
- if(!tile||!img?.complete||!img.naturalWidth)return false;
- const index=tile-1,w=img.naturalWidth/4,h=img.naturalHeight/2;
- g.imageSmoothingEnabled=false;
- g.drawImage(img,index%4*w,Math.floor(index/4)*h,w,h,0,0,size,size);
- return true;
+ const tile=avatarIndex(value);
+ const sk=sectOfAvatar(tile);
+ if(sk){const si=SECT_AVATAR_IMGS[gender][sk];if(!si?.complete||!si.naturalWidth)return false;g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(si,0,0,si.naturalWidth,si.naturalWidth,0,0,size,size);return true}
+ return false;
 }
 function paintLobbyAvatar(profile){
  const cn=$('#lbAva');
  if(!drawPlayerAvatar(cn.getContext('2d'),profile.gender,profile.avatar,160))portrait(cn,profile.gender,profile.weapon||'kiem','#22403a');
 }
-const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hairC:'den',sk:0,avatars:{nam:1,nu:1}};
-const AVATAR_SCENES={
- nam:['Tuyết Sơn','Thảo nguyên','Đỉnh mây','Hẻm núi lá đỏ','Thung lũng băng','Sa mạc đá','Núi đá chiều tím','Thung lũng trúc'],
- nu:['Tuyết Sơn','Hồ sương','Núi thu','Rừng xuân','Rừng thông phủ sương','Vách đá nắng vàng','Đồi hoa','Ruộng bậc thang']
-};
+const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hairC:'den',sk:0,avatars:{nam:9,nu:9},sect:'maoson'};
+
 function renderCreateScene(){
- const gender=cr.gender,n=cr.avatars[gender]||1;
- const img=$('#crBg'),name=AVATAR_SCENES[gender][n-1];
- img.src='assets/portraits/scene-'+gender+'-'+n+'.webp';
- img.alt='Nhân vật nhìn ra '+name;
+ const gender=cr.gender,n=cr.avatars[gender]||9;
+ const img=$('#crBg'),sk=sectOfAvatar(n);
+ img.classList.toggle('sect',!!sk);
+ if(sk){img.src=SECTS[sk].avatar[gender];img.alt=SECTS[sk].n+', '+SECTS[sk].weapon;return}
+ 
 }
 function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*100+'%'}
-function renderCreateAvatars(){
- const group=$('#crAvatars');
- const gender=cr.gender;
- group.innerHTML=Array.from({length:8},(_,i)=>{
-  const n=i+1,position=avatarPosition(i);
-  const label='Ảnh đại diện '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
-  return `<button type="button" class="cxavatar" data-avatar="${n}" title="${label}" aria-label="${label}" aria-pressed="${cr.avatars[gender]===n}" style="background-image:url('assets/portraits/avatar-${gender}.webp');background-position:${position}"></button>`;
- }).join('');
- renderCreateScene();
-}
+/* 24/11: không còn chọn avatar riêng; chọn môn phái thì avatar của phái đó đi kèm (chỉ số 9–14 theo SECT_KEYS) */
+function setCreateSect(k){if(!SECTS[k])k='maoson';cr.sect=k;const a=9+SECT_KEYS.indexOf(k);cr.avatars={nam:a,nu:a}}
+function renderCreateAvatars(){renderCreateScene()}
 function wIconHTML(k){const w=WICON[k]||{};if(w.src)return `<img src="${w.src}" alt="">`;const ci=w.g||0;return `<span class="gi" style="background-position:${-(ci%10)*100}% ${-((ci/10)|0)*100}%"></span>`}
 function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=P0?P0.gender:save.gender==='nu'?'nu':'nam';cr.hairI=Math.max(0,P0?HAIR[cr.gender].findIndex(h=>h.k===P0.hair):0);cr.hair=HAIR[cr.gender][cr.hairI].k;
- cr.avatars={nam:1,nu:1};
- if(P0)cr.avatars[cr.gender]=avatarIndex(P0.avatar);
+ setCreateSect(P0&&P0.sect&&SECTS[P0.sect]?P0.sect:P0&&sectOfAvatar(avatarIndex(P0.avatar))||'maoson');
  renderCreateAvatars();
  $('#crGo').textContent=P0?'Lưu và về sảnh':'Khởi hành';
 cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
@@ -4184,32 +4365,29 @@ function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d'
   drawHeroFrame(g,'idle',fi,x,y,1,scale,false);
   HERO=prev;
  }}
-function renderCreate(){const W=WEAPONS[cr.view],H0=HAIR[cr.gender][cr.hairI];
+function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=!!SECT_WEAPON[cr.sect],W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
- $('#crWeapon').innerHTML=Object.keys(WEAPONS).map(k=>`<button class="cxwb${cr.view===k?' on':''}${k==='kiem'?'':' lock'}" data-cw="${k}" title="${WEAPONS[k].name}${k==='kiem'?'':' · thử nghiệm'}">${wIconHTML(k)}<b>${WEAPONS[k].name}</b>${k==='kiem'?'':'<i class="lk">鎖</i>'}</button>`).join('');
- $('#crWInfo').innerHTML=`<span>${W.tr}</span>${cr.view==='kiem'?'':'<em>Đang thử nghiệm, bản đầu chỉ chơi được Kiếm</em>'}`;
+ $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${SECT_WEAPON[k]?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${SECT_WEAPON[k]?'':' · đang thử nghiệm'}"><span class="sav" style="background-image:url('${S0.avatar[cr.gender]}')"></span><b>${S0.n}</b><small>${S0.weapon}</small>${SECT_WEAPON[k]?'':'<i class="lk">鎖</i>'}</button>`}).join('');
+ $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này đang được chuẩn bị, chưa chơi được</em>'}`;
  $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crHairC').innerHTML=HAIRC.map(h=>`<button class="cxc${cr.hairC===h.k?' on':''}${h.on?'':' lock'}" data-cc="${h.k}" ${h.on?'':'disabled'} title="${h.n}${h.on?'':' · chưa có sprite'}"><i style="background:${h.c}"></i></button>`).join('');
- $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${W.name}</b></div><div><span>Sở trường</span><b>${W.role}</b></div>`;
+ $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${SC.weapon}</b></div><div><span>Sở trường</span><b>${SC.role}</b></div><div><span>Màu chủ đạo</span><b>${SC.color}</b></div>`;
+ const go=$('#crGo');go.disabled=!open;
+ if(!open){$('#crSkH').hidden=true;$('#crSk').innerHTML='';$('#crSkD').innerHTML=`<p>Bộ chiêu của ${SC.n} đang được chuẩn bị.</p>`;return}
+ $('#crSkH').hidden=false;
  const kit=W.kit,rows=[['Chủ động',kit.filter(x=>x.hotkey)],['Tự kích hoạt',kit.filter(x=>x.kind!=='passive'&&!x.hotkey)],['Nội tại',kit.filter(x=>x.kind==='passive'&&!x.legacy)]].filter(([,arr])=>arr.length);
  $('#crSk').innerHTML=rows.map(([lab,arr])=>`<div class="cxskr"><span>${lab}</span><div>${arr.map(x=>{const i=kit.indexOf(x);return `<button class="cxs ${x.kind}${cr.sk===i?' on':''}" data-sk="${i}" title="${x.name}">${x.g}</button>`}).join('')}</div></div>`).join('');
  const X=kit[cr.sk]||kit[0],KN=X.hotkey?'Chủ động · '+X.hotkey:{basic:'Đánh thường tự động',active:'Chiêu tự kích hoạt',auto:'Bị động tự kích hoạt',ult:'Tuyệt kỹ tự kích hoạt',passive:'Nội tại'}[X.kind]||'';
  $('#crSkD').innerHTML=`<b>${X.g} ${X.name}</b><small>${KN}${X.cd&&X.kind!=='basic'?' · hồi '+String(X.cd).replace('.',',')+' giây':''}${X.mp?' · '+X.mp+' nội lực':''}</small><p>${X.desc}</p>`;
- $('#crSkD').scrollTop=0;
- const go=$('#crGo');go.disabled=cr.view!=='kiem';}
+ $('#crSkD').scrollTop=0;}
 $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.id==='crGo')return;
  if(b.id==='crSceneOpen'){
   const img=$('#crBg'),full=$('#crSceneFull');
   full.src=img.src;full.alt=img.alt;$('#crSceneDialog').showModal();return;
  }
  if(b.id==='crSceneClose'){$('#crSceneDialog').close();return}
- if(b.dataset.avatar){
-  cr.avatars[cr.gender]=Number(b.dataset.avatar);
-  for(const tile of $('#crAvatars').children)tile.setAttribute('aria-pressed',String(tile===b));
-  renderCreateScene();
- }
+ if(b.dataset.sect){setCreateSect(b.dataset.sect);cr.sk=1;renderCreateScene()}
  if(b.dataset.cg){cr.gender=b.dataset.cg;cr.hairI=0;renderCreateAvatars()}
- if(b.dataset.cw){cr.view=b.dataset.cw;if(b.dataset.cw==='kiem')cr.weapon='kiem';cr.sk=1}
  if(b.dataset.hair){const n=HAIR[cr.gender].length;cr.hairI=(cr.hairI+(+b.dataset.hair)+n)%n}
  if(b.dataset.cc&&!b.disabled)cr.hairC=b.dataset.cc;
  if(b.dataset.sk)cr.sk=+b.dataset.sk;
@@ -4217,12 +4395,12 @@ $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(
 $('#crName').addEventListener('input',()=>{$('#crErr').textContent=''});
 $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click()});
 $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim();
- if(cr.view!=='kiem'){$('#crErr').textContent='Bản đầu chỉ chơi được Kiếm';return}
+ if(!SECT_WEAPON[cr.sect]){$('#crErr').textContent='Phái này đang được chuẩn bị, chưa chơi được';return}
  if(!HAIR[cr.gender][cr.hairI].on){$('#crErr').textContent='Kiểu tóc này chưa mở';return}
  if(n.length<2){$('#crErr').textContent='Tên cần ít nhất 2 ký tự';$('#crName').focus();return}if(n.length>14){$('#crErr').textContent='Tên tối đa 14 ký tự';return}
- if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.hair=cr.hair;P0.hairC=cr.hairC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
- save.prof={name:n,gender:cr.gender,avatar:cr.avatars[cr.gender],weapon:'kiem',hair:cr.hair,hairC:cr.hairC,lv:1,exp:0,created:Date.now()};
- sel.gender=cr.gender;sel.weapon='kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
+ if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.sect=cr.sect;P0.weapon=SECT_WEAPON[cr.sect]||'kiem';sel.weapon=P0.weapon;P0.hair=cr.hair;P0.hairC=cr.hairC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
+ save.prof={name:n,gender:cr.gender,avatar:cr.avatars[cr.gender],sect:cr.sect,weapon:SECT_WEAPON[cr.sect]||'kiem',hair:cr.hair,hairC:cr.hairC,lv:1,exp:0,created:Date.now()};
+ sel.gender=cr.gender;sel.weapon=SECT_WEAPON[cr.sect]||'kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
 /* --- sảnh --- */
 const LBT=[
  {k:'inv',g:'庫',n:'Kho Đồ',st:()=>invList().length+' món · '+Object.keys(books()).length+' bí tịch'},
