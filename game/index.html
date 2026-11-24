@@ -1415,6 +1415,18 @@ input,select,textarea,#crName{font-size:16px!important}
 #hud .acp b{font-size:14.5px!important}
 .acp small{font-size:8px!important}
 @media (max-height:460px){.acp .cpi{width:15px!important;height:15px!important}#hud .acp b{font-size:11.5px!important}.acp small{font-size:7px!important}}
+
+/* Tàng Bảo Các */
+.tbch{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}.tbch b{font:800 16px "Noto Serif",serif;color:var(--gold2)}
+.tbct{margin-bottom:8px}.tbct button{font-size:14px!important}.tbct small{opacity:.8;font-size:11px}
+.tbcs{margin:10px 0 6px!important}
+.tbcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px}
+.tbcc{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:8px 6px;background:linear-gradient(#2a1e12,#140d08);box-shadow:inset 0 0 0 1px #8a6a36;border-radius:3px}
+.tbci{width:52px;height:52px;display:grid;place-items:center}.tbci canvas{width:48px;height:48px;image-rendering:pixelated}.tbci b{font:400 34px "Ma Shan Zheng","Noto Serif",serif;color:var(--gold2)}
+.tbcn{font:700 13px "Noto Serif",serif;color:var(--ink)}.tbcc em{font-style:normal;font-size:11px;color:#9fe0b0}.tbcc small{font-size:10.5px;color:var(--dim);line-height:1.3}
+.tbcc.no{background:#0b0807;box-shadow:inset 0 0 0 1px #2c2218}.tbcc.no .tbci canvas,.tbcc.no .tbci b{filter:brightness(0);opacity:.75}.tbcc.no .tbcn{color:#6b5d4a}.tbcc.no em{color:#7a6a58}.tbcc.no small{color:#4f4436}
+.tbcl{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--dim)}.tbcl b{color:var(--gold)}
+@media (max-width:760px){.tbcg{grid-template-columns:repeat(auto-fill,minmax(108px,1fr))}}
 </style>
 </head>
 <body>
@@ -3683,7 +3695,8 @@ function chestRoll(st,keo){const T=CHEST_T[st]||CHEST_T[1],out={items:[],mat:{th
  const n=T.gear[0]+((Math.random()*(T.gear[1]-T.gear[0]+1))|0);for(let i=0;i<n;i++)if(Math.random()<T.gp)out.items.push(makeItem(st,wPick(T.tw)));
  for(let i=0;i<1+(keo?1:0);i++){if(Math.random()<0.45+(S.luck||0)*0.003){out.mat.hiem=(out.mat.hiem||0)+1;out.txt.push('+1 '+MATN.hiem+(i?' (kèo)':''))}else{const v=1+(Math.random()<.5?1:0);out.mat.duoc=(out.mat.duoc||0)+v;out.txt.push('+'+v+' '+MATN.duoc+(i?' (kèo)':''))}}
  out.book=Math.random()<T.book;return out}
-function addItems(items,saveNow=true){const inv=invList(),pend=save.pend||(save.pend=[]);let over=0;for(const it of items){if(inv.length<INV_MAX)inv.push(it);else{pend.push(it);over++}}if(saveNow)persist();if(over){try{notice('Kho đồ đầy',over+' món mới đang chờ xử lý trong Kho Đồ')}catch(e){}}return over}
+function addItems(items,saveNow=true){try{tbcNote(items)}catch(e){}
+const inv=invList(),pend=save.pend||(save.pend=[]);let over=0;for(const it of items){if(inv.length<INV_MAX)inv.push(it);else{pend.push(it);over++}}if(saveNow)persist();if(over){try{notice('Kho đồ đầy',over+' món mới đang chờ xử lý trong Kho Đồ')}catch(e){}}return over}
 function renderPend(){const box=$('#pendBox');if(!box)return;const pend=save.pend||[];if(!pend.length){box.innerHTML='';return}const full=invList().length>=INV_MAX;
  box.innerHTML=`<div class="pend"><h3>Đồ mới chờ xử lý (${pend.length})</h3><p class="dim sm">Kho đồ ${invList().length}/${INV_MAX}${full?' đã đầy. Phân giải bớt đồ cũ hoặc phân giải món mới.':''}</p>${pend.map((it,i)=>`<div class="pr">${itemEl(it,0)}<div><b class="tname t${it.tier}">${it.name}</b><small>${ilv(it)}${TIERS[it.tier].n} · ${SLOTS[it.slot].n}</small></div><button class="btn" data-pin="${i}" ${full?'disabled':''}>Cất vào kho</button><button class="btn" data-pds="${i}">Phân giải +${TIERS[it.tier].v}</button></div>`).join('')}</div>`;box.querySelectorAll('.pr .item').forEach((d,i)=>{const cn=d.querySelector('canvas');if(cn&&pend[i])drawItemIcon(cn,pend[i])})}
 $('#inv').addEventListener('click',e=>{const a=e.target.closest('[data-pin]'),d=e.target.closest('[data-pds]');const pend=save.pend||[];
@@ -3745,7 +3758,43 @@ function dtInfo(){const vn=nowMs()+7*3600e3,day0=Math.floor(vn/864e5)*864e5,d=ne
  let nx=null;for(const h of DT.slots){const a=day0+h*3600e3;if(a>vn){nx={h,inMs:a-vn};break}}if(!nx)nx={h:DT.slots[0],inMs:day0+864e5+DT.slots[0]*3600e3-vn};return{open:false,next:nx}}
 function dtStatus(){const i=dtInfo();if(!i.open)return 'Mở lúc '+String(i.next.h).padStart(2,'0')+':00';return i.rem>0?'Đang mở · còn '+mmss(i.left):'Đã ăn · khung '+String(i.h).padStart(2,'0')+':00'}
 let lbmK='',dtBites=0,dtLast=0,dtBusy=false;
-function openLbm(k){lbmK=k;$('#lbm').hidden=false;dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM})[k]()}
+
+/* ================= TÀNG BẢO CÁC (24/11): danh mục mọi vũ khí, trang bị, bí tịch, đan dược; có rồi thì sáng, chưa có thì đen ================= */
+const TBC_LOG=[
+ ['24/11','Tàng Bảo Các: danh mục vũ khí, trang bị, bí tịch, đan dược; ghi nhận món đã từng sở hữu.'],
+ ['24/11','Vũ khí: thanh Thanh Phong Kiếm dùng chung nam và nữ; kiếm bay Hồi Phong có chuôi.'],
+ ['24/11','Rương Boss chờ nhận; Ngộ Không: chuỗi 3 đòn, Thổi Lông, Cân Đẩu Vân, kỹ năng bấm tay.']];
+function tbcRec(){const t=save.tbc||(save.tbc={eq:{},bk:{},dan:{},pot:{}});t.eq=t.eq||{};t.bk=t.bk||{};t.dan=t.dan||{};t.pot=t.pot||{};return t}
+function tbcMark(cat,k){const t=tbcRec();if(!t[cat][k]){t[cat][k]=1}}
+function tbcNote(items){const t=tbcRec();for(const it of items||[]){if(!it||!it.name)continue;const o=t.eq[it.name]||(t.eq[it.name]={tier:0,forge:0,n:0});o.n=(o.n||0)+(o._seen&&o._seen===it.id?0:1);o._seen=it.id;o.tier=Math.max(o.tier||0,it.tier|0);o.forge=Math.max(o.forge||0,(typeof forgeLevel==='function'?forgeLevel(it):0)|0)}}
+function tbcSync(){const t=tbcRec();tbcNote([...invList(),...(save.pend||[])]);const B=books();for(const k in B)if(B[k])t.bk[k]=Math.max(t.bk[k]||0,B[k]);const S=sec();for(const k in S.own)if(S.own[k])t.bk['sec_'+k]=1;
+ const d=danBag();if(d.cuong>0)t.dan.cuong=1;if((save.trucco||0)>0)t.dan.trucco=1;const pp=pots();for(const k in pp)if(pp[k]>0)t.pot[k]=1;persist()}
+function tbcData(){tbcSync();const t=tbcRec();
+ const cls=[['kiem',1]].concat(Object.keys(WEAPONS).filter(k=>k!=='kiem').map(k=>[k,0]));
+ const wcls=cls.map(([k,open])=>({g:WEAPONS[k].g,n:'Loại '+WEAPONS[k].name,d:WEAPONS[k].role+' · '+WEAPONS[k].tr,own:!!open,det:open?'Đang mở':'Chưa mở khóa'}));
+ wcls.push({g:'拳',n:'Loại Song Quyền',d:'Tay không, hai nắm đấm · chưa có bộ chiêu',own:false,det:'Chưa mở khóa'});
+ const eqOf=(sk)=>SLOTS[sk].names.map(n=>{const o=t.eq[n];return {slot:sk,n,d:'Chỉ số gốc: '+SLOTS[sk].base.map(([k,v])=>sn(k)[0]+' '+v).join(', '),own:!!o,det:o?TIERS[Math.min(o.tier,TIERS.length-1)].n+(o.forge?' · cường hóa +'+o.forge:'')+' · đã nhận '+o.n:'Chưa sở hữu',tier:o?o.tier:0}});
+ const weap=[{h:'Loại vũ khí',list:wcls},{h:'Vũ khí đặc chế (kiếm)',list:eqOf('vk')}];
+ const gear=Object.keys(SLOTS).filter(k=>k!=='vk').map(k=>({h:SLOTS[k].n,list:eqOf(k)}));
+ const bk=Object.keys(BOOKS).map(k=>({g:BOOKS[k].g,n:BOOKS[k].n,d:BOOKS[k].d+' mỗi tầng',own:!!t.bk[k],det:t.bk[k]?'Tầng '+(books()[k]||t.bk[k])+'/'+BOOKMAX:'Chưa sở hữu'}));
+ const sc=Object.entries(SEC).map(([k,d])=>({g:d.g,n:d.n,d:d.d,own:!!t.bk['sec_'+k],det:t.bk['sec_'+k]?(sec().on===k?'Đang bật':'Đã lĩnh ngộ'):'Chưa lĩnh ngộ'}));
+ const dan=[...RECIPE.map(r=>({g:r.g,n:r.n,d:r.d,own:!!t.dan[r.k],det:t.dan[r.k]?(r.k==='cuong'?'Đang mang ×'+danBag().cuong:'Đã dùng '+(save.trucco||0)):'Chưa luyện'})),
+  {g:DAN.hothe.g,n:DAN.hothe.n,d:DAN.hothe.d+' (nhặt trong trận)',own:!!t.dan.hothe,det:t.dan.hothe?'Đã từng dùng':'Chưa nhặt'}];
+ const pot=Object.entries(POT).map(([k,d])=>({g:k==='hp'?'血':'氣',n:d.n,d:d.desc,own:!!t.pot[k],det:t.pot[k]?'Đang mang ×'+pots()[k]:'Chưa có'}));
+ return {vk:weap,tb:gear,bt:[{h:'Bí tịch cộng chỉ số',list:bk},{h:'Bí tịch võ công',list:sc}],dd:[{h:'Đan dược',list:dan},{h:'Thuốc',list:pot}]}}
+function tbcCount(){let own=0,all=0;try{const D=tbcData();for(const k in D)for(const sec_ of D[k])for(const e of sec_.list){all++;if(e.own)own++}}catch(e){}return {own,all}}
+let tbcTab='vk';
+function renderTBC(){$('#lbmT').textContent='Tàng Bảo Các';const D=tbcData(),TAB=[['vk','Vũ Khí'],['tb','Trang Bị'],['bt','Bí Tịch'],['dd','Đan Dược']];
+ const cnt=k=>{let o=0,a=0;for(const s_ of D[k])for(const e of s_.list){a++;if(e.own)o++}return [o,a]};
+ const all=tbcCount();
+ const card=e=>`<div class="tbcc${e.own?'':' no'}" title="${e.n}: ${e.d}"><div class="tbci">${e.slot?'<canvas data-s="'+e.slot+'" data-n="'+e.n+'" data-t="'+(e.tier||0)+'"></canvas>':'<b>'+e.g+'</b>'}</div><span class="tbcn">${e.n}</span><em>${e.det}</em><small>${e.d}</small></div>`;
+ $('#lbmB').innerHTML=`<div class="tbch"><b>Đã sở hữu ${all.own}/${all.all} món</b><span class="dim sm">Món chưa có hiện màu đen. Số "tất cả" là số món đang có trong game.</span></div>
+ <div class="tabs tbct">${TAB.map(([k,n])=>`<button data-tbc="${k}" class="${tbcTab===k?'on':''}">${n} <small>${cnt(k)[0]}/${cnt(k)[1]}</small></button>`).join('')}</div>
+ ${D[tbcTab].map(s_=>`<h3 class="tbcs">${s_.h} <span class="dim sm">(${s_.list.filter(e=>e.own).length}/${s_.list.length})</span></h3><div class="tbcg">${s_.list.map(card).join('')}</div>`).join('')}
+ <h3 class="tbcs">Nhật ký bổ sung</h3><div class="tbcl">${TBC_LOG.map(([d,t])=>`<div><b>${d}</b> ${t}</div>`).join('')}</div>`;
+ $('#lbmB').querySelectorAll('canvas[data-s]').forEach(cn=>{try{drawItemIcon(cn,{id:'tbc',slot:cn.dataset.s,tier:+cn.dataset.t,st:1,name:cn.dataset.n,base:{},aff:[]})}catch(e){}})}
+$('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-tbc]');if(!b||lbmK!=='tangbao')return;tbcTab=b.dataset.tbc;renderTBC()});
+function openLbm(k){lbmK=k;$('#lbm').hidden=false;dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM,tangbao:renderTBC})[k]()}
 $('#lbmX').addEventListener('click',()=>{$('#lbm').hidden=true;showLobby()});
 function renderDT(tickOnly){const i=dtInfo(),s0=staTick();$('#lbmT').textContent='Điểm Tâm';
  if(tickOnly&&$('#dtLeft')){$('#dtLeft').textContent=i.open?'Khung còn '+mmss(i.left):'';return}
@@ -3781,7 +3830,7 @@ function renderLD(){$('#lbmT').textContent='Luyện Đan';const m=mats();
  $('#lbmB').innerHTML=`<div class="mats big"><span><i class="mt duoc"></i>${MATN.duoc} <b>${m.duoc}</b></span><span><i class="mt hiem"></i>${MATN.hiem} <b>${m.hiem}</b></span><span class="dim sm">Tuyết Sâm rơi từ tinh anh (nhiều hơn ở đường Trại cướp). Băng Tâm Liên rơi từ rương trùm.</span></div>
  <div class="rcp">${RECIPE.map(r=>{const has=Object.entries(r.need).every(([k,v])=>m[k]>=v),ok=r.ok();return `<div class="rc" style="--c:${r.c}"><i>${r.g}</i><div><b>${r.n}</b><small>${r.d}</small><small class="need">Cần: ${Object.entries(r.need).map(([k,v])=>`<span class="${m[k]>=v?'':'lack'}">${v} ${MATN[k]}</span>`).join(' + ')} · ${r.lim()}</small></div><button class="btn gold" data-rc="${r.k}" ${has&&ok?'':'disabled'}>${!ok?'Đã đủ giới hạn':has?'Luyện':'Thiếu nguyên liệu'}</button></div>`}).join('')}</div><div id="ldMsg" class="dtmsg"></div>`}
 $('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-rc]');if(!b||b.disabled)return;const r=RECIPE.find(x=>x.k===b.dataset.rc),m=mats();if(!Object.entries(r.need).every(([k,v])=>m[k]>=v)||!r.ok())return;
- for(const[k,v]of Object.entries(r.need))m[k]-=v;if(r.k==='cuong')danBag().cuong++;else save.trucco=(save.trucco||0)+1;persist();sfx('taiji_open',0.45,0);renderLD();$('#ldMsg').innerHTML='<b class="ok">Luyện thành công: '+r.n+'</b>'});
+ for(const[k,v]of Object.entries(r.need))m[k]-=v;if(r.k==='cuong')danBag().cuong++;else save.trucco=(save.trucco||0)+1;tbcMark('dan',r.k);persist();sfx('taiji_open',0.45,0);renderLD();$('#ldMsg').innerHTML='<b class="ok">Luyện thành công: '+r.n+'</b>'});
 function danCarryHTML(){if(!G||!G.route)return '';const b=danBag();return `<div class="dancarry"><b>Đan mang theo</b><span>${RECIPE[0].g} ${RECIPE[0].n} ×${b.cuong}</span>${G.danNext?'<em>Sẽ dùng khi vào ải tới</em>':`<button class="btn" data-dan="cuong" ${b.cuong>0?'':'disabled'}>Dùng khi vào ải tới</button>`}</div>`}
 /* ---- Bí tịch võ công: Hồi Phong ---- */
 const SEC={truyphong:{n:'Truy Phong Kiếm',g:'追',d:'Biến thể đánh thường. Sau Lướt, nếu có quái trong tầm, nhát thường kế là cú chém tăng tầm có dư ảnh, rồi nối tiếp chuỗi chém.',boss:1},hoiphong:{n:'Hồi Phong',g:'風',d:'Sau khi Lướt, Hoành Tảo kế tiếp (trong 2,5 giây) quét gần trọn vòng, rộng hơn 50% và mạnh hơn 20%.',cost:{hiem:1},ngoc:40}};
@@ -3976,6 +4025,7 @@ const LBT=[
  {k:'luyendan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
  {k:'luyenvk',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
  {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Hóa Thân '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
+ {k:'tangbao',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
  {k:'luyencong',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Hóa Thân'},
  {k:'banghoi',g:'幫',n:'Bang Hội',st:()=>'Cần máy chủ',off:1,hide:1}];
 // Kiếm khởi đầu: nhân vật mới (và hồ sơ cũ chưa từng có vũ khí) nhận 1 thanh Phàm +0 để thấy ngay hệ cường hóa.
@@ -4006,7 +4056,7 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
  if(k==='inv'){invFrom='lobby';$('#lobby').hidden=true;$('#inv').hidden=false;renderInv();return}
- if(['diemtam','luyendan','luyenvk','chieumo'].includes(k)){openLbm(k);return}
+ if(['diemtam','luyendan','luyenvk','chieumo','tangbao'].includes(k)){openLbm(k);return}
  const T=LBT.find(x=>x.k===k);lobbyToast(T.n+(T.off?': cần máy chủ trực tuyến, sẽ mở khi có máy chủ.':': đang xây dựng, sẽ mở ở bản sau.'))});
 let lbToastT=0;function lobbyToast(t){let d=$('#lbToast');if(!d){d=document.createElement('div');d.id='lbToast';$('#lobby').appendChild(d)}d.textContent=t;d.classList.add('on');clearTimeout(lbToastT);lbToastT=setTimeout(()=>d.classList.remove('on'),2200)}
 $('#lbSwap').addEventListener('click',e=>{e.stopPropagation();openCreate()});
@@ -4037,7 +4087,8 @@ function renderBooks(){const box=$('#bookBox');if(!box)return;const B=books(),ks
  box.innerHTML=`<h3 style="margin-top:12px">Bí tịch <span class="dim sm">(${own}/${ks.length})</span></h3><div class="books">${ks.map(k=>{const d=BOOKS[k],n=B[k]||0;return `<div class="book${n?'':' no'}" title="${d.n}: ${d.d} mỗi tầng"><b>${d.g}</b><span>${d.n}</span><em>${n?'Tầng '+n+'/'+BOOKMAX:'Chưa có'}</em></div>`}).join('')}</div><p class="dim sm" style="margin:4px 0 0">Rơi từ rương báu của Thủ Lĩnh Sơn Tặc và Hổ Vương. Mỗi tầng cộng chỉ số vĩnh viễn.</p><h3 style="margin-top:10px">Nguyên liệu</h3><div class="mats"><span><i class="mt duoc"></i>${MATN.duoc} <b>${mats().duoc||0}</b></span><span><i class="mt hiem"></i>${MATN.hiem} <b>${mats().hiem||0}</b></span><span><i class="mt thiet"></i>${MATN.thiet} <b>${mats().thiet||0}</b></span></div>${secHTML()}`}
 const DAN={hothe:{n:'Hộ Thể Đan',g:'護',T:60,c:'#7df0c8',d:'Giải độc, choáng, chậm. Miễn nhiễm 60 giây.'},cuong:{n:'Cuồng Huyết Đan',g:'狂',T:45,c:'#ff8a3a',d:'+25% sát thương trong 45 giây.'}};
 function bfOn(k){return !!(P&&P.bf&&P.bf[k]>0)}
-function useDan(k,picked){const D=DAN[k];P.bf=P.bf||{};P.bf[k]=D.T;if(k==='hothe')P.st={};sfx('suodi_cast',0.4,0);
+function useDan(k,picked){try{tbcMark('dan',k)}catch(e){}
+const D=DAN[k];P.bf=P.bf||{};P.bf[k]=D.T;if(k==='hothe')P.st={};sfx('suodi_cast',0.4,0);
  fx({k:'ring',x:P.x,y:P.y,r0:10,r1:80,c:D.c,T:0.45});for(let i=0;i<10;i++)part(P.x+rnd(-16,16),P.y-rnd(0,40),0,rnd(-90,-40),rnd(.4,.7),rnd(2,4),D.c,1,0);if(picked)notice(D.n,D.d)}
 function chestTier(L){const w=[100,30,8,2,.5,.12,.03].map((b,i)=>b*Math.pow(1+(L||0)*0.02,i));let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
 function brkTier(L){const w=[100,24,5,1,.2,.04,.008].map((b,i)=>b*Math.pow(1+(L||0)*0.02,i));let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
