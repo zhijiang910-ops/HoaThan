@@ -1974,13 +1974,17 @@ const WEAPONS={
      if(vok('hv_vortex_b')){fx({k:'sp',s:'hv_vortex_b',x,y,sc:sc*1.35,T:0.6,gr:1});fx({k:'sp',s:'hv_vortex_f',x,y,sc:sc*1.35,T:1.17})}
      for(let i=0;i<6;i++)later(0.06+i*0.12,()=>{if(i%2==0)sfx('sword_slash',0.25,0.1);for(const e of enemiesIn(x,y,100)){if(e.dead)continue;hit(e,dmg*0.38,H({kb:i==5?90:6,stun:0.12,swordBasic:true}),x,y);e.flash=Math.max(e.flash,0.1)}G.shake=Math.max(G.shake||0,i==5?5:2)},'h')},'h');
     later(CUT_C_T3+0.02,()=>{if(vok('hv_ring'))fx({k:'sp',s:'hv_ring',x:P.x,y:P.y,sc:sc*1.3,T:0.8,follow:1})},'h')}},
-  {id:'k2',hotkey:'F',power:26,name:'Thiên Xu Kiếm Trận',g:'陣',kind:'active',cd:10,mp:20,range:320,desc:'Bảy thanh kiếm từ trời rơi xuống cắm thành trận quanh mục tiêu, trận xoay và chém liên tục mọi quái trong vòng trong 6 giây.',up:'+1 giây trận, +25% sát thương',
-   /* VFX gói Wuxia (Huyền Tiêu Kiếm Tông), xuất từ demo Godot: rơi kiếm 2s -> vòng xoay lặp 4s -> tan trận */
-   cast(tg,l){const a=angTo(tg),d=Math.min(this.range,Math.hypot(tg.x-P.x,tg.y-P.y)),cx=clamp(P.x+Math.cos(a)*d,40,AW-40),cy=clamp(P.y+Math.sin(a)*d,40,AH-40),sc=0.88,dur=6+(l-1),dmg=this.power*lv(l)*pw()*0.32;
+  {id:'k2',hotkey:'F',power:26,name:'Thiên Xu Kiếm Trận',g:'陣',kind:'active',cd:10,mp:20,range:320,desc:'Bảy thanh kiếm từ trời rơi xuống mục tiêu, gây một đòn nổ khi chạm đất. Kiếm trận xoay trong vùng đó và chém mọi quái mỗi giây trong 3 đến 5 giây.',up:'+0,5 giây trận (tối đa 5 giây), +25% sát thương',
+   /* VFX gói Wuxia (Huyền Tiêu Kiếm Tông), xuất từ demo Godot: rơi kiếm 2s (chạm đất ~1,2s) -> vòng xoay lặp -> tan trận.
+      Sát thương: 1 đòn nổ lúc kiếm chạm đất, sau đó mỗi 1 giây trong 3-5 giây (vùng bán kính 125). */
+   cast(tg,l){const a=angTo(tg),d=Math.min(this.range,Math.hypot(tg.x-P.x,tg.y-P.y)),cx=clamp(P.x+Math.cos(a)*d,40,AW-40),cy=clamp(P.y+Math.sin(a)*d,40,AH-40),sc=0.88,base=this.power*lv(l)*pw(),dur=Math.min(5,3+0.5*(l-1)),LAND=1.2,end=LAND+dur;
     sfx('wanjian_launch',0.5,0.15);fx({k:'sp',s:'tx_in',x:cx,y:cy,sc,T:2,gr:0});
-    for(let t=2;t<2+dur;t+=4)later(t,()=>fx({k:'sp',s:'tx_loop',x:cx,y:cy,sc,T:4,gr:1}),null);
-    later(2+Math.ceil(dur/4)*4,()=>fx({k:'sp',s:'tx_out',x:cx,y:cy,sc,T:0.73,gr:1}),null);
-    for(let t=0.5;t<2+dur;t+=0.5)later(t,()=>{for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,dmg,H({kb:8,stun:0.06}),cx,cy)}},null)}},
+    /* vòng kiếm xoay chỉ phát đến lúc hết trận (loop gốc 60 khung / 4 s = 15 khung/s), rồi tan */
+    const loopT=Math.max(0.5,end-2),loopN=Math.min(60,Math.round(loopT*15));
+    later(2,()=>fx({k:'sp',s:'tx_loop',x:cx,y:cy,sc,T:loopT,f0:0,f1:loopN-1,gr:1}),null);
+    later(2+loopT-0.04,()=>fx({k:'sp',s:'tx_out',x:cx,y:cy,sc,T:0.73,gr:1}),null);
+    later(LAND,()=>{G.shake=Math.max(G.shake||0,4);for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*1.2,H({kb:22,stun:0.12}),cx,cy)}},null);
+    for(let t=LAND+1;t<=end+0.001;t+=1)later(t,()=>{for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*0.6,H({kb:8,stun:0.06}),cx,cy)}},null)}},
   {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:25,range:260,desc:'Ba phi kiếm bay vòng quanh người, tự lao tới chém quái ở gần rồi quay về.',up:'+0.5 giây, +25% sát thương',
    cast(tg,l){sfx('wanjian_launch',0.45,0.2);const n=3;addZone({kind:'blades',follow:1,T:6+0.5*(l-1),n,r:80*Ar(),dmg:this.power*lv(l)*pw(),o:H({kb:20}),hm:new Map(),rot:0,sw:Array.from({length:n},(_,i)=>({st:0,nx:0.3+i*0.25,x:P.x,y:P.y,ang:0}))})}},
   {id:'k6',hotkey:'X',power:38,name:'Vạn Kiếm Quy Tông',g:'萬',kind:'ult',cd:24,range:560,desc:'Gần hai mươi thanh kiếm hiện ra vây quanh người rồi lần lượt phóng thẳng về phía trước, xuyên mọi kẻ địch trên đường.',up:'+25% sát thương',
@@ -3347,7 +3351,7 @@ function updateSkillRings(){
 }
 const SWORD_INFO={
  k1:{area:'Xuyên nhiều mục tiêu',unit:'mỗi mục tiêu',effect:l=>'Đẩy lùi, xuyên tối đa '+(l+2)+' mục tiêu.'},
- k2:{area:'Diện rộng · hình quạt',unit:'mỗi mục tiêu',effect:()=> 'Đẩy lùi trong vùng chém.'},
+ k2:{area:'Vùng tròn quanh điểm rơi (bán kính 125)',unit:'mỗi đòn',effect:l=>'Đòn nổ khi kiếm chạm đất (x1,2), rồi chém mỗi giây (x0,6) trong '+hudNumber(Math.min(5,3+.5*(l-1)))+' giây.'},
  k3:{area:'Quanh nhân vật',unit:'mỗi lần chạm',effect:l=>'Có '+(3+(l>=3)+(l>=5))+' kiếm xoay trong '+hudNumber(5+.5*(l-1))+' giây.'},
  k6:{area:'Diện rộng · quanh từng điểm rơi',unit:'mỗi kiếm trúng',effect:l=>'Thả '+(14+2*(l-1))+' kiếm, mỗi kiếm có thể trúng nhiều mục tiêu và đẩy lùi.'}
 };
