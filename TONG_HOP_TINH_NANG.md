@@ -78,6 +78,17 @@ Mỗi cấp tăng 4% chỉ số gốc. Sửa tốn 3 Huyền Thiết và đưa m
 - **Trang bị không phải vũ khí:** +3 và +6 tăng chỉ số; +9 **tăng chỉ số, hoặc nâng cấp passive/phòng ngự, hoặc cấp buff phòng ngự**, tùy món. Các con số trong bảng trên là **mốc chỉ số tham chiếu hiện có**; không tự thay bằng passive/buff mới khi chưa có thiết kế chi tiết được duyệt. Hệ Nón thứ 7 phải tuân theo cùng quy tắc, nhưng phần thưởng cụ thể chưa chốt.
 - Các mức thưởng +3/+6/+9 là **mốc cường hóa**; chỉ áp dụng theo cấp đang đạt của món và nguyên tắc cộng dồn/không cộng dồn phải được định nghĩa rõ khi triển khai. Mọi thay đổi gameplay cần kiểm tra cân bằng với thẻ Tu luyện, bí tịch và trang bị.
 
+### Hệ phẩm Hóa Thân và số lượng kỹ năng — ĐÃ CHỐT S/SS/SSS/UR (24/11/2026), CHƯA CẬP NHẬT CODE
+
+- Định hướng mới từ chủ game: **C chỉ dùng làm phôi Hóa Thân**; các phẩm chiến đấu/sưu tầm chính là **A, S, SS, SSS, UR**. **B không thuộc thang phẩm mới được đề xuất.** Chưa chốt cách chuyển dữ liệu C hiện có (Thổ Địa đang là C và đánh được), không xóa Hóa Thân đang chạy trước khi có phương án chuyển hồ sơ.
+- **S:** đúng **2 kỹ năng chủ động + 1 bị động**.
+- **SS:** đúng **3 kỹ năng chủ động + 1 bị động**.
+- **SSS:** đúng **3 kỹ năng chủ động + 2 bị động**.
+- **UR:** đúng **4 kỹ năng chủ động + 2 hoặc 3 bị động** (tùy từng Hóa Thân, chưa chốt tiêu chí chọn 2 hay 3).
+- **Đòn đánh thường tách riêng**, không tính vào số kỹ năng trên. **Phẩm A chưa được chủ game chốt số kỹ năng**. Vị trí của **tuyệt kỹ** (có tính là một chủ động hay là chiêu riêng) **chưa chốt**, không tự mở thêm ô kỹ năng trước khi xác định.
+- Danh sách dự kiến 50 Hóa Thân (20 A / 13 S / 9 SS / 5 SSS / 3 UR) là **phương án để duyệt**, không phải danh sách đã khóa. Chủ game đang cân nhắc bổ sung thần thú và thần linh **Sơn Hải Kinh** như Ứng Long, Chúc Long, Tây Vương Mẫu, Hình Thiên, Đế Tuấn; phẩm và số lượng thực tế sẽ chốt sau.
+- **Chưa được tự sửa gameplay:** `GODS` trong `game/index.html` hiện mới có Ngộ Không (SSS), Na Tra (SS), Bát Giới (S), Thổ Địa (C). Các bộ đang chạy có thể chưa khớp số kỹ năng mới, cần lập bảng thiếu/thừa và phương án cập nhật sau khi chủ game giao task.
+
 ## 3. Các hệ thống để sau
 
 | Tính năng | Quy tắc đã bàn | Phần còn cần quyết định |
