@@ -186,3 +186,4 @@ Nguyên nhân: `startTraining` gán `P0.gender=TR.gender` (giới tính thử �
 - **Méo khung Kiếm lúc vừa chạy vừa đánh:** do `runSwingTurn` ép bề ngang 24% khi đổi hướng (squash). Đã tắt (`turn=1`).
 - (24/11 đêm) Đòn 3 Ngộ Không nhanh thêm: anim/đứng yên 0,36 s, chạm 0,17 s, nhịp sau 0,45 s. Đòn C Kiếm: elip phóng 1,35 lần, đuôi tan hết trước 80% đòn (hết mảnh vụn nhỏ cuối đòn), mặc định tia sao ở đầu nhát chém (chủ game chọn), không còn vòng nhỏ.
 - (24/11 đêm) Chủ game chọn GIỮ elip chùm sợi (`c_ellipse.py`), chỉ lấy từ video Spine (thử ở `c_ellipse2.py`, không dùng) phần **đuôi tối dần sang xanh đậm – tím** (`tailmix`). Cung đặc kiểu video đã bỏ.
+- (24/11 đêm) Đòn C: VFX elip chậm lại (T 0,5→0,72 s, bật sớm hơn 0,4 s trước chạm để đỉnh sáng vẫn gần khung chạm). Đòn A/B: `wx_slash` và `zs2` đổi màu theo cùng bảng với C (đầu trắng → lam sáng → xanh đậm → tím ở đuôi, tô theo độ sáng, từ gốc `nguon/vfx_goc/*_teal.png`).
