@@ -184,3 +184,4 @@ Nguyên nhân: `startTraining` gán `P0.gender=TR.gender` (giới tính thử �
 - **Dash:** bỏ vệt mực đen; thay bằng vệt tốc độ sáng, vòng và bụi lúc bắt đầu.
 - **Ô xu** `#coins` sát mép trái (dưới avatar).
 - **Méo khung Kiếm lúc vừa chạy vừa đánh:** do `runSwingTurn` ép bề ngang 24% khi đổi hướng (squash). Đã tắt (`turn=1`).
+- (24/11 đêm) Đòn 3 Ngộ Không nhanh thêm: anim/đứng yên 0,36 s, chạm 0,17 s, nhịp sau 0,45 s. Đòn C Kiếm: elip phóng 1,35 lần, đuôi tan hết trước 80% đòn (hết mảnh vụn nhỏ cuối đòn), mặc định tia sao ở đầu nhát chém (chủ game chọn), không còn vòng nhỏ.

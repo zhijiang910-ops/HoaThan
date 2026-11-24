@@ -43,7 +43,7 @@ def sheet(name,front):
     rnd=random.Random(21);ST=strands(rnd)
     out=Image.new('RGBA',(CW*COLS,CH*((N+COLS-1)//COLS)),(0,0,0,0))
     for f in range(N):
-        p=(f+0.5)/N;head=min(1,p*1.22);tail=head*min(1,max(0,(p-0.40)/0.52))**1.15
+        p=(f+0.5)/N;head=min(1,p*1.22);tail=head*min(1,max(0,(p-0.36)/0.40))**1.0
         im=Image.new('RGBA',(CW,CH),(0,0,0,0));d=ImageDraw.Draw(im)
         gl=Image.new('RGBA',(CW,CH),(0,0,0,0));gd=ImageDraw.Draw(gl)
         if head-tail>0.02:
