@@ -1736,7 +1736,7 @@ Object.assign(CHM,{"nguudau": {"w": 145, "h": 141, "ax": 72, "ay": 138, "src": "
 /* Hắc/Bạch Vô Thường: thiết kế ChatGPT, chuyển sang nét pixel game bằng PixelLab (24/11) */
 Object.assign(CHM,{"hacvo": {"w": 135, "h": 159, "ax": 67, "ay": 156, "src": "assets/hacvo_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"bachvo": {"w": 141, "h": 165, "ax": 70, "ay": 162, "src": "assets/bachvo_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
 /* Diêm Vương, Phán Quan, Mạnh Bà: ảnh chủ game đưa (ChatGPT, 192x192 nền trong suốt, lưới pixel sạch) */
-Object.assign(CHM,{"diemvuong": {"w": 180, "h": 237, "ax": 90, "ay": 234, "src": "assets/diemvuong_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"phanquan": {"w": 122, "h": 158, "ax": 61, "ay": 155, "src": "assets/phanquan_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"manhba": {"w": 134, "h": 156, "ax": 67, "ay": 153, "src": "assets/manhba_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
+Object.assign(CHM,{"diemvuong": {"w": 180, "h": 237, "ax": 90, "ay": 234, "src": "assets/diemvuong_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"phanquan": {"w": 146, "h": 190, "ax": 73, "ay": 187, "src": "assets/phanquan_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}},"manhba": {"w": 161, "h": 187, "ax": 80, "ay": 184, "src": "assets/manhba_am.png", "proc": "walk", "anims": {"idle": {"fps": 8, "f": [[0, 0]]}, "run": {"fps": 8, "f": [[0, 0]]}, "attack": {"fps": 8, "f": [[0, 0]]}, "hit": {"fps": 8, "f": [[0, 0]]}, "death": {"fps": 8, "f": [[0, 0]]}}}});
 // Nhân vật chính lấy từ gói Wuxia Vol.2 (cong_cu/wuxia_sheet.py): nam = Huyền Tiêu Kiếm Tông · Nam đệ tử,
 // nữ = Xích Diễm Đao Môn · Nữ đệ tử. Cả hai cầm kiếm cùng một kiểu khi đứng, đi và chém.
 // Thần Giáng Tôn Ngộ Không: sprite PixelLab (vẽ lại cỡ 144, khung xương có gậy + đuôi), đã kiểm từng frame.
@@ -1799,12 +1799,12 @@ function drawSpr(c,h,an,fi,x,y,f,sc,flash,alpha){const M=h.meta,A=M.anims[an]||M
 /* quái dùng sprite gói Wuxia: [nhân vật, tỉ lệ] */
 const ESPR={boss:['quytuong',1.45],tieu:['vonghon',0.74],hoa:['matroi',0.62],can:['ambinh',0.78],xa:['oanhonxa',0.74],toc:['khuyen',0.8],elite:['quysai',0.95],tac:['daulap',0.8],tacdao:['hacphong',0.82],tacxa:['bachhoa',0.78],tacvuong:['hacphong',1.32],soi:['ho',0.78],langvuong:['ho',1.32]};
 /* 24/11 (chủ game: trùm phải thật nét). Phóng pixel art bằng hệ số lẻ làm pixel to nhỏ không đều, nhìn như vỡ nét. Với 7 trùm Âm Giới:
-   (1) nếu tỉ lệ NGUYÊN theo pixel màn hình (n = làm tròn của hệ số × DPR × ZOOM) chỉ lệch kích cỡ dưới 15% thì vẽ ở tỉ lệ nguyên, mỗi pixel ảnh = đúng n pixel màn hình (nét tuyệt đối);
+   (1) nếu tỉ lệ NGUYÊN theo pixel màn hình (n = làm tròn của hệ số × DPR × ZOOM) chỉ lệch kích cỡ tối đa 20% thì vẽ ở tỉ lệ nguyên, mỗi pixel ảnh = đúng n pixel màn hình (nét tuyệt đối);
    (2) nếu không thì giữ kích cỡ, dùng sheet phóng sẵn ×4 rồi thu về bằng lọc chất lượng cao (đều pixel, hơi mềm mép). */
 const ESPR_PX=new Set(['nguudau','madien','hacvo','bachvo','manhba','phanquan','diemvuong']);
 for(const k of ESPR_PX)if(CHM[k])CHM[k].hq=4;
 let _hqOff=false;
-function espScale(m){if(!ESPR_PX.has(m[0])){_hqOff=false;return m[1]}const d=DPR*ZOOM,t=m[1]*d,n=Math.round(t);if(n>=1&&Math.abs(n/t-1)<=0.15){_hqOff=true;return n/d}_hqOff=false;return m[1]}
+function espScale(m){if(!ESPR_PX.has(m[0])){_hqOff=false;return m[1]}const d=DPR*ZOOM,t=m[1]*d,n=Math.round(t);if(n>=1&&Math.abs(n/t-1)<=0.2){_hqOff=true;return n/d}_hqOff=false;return m[1]}
 function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=CH[m[0]];if(!h||!h.ok)return false;const A=h.meta.anims;let an='run',fi;
  if(e.stun>0&&A.hit){an='hit';fi=1}
  else if((wind||e.st==='dash'||e.st==='charge')&&A.attack){an='attack';fi=Math.floor((G.t*A.attack.fps*1.2+e.ph*7))%A.attack.f.length}
@@ -2341,7 +2341,7 @@ const AM_SIZE={mini:{r:36,spr:1.2},boss:{r:46,spr:1.45}};
 const AM_BOSSES={nguudau:['Ngưu Đầu','boss'],madien:['Mã Diện','boss'],huyetsat:['Huyết Sát Ma Tướng','mini'],hacvo:['Hắc Vô Thường','boss'],nghiethoa:['Nghiệt Hỏa Quỷ Vương','mini'],bachvo:['Bạch Vô Thường','boss'],thietlao:['Thiết Lao Ma Tướng','mini'],manhba:['Mạnh Bà','boss'],vongxuyenqt:['Vong Xuyên Quỷ Tướng','mini'],phanquan:['Phán Quan','boss'],dethinh:['Đế Thính','mini'],diemvuong:['Diêm Vương','boss']};
 for(const k in AM_BOSSES){const[nm,tier]=AM_BOSSES[k],z=AM_SIZE[tier];ET[k]=Object.assign({},ET[tier==='boss'?'boss':'elite'],{name:nm,amgioi:1,r:z.r},tier==='mini'?{mini:1}:{});ESPR[k]=[tier==='boss'?'quytuong':'quysai',z.spr]}
 /* Hình: Ngưu Đầu và Mã Diện = PixelLab (24/11). Hắc/Bạch Vô Thường, Mạnh Bà, Phán Quan, Diêm Vương đều đã có hình riêng. Mini-boss tạm quysai, riêng Huyết Sát dùng quytuong. */
-ESPR.nguudau=['nguudau',1.25];ESPR.diemvuong=['diemvuong',1.0];ET.diemvuong.r=58;/* trùm cuối: vẽ lại bằng PixelLab, to hơn và có aura lửa (chủ game) */ESPR.phanquan=['phanquan',1.11];ESPR.manhba=['manhba',1.13];ESPR.hacvo=['hacvo',1.11];ESPR.bachvo=['bachvo',1.07];ESPR.madien=['madien',1.1];/* hình PixelLab. Ảnh Ngưu Đầu thấp hơn Mã Diện (sừng 141 px so với đầu ngựa 147 px, chưa tính chùy 160), nên phóng 1,25 để Ngưu Đầu cao hơn một chút; cả hai vẫn cao hơn mini-boss */
+ESPR.nguudau=['nguudau',1.25];ESPR.diemvuong=['diemvuong',1.1];ET.diemvuong.r=58;/* trùm cuối: vẽ lại bằng PixelLab, to hơn và có aura lửa (chủ game) */ESPR.phanquan=['phanquan',0.93];ESPR.manhba=['manhba',0.94];ESPR.hacvo=['hacvo',1.11];ESPR.bachvo=['bachvo',1.07];ESPR.madien=['madien',1.1];/* hình PixelLab. Ảnh Ngưu Đầu thấp hơn Mã Diện (sừng 141 px so với đầu ngựa 147 px, chưa tính chùy 160), nên phóng 1,25 để Ngưu Đầu cao hơn một chút; cả hai vẫn cao hơn mini-boss */
 ESPR.huyetsat=['quytuong',AM_SIZE.mini.spr];/* chủ game: hình Ngưu Ma Vương dùng làm quái (Huyết Sát Ma Tướng, mini-boss T4/5), không làm Ngưu Đầu */
 /* Quái theo chặng: pool = danh sách trọng số (lặp lại = nhiều hơn), elite = số Quỷ Sai mỗi tầng trong chặng (theo thứ tự tầng) */
 const AM_ZONES=[
@@ -3098,7 +3098,7 @@ function hudFit(){const hud=$('#hud');if(!hud||hud.hidden)return;const vb=$('#vb
 setInterval(hudFit,300);addEventListener('resize',()=>setTimeout(hudFit,50));
 
 function resize(){
- DPR=Math.min(devicePixelRatio||1,MOBILE?1.5:2);VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
+ DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);/* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
  ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700),0.5,1.5);
  vign=document.createElement('canvas');vign.width=VW;vign.height=VH;const v=vign.getContext('2d');const g=v.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*0.3,VW/2,VH/2,Math.max(VW,VH)*0.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(12,3,0,.78)');v.fillStyle=g;v.fillRect(0,0,VW,VH);
 }
