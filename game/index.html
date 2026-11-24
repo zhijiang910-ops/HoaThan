@@ -1032,7 +1032,11 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #crBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
 #crPic{position:absolute;left:0;right:0;bottom:2%;margin:auto;height:92%;width:auto;max-width:100%;image-rendering:pixelated}
 #crPic.dim{filter:brightness(.35) grayscale(.6)}
-.cxar{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:46px;border:0;cursor:pointer;background:#0e0a07d8;box-shadow:inset 0 0 0 1px #c9a45e;color:#ffd36a;font-size:16px}
+.cxar{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:42px;display:grid;place-items:center;padding:0;border:1px solid #9b7942;border-radius:3px;cursor:pointer;background:linear-gradient(#382819,#15100b);box-shadow:inset 0 0 0 2px #181009;color:#f4d28a}
+.cxar::before{content:"";width:8px;height:8px;border:solid currentColor;border-width:2px 2px 0 0;transform:rotate(45deg)}
+.cxar.l::before{transform:rotate(-135deg)}
+.cxar:hover,.cxar:focus-visible{border-color:#f4d28a}
+.cxar:active{background:#513819}
 .cxar.l{left:6px}.cxar.r{right:6px}
 .cxlock{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);padding:4px 10px;background:#0e0a07e8;box-shadow:inset 0 0 0 1px #c08a70;color:#ffb8a0;font:700 12px "Be Vietnam Pro",sans-serif;white-space:nowrap}
 .cxhn{display:flex;flex-direction:column;align-items:center;gap:1px}
@@ -1056,7 +1060,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxskd b{display:block;font:700 13px "Be Vietnam Pro",sans-serif;color:#ffe08a}.cxskd small{display:block;font:600 10.5px "Be Vietnam Pro",sans-serif;color:#a8987a}
 .cxskd p{margin:3px 0 0;font:500 11.5px/1.35 "Be Vietnam Pro",sans-serif;color:#e0d4bc}
 .cxbar{grid-column:1/-1;display:flex;align-items:center;gap:12px}
-.cxbar .dim{flex:1;min-width:0}
+.cxbar #crGo{margin-left:auto}
 .cxbar .crerr{color:#ff8a70;font:700 13px "Be Vietnam Pro",sans-serif}
 #crGo{min-width:180px}#crGo:disabled{opacity:.45;cursor:not-allowed}
 @media (max-height:520px){
@@ -1065,14 +1069,14 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
  #crName{padding:4px 8px}.cxb{padding:4px 0;font-size:12px}
  .cxw{gap:3px}.cxwb{padding:2px 1px}.cxwb img,.cxwb .gi{max-width:36px}.cxwb b{font-size:9px}
  .cxwi{font-size:10px}.cxwi b{font-size:11px}
- .cxar{width:26px;height:36px;font-size:13px}.cxhn b{font-size:11.5px}.cxhn small{font-size:9.5px;min-height:11px}
+ .cxar{width:28px;height:36px}.cxhn b{font-size:11.5px}.cxhn small{font-size:9.5px;min-height:11px}
  .cxc{width:20px;height:20px;padding:2px}.cxsw span{font-size:10px}
  .cxinfo div{font-size:10.5px;padding:1px 0}
  .cxs{width:26px;height:26px;font-size:15px}.cxskr>span{width:48px;font-size:9.5px}.cxsk{gap:3px}
  .cxskd{padding:4px 6px;min-height:0}.cxskd b{font-size:11.5px}.cxskd small{font-size:9.5px}.cxskd p{font-size:10px;line-height:1.3}
- .cxbar .dim{font-size:9.5px}#crGo{min-width:0;padding:6px 14px}
+ #crGo{min-width:0;padding:6px 14px}
 }
-@media (max-height:360px){.cxinfo div:nth-child(n+4){display:none}.cxbar .dim{display:none}}
+@media (max-height:360px){.cxinfo div:nth-child(n+4){display:none}}
 /* tạo nhân vật: nhân vật ở cột trái, giữa là tranh minh họa */
 .cx{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)!important}
 .cxL .cxst{flex:1 1 0;min-height:90px;background:radial-gradient(ellipse at 50% 85%,#2a3a34,#0c0a08 70%)}
@@ -1426,7 +1430,7 @@ input,select,textarea,#crName{font-size:16px!important}
    <h3 class="cxh">Chọn avatar</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn avatar nhân vật"></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
-    <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước">◀</button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau">▶</button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
+    <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
    <div class="cxhr"><b id="crHairN"></b><div id="crHairC" class="cxsw"></div></div>
    
   </div>
@@ -1437,12 +1441,12 @@ input,select,textarea,#crName{font-size:16px!important}
   </div>
   <div class="cxp cxR">
    <h3 class="cxh">Binh khí</h3><div id="crWeapon" class="cxw"></div>
-   <h3 class="cxh">Thông tin nhân vật</h3><div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
+   <div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
    <h3 class="cxh">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd"></div>
    <button id="crTry" class="btn" type="button">Thử chiêu</button>
   </div>
   <dialog id="crSceneDialog" class="crscene-dialog" aria-label="Tranh toàn cảnh"><img id="crSceneFull" alt=""><button id="crSceneClose" class="btn" type="button">Đóng</button></dialog>
-  <div class="cxbar"><span class="dim sm">Chỉ tạo một lần. Kho đồ, bí tịch, thuốc và cài đặt cũ được giữ nguyên.</span><span class="crerr" id="crErr"></span><button id="crGo" class="btn gold">Bước vào giang hồ</button></div>
+  <div class="cxbar"><span class="crerr" id="crErr"></span><button id="crGo" class="btn gold">Bước vào giang hồ</button></div>
  </div>
 </section>
 <section id="lobby" class="screen" hidden>
@@ -3836,7 +3840,7 @@ function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gende
  cr.avatars={nam:1,nu:1};
  if(P0)cr.avatars[cr.gender]=avatarIndex(P0.avatar);
  renderCreateAvatars();
- {const ed=!!P0;$('#crGo').textContent=ed?'Lưu và về sảnh':'Bước vào giang hồ';const n=document.querySelector('#create .cxbar .dim');if(n)n.textContent=ed?'Đổi nhân vật: giữ nguyên kho đồ, bí tịch, thuốc và tiến độ ải.':'Chỉ tạo một lần. Kho đồ, bí tịch, thuốc và cài đặt cũ được giữ nguyên.'}
+ $('#crGo').textContent=P0?'Lưu và về sảnh':'Bước vào giang hồ';
 cr.view='kiem';cr.sk=1;showCreateDraft()}
 function showCreateDraft(){showOnly('create');renderCreate();
   clearInterval(window.__crh);let t=0;window.__crh=setInterval(()=>{if($('#create').hidden){clearInterval(window.__crh);return}crHero(t);t+=0.125},125)}
