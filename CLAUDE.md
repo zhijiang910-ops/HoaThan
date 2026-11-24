@@ -202,3 +202,4 @@ Mỗi đợt kiếm (6 đợt) tại mỗi quái bị trúng: chớp `swhit` ×2
 
 ## Thiên Xu Kiếm Trận: vòng sét (24/11)
 Chủ game xin vòng sét giật nằm trong. Pack Wuxia và game không có sét (xác nhận), nên gọi PixelLab VFX pro **1 lần, 8 lượt** (`nguon/pixellab/set/o1`, ảnh gốc `z/whole.png`). `set_ring.png` (12 khung 241×130, 16 fps, viền xanh đậm thêm bằng PIL cho rõ trên tuyết) lặp 0,75 s/vòng từ lúc kiếm chạm đất đến hết trận, `sc:0.95`, lớp sau người, thêm 1 vòng sáng khi đòn nổ. Chủ game dặn: cái nào tự làm được thì tự làm, chỉ gọi PixelLab khi thật cần.
+- (24/11 đêm) Chủ game: "không phải vòng sét mà là tia sét bị trận kiếm bao bọc". Bỏ vòng viền; PixelLab sửa tiếp (`EFFECT=`, **6 lượt**, `nguon/pixellab/set/o2`): cụm ~6 tia sét giật ở giữa, rìa trống. `set_ring.png` nay 12 khung 117×72, phóng `sc:2.1`, viền xanh đậm thêm bằng PIL. Tổng PixelLab cho sét Thiên Xu: 8 + 6 = 14 lượt.

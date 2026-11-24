@@ -1,0 +1,169 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "set_trap",
+ "fps": 16,
+ "frame_ms": 63,
+ "frames": 12,
+ "loop": true,
+ "canvas": {
+  "w": 264,
+  "h": 139
+ },
+ "anchor": {
+  "kind": "origin",
+  "x": 132,
+  "y": 69
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 117,
+    "h": 72
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -60,
+    "y": -35
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 117,
+    "h": 72
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -60,
+    "y": -35
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 36,
+    "h": 24
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -14,
+    "y": -12
+   }
+  },
+  {
+   "name": "part-storm",
+   "title": "the storm part",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 117,
+    "h": 72
+   },
+   "sheets": [
+    {
+     "file": "part-storm.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -60,
+    "y": -35
+   }
+  },
+  {
+   "name": "part-flash",
+   "title": "the flash part",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 37,
+    "h": 39
+   },
+   "sheets": [
+    {
+     "file": "part-flash.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -19,
+    "y": -17
+   }
+  },
+  {
+   "name": "part-sparks",
+   "title": "the sparks part",
+   "depth": "front",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 36,
+    "h": 24
+   },
+   "sheets": [
+    {
+     "file": "part-sparks.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -14,
+    "y": -12
+   }
+  }
+ ]
+}
