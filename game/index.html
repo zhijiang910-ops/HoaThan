@@ -1912,7 +1912,7 @@ function finishSwordCut(dt){
  arc(P.x,P.y-8,angle,(heavy?118:lunge?96:80)*Ar(),heavy?TAU:1.9,damage,
   H({kb:heavy?60:isB?32:20,stun:heavy?0.10:0,swordBasic:true,mark:heavy,pierceArmor:upgrade>=3 ? SWORD_FORGE_PIERCE : 0,
    stop:isB?0.055:0.035,numUp:isB?0.12:0,cutFx:{n:0,ang:angle+(dir>0?1.2:-1.2)},sarc:isB?2:lunge?3:1,nofx:swfx}),color,dir);
- if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);hitFx(P.x+Math.cos(angle)*58,P.y+6+Math.sin(angle)*40,angle*0.3,0.8,0.55,0.16)}
+ if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);}
  if(heavy&&upgrade>=9){
   const x=P.x+Math.cos(angle)*36,y=P.y+Math.sin(angle)*36-8;
   shoot(x,y,angle,370,{dmg:damage*.35,pierce:3,r:18,life:.26,kind:'crescent',c:color,o:H({pierceArmor:SWORD_FORGE_PIERCE})});
@@ -2046,7 +2046,7 @@ const WEAPONS={
     later(2,()=>fx({k:'sp',s:'tx_loop',x:cx,y:cy,sc,T:loopT,f0:0,f1:loopN-1,gr:1}),null);
     later(2+loopT-0.04,()=>fx({k:'sp',s:'tx_out',x:cx,y:cy,sc,T:0.73,gr:1}),null);
     /* vòng sét giật nằm trong vòng kiếm (PixelLab 8 lượt, 24/11): lặp 12 khung/0,75 s từ lúc kiếm chạm đất đến hết trận, nháy mạnh hơn lúc đòn nổ */
-    if(vok('set_ring')){/* sét giật lúc hiện lúc tắt (24/11): mỗi đợt 2-4 khung (khung ngẫu nhiên), nghỉ 0,1-0,4 s */{let t0=LAND;while(t0<end-0.15){const nf=2+Math.floor(Math.random()*3),f0=Math.floor(Math.random()*(12-nf+1));const T0=t0;later(T0,()=>{/* sét đánh xuống và NỔ va chạm trên quái trong trận (chủ game: giống hiệu ứng trúng đòn xanh ngọc) */if(G.fx.length<(MOBILE?60:150)){const es=enemiesIn(cx,cy,125).filter(e=>!e.dead);for(let i=es.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[es[i],es[j]]=[es[j],es[i]]}const pick=es.slice(0,2);if(!pick.length)pick.push({x:cx+rnd(-70,70),y:cy+rnd(-25,25),r:6});for(const e of pick){if(vok('set_ring'))fx({k:'sp',s:'set_ring',x:e.x,y:e.y-e.r*0.5,sc:1.25,f0,f1:f0+nf-1,T:nf/16,al:1});}sfx('sword_hit',0.2,0.15)}},null);t0+=nf/16+0.1+Math.random()*0.3}}}
+    if(vok('set_ring')){/* sét giật lúc hiện lúc tắt (24/11): mỗi đợt 2-4 khung (khung ngẫu nhiên), nghỉ 0,1-0,4 s */{let t0=LAND;while(t0<end-0.15){const nf=2+Math.floor(Math.random()*3),f0=Math.floor(Math.random()*(12-nf+1));const T0=t0;later(T0,()=>{/* sét đánh xuống và NỔ va chạm trên quái trong trận (chủ game: giống hiệu ứng trúng đòn xanh ngọc) */if(G.fx.length<(MOBILE?60:150)){const es=enemiesIn(cx,cy,125).filter(e=>!e.dead);for(let i=es.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[es[i],es[j]]=[es[j],es[i]]}const pick=es.slice(0,2);if(!pick.length)pick.push({x:cx+rnd(-70,70),y:cy+rnd(-25,25),r:6});for(const e of pick){if(vok('set_ring')){const ox=clamp((e.x-cx)*0.6,-70,70),oy=clamp((e.y-cy)*0.6,-30,30);fx({k:'sp',s:'set_ring',x:cx+ox,y:cy+oy-4,sc:0.95,f0,f1:f0+nf-1,T:nf/16,al:1})}}sfx('sword_hit',0.2,0.15)}},null);t0+=nf/16+0.1+Math.random()*0.3}}}
     later(LAND,()=>{G.shake=Math.max(G.shake||0,4);for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*1.2,H({kb:22,stun:0.12}),cx,cy)}},null);
     for(let t=LAND+1;t<=end+0.001;t+=1)later(t,()=>{for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*0.6,H({kb:8,stun:0.06}),cx,cy)}},null)}},
   {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:25,range:260,desc:'Ba phi kiếm bay vòng quanh người, tự lao tới chém quái ở gần rồi quay về.',up:'+0.5 giây, +25% sát thương',
@@ -2406,7 +2406,7 @@ function hit(e,dmg,o,sx,sy){
  if(o.brk){e.brk=o.brk;e.brkT=5;e.vuln=5}
  if(o.burn){e.burnT=2;e.burnD=Math.max(e.burnD,o.burn)}
  num(e.x,e.y-e.r*1.6-14,Math.round(d),crit?'c':o.t==='m'?'m':'w',o.swordBasic?1+Math.min(0.45,(P.combo||0)/120)+(o.numUp||0):1);
- if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n<1&&vok('wx_slash')){o.cutFx.n++;hitFx(e.x,e.y-e.r*0.3,(o.cutFx.ang||0)*0.35,0.55,0.55,0.14)}
+ if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n<1&&vok('wx_slash')){o.cutFx.n++}
  else if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n++<3){fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:o.cutFx.ang+rnd(-0.35,0.35),T:0.13,wh:1});
   for(let i=0;i<4;i++){const a=o.cutFx.ang+rnd(-0.9,0.9),v=rnd(90,200);part(e.x,e.y-e.r*1.5,Math.cos(a)*v,Math.sin(a)*v-40,rnd(0.15,0.3),rnd(2,4),i%2?'#fff6d8':'#ffd27a',1)}}
  if(o.swordBasic&&o.stop)G.hitstop=Math.max(G.hitstop||0,o.stop);
