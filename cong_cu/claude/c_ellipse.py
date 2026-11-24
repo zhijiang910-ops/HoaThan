@@ -4,7 +4,7 @@ Ra k5c_behind.png / k5c_front.png: ô 360x160, 15 khung, 4 cột. python3 c_elli
 import math,random,sys
 from PIL import Image,ImageDraw,ImageFilter
 OUT=sys.argv[1] if len(sys.argv)>1 else 'game/assets/vfx/'
-VAR=sys.argv[2] if len(sys.argv)>2 else ''
+VAR=sys.argv[2] if len(sys.argv)>2 else 'spark'  # mặc định: tia sao ở đầu nhát chém (chủ game chọn 24/11)
 N=15;CW,CH=360,224;COLS=4;CX,CY=180,114
 RX,RY=150,66
 M=18

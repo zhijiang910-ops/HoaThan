@@ -175,3 +175,12 @@ Lấy từ `origin/claude/relaxed-heisenberg-72j521` commit `819e7a23d6d9f18e93c
 
 ## Lỗi chọn Nam thành Nữ (24/11, đã sửa)
 Nguyên nhân: `startTraining` gán `P0.gender=TR.gender` (giới tính thử ở Luyện Công, lưu bền ở `tdst_tr`) lên hồ sơ thật, nên lần vào/ra Luyện Công sau đó (kể cả "Thử chiêu" ở màn tạo nhân vật) làm hồ sơ Nam tự thành Nữ. Sửa: `TR.gender=null` mỗi lần tải game; `startTraining` nhớ giới tính thật vào `window.__trG0`; `showLobby` trả lại; `persist` không lưu giới tính tạm. Test: `scratchpad/gender_test4.js` (hồ sơ nam + tdst_tr gender nu → vào Luyện Công → Ra sảnh → tải lại: vẫn nam).
+
+## Sửa 24/11 (đêm): mũ vàng, đòn 3 Ngộ Không, X/R, dash, ô xu, méo khung Kiếm
+- **Mũ vàng gậy chạm khắc (PixelLab edit-images-v2, 10 lượt, seed 11, `nguon/pixellab/gay/out2`)** thay hai mũ cũ, thân giữ nguyên.
+- **Đòn 3 Ngộ Không (bổ trên xuống) nhanh hơn:** animation/đứng yên 0,7→0,5 s, chạm 0,33→0,24 s, nhịp sau 0,78→0,58 s.
+- **X:** thêm nổ `wk_stomp` + vòng sáng + hạt + rung nhẹ tại mỗi quái bị xuyên và ở đầu gậy.
+- **R:** gậy rơi chậm (đáp ở 0,95 s, `T` 1,7 s, rơi easeIn mũ 3), đáp xong tan từ từ (~0,5 s), bóng đổ là gradient mềm lớn dần.
+- **Dash:** bỏ vệt mực đen; thay bằng vệt tốc độ sáng, vòng và bụi lúc bắt đầu.
+- **Ô xu** `#coins` sát mép trái (dưới avatar).
+- **Méo khung Kiếm lúc vừa chạy vừa đánh:** do `runSwingTurn` ép bề ngang 24% khi đổi hướng (squash). Đã tắt (`turn=1`).
