@@ -73,3 +73,23 @@ Tổng lượt PixelLab đã dùng cho nhánh combo hôm nay: 3 (thử 1) + 3 (t
 | **Nữ C4: FAIL** | Có hình lưỡi liềm xám hallucinate phía trên đầu |
 | Tay cầm kiếm | Chưa có lớp nắm tay: kiếm vẽ đè lên bàn tay, chuôi chưa che bởi ngón; cần lớp `_hand` mới |
 | Chưa làm | Đưa vào game (WSOCK + sheet), HIT/timing, VFX mới, hướng trái, so +0 và +6, video 60 FPS trong game |
+
+## ĐƯA COMBO MỚI VÀO GAME — A(7) B(7) C(12), nam và nữ (24/11/2026) — QA chạy thật, CHƯA tuyên bố PASS toàn bộ
+Thay đổi: thêm 2 hàng ô (y=384, 512) vào `hero_{nam,nu}_ns.png` và `_hand.png` (ô cũ giữ cho lướt Huyết Ảnh `cutC` và bộ Huyền Giáp), socket kiếm 'f' từng khung vào `WSOCK`, `NC` và `TA/TB/TC` mới. **Tổng thời lượng giữ 580/550/800 ms** nên nhịp đánh và DPS không đổi (`dur` quyết định chu kỳ đánh). Chi tiết: `animation_manifest.json`.
+Đo ở 60 FPS, nam và nữ, Luyện Công:
+| Tiêu chí | Kết quả |
+|---|---|
+| A→B→C liền mạch, không reset về idle giữa các đòn | Đạt (timeline tick: attack 0–583, attack2 583–1133, attack3 1133–1933 ms) |
+| +0 chỉ A–B; +6 có C | Đạt (forge 0: chỉ attack/attack2; forge 6: có attack3) |
+| HIT đúng pha ra đòn | A ở 283 ms (A4), B ở khoảng 900 ms (B5), C ở khoảng 1400 ms (C4). HIT của B, C trễ hơn cũ (B 150→310 ms, C 100→255 ms trong đòn) vì khung chạm mới nằm ở pha quét thật |
+| C: một elip, tan trước hết động tác | Đạt: elip 1350–1850 ms, anim C đến 1933 ms; không còn `zs1` |
+| Quay mặt trái (lật) | Đạt: kiếm vẫn gắn đúng tay, elip đúng chiều (`QA_BEFORE_AFTER/AFTER_ABC_game_quay_trai.png`) |
+| Kiếm đúng một thanh, đúng độ dài | Đạt trên các khung chụp (kiếm vẽ bằng ảnh kiếm của game) |
+| Lỗi script | Không có |
+Bằng chứng: `AFTER_ABC_game_{nam,nu}_sheet.png`, `AFTER_ABC_game_khung_cham_zoom.png`, `AFTER_ABC_{nam,nu}_60fps.mp4`, `AFTER_ABC_{nam,nu}_slow5x.mp4`, `AFTER_ABC_game_quay_trai.png`.
+**Còn tồn tại / chưa kiểm:**
+- Chưa có lớp bàn tay mới: kiếm vẽ đè lên bàn tay ở khung mới (chuôi chưa che bởi ngón).
+- Pha quét C5–C8 vẫn là tay duỗi ngang (góc nhìn nghiêng), phần quét do elip đảm nhiệm. Elip PixelLab hiện vẫn hiện nguyên vòng ngay khung đầu, chưa có đầu nhọn kéo dần (cần VFX mới).
+- Chưa so khung-từng-khung với video Hovl (chưa có clip nguồn).
+- Chưa kiểm khi nhân vật đang di chuyển và đánh (run-swing) với khung mới, chưa kiểm bộ Huyền Giáp với combo mới (Huyền Giáp vẫn dùng khung đánh cũ), chưa kiểm iPhone thật.
+- Kiếm bay Hồi Phong to và dễ che nhân vật trong ảnh QA (đã thêm viền để nhìn rõ).
