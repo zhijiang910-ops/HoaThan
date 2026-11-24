@@ -1825,11 +1825,11 @@ function startSwordCut(target,basic){
 }
 function comboFx(step){/* VFX bản mẫu (PixelLab, gói tách lớp, tông trắng bạc - xanh ngọc). A, B nổ đúng khung trúng; C: lớp sau người + lớp trước người */
  if(!(P.kit&&P.kit.w==='kiem')||!vok('zs3'))return;const f=P.facing||1,sc=HERO.SC,an=HERO.meta.anims[['attack','attack2','attack3'][step]],at=(an&&an.dur?an.dur*an.hit:0.2);
- const go=(k,T,gr,m)=>fx({k:'sp',s:k,x:P.x,y:P.y,sc:sc*(m||1),fx:f,T,gr:gr?1:0,follow:1});
+ const go=(k,T,gr,m,fd)=>fx({k:'sp',s:k,x:P.x,y:P.y,sc:sc*(m||1),fx:f,T,gr:gr?1:0,follow:1,fade:fd||0});
  /* Vệt chém: bộ Slashes (Frostwindz) đổi sang bảng màu game; khung lớn nhất của vệt trùng khung trúng */
  if(step===0)later(Math.max(0,at-0.14),()=>go('zs3',0.42,0,1.35),'h');
  else if(step===1)later(Math.max(0,at-0.16),()=>go('zs2',0.38,0,1.3),'h');
- else{later(0,()=>go('zs1',0.45,0,1.3),'h');later(at,()=>{go('k5c_behind',0.75,1);go('k5c_front',0.75)},'h')}}
+ else{/* C = một cú quét → một elip → thu thế + mờ dần. Không còn slash zs1 độc lập; elip chỉ sống 0,5 s (tắt trước hết recovery 0,8 s), hai lớp cùng thời điểm và cùng thời gian */later(at,()=>{go('k5c_behind',0.5,1,1,0.2);go('k5c_front',0.5,0,1,0.2)},'h')}}
 function finishSwordCut(dt){
  const cut=P.swordCut;
  if(!cut)return;
