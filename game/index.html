@@ -3170,10 +3170,9 @@ function drawGodSprite(){
  let an='idle',fi=Math.floor(G.t*6)%A.idle.f.length,lean=0;const DUR=0.45;
  if(P._gHold&&G.t<P._gHold.until){an=P._gHold.an;fi=P._gHold.fi}
  else if(P.hurt>0.05&&A.hit){an='hit';fi=Math.min(A.hit.f.length-1,Math.floor((1-P.hurt/0.2)*A.hit.f.length))}
- // Đang di chuyển thì giữ khung CHẠY (chân bước theo quãng đường, không trượt chân như khung đánh đứng chân); nhịp đánh thể hiện bằng nghiêng người + gậy.
- // Đánh đúng khung đánh chỉ khi đứng yên.
- else if(P.moving){an='run';fi=Math.floor((P.runPh||0)/18)%A.run.f.length;}
+ // Đánh là hiện đúng động tác đánh, kể cả khi đang di chuyển (chủ game chọn 24/11); hết nhịp đánh thì về khung chạy.
  else if(P._gAtk&&G.t-P._gAtk.t<DUR){an=P._gAtk.an;fi=Math.min(A[an].f.length-1,Math.floor((G.t-P._gAtk.t)/DUR*A[an].f.length))}
+ else if(P.moving){an='run';fi=Math.floor((P.runPh||0)/18)%A.run.f.length}
  if(P.god.def.look==='wukong'&&vok('wk_aura_fire')){const A2=AURAF,i=Math.floor(G.t*A2.fps)%A2.n;X.save();X.imageSmoothingEnabled=false;X.drawImage(VFX.wk_aura_fire,(i%A2.c)*A2.w,Math.floor(i/A2.c)*A2.h,A2.w,A2.h,Math.round(P.x-A2.ax),Math.round(P.y-A2.ay),A2.w,A2.h);X.restore()}else drawAura(P.x,P.y);X.fillStyle='rgba(0,0,0,.4)';ell(P.x,P.y,22,7);
  const M=h.meta,fr=A[an].f[fi],sc=0.98,flick=P.inv>0&&P.hurt>0&&Math.floor(G.t*30)%2;
  X.save();X.imageSmoothingEnabled=false;X.translate(Math.round(P.x),Math.round(P.y));X.scale(P.facing*sc,sc);if(flick)X.globalAlpha=0.55;
