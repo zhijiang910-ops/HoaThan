@@ -148,3 +148,10 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 - (24/11 tối) Elip C v2: bản đầu bị chê xấu vì phẳng như vector. `c_ellipse.py` giờ dựng 3 dải lồng nhau (ngoài mảnh, chính dày 5 lớp màu viền→lõi trắng, trong ngắn), quầng sáng mờ, vệt tốc độ + hạt. Chạy: `python3 cong_cu/claude/c_ellipse.py` (tham số tùy chọn: thư mục ra).
 - (24/11 tối, v3) Chủ game gửi ảnh mẫu `nguon/tham_chieu/anh_mau_vfx_kiem.png` (elip dẹt rộng, chùm sợi mảnh, dày dưới-trái, trắng–xanh lam, quầng sáng). Không tách được vòng sạch từ ảnh (bị nhân vật/quái/nền đè) nên `c_ellipse.py` dựng bám đúng hình dạng đó. Ô mới 360×200 (`SPX k5c_*: w360,h200,px180,py144`). **Màu ba đòn A/B/C đổi sang xanh lam–trắng**: `zs2` và `wx_slash` xoay hue +38° (gốc teal ở `nguon/vfx_goc/*_teal.png`).
 - (24/11 tối, v3b) Thêm ~34 sợi mảnh lẻ ở nhiều bán kính (0,45–1,35 lần elip), dài ngắn khác nhau, quầng sáng giảm để không ra viền xám trên nền tuyết. Ô k5c_* nay 360×224 (`py:154`).
+
+## Cân Đẩu Vân bay thật, Hóa Thân gọn, đồng bộ, số sát thương (24/11, chủ game duyệt thứ tự)
+- **Cân Đẩu Vân (F):** nhân vật bay thật theo đường mây 0,55 s (`P._gFly`, nội suy trong vòng cập nhật vị trí, bất tử + đứng yên input), mây đi cùng dưới chân, rồi `later(D)` đáp xuống nện đất, scorch, whirl, rung. Có chốt chặn nếu `later` bị purge.
+- **Hóa Thân:** `wk_puff` 2→1,75, `wk_roar` 1,2→1,06 (al 0,85), aura lửa alpha 0,85 (≈ -23% diện tích, lớp trước đỡ che người).
+- **Số sát thương:** gộp số cùng loại gần nhau (<26 px) trong 0,3 s thành một số lớn; trần cùng lúc 60 (điện thoại 34); số nằm trên người chơi mờ còn 40%.
+- **Kiểm đồng bộ:** `cong_cu/claude/sync_qa.js <game> kiem|god` (+ `vfx_peaks.json`): đo lúc vung, khung chạm, lúc số sát thương hiện, lúc VFX sáng nhất. Đã chỉnh: đòn C chuyển khung chạm sang khung 4 (TC) và elip bật sớm 0,24 s (trước đó sát thương rơi 190–320 ms trước vệt sáng nhất); đòn A vệt bật at-0,02; Ngộ Không bổ: wk_arc nhỏ T 0,22; đâm: chớp gậy và va chạm sáng nhất ngay lúc trúng. Kết quả hiện tại: mọi đòn A/B/C và 3 đòn Ngộ Không lệch ≤ 76 ms.
+- Chưa kiểm đồng bộ bằng script: Q/F/X của Kiếm, Thổi Lông, Kim Cô Bổng mở rộng/khổng lồ, Hóa Thân.
