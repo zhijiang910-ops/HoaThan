@@ -96,3 +96,6 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - Làm trên nhánh `claude/relaxed-heisenberg-72j521`, push lên nhánh đó.
 - Không tạo PR nếu chủ game không yêu cầu.
 - Không ghi tên model vào commit.
+
+## Chốt 24/11 (sau góp ý): A-B-C là MỘT CHUỖI theo video Hovl
+Animation và VFX cũ (zs3/zs2, elip k5c_*) mày đã duyệt là đạt. Việc cần là đổi A, B, C thành một chuỗi liền như video: A = khuỵu → dựng → duỗi ngang (chạm) → kéo hông; B = quét từ sau lên → giơ cao; C = vung xuống (chạm, elip k5c_*) → thu. Làm bằng cách xếp lại 12 khung đã có trong `hero_*_ns.png` (hàng y=384/512), `NC`/`TA/TB/TC` trong `game/index.html`, không gọi thêm PixelLab. Các khung hc_* (VFX Hovl do PixelLab tạo) và bản C riêng trong `ANIMATION_A_B_C/*/C_hovl` chỉ để tham khảo, không dùng.

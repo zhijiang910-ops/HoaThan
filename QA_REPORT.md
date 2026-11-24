@@ -119,3 +119,7 @@ Timing giữ tổng 800 ms; **khung chạm C9 bắt đầu ở 560 ms (70%)** (H
 | Đúng Master | Đạt (màu 100% thuộc bảng Master, đáy chân 116–119) |
 | Cảm giác: HIT của C trễ hơn rất nhiều | HIT ở 0,58 s sau khi bắt đầu đòn (cũ 0,1 s), do khởi động dài như Hovl. DPS không đổi (chu kỳ 800 ms); cần chủ game cảm nhận |
 **Còn thiếu:** ít streak bên trong cung và ít tia lửa so với Hovl; chưa tạo VFX mới cho A, B (còn `zs3`, `zs2`); chưa có lớp bàn tay; Huyền Giáp vẫn khung cũ; chưa chơi thử trên iPhone.
+
+## Chuỗi A-B-C liền theo Hovl, dùng lại khung có sẵn (24/11/2026)
+Không gọi PixelLab. A 6 khung (580 ms, chạm A4), B 5 khung (550 ms, chạm B3), C 6 khung (800 ms, chạm C3). VFX trả về bản đã duyệt: zs3 (A), zs2 (B), elip k5c_* (C, sống 0,6 s, tan trước hết đòn). Đo 60 FPS nam và nữ: attack 0–583, attack2 583–1133, attack3 1133–1933 ms, không reset về idle, elip tan ở 1833 ms, không nhát dư. Ảnh/video: `QA_BEFORE_AFTER/CHUOI_ABC_*`.
+Còn lại: khung nối A→B và B→C dùng khung của các đòn khác nên có chỗ nhảy tư thế nhẹ; HIT mới (A 280 ms, B 170 ms, C 190 ms trong đòn) cần mày cảm nhận; chưa có lớp bàn tay; Huyền Giáp vẫn khung cũ.
