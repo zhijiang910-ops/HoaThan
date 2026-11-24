@@ -379,3 +379,9 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - Ngưỡng chọn tỉ lệ nguyên của trùm nâng từ 15% lên 20% (`espScale`). Diêm Vương hệ số 1,1 (cao 237 px, chiếm ~60% chiều cao iPhone ngang, to nhất; muốn nhỏ hơn thì giảm `ESPR.diemvuong`).
 - Ảnh mô phỏng iPhone DPR 3: `nguon/tham_chieu/trum_iphone_dpr3_sau_khi_sua.png`. PixelLab đợt này: +20; còn khoảng 2.413 lượt.
 
+## ĐỒNG BỘ 7 TRÙM LẦN 2 (24/11 đêm, chủ game: "chưa đồng bộ với Ngưu Đầu, Mã Diện, Hắc/Bạch Vô Thường"; Diêm Vương "áo bào đen, ngầu hơn")
+- **Đo được:** bản trước của Phán Quan, Mạnh Bà, Diêm Vương chỉ có ~62% đoạn màu rộng 1 px (khối 2×2 còn sót, trung bình 1,7 px/đoạn) so với 76–85% (1,23–1,45) của 4 trùm kia. Nguyên nhân: tao đưa PixelLab ảnh vẫn còn khối vuông 2×2 nên nó giữ khối.
+- **Cách làm đúng (bài học):** thu ảnh ChatGPT về độ phân giải thật (`NEAREST` ÷2), rồi phóng MƯỢT lên cỡ đích bằng `LANCZOS` (alpha cắt ngưỡng 110) để làm đầu vào `edit-images-v2`; prompt ghi rõ "NO 2x2 blocks, ultra-fine 1 px grid, rich shading 4–5 tones per material, giữ nguyên thiết kế". Script `nguon/pixellab/amgioi/gen_sync.py`, kết quả `sy/`. 10 lượt/con, 30 lượt (còn ~2.373).
+- **Sau khi vẽ lại:** Diêm Vương 190×245 (áo bào ĐEN thêu rồng vàng mảnh, áo choàng đen, mão lớn dải châu dài, mắt đỏ phát sáng, aura lửa đỏ đen, ESPR 1,07, `ET.diemvuong.r=58`), Phán Quan 145×188, Mạnh Bà 158×186 (ESPR ~0,94 để cao ~176); 76–84% đoạn 1 px, 85–100 màu, ngang 4 trùm kia. Ảnh: `nguon/tham_chieu/bay_trum_dong_bo_v2.png`, `dong_bo_v2.png`.
+- Các bản trước (`vt2/`, `dv/`) giữ để tham khảo, không dùng.
+
