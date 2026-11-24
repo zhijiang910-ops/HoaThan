@@ -1007,11 +1007,12 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .lbfoot{text-shadow:0 1px 2px #000,0 0 6px #000}.lbfoot .dim,.lbfoot .toggle{color:#d8cdb4!important}
 /* ===== tạo nhân vật 3 cột ===== */
 #create:not([hidden]){display:block!important;padding:0!important;overflow:hidden!important;background:radial-gradient(ellipse at 50% 30%,#2a1a10,#0a0604 75%)!important}
-.cx{position:absolute;inset:0;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;gap:12px;
+.cx{position:absolute;inset:0;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:10px;
  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));box-sizing:border-box}
 .cxp{min-width:0;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:10px 12px;background:linear-gradient(#1c1610f2,#0e0a07f2);box-shadow:inset 0 0 0 1px #0a0806,inset 0 0 0 2px #8a6a36,0 8px 24px rgba(0,0,0,.5)}
 .cxh{margin:4px 0 0;padding-bottom:3px;font:700 12px "Be Vietnam Pro",sans-serif;color:#c9a45e;border-bottom:1px solid #4a3a22;letter-spacing:.02em}
 .cxh.c{text-align:center}.cxh:first-child{margin-top:0}
+@media (max-height:420px){.cxR .cxwb img,.cxR .cxwb .gi{max-width:28px}.cxR .cxskd{min-height:0}.cxR .cxskr{gap:4px}}
 #crName{background:#0c0805;border:0;box-shadow:inset 0 0 0 1px #8a6a36;color:#ffe9b0;font:700 15px "Be Vietnam Pro",sans-serif;padding:7px 10px;outline:none;min-width:0}
 #crName:focus{box-shadow:inset 0 0 0 2px #e6c27a}
 .cxg{display:flex;gap:6px}
@@ -1059,8 +1060,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxskd{padding:6px 8px;background:rgba(0,0,0,.35);box-shadow:inset 0 0 0 1px #3a2e1c;min-height:64px}
 .cxskd b{display:block;font:700 13px "Be Vietnam Pro",sans-serif;color:#ffe08a}.cxskd small{display:block;font:600 10.5px "Be Vietnam Pro",sans-serif;color:#a8987a}
 .cxskd p{margin:3px 0 0;font:500 11.5px/1.35 "Be Vietnam Pro",sans-serif;color:#e0d4bc}
-.cxbar{grid-column:1/-1;display:flex;align-items:center;gap:12px}
-.cxbar #crGo{margin-left:auto}
+.cxbar{display:grid;gap:4px;margin-top:auto;padding-top:6px;flex-shrink:0}.cxbar #crGo{width:100%;min-width:0}.cxbar .crerr:empty{display:none}
+.cxR>*{flex-shrink:0}
 .cxbar .crerr{color:#ff8a70;font:700 13px "Be Vietnam Pro",sans-serif}
 #crGo{min-width:180px}#crGo:disabled{opacity:.45;cursor:not-allowed}
 @media (max-height:520px){
@@ -1078,11 +1079,11 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 }
 @media (max-height:360px){.cxinfo div:nth-child(n+4){display:none}}
 /* tạo nhân vật: nhân vật ở cột trái, giữa là tranh minh họa */
-.cx{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)!important}
+.cx{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,1fr)!important}
 .cxL .cxst{flex:1 1 0;min-height:90px;background:radial-gradient(ellipse at 50% 85%,#2a3a34,#0c0a08 70%)}
 .cxL > :not(.cxst){flex-shrink:0}
 .cxL #crPic{inset:0;margin:auto;width:100%;height:100%;object-fit:contain}
-.cxhr{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cxhr{display:flex;flex-direction:column;align-items:center;gap:5px;padding:3px 0 1px}
 .cxhr b{font:700 12px "Be Vietnam Pro",sans-serif;color:#ffe9b0;white-space:nowrap}
 .cxsw{gap:5px!important}
 .cxC{padding:0!important;overflow:hidden!important}
@@ -1423,7 +1424,7 @@ input,select,textarea,#crName{font-size:16px!important}
 <section id="create" class="screen" hidden>
  <div class="cx">
   <div class="cxp cxL">
-   <h3 class="cxh">Danh hiệu giang hồ</h3>
+   <label for="crName" class="cxh">Tên nhân vật</label>
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
    <h3 class="cxh">Chọn avatar</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn avatar nhân vật"></div>
@@ -1442,9 +1443,9 @@ input,select,textarea,#crName{font-size:16px!important}
    <h3 class="cxh">Binh khí</h3><div id="crWeapon" class="cxw"></div>
    <div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
    <h3 class="cxh">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd"></div>
+  <div class="cxbar"><span class="crerr" id="crErr" role="status"></span><button id="crGo" class="btn gold">Khởi hành</button></div>
   </div>
   <dialog id="crSceneDialog" class="crscene-dialog" aria-label="Tranh toàn cảnh"><img id="crSceneFull" alt=""><button id="crSceneClose" class="btn" type="button">Đóng</button></dialog>
-  <div class="cxbar"><span class="crerr" id="crErr"></span><button id="crGo" class="btn gold">Bước vào giang hồ</button></div>
  </div>
 </section>
 <section id="lobby" class="screen" hidden>
@@ -3833,7 +3834,7 @@ function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gende
  cr.avatars={nam:1,nu:1};
  if(P0)cr.avatars[cr.gender]=avatarIndex(P0.avatar);
  renderCreateAvatars();
- $('#crGo').textContent=P0?'Lưu và về sảnh':'Bước vào giang hồ';
+ $('#crGo').textContent=P0?'Lưu và về sảnh':'Khởi hành';
 cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
   clearInterval(window.__crh);let t=0;window.__crh=setInterval(()=>{if($('#create').hidden){clearInterval(window.__crh);return}crHero(t);t+=0.125},125)}
 function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);g.imageSmoothingEnabled=false;
