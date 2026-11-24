@@ -1,0 +1,119 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "set_arc",
+ "fps": 16,
+ "frame_ms": 63,
+ "frames": 12,
+ "loop": true,
+ "canvas": {
+  "w": 264,
+  "h": 139
+ },
+ "anchor": {
+  "kind": "origin",
+  "x": 132,
+  "y": 69
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 190,
+    "h": 80
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -96,
+    "y": -40
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 190,
+    "h": 80
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -96,
+    "y": -40
+   }
+  },
+  {
+   "name": "part-arcs",
+   "title": "the arcs part",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 190,
+    "h": 80
+   },
+   "sheets": [
+    {
+     "file": "part-arcs.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -96,
+    "y": -40
+   }
+  },
+  {
+   "name": "part-specks",
+   "title": "the specks part",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 44,
+    "h": 20
+   },
+   "sheets": [
+    {
+     "file": "part-specks.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -3,
+    "y": -8
+   }
+  }
+ ]
+}
