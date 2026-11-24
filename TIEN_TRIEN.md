@@ -13,13 +13,13 @@ Game vốn là bản Tây Du, đang chuyển chủ đề sang **khử tà diệt
 - Hệ thống: tối đa Lv200 và 12 phẩm (mở đến Lv70 và 7 phẩm), cường hóa, Tàng Bảo Các, rương Boss, tạo nhân vật có avatar, Luyện Công, Vượt Ải theo sao.
 - **2 map:** Hoang Thôn Nghĩa Địa (làng bỏ hoang phía tây, nghĩa địa phía đông, hàng đèn lồng ở giữa) và Cổ Miếu Hoang (một tượng Phật lớn ở chính điện, lư hương, sư tử đá, đèn đá dọc lối đi). Bố cục map xếp tay, không còn rải ngẫu nhiên. 4 map cũ đã xóa.
 - **Quái Âm Giới thay quái Tây Du:** Vong Hồn, Ma Trơi, Âm Binh (có animation PixelLab), Oan Hồn Xạ, Địa Ngục Khuyển, Quỷ Sai. Boss ải vẫn là Ngưu Ma Vương.
-- **Âm Giới 18 tầng: dữ liệu và cấu hình đã có** (7 map, 12 boss/mini-boss, quái theo chặng, bậc kích cỡ quái thường < Tinh Anh < mini-boss < trùm), chưa nối vào luồng chơi. Hình đã có: Ngưu Đầu, Mã Diện (PixelLab), Hắc/Bạch Vô Thường (thiết kế ChatGPT chuyển nét pixel). Brief và master để nhờ ChatGPT vẽ: `nguon/master_amgioi/`.
+- **Âm Giới 18 tầng: dữ liệu và cấu hình đã có** (7 map, 12 boss/mini-boss, quái theo chặng, bậc kích cỡ quái thường < Tinh Anh < mini-boss < trùm), chưa nối vào luồng chơi. Hình 7 trùm đã có: Ngưu Đầu, Mã Diện (PixelLab), Hắc/Bạch Vô Thường (thiết kế ChatGPT, PixelLab chuyển nét pixel), Mạnh Bà, Phán Quan, Diêm Vương (ChatGPT). Brief và master để nhờ ChatGPT vẽ: `nguon/master_amgioi/`.
 - Bản chơi thử: https://claude.ai/artifact/66MCZmMfKMjwuYrknQjNU1 (riêng tư, chủ game tự mở Share).
 - Code mới nhất ở nhánh `claude/youthful-fermat-6hovsq`.
 
 ## Việc còn dở
 1. **Hoạt động Âm Giới** chưa nối vào luồng chơi (chỉ có dữ liệu `AM_*`, `amFloor(n)`): 18 tầng địa ngục, 1/3/5 sao, 2 lượt mỗi ngày, chết là thua. Boss mốc: Ngưu Đầu và Mã Diện (tầng 3), Hắc Vô Thường (6), Bạch Vô Thường (9), Mạnh Bà (12), Phán Quan (15), Diêm Vương (18). Phần thưởng chưa chốt.
-2. **Boss Âm Giới:** còn thiếu hình Mạnh Bà, Phán Quan, Diêm Vương (đang mượn hình tạm); 5 mini-boss dùng hình Quỷ Sai/Ngưu Ma Vương; 6 quái thường mới chưa có. Các hình đã có nằm ở mục trên.
+2. **Boss Âm Giới:** cả 7 trùm đã có hình riêng; còn thiếu hình riêng cho 5 mini-boss (đang dùng hình Quỷ Sai/Ngưu Ma Vương) và 6 quái thường mới.
 3. **6 môn phái** (bản mới, đã có dữ liệu `SECTS` và 12 avatar nam/nữ, chưa vào luồng chơi): Mao Sơn Phái (Kiếm, đã có), Trảm Yêu Môn (Đao), Phục Ma Tự (Trượng), Thiên Cương Môn (Quyền), Huyền Linh Các (Quạt), Truy Hồn Cốc (Cung). Làm Đao trước.
 4. **Đổi chữ theo chủ đề** còn dở: mô tả kỹ năng, thần tướng, quái sự kiện, cốt truyện, tên màn, vật phẩm.
 5. **Cân bằng sát thương** để sau. Không tự chỉnh số khi chủ game chưa ra lệnh.
