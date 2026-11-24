@@ -3,7 +3,7 @@ Khung 0-5: tia sét dày gấp khúc đổi hình mỗi khung + chớp tròn d�
 import random,math
 from PIL import Image,ImageDraw,ImageFilter
 W,H=80,120;GX,GY=40,108;N=12;COLS=4
-def bolt_path(rnd,x0=40,y0=2,x1=GX,y1=GY,seg=9,amp=11):
+def bolt_path(rnd,x0=40,y0=2,x1=GX,y1=GY,seg=9,amp=9):
     pts=[(x0,y0)]
     for i in range(1,seg):
         t=i/seg;pts.append((x0+(x1-x0)*t+rnd.uniform(-amp,amp)*(1-0.3*t),y0+(y1-y0)*t))
@@ -23,12 +23,12 @@ def frame(f):
             for j in range(1,4):bp.append((bx+dx*j/3+rnd.uniform(-4,4),by+j*rnd.uniform(6,10)))
             branches.append(bp)
         glow=Image.new('L',(W,H),0);gd=ImageDraw.Draw(glow)
-        for pl,w in [(main,9)]+[(b,5) for b in branches]:draw_poly(gd,pl,w,255)
-        glow=glow.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(1.5))
-        g=Image.new('RGBA',(W,H),(40,120,255,0));g.putalpha(glow.point(lambda v:int(min(255,v*0.8*k))));layers.alpha_composite(g)
+        for pl,w in [(main,4)]+[(b,3) for b in branches]:draw_poly(gd,pl,w,255)
+        glow=glow.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
+        g=Image.new('RGBA',(W,H),(40,120,255,0));g.putalpha(glow.point(lambda v:int(min(255,v*0.45*k))));layers.alpha_composite(g)
         d=ImageDraw.Draw(layers)
-        for pl,w in [(main,6)]+[(b,3) for b in branches]:draw_poly(d,pl,w,(90,190,255,255))
-        for pl,w in [(main,3)]+[(b,1) for b in branches]:draw_poly(d,pl,w,(255,255,255,255))
+        for pl,w in [(main,3)]+[(b,2) for b in branches]:draw_poly(d,pl,w,(110,200,255,255))
+        for pl,w in [(main,1)]+[(b,1) for b in branches]:draw_poly(d,pl,w,(255,255,255,255))
     # chớp tròn dẹt dưới đất
     fl=Image.new('RGBA',(W,H),(0,0,0,0));fd=ImageDraw.Draw(fl)
     if f>=1:
