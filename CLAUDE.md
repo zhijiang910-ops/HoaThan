@@ -93,7 +93,7 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - Nhân vật: `game/assets/hero_nam.png`, `hero_nu.png`, ô 160×128. Frame PixelLab 128 canvas đặt lệch dx=16.
 
 ## Git
-- Làm trên nhánh `claude/relaxed-heisenberg-72j521`, push lên nhánh đó.
+- Làm trên nhánh `claude/jolly-ritchie-pitrnx` (phiên này), push lên nhánh đó. Nhánh `claude/relaxed-heisenberg-72j521` là của Codex/phiên khác, chỉ lấy file cần thiết.
 - Không tạo PR nếu chủ game không yêu cầu.
 - Không ghi tên model vào commit.
 
@@ -194,3 +194,4 @@ Nguyên nhân: `startTraining` gán `P0.gender=TR.gender` (giới tính thử �
 3. **PixelLab VFX pro** (18 lượt, 1 lần, `nguon/pixellab/c_pro/`): nhát chém cong dày nhiều dải, đầu sáng đuôi xanh đậm, `k5c_pro.png` (whole, 15 khung 196×200, anchor px:89 py:104). **CHƯA vào game** (chỉ thử ở bản sao): chờ chủ game chọn giữa bản code (1-2) và bản PixelLab. Bản PixelLab đẹp, sạch hơn nhưng là một vành đứng cố định phía trước (tự vẽ dần), không quét từ sau lưng như bản code.
 - (24/11 đêm) **Bản ghép đòn C ĐÃ VÀO GAME (chủ game duyệt):** vành PixelLab `k5c_pro` (T 0,5 s, bật 0,12 s trước chạm, `dx:26,dy:-48`, al 0,92) là vệt chính phía trước; elip code `k5c_behind/front` giữ làm sợi mảnh + đuôi tím + tia sao (T 0,64, tan sớm hơn, độ đục 0,85/0,7 để bớt chồng rối). Hoàn nguyên: xóa dòng `go('k5c_pro'...)` trong `comboFx` (không cần đổi ảnh).
 - (24/11 đêm) Bản ghép bị chê "2 VFX xếp chồng". Đã bỏ lớp code `k5c_behind/front` khỏi đòn C: chỉ còn **một vành PixelLab `k5c_pro`** (đuôi tô tím trực tiếp trong ảnh: hàm tô theo vị trí trên-trái; T 0,56 s, scale 1,25) + điểm chạm. Ảnh gốc PixelLab chưa tô: `nguon/pixellab/c_pro/k5c_pro.png`. Muốn quay lại bản code: thêm lại 2 dòng `go('k5c_behind'...)`, `go('k5c_front'...)`.
+- (24/11 đêm) Thêm lại **tia sao ở đầu vành** đòn C: vẽ thẳng vào các khung 3–9 của `k5c_pro.png` tại đầu mũi vành (khung 8–9 mờ 55%). Ảnh gốc chưa tô tím chưa vẽ tia: `nguon/pixellab/c_pro/k5c_pro.png`.
