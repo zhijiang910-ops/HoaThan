@@ -213,3 +213,7 @@ Gỡ hết `swhit` (đòn thường, điểm chạm C, Thiên Xu, Vạn Kiếm),
 
 ## Gộp nhánh ChatGPT (24/11 đêm)
 Đã gộp `origin/claude/relaxed-heisenberg-72j521` (tới `bbb5804`, 8 commit): nút quay lại ở Kho đồ và Vượt Ải trên điện thoại, thu gọn khung chi tiết Kho đồ, phóng biểu tượng vũ khí ô trang bị, bánh bao ăn dần (Điểm Tâm), 8 chân dung thần thoại (`assets/ui/ava_*.png`), tách biểu cảm Bạch Cốt Tinh/Đát Kỷ, khóa số kỹ năng thần tướng S–UR (docs `TONG_HOP_TINH_NANG.md`). Xung đột duy nhất: khung viền nhẹ tranh, giữ viền. Nhánh làm việc vẫn `claude/jolly-ritchie-pitrnx`.
+
+## R và Thiên Xu chỉnh (24/11 đêm)
+- **R Định Hải Trấn Thiên:** điểm chạm lệch vì gậy rơi chậm dần (`(1-fall)^3`) nên đứng yên trên đất ~0,2 s trước vụ nổ. Đổi thành rơi nhanh dần (`1-fall²`) để chạm đất đúng khung nổ (0,95 s); thêm 2 vòng xung kích (vàng ngoài, trắng trong) và chớp màn hình `G.flash 0,22`.
+- **Thiên Xu:** bỏ chớp chém `hitFx` và vòng sáng khi nổ (chủ game: chỉ cần sét va chạm); sét PixelLab trên quái to hơn (`sc:1.25`, `y:e.y-e.r*0.5`).
