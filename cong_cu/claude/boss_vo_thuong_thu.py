@@ -45,7 +45,7 @@ def bach():
     for c,k in enumerate([242,230,222]):o[...,c]=np.where(skin,a[...,c]*0.3+k*0.7,o[...,c])
     px=np.clip(o,0,255).astype(np.uint8)
     px[0:42,:,3]=0                      # xoá nón lá
-    px[0:43,:56,3]=0;px[0:43,85:,3]=0   # xoá nốt viền vành nón còn sót hai bên
+    px[0:44,:49,3]=0;px[0:43,49:56,3]=0;px[0:43,85:,3]=0   # xoá nốt viền vành nón còn sót hai bên
     im=Image.fromarray(px);d=ImageDraw.Draw(im)
     # đỉnh đầu (tóc đen) vì nón lá che mất phần này
     d.rectangle([58,37,79,43],fill=K);d.rectangle([59,38,78,42],fill=(26,26,34,255))
