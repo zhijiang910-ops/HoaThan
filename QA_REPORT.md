@@ -58,3 +58,18 @@ Kết luận: **không dùng được frame PixelLab này**. Theo luật: dừng
 | Kiếm một thanh, đúng tay | Đạt |
 | Chuyển động | C2–C3 nâng kiếm cao đọc rõ; C4 chém chéo xuống rõ; C5–C8 kiếm duỗi ngang (sweep đọc như duỗi tay, VFX phải kể phần quét) |
 | Lỗi còn lại | C5: mũi kiếm bị vỡ/nhòe (FAIL khung này); quần đen lộ nhẹ ở cổ chân C4–C7 cần kiểm 1× và phóng; C1/C12 chưa trùng tuyệt đối Master idle |
+
+## Bộ ứng viên A(7) B(7) C(12) nam và nữ — PixelLab thân KHÔNG kiếm + kiếm gắn theo khung xương (24/11/2026) — ỨNG VIÊN, CHƯA PASS
+Lý do đổi cách: tạo kèm kiếm bằng PixelLab cho thanh kiếm lúc nhòe, ngắn cụt, vỡ mũi hoặc biến mất (lần 3 + bộ thứ hai). Cách mới khớp kiến trúc game (vũ khí là lớp riêng, `WSOCK`): `first_frame` = khung idle của `hero_{nam,nu}_ns.png` (khớp Master 99,4% nam / 99,1% nữ pixel, chỉ khác kiếm), rig bỏ 3 khớp kiếm, mô tả "hands empty, no weapon"; vị trí chuôi, mũi, góc kiếm từng khung lấy từ khung xương (`socket.json`, hệ 128, góc độ; độ dài rig 24 nam / 30,8 nữ, ảnh kiếm game dài 28 / 32).
+File: `ANIMATION_A_B_C/{nam,nu}/{A,B,C}_ung_vien/` (frame 128×128 RGBA không kiếm + `socket.json` + `job.json`). Ảnh/video: `QA_BEFORE_AFTER/UNG_VIEN_ABC_{nam,nu}_sheet.png`, `UNG_VIEN_ABC_{nam,nu}_cham.mp4` (A→B→C×2, 8 khung/s, phóng 5×, kiếm vẽ bằng ảnh kiếm của game xoay theo socket).
+Tổng lượt PixelLab đã dùng cho nhánh combo hôm nay: 3 (thử 1) + 3 (thử 2) + 3 (thử 3) + 15 (bộ 2) + 18 (bộ 3) + 18 (bộ không kiếm, kể cả 9 lượt lãng phí do job nữ có kiếm đã gửi nhầm) ≈ 60.
+| Tiêu chí | Kết quả |
+|---|---|
+| Đúng Master (trang phục/màu/tóc) | Đạt cả 26×2 khung (nhìn 2× và đo bảng màu 100% thuộc Master, thô) |
+| Đáy chân | Nam 116–117, nữ 116–119 (Master 117/118): không trượt/nổi rõ; C nữ có biên 119 cần kiểm |
+| Một thanh kiếm, độ dài cố định | Đạt: vẽ từ socket, mọi khung cùng độ dài |
+| Kiếm mất / nhòe / vỡ mũi | Hết (kiếm không do PixelLab vẽ) |
+| Đọc rõ chuyển động | A: nâng cao (A2) → chém chéo xuống (A3–A5) → thu; B: kéo kiếm ra sau (B2–B3) → quét ra trước (B5) → thu; C: nâng cao (C2–C3) → chém (C4) → duỗi quét (C5–C8) → thu |
+| **Nữ C4: FAIL** | Có hình lưỡi liềm xám hallucinate phía trên đầu |
+| Tay cầm kiếm | Chưa có lớp nắm tay: kiếm vẽ đè lên bàn tay, chuôi chưa che bởi ngón; cần lớp `_hand` mới |
+| Chưa làm | Đưa vào game (WSOCK + sheet), HIT/timing, VFX mới, hướng trái, so +0 và +6, video 60 FPS trong game |
