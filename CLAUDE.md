@@ -136,3 +136,8 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 - Nam: khung trúng đòn 2-3 (`1280,128`, `1440,128`) kiếm thò ra từ sau hông, tay không cầm chuôi. Đã đổi socket sang 'f', góc 29°/30° như khung 1 và 4 (`WSOCK.nam`). Các khung khác của Nam/Nữ đã kiểm (chuôi nằm trên thân).
 - Hồi Phong: kiếm bay nhỏ lại ~19% (`58/WPN[..][0]`, trước 72).
 - **Nữ Huyền Giáp (`hero_nu_hg.png`) mất cổ + cổ áo**: giáp bắt đầu ngay dưới cằm, đầu như đặt lên vai. Chưa sửa vì luật không vá khung; cách đúng là tạo lại bằng `transfer-outfit-v2`.
+
+## Đồng bộ màu A/B/C, elip C dày, bàn tay (24/11)
+- `wx_slash` (đòn A) đổi sang bảng màu của `zs2` (đòn B), bớt đậm (gốc: `nguon/vfx_goc/wx_slash_goc.png`). Elip C (`k5c_behind/front`) dày thêm ~6px bằng chồng bản dịch ±1..3px trong từng ô (gốc: `nguon/vfx_goc/k5c_*_goc.png`).
+- Lớp tay `hero_nam_hand.png` và `hero_nam_hg_hand.png`: thêm bàn tay ở ô `1280,128` và `1440,128` (chép từ ô `1120,128`). Hai file này vì thế khác Master khóa (chủ game đã cho vẽ thêm tay). `hero_*_ns.png`, `hero_*.png`, `hero_nu_hand.png` vẫn trùng hash Master.
+- Kiểm đối chiếu Master: sheet thân không kiếm của Nam/Nữ trùng Master. Nữ Huyền Giáp mất cổ/cổ áo (chưa sửa). Kiếm dùng chung bản nữ dài 32 so với kiếm Master của Nam ~28.
