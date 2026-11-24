@@ -1,0 +1,339 @@
+{
+ "frames": [
+  {
+   "filename": "hovl-c2 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 1.png",
+   "frame": {
+    "x": 320,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 2.png",
+   "frame": {
+    "x": 640,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 3.png",
+   "frame": {
+    "x": 960,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 4.png",
+   "frame": {
+    "x": 0,
+    "y": 220,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 5.png",
+   "frame": {
+    "x": 320,
+    "y": 220,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 6.png",
+   "frame": {
+    "x": 640,
+    "y": 220,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 7.png",
+   "frame": {
+    "x": 960,
+    "y": 220,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 8.png",
+   "frame": {
+    "x": 0,
+    "y": 440,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 9.png",
+   "frame": {
+    "x": 320,
+    "y": 440,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 10.png",
+   "frame": {
+    "x": 640,
+    "y": 440,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  },
+  {
+   "filename": "hovl-c2 11.png",
+   "frame": {
+    "x": 960,
+    "y": 440,
+    "w": 320,
+    "h": 220
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 220
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 220
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7454545454545455
+   },
+   "duration": 42
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "hovl-c2.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1280,
+   "h": 660
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "feet",
+   "x": 160,
+   "y": 164
+  },
+  "frameTags": [
+   {
+    "name": "hovl-c2",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ]
+ }
+}

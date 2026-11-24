@@ -1,0 +1,217 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "hovl_c2",
+ "fps": 24,
+ "frame_ms": 42,
+ "frames": 12,
+ "loop": false,
+ "canvas": {
+  "w": 320,
+  "h": 220
+ },
+ "anchor": {
+  "kind": "feet",
+  "x": 160,
+  "y": 164
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 11,
+   "frame": {
+    "w": 279,
+    "h": 108
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 11,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -130,
+    "y": -69
+   }
+  },
+  {
+   "name": "whole-with-sprite",
+   "title": "the whole effect with the sprite in it",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 279,
+    "h": 145
+   },
+   "sheets": [
+    {
+     "file": "whole-with-sprite.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -130,
+    "y": -106
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 11,
+   "frame": {
+    "w": 279,
+    "h": 55
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 11,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -130,
+    "y": -69
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 2,
+   "frames": 9,
+   "frame": {
+    "w": 275,
+    "h": 57
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 9,
+     "columns": 3,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -126,
+    "y": -18
+   }
+  },
+  {
+   "name": "part-slash",
+   "title": "the slash part",
+   "depth": "both",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 11,
+   "frame": {
+    "w": 270,
+    "h": 108
+   },
+   "sheets": [
+    {
+     "file": "part-slash.png",
+     "first_frame": 0,
+     "frames": 11,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -121,
+    "y": -69
+   }
+  },
+  {
+   "name": "part-flash",
+   "title": "the flash part",
+   "depth": "behind",
+   "loop": false,
+   "start_frame": 0,
+   "frames": 3,
+   "frame": {
+    "w": 18,
+    "h": 8
+   },
+   "sheets": [
+    {
+     "file": "part-flash.png",
+     "first_frame": 0,
+     "frames": 3,
+     "columns": 2,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": -130,
+    "y": -41
+   }
+  },
+  {
+   "name": "part-sparks",
+   "title": "the sparks part, in place",
+   "role": "projectile",
+   "depth": "front",
+   "loop": false,
+   "start_frame": 2,
+   "frames": 5,
+   "frame": {
+    "w": 11,
+    "h": 12
+   },
+   "sheets": [
+    {
+     "file": "part-sparks.png",
+     "first_frame": 0,
+     "frames": 5,
+     "columns": 3,
+     "rows": 2
+    }
+   ],
+   "offset": {
+    "x": -130,
+    "y": -46
+   },
+   "moves": [
+    {
+     "x": 152.09,
+     "y": 67.87
+    },
+    {
+     "x": 0,
+     "y": 46
+    },
+    {
+     "x": 0,
+     "y": 46
+    },
+    {
+     "x": 0,
+     "y": 46
+    },
+    {
+     "x": 0,
+     "y": 46
+    }
+   ]
+  }
+ ]
+}

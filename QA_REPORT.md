@@ -105,3 +105,17 @@ Bằng chứng: `AFTER_ABC_game_{nam,nu}_sheet.png`, `AFTER_ABC_game_khung_cham_
 | Asset VFX | 40 mục SPX vs file | Không thiếu/hỏng kích thước |
 | Soak 3600 tick nam+nữ, bấm Q/F/X + click ngắm | Lỗi script | 0 |
 **Chưa kiểm:** Safari iPhone thật, Ngộ Không khi quay trái, bộ Huyền Giáp với combo mới, chạy với quái tinh anh/boss.
+
+## Đòn C theo Hovl: pose mới + VFX elip mới (24/11/2026) — ỨNG VIÊN trong game, chưa tuyên bố PASS
+Nguồn: bản quay màn hình Hovl của chủ game (`nguon/tham_chieu/hovl/MOTION_ANALYSIS.md`). Pose C dựng lại bám chuỗi Hovl: khuỵu thấp kiếm sau hông → đứng dậy kiếm dựng → duỗi ngang → kéo về hông → giơ cao sau lưng → vung xuống (chạm C9) → thu. Chân khép, thân trên làm chuyển động. PixelLab thân không kiếm (nam seed 51, nữ seed 52, 3 lượt mỗi giới), kiếm gắn socket.
+VFX: PixelLab VFX creator. Lần 1 (lite, 2 lượt) FAIL: mỏng, nhỏ. Lần 2 (pro, 12 lượt) đạt: cung elip ngang to (275×106), dày tới ~18 px, đầu nhọn, vẽ dần theo chiều quét rồi mờ dần, thân dày đuôi thuôn, lõi trắng viền xanh. Hai lớp `hc_behind`/`hc_front` (12 khung) thay `k5c_*`.
+Timing giữ tổng 800 ms; **khung chạm C9 bắt đầu ở 560 ms (70%)** (Hovl ~77%) để VFX 0,28 s kết thúc đúng lúc hết đòn.
+| Tiêu chí | Kết quả (đo 60 FPS, nam và nữ) |
+|---|---|
+| Một elip duy nhất, không nhát chém dư | Đạt (fx trong C: chỉ `hc_behind`, `hc_front`, tia trúng) |
+| Elip tan trước khi hết đòn | Đạt: C+520..800 ms, đòn kết 800 ms |
+| Elip vẽ dần, đầu nhọn, dày | Đạt ở ảnh QA |
+| Pose đọc ra chuỗi Hovl | Đạt trên 12 khung (xem `AFTER_C_hovl_*`) |
+| Đúng Master | Đạt (màu 100% thuộc bảng Master, đáy chân 116–119) |
+| Cảm giác: HIT của C trễ hơn rất nhiều | HIT ở 0,58 s sau khi bắt đầu đòn (cũ 0,1 s), do khởi động dài như Hovl. DPS không đổi (chu kỳ 800 ms); cần chủ game cảm nhận |
+**Còn thiếu:** ít streak bên trong cung và ít tia lửa so với Hovl; chưa tạo VFX mới cho A, B (còn `zs3`, `zs2`); chưa có lớp bàn tay; Huyền Giáp vẫn khung cũ; chưa chơi thử trên iPhone.

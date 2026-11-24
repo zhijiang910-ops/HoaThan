@@ -8,7 +8,7 @@
  "khung_cham": {
   "A": 4,
   "B": 5,
-  "C": 4
+  "C": 9
  },
  "luu_y": "Tổng 580/550/800 ms giữ như cũ nên nhịp đánh/DPS không đổi; HIT tính theo tỷ lệ khung chạm so với tổng thời lượng.",
  "vfx": {
@@ -19,7 +19,7 @@
    "zs2": "bật trước khung chạm 0,16 s, T 0,38, tỉ lệ 1,3"
   },
   "C": {
-   "k5c_behind+k5c_front": "bật đúng khung chạm, T 0,5 s, fade 0,2, cùng một timeline (đã bỏ zs1 độc lập)"
+   "hc_behind+hc_front": "PixelLab VFX creator (pro) theo Hovl: elip ngang một cung dày, đầu nhọn vẽ dần, đuôi thuôn; bật trước khung chạm 0,04 s, T 0,28 s, tỉ lệ 0,9, fade 0,1; hai lớp 12 khung cùng timeline"
   }
  },
  "gioi": {
@@ -231,7 +231,7 @@
     ]
    },
    "C": {
-    "ten": "Phá Thế Trảm (+6): một lần chém quét, một elip, thu thế",
+    "ten": "Phá Thế Trảm (+6) theo Hovl: tích lực thấp, kiếm dựng, duỗi ngang, kéo hông, giơ cao, vung xuống chạm, thu thế",
     "frames": [
      {
       "o": [
@@ -241,10 +241,10 @@
       "ms": 70,
       "hit": false,
       "grip_cell": [
-       100.9,
-       55.3
+       74.9,
+       64.3
       ],
-      "angle": 20.0,
+      "angle": 165.0,
       "layer": "f"
      },
      {
@@ -252,13 +252,13 @@
        2400,
        384
       ],
-      "ms": 80,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       91.4,
-       33.3
+       73.4,
+       66.3
       ],
-      "angle": -100.0,
+      "angle": 170.0,
       "layer": "f"
      },
      {
@@ -269,10 +269,10 @@
       "ms": 60,
       "hit": false,
       "grip_cell": [
-       100.4,
-       41.3
+       91.9,
+       40.3
       ],
-      "angle": -55.0,
+      "angle": -90.0,
       "layer": "f"
      },
      {
@@ -280,13 +280,13 @@
        2720,
        384
       ],
-      "ms": 60,
-      "hit": true,
+      "ms": 50,
+      "hit": false,
       "grip_cell": [
-       107.4,
-       62.3
+       109.9,
+       54.3
       ],
-      "angle": 45.0,
+      "angle": 0.0,
       "layer": "f"
      },
      {
@@ -297,10 +297,10 @@
       "ms": 60,
       "hit": false,
       "grip_cell": [
-       111.9,
-       60.3
+       77.9,
+       64.3
       ],
-      "angle": 10.0,
+      "angle": 160.0,
       "layer": "f"
      },
      {
@@ -311,10 +311,10 @@
       "ms": 60,
       "hit": false,
       "grip_cell": [
-       112.9,
-       56.3
+       83.4,
+       33.3
       ],
-      "angle": 0.0,
+      "angle": -115.0,
       "layer": "f"
      },
      {
@@ -322,13 +322,13 @@
        3200,
        384
       ],
-      "ms": 60,
+      "ms": 100,
       "hit": false,
       "grip_cell": [
-       112.4,
-       55.3
+       86.4,
+       31.3
       ],
-      "angle": -4.0,
+      "angle": -100.0,
       "layer": "f"
      },
      {
@@ -336,13 +336,13 @@
        3360,
        384
       ],
-      "ms": 50,
+      "ms": 100,
       "hit": false,
       "grip_cell": [
-       109.4,
-       51.3
+       104.9,
+       53.3
       ],
-      "angle": -10.0,
+      "angle": 10.0,
       "layer": "f"
      },
      {
@@ -351,12 +351,12 @@
        384
       ],
       "ms": 60,
-      "hit": false,
+      "hit": true,
       "grip_cell": [
-       104.9,
-       55.3
+       109.4,
+       65.3
       ],
-      "angle": 10.0,
+      "angle": 55.0,
       "layer": "f"
      },
      {
@@ -364,13 +364,13 @@
        3680,
        384
       ],
-      "ms": 70,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       103.9,
-       57.3
+       105.9,
+       69.3
       ],
-      "angle": 25.0,
+      "angle": 75.0,
       "layer": "f"
      },
      {
@@ -378,13 +378,13 @@
        0,
        512
       ],
-      "ms": 80,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       102.4,
-       56.3
+       104.4,
+       59.3
       ],
-      "angle": 30.0,
+      "angle": 35.0,
       "layer": "f"
      },
      {
@@ -392,10 +392,10 @@
        160,
        512
       ],
-      "ms": 90,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       102.9,
+       103.4,
        54.3
       ],
       "angle": 15.0,
@@ -612,7 +612,7 @@
     ]
    },
    "C": {
-    "ten": "Phá Thế Trảm (+6): một lần chém quét, một elip, thu thế",
+    "ten": "Phá Thế Trảm (+6) theo Hovl: tích lực thấp, kiếm dựng, duỗi ngang, kéo hông, giơ cao, vung xuống chạm, thu thế",
     "frames": [
      {
       "o": [
@@ -622,10 +622,10 @@
       "ms": 70,
       "hit": false,
       "grip_cell": [
-       99.6,
-       57.0
+       72.8,
+       66.0
       ],
-      "angle": 20.0,
+      "angle": 165.0,
       "layer": "f"
      },
      {
@@ -633,13 +633,13 @@
        2400,
        384
       ],
-      "ms": 80,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       88.9,
-       35.0
+       71.0,
+       68.0
       ],
-      "angle": -100.0,
+      "angle": 170.0,
       "layer": "f"
      },
      {
@@ -650,10 +650,10 @@
       "ms": 60,
       "hit": false,
       "grip_cell": [
-       99.5,
-       43.0
+       90.6,
+       42.0
       ],
-      "angle": -55.0,
+      "angle": -90.0,
       "layer": "f"
      },
      {
@@ -661,13 +661,13 @@
        2720,
        384
       ],
-      "ms": 60,
-      "hit": true,
+      "ms": 50,
+      "hit": false,
       "grip_cell": [
-       108.1,
-       64.0
+       109.4,
+       56.0
       ],
-      "angle": 45.0,
+      "angle": 0.0,
       "layer": "f"
      },
      {
@@ -678,10 +678,10 @@
       "ms": 60,
       "hit": false,
       "grip_cell": [
-       112.2,
-       62.0
+       75.8,
+       66.0
       ],
-      "angle": 10.0,
+      "angle": 160.0,
       "layer": "f"
      },
      {
@@ -692,10 +692,10 @@
       "ms": 60,
       "hit": false,
       "grip_cell": [
-       113.2,
-       58.0
+       80.9,
+       35.0
       ],
-      "angle": 0.0,
+      "angle": -115.0,
       "layer": "f"
      },
      {
@@ -703,13 +703,13 @@
        3200,
        384
       ],
-      "ms": 60,
+      "ms": 100,
       "hit": false,
       "grip_cell": [
-       112.3,
-       57.0
+       83.9,
+       33.0
       ],
-      "angle": -4.0,
+      "angle": -100.0,
       "layer": "f"
      },
      {
@@ -717,13 +717,13 @@
        3360,
        384
       ],
-      "ms": 50,
+      "ms": 100,
       "hit": false,
       "grip_cell": [
-       109.4,
-       53.0
+       105.2,
+       55.0
       ],
-      "angle": -10.0,
+      "angle": 10.0,
       "layer": "f"
      },
      {
@@ -732,12 +732,12 @@
        384
       ],
       "ms": 60,
-      "hit": false,
+      "hit": true,
       "grip_cell": [
-       104.4,
-       57.0
+       111.0,
+       67.0
       ],
-      "angle": 10.0,
+      "angle": 55.0,
       "layer": "f"
      },
      {
@@ -745,13 +745,13 @@
        3680,
        384
       ],
-      "ms": 70,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       103.4,
-       59.0
+       107.0,
+       71.0
       ],
-      "angle": 25.0,
+      "angle": 75.0,
       "layer": "f"
      },
      {
@@ -759,13 +759,13 @@
        0,
        512
       ],
-      "ms": 80,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       101.5,
-       58.0
+       104.3,
+       61.0
       ],
-      "angle": 30.0,
+      "angle": 35.0,
       "layer": "f"
      },
      {
@@ -773,10 +773,10 @@
        160,
        512
       ],
-      "ms": 90,
+      "ms": 60,
       "hit": false,
       "grip_cell": [
-       101.6,
+       102.5,
        56.0
       ],
       "angle": 15.0,
