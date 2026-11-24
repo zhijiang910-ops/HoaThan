@@ -44,7 +44,9 @@
 
 ## C. Thiết kế ĐÃ CHỐT nhưng CHƯA triển khai đầy đủ
 
-### C1. Rương Boss và quyền nhận thưởng
+### C1. Rương Boss và quyền nhận thưởng — ĐÃ TRIỂN KHAI (24/11, Codex + Claude)
+- **Trạng thái code:** hạ Boss gọi `recordBossVictory()`: ghi hoàn thành ải/mở sao và lưu rương chờ `save.bossChest` (thưởng roll sẵn, một rương duy nhất). Nhận tại màn rương hoặc nút "Rương Boss chờ nhận" ở sảnh (`claimChest`), trừ 15 thể lực lúc nhận, xóa rương ngay để không nhận trùng. Đã bỏ nút "Bỏ qua". Đang có rương chờ mà hạ Boss lần nữa: sao vẫn mở nhưng thưởng mới không cộng dồn (có báo trên màn hình và ở sảnh). Checkpoint `cp.chestDone` = đã hạ Boss nhưng chưa kết toán: bấm "Tiếp tục" hoặc "Vượt Ải" ở sảnh sẽ kết toán ải đó (Tiên ngọc, số lần thắng, EXP) trước. Đã QA bằng Playwright; chưa thử trên Safari iPhone thật và đoạn Boss chết → rương rơi → mở trong trận.
+- **Yêu cầu thiết kế gốc (giữ để đối chiếu):**
 - Hạ Boss hoàn thành ải/mở sao ngay cả khi thiếu thể lực. Mở rương tốn **15 thể lực** khi **nhận thưởng**.
 - Thiếu thể lực: lưu **một quyền nhận rương chờ hợp lệ**, đủ thể lực nhận sau mà **không đánh lại Boss**. Không để nút Bỏ qua làm mất quyền nhận; chống nhận trùng và farm tài nguyên vô hạn.
 - Giữ bảng `CHEST_T` đang có: 4 Huyền Thiết chắc chắn, lượt dược liệu, vật phẩm/bí tịch theo sao; tỷ lệ bí tịch ★1..★5 = **6/8/10/12/15%**. Thưởng đầu tách thưởng farm.

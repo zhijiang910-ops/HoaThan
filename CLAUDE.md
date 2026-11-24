@@ -55,6 +55,10 @@ Lịch sử cũ hơn: `BAT_DAU_CLAUDE.md`, `TONG_HOP_TINH_NANG.md`, `tai_lieu/`.
 - **Luyện Công** có nút "Áo" và "Kiếm" để thử nhanh (gồm cả Thương và Tay không).
 - **Thương / Song Quyền (23/11):** đã có nhân vật pixel (đứng, chạy, lướt, trúng đòn, ngã) dùng chung sheet không kiếm. Thương = ảnh `wpn/thuong1.png` (cầm ở 40% cán), Song Quyền = tay không (`WCLASS_ART`). **Chưa có động tác đánh** (chủ game dặn để sau): khi đánh vẫn giữ tư thế đứng/chạy. Song Quyền chưa có trong `WEAPONS` (chưa có bộ chiêu). Phác thảo combo Song Quyền A/B/C đã gửi: `cong_cu/claude/quyen_sketch.py`.
 
+## Cập nhật 24/11 (Codex + Claude)
+- **Rương Boss chờ nhận ĐÃ LÀM:** `recordBossVictory`, `showBossChest`, `claimChest`, nút `#lbBossChest` ở sảnh, `save.bossChest` (một rương, thưởng roll sẵn, trừ 15 thể lực lúc nhận). Hạ Boss lần nữa khi đang có rương chờ thì thưởng mới không cộng dồn. `cp.chestDone` = đã hạ Boss chưa kết toán; "Tiếp tục" hoặc "Vượt Ải" ở sảnh sẽ kết toán trước.
+- **Tạo nhân vật:** chọn avatar (8 mẫu mỗi giới, `portraits/avatar-*.webp`, `profile.avatar`), tranh cảnh theo avatar có xem toàn cảnh, nút "Thử chiêu" (`startTraining(true)`, `G.createPreview`), cột Binh khí bên phải. Nguồn gốc ảnh avatar/tranh cảnh cần chủ game xác nhận.
+
 ## Đã chốt, CHƯA làm vào game (việc tiếp theo)
 1. **Thêm các bộ đồ khác** (đề xuất: Kim Lũ Y, Huyết Ma Bào) + hiệu ứng bộ mốc 2/4/6 món (nên đổi lối chơi). Mỗi bộ ~330 lượt PixelLab cho cả nam và nữ.
 2. Thêm dáng vũ khí (mỗi cây 1 lượt, pixflux, có thể lấy icon gói Wuxia `UI/Items_64` làm mẫu).

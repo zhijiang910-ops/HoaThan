@@ -3631,7 +3631,7 @@ function showBossChest(reward){
  $('#chestTitle').textContent='Bảo rương · Tuyết Sơn '+stars(reward?.star||G.star);
  $('#chestSub').textContent=reward
   ?'Nhận thưởng tốn '+CHEST_STA+' thể lực. Đang có '+v+'/'+STA.max+'.'+(can?'':' Rương được giữ để nhận sau tại sảnh.')
-  :'Đã có rương Boss chờ nhận tại sảnh. Lượt này giữ nguyên rương cũ.';
+  :'Đang có rương Boss chờ nhận tại sảnh nên thưởng rương lượt này không cộng dồn. Ải vẫn được ghi hoàn thành. Hãy nhận rương cũ trước khi hạ Boss lần nữa.';
  $('#lootList').innerHTML=reward?`<div class="claim"><div class="dim sm">${dropTableTxt(reward.star)}</div><div class="cbtns"><button class="btn gold" id="claimBtn" ${can?'':'disabled'}>Nhận thưởng · −${CHEST_STA} thể lực</button></div></div>`:'';
  if(reward)$('#claimBtn').onclick=claimChest;
 }
@@ -3912,8 +3912,8 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();G=null;document.
  const MP=MAPS.tuyet;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
  giveStarterSword();
  $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"><i>${t.g}</i><b>${t.n}</b><small>${t.st()}</small></button>`).join('');
- {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?'Tuyết Sơn '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
- $('#lbGoS').textContent='Tuyết Sơn · đã mở '+stars(rprog().star);
+ {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?'Tuyết Sơn '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss · bấm để kết toán':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
+ $('#lbGoS').textContent=save.bossChest?'Có rương Boss chờ: nhận trước khi hạ Boss lần nữa':'Tuyết Sơn · đã mở '+stars(rprog().star);
  $('#lbRes').textContent='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;
  lobbyTick();setTimeout(lobbyPics,350);setTimeout(lobbyPics,1500);clearInterval(window.__lbh);window.__lbh=setInterval(()=>{if($('#lobby').hidden){clearInterval(window.__lbh);return}lobbyHero()},125);clearInterval(lbTimer);lbTimer=setInterval(()=>{if($('#lobby').hidden){clearInterval(lbTimer);return}lobbyTick()},1000)}
 function dimCanvas(cn){const g=cn.getContext('2d'),a={lbBg:.58}[cn.id]||0;if(!a)return;g.save();g.setTransform(1,0,0,1,0,0);g.fillStyle='rgba(6,4,3,'+a+')';g.fillRect(0,0,cn.width,cn.height);g.restore()}
@@ -3934,7 +3934,7 @@ $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)
  const T=LBT.find(x=>x.k===k);lobbyToast(T.n+(T.off?': cần máy chủ trực tuyến, sẽ mở khi có máy chủ.':': đang xây dựng, sẽ mở ở bản sau.'))});
 let lbToastT=0;function lobbyToast(t){let d=$('#lbToast');if(!d){d=document.createElement('div');d.id='lbToast';$('#lobby').appendChild(d)}d.textContent=t;d.classList.add('on');clearTimeout(lbToastT);lbToastT=setTimeout(()=>d.classList.remove('on'),2200)}
 $('#lbSwap').addEventListener('click',e=>{e.stopPropagation();openCreate()});
-$('#lbGo').addEventListener('click',()=>{showOnly('menu');buildMenu();paintMap()});
+$('#lbGo').addEventListener('click',()=>{if(save.cp&&save.cp.chestDone){lobbyToast('Kết toán ải vừa thắng trước khi vào ải mới');resumeCP();return}showOnly('menu');buildMenu();paintMap()});
 $('#lbBossChest').addEventListener('click',()=>{
  if(!save.bossChest)return;
  showOnly('chest');
