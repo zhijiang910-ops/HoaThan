@@ -1838,9 +1838,29 @@ for(const k in MM){const i=new Image();i.onload=()=>{mapLoad++;if(!G&&mapLoad%8=
 const mok=k=>MIMG[k]&&MIMG[k].complete&&MIMG[k].naturalWidth>0;
 const MAPS={
  amdia:{name:'Hoang Thôn Nghĩa Địa',zh:'荒村義地',desc:'Thôn trang bỏ hoang bên nghĩa địa: nhà đổ nát, bia mộ, quan tài đỏ và đèn lồng trắng leo lét. Âm khí nặng, quỷ hồn lảng vảng.',ground:'g_amdia',patch:'g_amdia_co',edge:'#12100f',dens:1.7,
-  border:['Am_caykho1','Am_caykho2','Am_caykho1','Am_denlong2','Am_caykho2','Am_nha2'],inner:[['Am_nha1',3],['Am_nha2',3],['Am_quantai1',6],['Am_quantai2',5],['Am_quantai3',4],['Am_bia1',12],['Am_bia2',8],['Am_denlong',14],['Am_denlong2',3],['Am_caykho1',6],['Am_caykho2',6],['City_wood_fence',9],['Forest_reeds',12],['City_clay_jar',4],['City_wood_cart',2]]},
+  border:['Am_caykho1','Am_caykho2','Am_caykho1','Am_denlong2','Am_caykho2','Am_nha2'],inner:[['Am_caykho1',3],['Am_caykho2',3],['Forest_reeds',5],['Am_bia2',2]],
+  /* bố cục 24/11: làng bỏ hoang ở phía tây, nghĩa địa ở phía đông, đường đèn lồng ở giữa */
+  layout(add){
+   add('Am_nha1',480,560,1.25);add('Am_nha2',520,1140,1.25);add('Am_nha1',470,1730,1.25);add('Am_nha2',960,400,1.15);add('Am_nha1',980,1900,1.15);
+   for(let x=330;x<=640;x+=62)add('City_wood_fence',x,880,1);
+   add('Am_denlong',720,820);add('Am_denlong',720,1460);add('City_clay_jar',700,640);add('City_clay_jar',690,1250);add('City_wood_cart',800,1720);add('City_clay_jar',300,1400);
+   for(let x=900;x<=2300;x+=250){if(Math.abs(x-1600)<180)continue;add('Am_denlong',x,1000)}
+   for(let r=0;r<5;r++)for(let c=0;c<4;c++){if(Math.random()<0.12)continue;add((r+c)%2?'Am_bia2':'Am_bia1',2250+c*190,620+r*210,1,16)}
+   add('Am_quantai1',2220,1780);add('Am_quantai2',2480,1800);add('Am_quantai3',2740,1760);add('Am_quantai1',860,2000,1);
+   add('Am_caykho1',2950,500,1.2);add('Am_caykho2',2950,1050);add('Am_caykho1',2950,1650,1.2);add('Am_caykho2',2200,400);add('Am_caykho1',1600,320,1.2);add('Am_caykho2',1600,1990);add('Am_caykho1',300,420,1.2);add('Am_caykho2',300,1960);
+   add('Am_denlong2',2150,1150)}},
  mieu:{name:'Cổ Miếu Hoang',zh:'古廟荒',desc:'Ngôi cổ miếu bị bỏ hoang trên đồi, tượng Phật phủ rêu, lư hương nguội lạnh, phướn bùa vàng rách và cột đá quấn dải đỏ. Nơi tà khí tụ lại.',ground:'g_mieu',patch:null,edge:'#0e0f13',dens:1.7,
-  border:['Mi_cayphong','Mi_cotda','Mi_denda','Mi_cayphong','Mi_phuon','Mi_cotda'],inner:[['Forest_pavilion',1],['Mi_tuongphat',5],['Mi_luhuong',5],['Mi_phuon',9],['Mi_cotda',10],['Mi_denda',8],['Mi_cayphong',4],['Forest_stone_shrine',3],['City_stone_lion',4],['City_stone_stele',5],['Forest_reeds',6],['Forest_stone_lantern',4]]},
+  border:['Mi_cayphong','Mi_cotda','Mi_denda','Mi_cayphong','Mi_phuon','Mi_cotda'],inner:[['Forest_reeds',3],['Mi_phuon',2],['Mi_cayphong',2]],
+  /* bố cục 24/11: một tượng Phật lớn ở chính điện phía bắc, lư hương + sư tử trước tượng, hai hàng đèn đá dọc lối đi */
+  layout(add){
+   add('Mi_tuongphat',1600,650,3.6);add('Mi_luhuong',1600,820,1.7);
+   add('City_stone_lion',1450,800,1.9);add('City_stone_lion',1750,800,1.9);
+   add('Mi_phuon',1280,720,1.4);add('Mi_phuon',1920,720,1.4);
+   add('Mi_cotda',1250,980,1.3);add('Mi_cotda',1950,980,1.3);add('Mi_cotda',1250,1560,1.3);add('Mi_cotda',1950,1560,1.3);
+   for(let y=1000;y<=2000;y+=200){if(y>1060&&y<1260)continue;add('Mi_denda',1410,y);add('Mi_denda',1790,y)}
+   add('Forest_pavilion',560,1150,1.25);add('Forest_stone_shrine',2650,1150,1.7);
+   add('City_stone_stele',900,640);add('City_stone_stele',2300,640);add('City_stone_stele',900,1750);add('City_stone_stele',2300,1750);
+   add('Mi_cayphong',480,480,1.15);add('Mi_cayphong',2720,480,1.15);add('Mi_cayphong',480,1950,1.15);add('Mi_cayphong',2720,1950,1.15);add('Mi_cayphong',1000,2000);add('Mi_cayphong',2200,2000)}},
 };
 const curMap=()=>G?G.cfg.map:sel.map;
 let groundPats={};
@@ -1853,6 +1873,7 @@ function buildDecor(id){decor.length=0;patches.length=0;const M=MAPS[id];
   for(let y=520;y<AH-200;y+=520){decor.push(makeProp(M.houses[i++%M.houses.length],-150,y));decor.push(makeProp(M.houses[i++%M.houses.length],AW+150,y))}}
  else{for(let x=-40;x<AW+80;x+=rnd(110,190)){decor.push(makeProp(pick(M.border),x,rnd(-30,60)));decor.push(makeProp(pick(M.border),x+rnd(-40,40),AH+rnd(80,190)))}
   for(let y=150;y<AH+100;y+=rnd(110,180)){decor.push(makeProp(pick(M.border),rnd(-110,-20),y));decor.push(makeProp(pick(M.border),AW+rnd(20,110),y))}}
+ if(M.layout){const add=(n,x,y,sc,j)=>{const d=makeProp(n,x+(j?rnd(-j,j):0),y+(j?rnd(-j,j):0));if(sc&&sc!==1){d.sc=sc;if(d.col)d.col=d.col.map(v=>v*sc)}decor.push(d)};M.layout(add)}
  for(const[n,cnt]of M.inner)for(let i=0,N=Math.round(cnt*(M.dens||1));i<N;i++){for(let tr=0;tr<30;tr++){const x=rnd(140,AW-140),y=rnd(200,AH-120);if(ok(x,y,320)){decor.push(makeProp(n,x,y));break}}}
  if(M.patch)for(let i=0;i<26;i++)patches.push({x:rnd(0,AW),y:rnd(0,AH),r:rnd(90,230),seed:Math.random()*1000})
 }
@@ -1861,8 +1882,8 @@ function solidPush(o,r){if(!G||!MAPS[G.cfg.map].ground)return;for(const d of dec
  const x0=d.x+d.col[0]-r,x1=d.x+d.col[2]+r,y0=d.y+d.col[1]-r*0.6,y1=d.y+d.col[3]+r*0.6;
  if(o.x>x0&&o.x<x1&&o.y>y0&&o.y<y1){const l=o.x-x0,rr=x1-o.x,t=o.y-y0,b=y1-o.y,mn=Math.min(l,rr,t,b);if(mn===l)o.x=x0;else if(mn===rr)o.x=x1;else if(mn===t)o.y=y0;else o.y=y1}}}
 function drawProp(d){const m=MM[d.n],im=MIMG[d.n];if(!im||!im.complete||!im.naturalWidth)return;const c=X;
- const behind=P&&G&&P.y<d.y-6&&P.y>d.y-m.ay*PS+20&&Math.abs(P.x-d.x)<m.w*PS*0.42&&m.h*PS>110;
- c.save();if(behind)c.globalAlpha=0.5;c.drawImage(im,Math.round(d.x-m.ax*PS),Math.round(d.y-m.ay*PS),Math.round(m.w*PS),Math.round(m.h*PS));c.restore()}
+ const S=PS*(d.sc||1);const behind=P&&G&&P.y<d.y-6&&P.y>d.y-m.ay*S+20&&Math.abs(P.x-d.x)<m.w*S*0.42&&m.h*S>110;
+ c.save();if(behind)c.globalAlpha=0.5;c.drawImage(im,Math.round(d.x-m.ax*S),Math.round(d.y-m.ay*S),Math.round(m.w*S),Math.round(m.h*S));c.restore()}
 let patchCv=null;
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
