@@ -1,0 +1,144 @@
+{
+ "app": "PixelLab VFX Creator",
+ "name": "set_ring",
+ "fps": 16,
+ "frame_ms": 63,
+ "frames": 12,
+ "loop": true,
+ "canvas": {
+  "w": 264,
+  "h": 139
+ },
+ "anchor": {
+  "kind": "origin",
+  "x": 132,
+  "y": 69
+ },
+ "clips": [
+  {
+   "name": "whole",
+   "title": "the whole effect, no sprite",
+   "depth": "both",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 241,
+    "h": 130
+   },
+   "sheets": [
+    {
+     "file": "whole.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -122,
+    "y": -66
+   }
+  },
+  {
+   "name": "behind",
+   "title": "everything behind the sprite",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 238,
+    "h": 130
+   },
+   "sheets": [
+    {
+     "file": "behind.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -119,
+    "y": -66
+   }
+  },
+  {
+   "name": "front",
+   "title": "everything in front of the sprite",
+   "depth": "front",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 239,
+    "h": 110
+   },
+   "sheets": [
+    {
+     "file": "front.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -122,
+    "y": -52
+   }
+  },
+  {
+   "name": "part-ring",
+   "title": "the ring part",
+   "depth": "behind",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 238,
+    "h": 130
+   },
+   "sheets": [
+    {
+     "file": "part-ring.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -119,
+    "y": -66
+   }
+  },
+  {
+   "name": "part-sparks",
+   "title": "the sparks part",
+   "depth": "front",
+   "loop": true,
+   "start_frame": 0,
+   "frames": 12,
+   "frame": {
+    "w": 239,
+    "h": 110
+   },
+   "sheets": [
+    {
+     "file": "part-sparks.png",
+     "first_frame": 0,
+     "frames": 12,
+     "columns": 4,
+     "rows": 3
+    }
+   ],
+   "offset": {
+    "x": -122,
+    "y": -52
+   }
+  }
+ ]
+}

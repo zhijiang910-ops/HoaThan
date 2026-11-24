@@ -199,3 +199,6 @@ Nguyên nhân: `startTraining` gán `P0.gender=TR.gender` (giới tính thử �
 
 ## Vạn Kiếm Quy Tông có va chạm (24/11)
 Mỗi đợt kiếm (6 đợt) tại mỗi quái bị trúng: chớp `swhit` ×2, vòng sáng nhỏ, hạt, tiếng `sword_hit`; ở cuối làn mỗi đợt có chớp lớn ×2,6 + vòng (lớp sau người). Giới hạn số fx (60 điện thoại / 150) để không nặng. Không dùng bộ `impact` của Wuxia vì toàn mảnh pha lê xanh ngọc (chủ game từng chê "mảnh băng"). Chưa làm: vòng sét Thiên Xu (cần PixelLab, đang chờ chủ game xác nhận gọi).
+
+## Thiên Xu Kiếm Trận: vòng sét (24/11)
+Chủ game xin vòng sét giật nằm trong. Pack Wuxia và game không có sét (xác nhận), nên gọi PixelLab VFX pro **1 lần, 8 lượt** (`nguon/pixellab/set/o1`, ảnh gốc `z/whole.png`). `set_ring.png` (12 khung 241×130, 16 fps, viền xanh đậm thêm bằng PIL cho rõ trên tuyết) lặp 0,75 s/vòng từ lúc kiếm chạm đất đến hết trận, `sc:0.95`, lớp sau người, thêm 1 vòng sáng khi đòn nổ. Chủ game dặn: cái nào tự làm được thì tự làm, chỉ gọi PixelLab khi thật cần.
