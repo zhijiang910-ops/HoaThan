@@ -1104,7 +1104,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* viền nhẹ cho khung tranh: một nét sáng mảnh + một nét tối, nằm đè lên ảnh */
 .cxill::after,.cxL .cxst::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,236,190,.4),inset 0 0 0 3px rgba(10,6,3,.5),inset 0 0 0 4px rgba(255,236,190,.15)}
 .cxL .cxst{position:relative}
-.cxill #crBg{position:absolute;inset:-54.72% auto auto -25.2%;width:172%;height:172%;object-fit:cover;image-rendering:pixelated}
+/* ảnh luôn phủ kín khung ở mọi tỉ lệ: nền cover 100% rồi phóng 1,72 quanh tâm và dịch (tương đương bản cũ của Codex nhưng không hở khi khung khác tỉ lệ) */
+.cxill #crBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:translate(10.8%,-18.7%) scale(1.72);transform-origin:50% 50%;image-rendering:pixelated}
 
 .cxwi{margin-top:2px}
 .crscene-open{position:absolute;inset:0;z-index:1;border:0;background:none;cursor:zoom-in}
