@@ -47,3 +47,14 @@ Kết luận: **không dùng được frame PixelLab này**. Theo luật: dừng
 - Master (idle/run, `xt_nam_first.png`): thân nhìn nghiêng hẳn, áo choàng dài chấm gót có vạt trắng.
 - 10 khung C đang chạy trong game: lộ quần đen, thân xoay 3/4, tức cũng lệch Master giống kết quả thử PixelLab. Tư thế gần như không đổi giữa các khung (kiếm duỗi ngang trước ngực, chỉ đổi nhẹ góc kiếm); không có lấy đà, không có quét. HIT ở C2 (70 ms) khi kiếm đã duỗi sẵn.
 - Hệ quả: retarget từ khung C cũ sẽ kế thừa lệch nhận diện; không thể coi nó là "đúng Master".
+
+## Thử PixelLab lần 3 — pose C (nam), chân khép, chuyển động ở thân trên — ỨNG VIÊN, CHƯA PASS
+Ảnh: `QA_BEFORE_AFTER/TRIAL3_PixelLab_C_nam_UNG_VIEN.png`; frame: `ANIMATION_A_B_C/nam/C_ung_vien_lan3/` (chưa đưa vào game). 3 lượt, seed 5.
+| Tiêu chí | Kết quả |
+|---|---|
+| Trang phục / màu so Master | Đạt rõ: áo choàng dài, vạt trắng, thắt lưng, dải tóc, màu đúng. Đo bảng màu: 100% màu thuộc bảng Master (lượng tử hóa thô, chỉ kiểm màu lạ) |
+| Góc nhìn | Gần đạt: thân nghiêng, cổ áo trắng hơi lộ phía trước ở C3–C7 |
+| Chân / trọng tâm | Đáy chân ổn 116–117 so Master 117 (không trượt, không nổi); C4–C7 hạ người ~5 px do khuỵu (chủ ý) |
+| Kiếm một thanh, đúng tay | Đạt |
+| Chuyển động | C2–C3 nâng kiếm cao đọc rõ; C4 chém chéo xuống rõ; C5–C8 kiếm duỗi ngang (sweep đọc như duỗi tay, VFX phải kể phần quét) |
+| Lỗi còn lại | C5: mũi kiếm bị vỡ/nhòe (FAIL khung này); quần đen lộ nhẹ ở cổ chân C4–C7 cần kiểm 1× và phóng; C1/C12 chưa trùng tuyệt đối Master idle |
