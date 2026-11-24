@@ -20,7 +20,7 @@ Game vốn là bản Tây Du, đang chuyển chủ đề sang **khử tà diệt
 ## Việc còn dở
 1. **Hoạt động Âm Giới** chưa nối vào luồng chơi (chỉ có dữ liệu `AM_*`, `amFloor(n)`): 18 tầng địa ngục, 1/3/5 sao, 2 lượt mỗi ngày, chết là thua. Boss mốc: Ngưu Đầu và Mã Diện (tầng 3), Hắc Vô Thường (6), Bạch Vô Thường (9), Mạnh Bà (12), Phán Quan (15), Diêm Vương (18). Phần thưởng chưa chốt.
 2. **Boss Âm Giới:** cả 7 trùm đã có hình riêng; còn thiếu hình riêng cho 5 mini-boss (đang dùng hình Quỷ Sai/Ngưu Ma Vương) và 6 quái thường mới.
-3. **6 môn phái** (bản mới, đã có dữ liệu `SECTS` và 12 avatar nam/nữ, chưa vào luồng chơi): Mao Sơn Phái (Kiếm, đã có), Trảm Yêu Môn (Đao), Phục Ma Tự (Trượng), Thiên Cương Môn (Quyền), Huyền Linh Các (Quạt), Truy Hồn Cốc (Cung). Làm Đao trước.
+3. **6 môn phái:** 5 phái đã chơi được (chọn ở màn tạo nhân vật), mỗi phái có cây vũ khí riêng và bộ chiêu Q/F/X dùng VFX gói Wuxia: Mao Sơn (Kiếm), Trảm Yêu Môn (Đao, Xích Diễm), Phục Ma Tự (Trượng, Kim Cương Tự), Huyền Linh Các (Quạt, Bách Hoa Cốc), Truy Hồn Cốc (Cung, U Minh Giáo). **Thiên Cương Môn (Quyền) chưa có bộ chiêu**, vẫn khóa. Số liệu các phái mới là tạm, chưa cân bằng; động tác đánh riêng của từng vũ khí chủ game tự làm.
 4. **Đổi chữ theo chủ đề** còn dở: mô tả kỹ năng, thần tướng, quái sự kiện, cốt truyện, tên màn, vật phẩm.
 5. **Cân bằng sát thương** để sau. Không tự chỉnh số khi chủ game chưa ra lệnh.
 6. Tiến độ sao đang dùng chung giữa các map, chưa tách. Chưa thử trên iPhone thật. Chưa đo hiệu năng Vạn Kiếm trên máy yếu.
