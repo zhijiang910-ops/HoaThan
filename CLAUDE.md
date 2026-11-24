@@ -129,3 +129,5 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 
 ## Sửa vệt chém A/B Kiếm (24/11)
 Đòn A (`zs3`) lật dọc (`fl:-1`, `oy:-92`) để quét từ trên xuống cùng chiều lưỡi kiếm, bật sớm 0,18 s trước khung trúng. Đòn B (`zs2`) giữ chiều gốc (kiếm B quét từ dưới lên), chỉ thêm nghiêng theo hướng chém. `comboFx(step,angle)` truyền góc; `sp` hỗ trợ `oy`. C không đổi.
+
+**Đòn A đổi VFX (24/11, chủ game chọn):** vệt `zs3` thay bằng `wx_slash` (gói Wuxia `Common_VFX/Skills/07_Sword_Arc/PNG/slash`, 8 khung 96×96, `assets/vfx/wx_slash.png`), bật trước khung trúng 0,06 s, T 0,34 s, đặt trước ngực (`dx`,`dy` px trong `sp`). `zs3` chỉ còn làm dự phòng. Đòn B và C giữ nguyên VFX cũ. Đã bỏ ý định làm VFX mới bằng PixelLab cho A/B.
