@@ -415,3 +415,7 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - **Kết quả:** Ngưu Đầu, Mã Diện, Hắc, Bạch, Diêm Vương nét; Mạnh Bà ổn; **Phán Quan lởm chởm** vì bị thu 12% (`BOSS_REL`) theo hệ số lẻ, một số hàng pixel bị nuốt. So đối chứng: vẽ tỉ lệ nguyên sạch hơn rõ rệt (`nguon/tham_chieu/phanquan_thu_le_vs_nguyen_*.png`). Số đo chạy ngang/dọc của Phán Quan tương đương các trùm khác (không phải lỗi hình gốc).
 - **Đã sửa:** bỏ `BOSS_REL.phanquan` (vẽ nguyên, nét, nhưng cao ~188 px so với ~165 của Bạch/Mạnh Bà). **Còn lại (chưa làm, cần PixelLab):** vẽ lại Phán Quan và Mạnh Bà ở khung 192 với thân cao ~160 px để vừa to bằng các trùm khác vừa vẽ ở tỉ lệ nguyên (bỏ `BOSS_REL` cho cả hai): 10 lượt/con. Mạnh Bà hiện vẫn thu 0,88 (lọc mịn), nhìn ổn nhưng không nét tuyệt đối như 5 con kia.
 
+
+## Phán Quan, Mạnh Bà vẽ lại ở cỡ nhỏ (24/11 đêm)
+- PixelLab `edit-images-v2` khung 192, thân cao ~155 px (script `nguon/pixellab/amgioi/gen_sync2.py`, kết quả `sy2/`, seed 7, 10 lượt/con = 20 lượt). Giữ nguyên thiết kế ChatGPT. `game/assets/phanquan_am.png` 118×155, `manhba_am.png` 131×152 (cắt sát viền).
+- Bỏ `BOSS_REL.manhba` (chỉ còn `nguudau:1.15`): cả 7 trùm giờ vẽ ở tỉ lệ nguyên (nét), cao ~141–190 px, Mạnh Bà và Phán Quan không còn to hơn các trùm khác. Đã kiểm game tải không lỗi; chưa chụp lại 3 loại màn. Còn ~2.353 lượt PixelLab.
