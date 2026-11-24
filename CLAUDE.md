@@ -167,3 +167,6 @@ Chủ game duyệt, cho phép PixelLab ở VFX Ngộ Không nhưng chỉ khi th�
 - Test: `scratchpad/xr_test.js` cần đặt cd kỹ năng = 0 trước khi bấm (cd sau Hóa Thân không giảm khi chạy đồng hồ ảo).
 - (24/11 tối) **R (Định Hải Trấn Thiên)** choáng 1,0→1,8 s (tinh anh nửa thời gian, trùm miễn choáng theo luật `hit`), sao choáng trên đầu quái 3→4 và to hơn. **X (Như Ý Xuyên Thiên)** sát thương xuyên 35% giáp (`pierceArmor:0.35`, hiện trong mô tả).
 - (24/11 tối) Đòn C thêm **một vòng nhỏ bên trong** (chủ game xin): `ring_small` trong `c_ellipse.py` (0,46 lần elip lớn, 12 sợi sáng, bắt đầu trễ 0,12, tan sớm hơn). Đây là chủ ý theo yêu cầu, không phải vệt chém phụ độc lập.
+
+## Đồng bộ 16 tranh cảnh mới (24/11, commit nguồn 819e7a2)
+Lấy từ `origin/claude/relaxed-heisenberg-72j521` commit `819e7a23d6d9f18e93c42cd6419d56b2eb90b852` ("Ve lai 16 tranh pixel va bo phong anh bang CSS"): 16 file `game/assets/portraits/scene-{nam,nu}-{1..8}.webp` (793×992) và dòng CSS `.cxill #crBg` (inset 0, 100%, `object-fit:contain`, nền #110d0a, không còn `transform:scale`). Thay luật `scale(1.3)` cũ của Claude. Đã kiểm 8 ảnh nam + 8 ảnh nữ đổi theo avatar (script `scratchpad/scene16.js`, ảnh `nguon/tham_chieu/scene16_kiem_tra.png`). Chép file chứ không merge nhánh (nhánh làm việc vẫn `claude/jolly-ritchie-pitrnx`).
