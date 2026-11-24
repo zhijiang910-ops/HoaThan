@@ -423,7 +423,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .avn small{font:600 11px "Noto Serif",serif;color:#cfe6dc;text-shadow:0 1px 3px #000}
 #ava.ready .avn small{color:#ffd36a}
 #coins{top:calc(max(10px,env(safe-area-inset-top)) + 92px)!important}
-/* nút Hóa Thân góc phải: nhỏ lại, chỉ sáng khi đủ nộ */
+/* nút Thần Giáng góc phải: nhỏ lại, chỉ sáng khi đủ nộ */
 #godBtn{width:104px!important;height:104px!important}#godBtn canvas{width:92px!important;height:92px!important}
 #godBtn:not(.ready):not(.active){opacity:.7}
 #godBtn #godTxt{font-size:14px!important;padding:2px 14px!important}
@@ -731,16 +731,16 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #evPic{image-rendering:auto!important}
 @media (max-height:520px){.shopkeep{width:44px;height:44px}.mkt small{font-size:10px}}
 
-/* ===== đổi bên: kỹ năng + bình thuốc sang phải, Lướt + Hóa Thân sang trái (tay trái không đè lên ô kỹ năng) ===== */
+/* ===== đổi bên: kỹ năng + bình thuốc sang phải, Lướt + Thần Giáng sang trái (tay trái không đè lên ô kỹ năng) ===== */
 #skills{left:auto!important;right:max(14px,env(safe-area-inset-right))!important;align-items:flex-end!important}
 #acts{right:auto!important;left:max(18px,env(safe-area-inset-left))!important;flex-direction:row-reverse}
 @media (max-height:520px){#skills{right:max(10px,env(safe-area-inset-right))!important}#acts{left:max(12px,env(safe-area-inset-left))!important}}
 
-/* Hóa Thân sang phải, phía trên bảng kỹ năng, xa cần điều khiển */
+/* Thần Giáng sang phải, phía trên bảng kỹ năng, xa cần điều khiển */
 #godBtn{position:absolute!important;left:auto!important;right:max(18px,env(safe-area-inset-right))!important;bottom:calc(max(14px,env(safe-area-inset-bottom)) + 104px)!important;z-index:6}
 @media (max-height:520px){#godBtn{right:max(12px,env(safe-area-inset-right))!important;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 66px)!important}}
 
-/* Lướt sát bên trái thanh máu, Hóa Thân sát bên phải thanh máu (2 chỗ trống giữa đáy) */
+/* Lướt sát bên trái thanh máu, Thần Giáng sát bên phải thanh máu (2 chỗ trống giữa đáy) */
 #acts{left:calc(50% - min(380px,calc(33*var(--vw)))/2 - 108px)!important;right:auto!important;bottom:max(12px,env(safe-area-inset-bottom))!important}
 #godBtn{right:calc(max(14px,env(safe-area-inset-right)) + 222px)!important;bottom:max(10px,env(safe-area-inset-bottom))!important}
 @media (max-height:520px){
@@ -786,7 +786,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #brk .bfoot .btn{padding:7px 14px!important;min-height:0!important}
 }
 @media (max-height:520px) and (min-width:600px){#brk .cards{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}}
-/* avatar chỉ để nhìn: Hóa Thân bấm ở nút dưới */
+/* avatar chỉ để nhìn: Thần Giáng bấm ở nút dưới */
 #avaBtn{pointer-events:none!important;cursor:default!important;background:rgba(20,30,28,.85)!important;animation:none!important}
 #ava .avtag{display:none!important}
 #ava.god #avaBtn{box-shadow:0 0 0 2px #0e201d,0 0 0 3px #ffd36a,0 0 10px rgba(255,200,90,.55)!important}
@@ -853,7 +853,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 }
 .books{grid-template-columns:repeat(2,minmax(0,1fr))!important}.book span{white-space:normal!important;line-height:1.15;font-size:10.5px!important}.book{padding:4px 5px!important}
 
-/* Hóa Thân: khung lục giác, vòng Nộ tròn quanh chân dung. */
+/* Thần Giáng: khung lục giác, vòng Nộ tròn quanh chân dung. */
 #godBtn{isolation:isolate;border-radius:0;background:transparent!important;box-shadow:none;opacity:1}
 #godBtn:before,#godBtn:after{content:"";position:absolute;pointer-events:none;clip-path:polygon(50% 0,96% 25%,96% 75%,50% 100%,4% 75%,4% 25%)}
 #godBtn:before{inset:0;background:linear-gradient(145deg,#f3d38b,#82532b 56%,#d2a55c);z-index:-2}
@@ -1483,7 +1483,7 @@ input,select,textarea,#crName{font-size:16px!important}
 <canvas id="cv"></canvas>
 
 <div id="hud" hidden>
- <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Hóa Thân!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><div class="acp" title="Lực chiến"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="cpv">0</b></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
+ <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Thần Giáng!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><div class="acp" title="Lực chiến"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="cpv">0</b></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
  <div id="coins" class="frm"><canvas id="coinIco" width="13" height="13"></canvas><b id="coinv">0</b></div>
  <div id="top"><div id="tbar"><b id="tStage">Màn 1</b><i class="tsep"></i><span id="tWave">Đợt 1/5</span><div id="wbar"><i id="wfill"></i></div><em id="tPct">0%</em><span id="wl2" hidden></span><span id="wr2" hidden></span></div><div id="wtime"><svg viewBox="0 0 12 16" class="hgs"><path d="M1 1h10M1 15h10M2 1c0 4 4 5 4 7s-4 3-4 7M10 1c0 4-4 5-4 7s4 3 4 7" fill="none" stroke="#f5e3bd" stroke-width="1.6"/><path d="M4 13h4l-2-3z" fill="#f5e3bd"/></svg><span id="wtimeT">00:20</span></div></div>
  <div id="bossbar" hidden><div class="bn">Ngưu Ma Vương</div><div class="bb"><i id="bossfill"></i></div></div>
@@ -1498,16 +1498,16 @@ input,select,textarea,#crName{font-size:16px!important}
  <div id="acts">
   <button id="dashBtn" aria-label="Lướt né"><i></i><svg viewBox="0 0 32 24"><path d="M3 18C10 16 20 10 29 3c-4 8-11 14-20 17z" fill="#eafff4"/><path d="M6 21c7-1 14-5 20-11-3 6-9 10-17 13z" fill="#9fd8c4"/></svg><span>Lướt</span><em class="hud-press" aria-hidden="true">BẤM</em></button>
  </div>
- <button id="godBtn" aria-label="Hóa Thân · Nộ 0%">
+ <button id="godBtn" aria-label="Thần Giáng · Nộ 0%">
   <span class="god-ring" aria-hidden="true"><canvas id="godIcon" width="160" height="160"></canvas></span>
-  <em class="hud-press" aria-hidden="true">BẤM</em><span id="godMeter" aria-hidden="true">0%</span><span id="godTxt" aria-hidden="true">Hóa Thân</span>
+  <em class="hud-press" aria-hidden="true">BẤM</em><span id="godMeter" aria-hidden="true">0%</span><span id="godTxt" aria-hidden="true">Thần Giáng</span>
  </button>
  <div id="lowEdge" aria-hidden="true"></div>
  <div id="tutShade" aria-hidden="true" hidden><i id="tutFocus" hidden></i></div>
  <div id="tut" role="group" aria-labelledby="tutT" aria-describedby="tutS" hidden><b id="tutT"></b><span id="tutS"></span><button id="tutDo" class="btn gold" type="button"></button><i id="tutP"></i></div>
  <button id="danBtn" hidden aria-label="Dùng Cuồng Huyết Đan"><b>狂</b><small id="danN">0</small><em class="hud-press" aria-hidden="true">BẤM</em></button>
  <button type="button" id="dashHelp" class="hud-help" data-info="dash" aria-label="Xem chi tiết Lướt" hidden>i</button>
- <button type="button" id="godHelp" class="hud-help" data-info="god" aria-label="Xem chi tiết Hóa Thân" hidden>i</button>
+ <button type="button" id="godHelp" class="hud-help" data-info="god" aria-label="Xem chi tiết Thần Giáng" hidden>i</button>
  <button type="button" id="danHelp" class="hud-help" data-info="dan" aria-label="Xem chi tiết Cuồng Huyết Đan" hidden>i</button>
  <section id="skillInspect" hidden role="dialog" aria-modal="true" aria-labelledby="skillInspectTitle">
   <article><h2 id="skillInspectTitle"></h2><p id="skillInspectDesc"></p><dl id="skillInspectStats"></dl><p id="skillInspectNote" hidden>Sát thương gốc tính trước giáp, chí mạng và biến động khi trúng.</p>
@@ -1594,11 +1594,11 @@ input,select,textarea,#crName{font-size:16px!important}
    <div class="panel">
     <h2>Thần tướng</h2>
     <div id="gods"></div>
-    <p class="dim sm">Đủ Nộ thì hóa thân: đổi toàn bộ ngoại hình, vũ khí và bộ chiêu. Hết Nộ trở về người phàm với nguyên vẹn nâng cấp.</p>
+    <p class="dim sm">Đủ Nộ thì thần giáng: đổi toàn bộ ngoại hình, vũ khí và bộ chiêu. Hết Nộ trở về người phàm với nguyên vẹn nâng cấp.</p>
    </div>
   </div>
   <footer class="mfoot">
-   <div class="keys dim">PC: WASD hoặc phím mũi tên di chuyển · Space lướt né · R hóa thân (bấm lại để thoát) · Esc tạm dừng<br>Điện thoại: kéo ngón tay ở nửa trái màn hình để di chuyển, nút bên phải để lướt và hóa thân</div>
+   <div class="keys dim">PC: WASD hoặc phím mũi tên di chuyển · Space lướt né · R thần giáng (bấm lại để thoát) · Esc tạm dừng<br>Điện thoại: kéo ngón tay ở nửa trái màn hình để di chuyển, nút bên phải để lướt và thần giáng</div>
    <div id="best" class="dim sm"></div>
    <button id="backLobby" class="btn">Về sảnh</button><button id="invBtn" class="btn">Kho đồ</button>
    <button id="startBtn" class="btn gold">Xuất phát</button>
@@ -1718,7 +1718,7 @@ const CHM={"hero_nam":{"w":131,"h":138,"ax":57,"ay":119,"anims":{"idle":{"fps":4
 Object.assign(CHM,{quytuong:{"w": 145, "h": 149, "ax": 49, "ay": 137, "anims": {"idle": {"fps": 4.0, "f": [[0, 0], [145, 0], [290, 0], [435, 0]]}, "run": {"fps": 8.0, "f": [[580, 0], [725, 0], [870, 0], [1015, 0], [1160, 0], [1305, 0], [1450, 0], [1595, 0]]}, "attack": {"fps": 10.0, "f": [[1740, 0], [1885, 0], [2030, 0], [2175, 0], [0, 149], [145, 149], [290, 149], [435, 149]]}, "attack2": {"fps": 10.53, "f": [[580, 149], [725, 149], [870, 149], [1015, 149], [1160, 149], [1305, 149], [1450, 149], [1595, 149]]}, "hit": {"fps": 8.7, "f": [[1740, 149], [1885, 149], [2030, 149], [2175, 149]]}, "death": {"fps": 2.38, "f": [[0, 298], [145, 298], [290, 298], [435, 298]]}}, "src": "assets/quytuong.png", "realRun": true, "wuxia": "蓝灰獠牙鬼战士像"}});
 // Nhân vật chính lấy từ gói Wuxia Vol.2 (cong_cu/wuxia_sheet.py): nam = Huyền Tiêu Kiếm Tông · Nam đệ tử,
 // nữ = Xích Diễm Đao Môn · Nữ đệ tử. Cả hai cầm kiếm cùng một kiểu khi đứng, đi và chém.
-// Hóa Thân Tôn Ngộ Không: sprite PixelLab (vẽ lại cỡ 144, khung xương có gậy + đuôi), đã kiểm từng frame.
+// Thần Giáng Tôn Ngộ Không: sprite PixelLab (vẽ lại cỡ 144, khung xương có gậy + đuôi), đã kiểm từng frame.
 Object.assign(CHM,{god_wukong:{"w": 166, "h": 160, "ax": 67, "ay": 154, "anims": {"idle": {"fps": 10, "f": [[0, 0], [166, 0], [332, 0], [498, 0]]}, "run": {"fps": 10, "f": [[664, 0], [830, 0], [996, 0], [1162, 0], [1328, 0], [1494, 0], [1660, 0], [1826, 0]]}, "attack": {"fps": 10, "f": [[0, 160], [166, 160], [332, 160], [498, 160]]}, "attack2": {"fps": 10, "f": [[664, 160], [830, 160], [996, 160], [1162, 160]]}, "hit": {"fps": 10, "f": [[1328, 160], [1494, 160], [1660, 160]]}}, "src": "assets/god_wukong.png", "realRun": true}});
 Object.assign(CHM,{hero_nam:{"w": 160, "h": 128, "ax": 80, "ay": 118, "anims": {"idle": {"fps": 10, "f": [[0, 0], [160, 0], [320, 0], [480, 0]]}, "run": {"fps": 10, "f": [[640, 0], [800, 0], [960, 0], [1120, 0], [1280, 0], [1440, 0], [1600, 0], [1760, 0]]}, "attack": {"fps": 10, "f": [[1920, 0], [2080, 0], [2240, 0], [2400, 0], [0, 128], [160, 128]]}, "attack2": {"fps": 10, "f": [[320, 128], [480, 128], [640, 128], [800, 128], [960, 128]]}, "hit": {"fps": 10, "f": [[1120, 128], [1280, 128], [1440, 128], [1600, 128]]}, "death": {"fps": 10, "f": [[1760, 128], [1920, 128], [2080, 128], [2240, 128]]}}, "src": "assets/hero_nam.png", "realRun": true, "face": [56, 14]},hero_nu:{"w": 160, "h": 128, "ax": 80, "ay": 118, "anims": {"idle": {"fps": 10, "f": [[0, 0], [160, 0], [320, 0], [480, 0]]}, "run": {"fps": 10, "f": [[640, 0], [800, 0], [960, 0], [1120, 0], [1280, 0], [1440, 0], [1600, 0], [1760, 0]]}, "attack": {"fps": 10, "f": [[1920, 0], [2080, 0], [2240, 0], [2400, 0], [0, 128], [160, 128]]}, "attack2": {"fps": 10, "f": [[320, 128], [480, 128], [640, 128], [800, 128], [960, 128]]}, "hit": {"fps": 10, "f": [[1120, 128], [1280, 128], [1440, 128], [1600, 128]]}, "death": {"fps": 10, "f": [[1760, 128], [1920, 128], [2080, 128], [2240, 128]]}}, "src": "assets/hero_nu.png", "realRun": true, "face": [54, 15]}});
 // Nhát C Kiếm +6 · Lướt Trảm: lấy đà, lướt đâm, trượt dừng, thu thế 1-2-3.
@@ -1809,7 +1809,7 @@ function staffGlow(c,len,k,alpha,pos){const m=STF[k],W=m.w+8,H=Math.ceil(len)+4;
 function drawWkStaff(c,len,k){const I=VFX[k],m=STF[k],w=m.w,x0=-Math.floor(w/2);c.drawImage(I,0,0,w,m.t,x0,0,w,m.t);
  if(m.tile){/* thân có hoa văn (PixelLab 24/11): lặp viên gạch, lật gương xen kẽ để mép nối luôn khớp */let y=m.t,i=0,rem=len-m.t-m.b;while(rem>0){const h=Math.min(m.tile,rem);c.save();c.beginPath();c.rect(x0,y,w,h);c.clip();if(i%2){c.translate(0,2*y+m.tile);c.scale(1,-1)}c.drawImage(I,0,m.t,w,m.tile,x0,y,w,m.tile);c.restore();y+=h;rem-=h;i++}c.drawImage(I,0,m.t+m.tile,w,m.b,x0,len-m.b,w,m.b)}
  else{c.drawImage(I,0,m.t,w,1,x0,m.t,w,Math.max(0,len-m.t-m.b));c.drawImage(I,0,m.t+1,w,m.b,x0,len-m.b,w,m.b)}}
-// Hào quang lửa khi Ngộ Không hóa thân: fire_aura_01 của KanaWorks_AI (giấy phép KanaWorks_AI VFX Asset License 1.0, phải ghi công), đã chuyển pixel 0.6x, 20 khung 134x240, chân ở tâm vòng lửa (67,212)
+// Hào quang lửa khi Ngộ Không thần giáng: fire_aura_01 của KanaWorks_AI (giấy phép KanaWorks_AI VFX Asset License 1.0, phải ghi công), đã chuyển pixel 0.6x, 20 khung 134x240, chân ở tâm vòng lửa (67,212)
 const AURAF={w:134,h:240,c:10,n:20,ax:67,ay:212,fps:15};{const i=new Image();i.src='assets/vfx/wk_aura_fire.png';preDecode(i);VFX.wk_aura_fire=i}
 {const i=new Image();i.src='assets/vfx/wk_crack.png';preDecode(i);VFX.wk_crack=i}/* vết nứt đất (PixelLab, ép dẹt theo góc nhìn) 128x74 */
 const STF={wk_staff:{w:20,t:65,b:62+3,tile:62},wk_staff_big:{w:35,t:110,b:111}};
@@ -2249,10 +2249,10 @@ const CARDS=[
  ['luck','Phúc Duyên','福',5,'','May mắn: rơi đồ và thẻ hiếm','Chỉ số',99],
  ['wDmg','Tinh Luyện Binh Khí','兵',10,'%','Sát thương mọi chiêu của hệ vũ khí đang dùng','Vũ khí',99],
  ['bSpd','Khoái Kích','擊',10,'%','Tốc độ đánh thường','Vũ khí',99],
- ['rage','Nộ Khí Xung Thiên','怒',15,'%','Hiệu suất tích Nộ','Nộ và hóa thân',8],
- ['godCdr','Thần Thông Tốc Hồi','時',8,'%','Giảm hồi chiêu hóa thân (tối đa 50%)','Nộ và hóa thân',6],
- ['godDmg','Thần Uy','威',12,'%','Sát thương khi hóa thân','Nộ và hóa thân',99],
- ['refund','Bất Diệt Thần Hồn','魂',10,'','Giới hạn hoàn Nộ khi hạ quái trong lúc hóa thân','Nộ và hóa thân',4],
+ ['rage','Nộ Khí Xung Thiên','怒',15,'%','Hiệu suất tích Nộ','Nộ và thần giáng',8],
+ ['godCdr','Thần Thông Tốc Hồi','時',8,'%','Giảm hồi chiêu thần giáng (tối đa 50%)','Nộ và thần giáng',6],
+ ['godDmg','Thần Uy','威',12,'%','Sát thương khi thần giáng','Nộ và thần giáng',99],
+ ['refund','Bất Diệt Thần Hồn','魂',10,'','Giới hạn hoàn Nộ khi hạ quái trong lúc thần giáng','Nộ và thần giáng',4],
  ['lifeKill','Hấp Huyết','吸',1,'','Hồi khí huyết mỗi lần hạ quái','Đặc biệt',5],
  ['thorns','Phản Chấn','反',12,'','Sát thương phản lại kẻ chạm vào mình','Đặc biệt',5],
  ['dashCdr','Lăng Ba Vi Bộ','步',12,'%','Giảm hồi chiêu lướt né','Đặc biệt',4],
@@ -2433,7 +2433,7 @@ function updateCombo(dt){
 function addRage(v){
  if(P.form==='god'){if(P.refund<S.refund){const a=Math.min(v*0.6,S.refund-P.refund);P.rage=Math.min(100,P.rage+a);P.refund+=a}return}
  if(P.godCd>0||P.transT>0)return;
- const was=P.rage<100;P.rage=Math.min(100,P.rage+v*(1+(S.rage+comboReward(P.combo).rage)/100));if(was&&P.rage>=100)notice('Nộ đầy','Bấm Hóa Thân (R)');
+ const was=P.rage<100;P.rage=Math.min(100,P.rage+v*(1+(S.rage+comboReward(P.combo).rage)/100));if(was&&P.rage>=100)notice('Nộ đầy','Bấm Thần Giáng (R)');
 }
 /* Hồi Phong nội tại (24/11): chí mạng hoặc mỗi 3 đòn đánh thường -> 1 phi kiếm, tối đa 3, tự tìm quái; mỗi kiếm sống 7+cấp giây. Zone 'blades' có cờ passive, ô sw[i].on = đang có kiếm */
 function hpPassive(){let z=G.zones.find(q=>q.kind==='blades'&&q.passive);if(!z){addZone({kind:'blades',passive:1,follow:1,T:1e9,n:3,r:80*Ar(),dmg:0,o:H({kb:20,hpb:1}),hm:new Map(),rot:0,sw:Array.from({length:3},()=>({on:0,st:0,nx:0,x:P.x,y:P.y,ang:0,life:0}))});z=G.zones[G.zones.length-1]}return z}
@@ -2514,7 +2514,7 @@ function tryTransform(){
  if(!G||G.state!=='play'||G.paused)return;
  if(P.form==='god'){revert();return}
  if(P.rage<100||P.godCd>0||P.transT>0)return;
- cancelSkillAim();P.manualQueue=null;P.swordCut=null;P.swordGuard=null;P.cutC=null;P.transT=0.7;G.freeze=0.7;sfx('taiji_open',0.6,0.2);if(isWk()&&vok('wk_puff')){fx({k:'sp',s:'wk_puff',x:P.x,y:P.y-50,sc:1.75,al:0.9,T:0.95})}else{fx({k:'pillar',x:P.x,y:P.y,T:0.9});G.flash=0.5}notice(P.god.def.tf||'Hóa Thân',P.god.def.name);
+ cancelSkillAim();P.manualQueue=null;P.swordCut=null;P.swordGuard=null;P.cutC=null;P.transT=0.7;G.freeze=0.7;sfx('taiji_open',0.6,0.2);if(isWk()&&vok('wk_puff')){fx({k:'sp',s:'wk_puff',x:P.x,y:P.y-50,sc:1.75,al:0.9,T:0.95})}else{fx({k:'pillar',x:P.x,y:P.y,T:0.9});G.flash=0.5}notice(P.god.def.tf||'Thần Giáng',P.god.def.name);
 }
 function enterGod(){
  cancelSkillAim();P.manualQueue=null;
@@ -2716,7 +2716,7 @@ function castGod(dt){
  const g=P.god,asp=1+S.aspd/200;
  g.basic.cd-=dt;
  if(g.basic.cd<=0){const tg=nearest(P.x,P.y,g.def.basic.range);if(tg){g.def.basic.cast(tg);g.basic.cd=(g.def.look==='wukong'&&P._gN===0?0.45:g.def.basic.cd)/asp}}
- /* Kỹ năng và tuyệt kỹ của Hóa Thân do người chơi BẤM (chủ game, 24/11); ở đây chỉ hồi chiêu. Thần tướng khác vẫn tự thi triển. */
+ /* Kỹ năng và tuyệt kỹ của Thần Giáng do người chơi BẤM (chủ game, 24/11); ở đây chỉ hồi chiêu. Thần tướng khác vẫn tự thi triển. */
  const manual=true;
  for(const s of g.sk){s.cd=Math.max(0,s.cd-dt);if(manual)continue;if(s.cd<=0){if(s.def.need&&!s.def.need())continue;const tg=nearest(P.x,P.y,s.def.range);if(tg){s.def.cast(tg);s.cd=s.def.cd;s.fl=0.3}}}
  if(g.ult){g.ult.cd=Math.max(0,g.ult.cd-dt);if(!manual&&g.ult.cd<=0){const tg=nearest(P.x,P.y,g.ult.def.range);if(tg){g.ult.def.cast(tg);g.ult.cd=g.ult.def.cd;notice(g.ult.def.name)}}}
@@ -2946,7 +2946,7 @@ addEventListener('resize',()=>{if(!VIEW._busy){VIEW._busy=1;setTimeout(()=>{VIEW
 addEventListener('orientationchange',()=>{for(const t of [80,300,700])setTimeout(viewApply,t)});
 setInterval(viewApply,500);
 
-/* HUD điện thoại ngang: đo vị trí thật của nút Lướt và cụm kỹ năng rồi đặt thanh máu nằm giữa, nút Hóa Thân ngồi trên cụm kỹ năng -> không bao giờ đè nhau ở mọi cỡ màn */
+/* HUD điện thoại ngang: đo vị trí thật của nút Lướt và cụm kỹ năng rồi đặt thanh máu nằm giữa, nút Thần Giáng ngồi trên cụm kỹ năng -> không bao giờ đè nhau ở mọi cỡ màn */
 function hudFit(){const hud=$('#hud');if(!hud||hud.hidden)return;const vb=$('#vbars'),gb=$('#godBtn'),sk=$('#skills'),dh=$('#dashBtn');if(!vb||!sk||!dh)return;
  const low=(VIEW.on?(VIEW.rot?VIEW.W:VIEW.H):innerHeight)<=520;
  if(!low){vb.style.left=vb.style.right='';if(gb){gb.style.right=gb.style.bottom='';gb.style.left=''}return}
@@ -3333,7 +3333,7 @@ function drawPlayer(){
  if(god)drawAura(P.x,P.y);
  drawChar(P.x,P.y,L,{f:P.facing,t:P.t,mv:P.moving,fl:P.hurt>0.12,w,atk:P.atkT>0?1-P.atkT/0.22:-1,aa:P.atkAng,sw:P.swingDir,th:P.thrust||w==='thuong'||w==='hoa'?1:0,sc:god?1.15:1,al:flick?0.5:1});
 }
-/* Vẽ nhân vật vẽ-bằng-code (Hóa Thân, Hỏa yêu) ở độ phân giải 1 điểm ảnh = 1 đơn vị thế giới rồi phóng lên,
+/* Vẽ nhân vật vẽ-bằng-code (Thần Giáng, Hỏa yêu) ở độ phân giải 1 điểm ảnh = 1 đơn vị thế giới rồi phóng lên,
    cho cùng mật độ pixel với sprite Wuxia. Tạm thời, chờ sprite PixelLab. */
 const PIXC=document.createElement('canvas'),PIXG=PIXC.getContext('2d');
 function pixWrap(x,y,w,h,fn){
@@ -3343,7 +3343,7 @@ function pixWrap(x,y,w,h,fn){
  const keep=X;X=PIXG;try{fn()}finally{X=keep}
  X.save();X.imageSmoothingEnabled=false;X.drawImage(PIXC,Math.round(x-w/2),Math.round(y-h),W,H);X.restore();
 }
-// Hóa Thân có sprite riêng (hiện: Tôn Ngộ Không). Các Hóa Thân khác vẫn vẽ bằng code.
+// Thần Giáng có sprite riêng (hiện: Tôn Ngộ Không). Các Thần Giáng khác vẫn vẽ bằng code.
 const GOD_SPR={wukong:'god_wukong'};
 /* Ngộ Không chạy-đánh (PixelLab animate-with-text-v3, 24/11): khung chạy → đâm gậy thẳng → rút về, chân vẫn bước. Hàng y=320 của god_wukong.png */
 {const C=[[0, 320], [166, 320], [332, 320], [498, 320], [664, 320], [830, 320]],Q=[0, 1, 2, 3, 4, 5, 5, 5];CHM.god_wukong.anims.runatk={fps:10,f:Q.map(i=>C[i].slice())}}
@@ -3407,11 +3407,11 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
  body.playing #trP~#quests{display:none}</style>
  <b>Luyện Công</b><button data-t="fold">${TR.fold?'Mở bảng ▾':'Thu gọn ▴'}</button>
  <button data-t="rage" class="${TR.rage?'on':''}">Nộ đầy mãi</button>
- <button data-t="hoa">Hóa Thân ngay</button>
+ <button data-t="hoa">Thần Giáng ngay</button>
  <button data-t="cd">Hồi hết chiêu</button>
  <button data-t="forge">Kiếm +${TR.forge}</button>
  <button data-t="gender">${(prof()||{}).gender==='nu'?'Nữ':'Nam'}</button>
- <button data-t="god">Hóa Thân: ${P.god.def.name}</button>
+ <button data-t="god">Thần Giáng: ${P.god.def.name}</button>
  <button data-t="slow" class="${TR.scale<1?'on':''}">Chậm ×0,25</button>
  <button data-t="godmode" class="${TR.god_on?'on':''}">Bất tử</button>
  <button data-t="mob">+ Quái thật</button>
@@ -3638,9 +3638,9 @@ function inspectSkill(key){
   ['Loại','Bấm dùng · không gây sát thương'],['Hiệu ứng','Miễn thương 0,3 giây.'],['Hồi chiêu',cooldownText(1.4*(1-S.dashCdr/100),P.dashCd)],['Phím nhanh','Space']]};
  if(key==='god'){
   const d=P.god.def;
-  return {title:(d.tf||'Hóa Thân')+' · '+d.name,desc:'Cần đầy Nộ. Khi hóa thân, đánh thường và thần thông tự kích hoạt.',rows:[
+  return {title:(d.tf||'Thần Giáng')+' · '+d.name,desc:'Cần đầy Nộ. Khi thần giáng, đánh thường và thần thông tự kích hoạt.',rows:[
    ['Kích hoạt','Bấm dùng · gây sát thương diện rộng'],['Sát thương gốc',hudNumber(30*gp()*(1+.5*S.openBoost))+' / mục tiêu khi nhập thân'],
-   ['Hiệu ứng','Đẩy lùi và choáng quái thường. Tăng '+d.armor+' giáp khi hóa thân.'],['Thời lượng',hudSeconds(d.dur)],
+   ['Hiệu ứng','Đẩy lùi và choáng quái thường. Tăng '+d.armor+' giáp khi thần giáng.'],['Thời lượng',hudSeconds(d.dur)],
    ['Hồi chiêu',cooldownText(d.cd*(1-S.godCdr/100),P.godCd)],['Phím nhanh','R / E']]};
  }
  if(key==='dan')return {title:DAN.cuong.n,desc:DAN.cuong.d,rows:[
@@ -4044,11 +4044,11 @@ const CM={test:true,start:'wukong',price:30,cur:'Tiên ngọc',shardNeed:3,w:{wu
 function gods(){const g=save.gods||(save.gods={own:[CM.start],shard:0});if(!g.own.includes(CM.start))g.own.unshift(CM.start);return g}
 function godOwned(k){return gods().own.includes(k)}
 function renderCM(msg){$('#lbmT').textContent='Chiêu Mộ';const g=gods(),keys=Object.keys(GODS),miss=keys.filter(k=>!g.own.includes(k));
- $('#lbmB').innerHTML=`<p class="dim sm">Chiêu mộ mở khóa Hóa Thân. Trùng thì đổi thành Mảnh Hóa Thân, đủ ${CM.shardNeed} mảnh đổi được một Hóa Thân chưa có. <b class="warn">Tỉ lệ, giá, số mảnh và loại tiền đang là cấu hình thử nghiệm, chưa chốt.</b></p>
+ $('#lbmB').innerHTML=`<p class="dim sm">Chiêu mộ mở khóa Thần Giáng. Trùng thì đổi thành Mảnh Thần Giáng, đủ ${CM.shardNeed} mảnh đổi được một Thần Giáng chưa có. <b class="warn">Tỉ lệ, giá, số mảnh và loại tiền đang là cấu hình thử nghiệm, chưa chốt.</b></p>
  <div class="cmg">${keys.map(k=>{const d=GODS[k],own=g.own.includes(k);return `<div class="cmc${own?' own':''}"><canvas data-gp="${k}" width="64" height="64"></canvas><b>${d.name}</b><small>${own?'Đã có':'Chưa có'} · bậc ${d.tier}</small>${!own&&g.shard>=CM.shardNeed?`<button class="btn" data-cmx="${k}">Đổi ${CM.shardNeed} mảnh</button>`:''}</div>`}).join('')}</div>
- <div class="cmb"><span>${CM.cur}: <b>${save.ngoc||0}</b> · Mảnh Hóa Thân: <b>${g.shard}</b></span><button class="btn gold" id="cmPull" ${(save.ngoc||0)>=CM.price?'':'disabled'}>Chiêu mộ ×1 · ${CM.price} ${CM.cur}</button></div><div id="cmMsg" class="dtmsg">${msg||''}</div>`;
+ <div class="cmb"><span>${CM.cur}: <b>${save.ngoc||0}</b> · Mảnh Thần Giáng: <b>${g.shard}</b></span><button class="btn gold" id="cmPull" ${(save.ngoc||0)>=CM.price?'':'disabled'}>Chiêu mộ ×1 · ${CM.price} ${CM.cur}</button></div><div id="cmMsg" class="dtmsg">${msg||''}</div>`;
  document.querySelectorAll('#lbmB [data-gp]').forEach(cn=>{const d=GODS[cn.dataset.gp];portrait(cn,d.look,d.wpn,'#2a1a10')});
- $('#cmPull').onclick=()=>{if((save.ngoc||0)<CM.price)return;save.ngoc-=CM.price;const ks=Object.keys(CM.w),k=ks[wPick(ks.map(x=>CM.w[x]))],g2=gods();let m;if(g2.own.includes(k)){g2.shard++;m='Trùng '+GODS[k].name+' → +1 Mảnh Hóa Thân'}else{g2.own.push(k);m='Chiêu mộ được '+GODS[k].name+'!'}persist();sfx('taiji_open',0.5,0);renderCM('<b class="ok">'+m+'</b>')};
+ $('#cmPull').onclick=()=>{if((save.ngoc||0)<CM.price)return;save.ngoc-=CM.price;const ks=Object.keys(CM.w),k=ks[wPick(ks.map(x=>CM.w[x]))],g2=gods();let m;if(g2.own.includes(k)){g2.shard++;m='Trùng '+GODS[k].name+' → +1 Mảnh Thần Giáng'}else{g2.own.push(k);m='Chiêu mộ được '+GODS[k].name+'!'}persist();sfx('taiji_open',0.5,0);renderCM('<b class="ok">'+m+'</b>')};
  document.querySelectorAll('#lbmB [data-cmx]').forEach(b=>b.onclick=()=>{const k=b.dataset.cmx,g2=gods();if(g2.own.includes(k)||g2.shard<CM.shardNeed)return;g2.shard-=CM.shardNeed;g2.own.push(k);persist();renderCM('<b class="ok">Đổi mảnh lấy '+GODS[k].name+'</b>')})}
 /* ---- Luyện Vũ Khí (ghép bản thử: FORGE_ODDS, hư hỏng/sửa, mốc +3/+6/+9) ---- */
 function eqWeapon(){return invList().find(x=>x.id===eqMap().vk)}
@@ -4222,9 +4222,9 @@ const LBT=[
  {k:'diemtam',g:'點',n:'Điểm Tâm',st:()=>dtStatus()},
  {k:'luyendan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
  {k:'luyenvk',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
- {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Hóa Thân '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
+ {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Thần Giáng '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
  {k:'tangbao',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
- {k:'luyencong',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Hóa Thân'},
+ {k:'luyencong',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
  {k:'banghoi',g:'幫',n:'Bang Hội',st:()=>'Cần máy chủ',off:1,hide:1}];
 // Kiếm khởi đầu: nhân vật mới (và hồ sơ cũ chưa từng có vũ khí) nhận 1 thanh Phàm +0 để thấy ngay hệ cường hóa.
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
@@ -4355,7 +4355,7 @@ function exitArena(){const A=G.arena;if(!A)return;$('#tacloot').hidden=true;$('#
   P.x=A.px;P.y=A.py;G.cam.x=P.x;G.cam.y=P.y;P.inv=2;G.arena=null;G.evT=rnd(60,90);notice('Trở lại '+MAPS[G.cfg.map].name,'Đợt '+G.sw+'/5 tiếp tục');renderQuests()})}
 /* ================= STATUS ICONS (#avaFx) ================= */
 const STX={
- god:{g:'聖',n:'Hóa Thân',b:1,c:'#ffd36a'},
+ god:{g:'聖',n:'Thần Giáng',b:1,c:'#ffd36a'},
  toc:{g:'疾',n:'Thần tốc: +60% tốc chạy',b:1,c:'#7ad7ff'},
  don:{g:'遁',n:'Độn thổ: miễn thương',b:1,c:'#d8b47a'},
  doc:{g:'毒',n:'Trúng độc: mất máu theo giây',c:'#8be04a'},
@@ -4448,7 +4448,7 @@ function hud(dt){
  if(last.godRing!==ring){last.godRing=ring;el.godBtn.style.setProperty('--p',ring)}
  const meter=god?Math.ceil(fraction*P.godDur)+'s':cooling?Math.ceil(P.godCd)+'s':ready||st==='charging'?'':Math.floor(fraction*100)+'%';
  setT('godMeter',el.godMeter,meter);
- setT('gt',el.godTxt,god?'Thoát Hóa Thân':cooling?'Hồi Hóa Thân':ready?'Hóa Thân · Sẵn sàng':st==='charging'?'Đang Hóa Thân':'Hóa Thân');
+ setT('gt',el.godTxt,god?'Thoát Thần Giáng':cooling?'Hồi Thần Giáng':ready?'Thần Giáng · Sẵn sàng':st==='charging'?'Đang Thần Giáng':'Thần Giáng');
  const godLabel=el.godTxt.textContent+(meter?' · '+(st===''?'Nộ ':'')+meter:'');
  if(last.godLabel!==godLabel){last.godLabel=godLabel;el.godBtn.setAttribute('aria-label',godLabel)}
  renderFx();
@@ -4513,8 +4513,8 @@ function openBreak(t){
   const k=P.kit,W=WEAPONS[k.w],gd=P.god.def;
   const row=(g,n,tp,lvl,d)=>`<div class="srow${lvl===0?' off':''}"><div class="ico g">${g}</div><div><b>${n}</b><em>${tp}</em>${lvl>0?'<em>Cấp '+lvl+'</em>':lvl===0?'<em style="background:#4a3a2a;color:#cbb">Chưa lĩnh ngộ</em>':''}<small>${d}</small></div></div>`;
   body.innerHTML=`<div class="wu"><div class="panel"><h2>Người phàm · ${W.name}</h2>${row(k.basic.def.g,k.basic.def.name,'Đánh thường',-1,k.basic.def.desc)}${k.act.map(s=>row(s.def.g,s.def.name,s.def.hotkey?'Chủ động · '+s.def.hotkey:'Tự kích hoạt',s.lvl,s.def.desc)).join('')}${k.pas.filter(p=>!p.def.legacy||p.on).map(p=>row(p.def.g,p.def.name,'Bị động',p.on?-1:0,p.def.desc)).join('')}${row(k.ult.def.g,k.ult.def.name,k.ult.def.hotkey?'Tuyệt kỹ chủ động · '+k.ult.def.hotkey:'Tuyệt kỹ tự kích hoạt',k.ult.lvl,k.ult.def.desc)}</div>
-  <div class="panel"><h2>Thần tướng · ${gd.name}</h2><p class="dim sm" style="margin-bottom:6px">${gd.wname} · Bậc ${gd.tier} · Hóa thân ${gd.dur}s (hoàn Nộ tối đa ${Math.round(S.refund)}%) · Hồi ${Math.round(gd.cd*(1-S.godCdr/100))}s · Hệ số ×${gd.mult} · kế thừa 70% thưởng sát thương người phàm · +${gd.armor} giáp</p>
-  ${row(GODS[sel.god]&&gd.basic.g,gd.basic.name,'Đánh thường',-1,'Thay đòn đánh của người phàm khi hóa thân.')}${gd.skills.map(s=>row(s.g,s.name,'Thần thông tự kích hoạt',-1,s.desc)).join('')}${gd.ult?row(gd.ult.g,gd.ult.name,'Tuyệt kỹ tự kích hoạt',-1,gd.ult.desc):''}</div></div>`;
+  <div class="panel"><h2>Thần tướng · ${gd.name}</h2><p class="dim sm" style="margin-bottom:6px">${gd.wname} · Bậc ${gd.tier} · Thần giáng ${gd.dur}s (hoàn Nộ tối đa ${Math.round(S.refund)}%) · Hồi ${Math.round(gd.cd*(1-S.godCdr/100))}s · Hệ số ×${gd.mult} · kế thừa 70% thưởng sát thương người phàm · +${gd.armor} giáp</p>
+  ${row(GODS[sel.god]&&gd.basic.g,gd.basic.name,'Đánh thường',-1,'Thay đòn đánh của người phàm khi thần giáng.')}${gd.skills.map(s=>row(s.g,s.name,'Thần thông tự kích hoạt',-1,s.desc)).join('')}${gd.ult?row(gd.ult.g,gd.ult.name,'Tuyệt kỹ tự kích hoạt',-1,gd.ult.desc):''}</div></div>`;
  }
  const sv=[['hp','Khí huyết',''],['armor','Giáp',''],['dodge','Né tránh','%'],['speed','Thân pháp','%'],['regen','Căn cốt',''],['dmgW','Vũ lực','%'],['dmgM','Pháp lực','%'],['area','Phạm vi','%'],['aspd','Tốc đánh','%'],['crit','Hội tâm','%'],['critD','Bạo kích','%'],['mp','Nội lực',''],['mpR','Nội tức',''],['rage','Tích Nộ','%'],['xp','Ngộ tính','%'],['luck','Phúc duyên','']];
  $('#strip').innerHTML=sv.map(s=>`<div><span>${s[1]}</span><b>${Math.round(S[s[0]]*10)/10}${s[2]}</b></div>`).join('');
@@ -4568,7 +4568,7 @@ const SLOTS={vk:{n:'Vũ khí',base:[['dmgW',6],['dmgM',6]],names:['Thanh Phong K
  tay:{n:'Đai / Găng tay',base:[['hp',8],['armor',1]],names:['Hộ Tâm Đai','Huyền Thiết Đai','Truy Phong Thủ Sáo','Liệt Phong Thủ Sáo']}};
 const AFF={hp:10,armor:2,dodge:1.2,speed:3,regen:.3,dmgW:4,dmgM:4,area:4,aspd:3,crit:1.5,critD:8,mpR:.8,luck:3,cdr:2,pickup:8,lifeKill:.3,godDmg:4};
 const SPEC=['Khí linh hộ chủ','Nhận chủ','Biến hóa kích thước','Pháp tắc thiên địa','Uy áp Cổ thần','Nguyên khí khai thiên'];
-const STATN={hp:['Khí huyết',''],armor:['Hộ giáp',''],dodge:['Né tránh','%'],speed:['Thân pháp','%'],regen:['Hồi huyết/giây',''],dmgW:['Ngoại công','%'],dmgM:['Nội công','%'],area:['Phạm vi chiêu','%'],aspd:['Tốc độ ra chiêu','%'],crit:['Bạo kích','%'],critD:['Bạo thương','%'],mp:['Nội lực',''],mpR:['Hồi nội lực/giây',''],luck:['Cơ duyên',''],cdr:['Giảm hồi chiêu','%'],pickup:['Tầm hút vật phẩm','%'],lifeKill:['Hồi huyết khi hạ',''],dashCdr:['Giảm hồi Dash','%'],bSpd:['Tốc độ đòn thường','%'],godDmg:['Uy lực hóa thân','%'],xp:['Tu vi nhận','%']};
+const STATN={hp:['Khí huyết',''],armor:['Hộ giáp',''],dodge:['Né tránh','%'],speed:['Thân pháp','%'],regen:['Hồi huyết/giây',''],dmgW:['Ngoại công','%'],dmgM:['Nội công','%'],area:['Phạm vi chiêu','%'],aspd:['Tốc độ ra chiêu','%'],crit:['Bạo kích','%'],critD:['Bạo thương','%'],mp:['Nội lực',''],mpR:['Hồi nội lực/giây',''],luck:['Cơ duyên',''],cdr:['Giảm hồi chiêu','%'],pickup:['Tầm hút vật phẩm','%'],lifeKill:['Hồi huyết khi hạ',''],dashCdr:['Giảm hồi Dash','%'],bSpd:['Tốc độ đòn thường','%'],godDmg:['Uy lực thần giáng','%'],xp:['Tu vi nhận','%']};
 const sn=k=>STATN[k]||[k,''];
 const fmtv=(k,v)=>{const u=sn(k)[1];return '+'+(Math.abs(v)<10&&v%1?v.toFixed(1):Math.round(v))+(u||'')};
 function rollTier(st,boss){const w=[60,28,9,2.5,.4,.08,.02].map((b,i)=>b*Math.pow(1+0.55*(st-1),i));if(boss&&st>=2)w[0]=0;let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
@@ -4645,7 +4645,7 @@ function equipBonus(){const b={},inv=invList(),eq=eqMap();for(const sl in eq){co
  const perk=forgePerk(it),rank=Math.min(3,Math.floor(forgeLevel(it)/3));
  if(perk&&rank>0)b[perk.stat]=(b[perk.stat]||0)+perk.values[rank-1];
  }return b}
-function itemStats(it){let h=heroLv()<TIER_LV[it.tier]?`<div class="aff" style="color:#ff7a6a">Yêu cầu Cấp ${TIER_LV[it.tier]}</div>`:'';for(const k in it.base)h+=`<div>${sn(k)[0]} <b>${fmtv(k,it.base[k]*forgeBaseFactor(it))}</b></div>`;for(const[k,v]of it.aff)h+=`<div class="aff">${sn(k)[0]} <b>${fmtv(k,v)}</b></div>`;if(it.sp)h+=`<div class="sp">${it.sp}: sát thương hóa thân +${it.spv}%</div>`;return h}
+function itemStats(it){let h=heroLv()<TIER_LV[it.tier]?`<div class="aff" style="color:#ff7a6a">Yêu cầu Cấp ${TIER_LV[it.tier]}</div>`:'';for(const k in it.base)h+=`<div>${sn(k)[0]} <b>${fmtv(k,it.base[k]*forgeBaseFactor(it))}</b></div>`;for(const[k,v]of it.aff)h+=`<div class="aff">${sn(k)[0]} <b>${fmtv(k,v)}</b></div>`;if(it.sp)h+=`<div class="sp">${it.sp}: sát thương thần giáng +${it.spv}%</div>`;return h}
 const GEARIMG=new Image();GEARIMG.src='assets/ui/gear.png';GEARIMG.onload=()=>{try{document.querySelectorAll('.item').length&&paintIcons(document)}catch(e){}};
 // Phẩm Phàm/Linh/Bảo: icon Wuxia (hàng 4–5 của gear.png). Phẩm Tiên trở lên: icon pháp bảo cũ. Hộ phù giữ bùa cũ.
 const GCELL={vk:[[30],[31],[32],[4,7],[3],[2,8],[9]],phu:[[14],[14],[11],[12],[10],[13],[13]],ao:[34,35,36,17,18,19,19],hai:[37,38,39,22,23,24,24],boi:[40,41,42,27,28,29,29],tay:[43,44,45,46,47,48,49]};
@@ -4823,7 +4823,7 @@ const QDEF=[
  {k:'brk',t:s=>'Đập vỡ '+s.n+' bình, thùng',n:st=>2,r:st=>10+4*st},
  {k:'combo',t:s=>'Đạt '+s.n+' liên kích',n:st=>30+20*st,r:st=>15+6*st,max:1},
  {k:'nohit',t:s=>'Không trúng đòn '+s.n+' giây',n:st=>12+3*st,r:st=>18+6*st,max:1},
- {k:'god',t:s=>'Hóa Thân '+s.n+' lần',n:st=>1,r:st=>15+5*st},
+ {k:'god',t:s=>'Thần Giáng '+s.n+' lần',n:st=>1,r:st=>15+5*st},
  {k:'wave',t:s=>'Hoàn thành '+s.n+' đợt',n:st=>2,r:st=>14+5*st},
  {k:'lvl',t:s=>'Đạt cấp '+s.n,n:st=>(G?G.level:1)+3,r:st=>15+5*st,max:1}];
 function newQuest(){const st=G.stage||1,used=new Set(G.qs.map(q=>q.k));const pool=QDEF.filter(d=>!used.has(d.k));const d=pick(pool);const q={k:d.k,n:d.n(st),p:0,r:d.r(st),max:!!d.max,done:false};q.txt=d.t(q);if(d.k==='lvl')q.p=G.level;return q}
@@ -4855,8 +4855,8 @@ $('#homeBtn').addEventListener('click',()=>{$('#chest').hidden=true;G.chest=null
 function lootMsg(t){const d=document.createElement('div');d.innerHTML=t;$('#loot').appendChild(d);setTimeout(()=>d.remove(),3200);if($('#loot').children.length>3)$('#loot').firstChild.remove()}
 
 /* ================= MENU ================= */
-/* Chân dung Hóa Thân cắt từ chính sprite (đứng khung 0): vùng đầu + mũ lông vũ + vai, phóng đúng 2x để giữ nét pixel */
-/* Chân dung Hóa Thân: vẽ riêng bằng PixelLab (mặt cận cảnh, theo phong cách sprite) */
+/* Chân dung Thần Giáng cắt từ chính sprite (đứng khung 0): vùng đầu + mũ lông vũ + vai, phóng đúng 2x để giữ nét pixel */
+/* Chân dung Thần Giáng: vẽ riêng bằng PixelLab (mặt cận cảnh, theo phong cách sprite) */
 const GOD_AVA={wukong:'assets/ui/ava_wukong.png',nam:'assets/ui/ava_nam.png',nu:'assets/ui/ava_nu.png'},GAVA={};for(const k in GOD_AVA){const i=new Image();i.onload=()=>{try{paintGodIcon();if(!$('#menu').hidden)buildMenu();if(typeof lobbyPics==='function')lobbyPics();if(G)paintAva()}catch(e){}};i.src=GOD_AVA[k];GAVA[k]=i}
 function godBust(g,look){const i=GAVA[look];if(!i||!i.complete||!i.naturalWidth)return false;g.save();g.imageSmoothingEnabled=false;g.drawImage(i,0,0,160,160);g.restore();return true}
 function portrait(cn,look,wpn,bg){const g=cn.getContext('2d');cn.width=cn.height=160;const gr=g.createRadialGradient(80,70,10,80,80,90);gr.addColorStop(0,bg||'#3a2410');gr.addColorStop(1,'#120a06');g.fillStyle=gr;g.fillRect(0,0,160,160);if(godBust(g,look))return;if(useHero(look,wpn)){drawHeroFrame(g,'idle',0,80,150,1,1.2,false);return}X=g;drawChar(80,140,LOOK[look],{f:1,t:1.2,w:wpn,atk:-1,aa:0,sc:2.2});X=ctx}
@@ -4872,7 +4872,7 @@ function buildMenu(){
   <div class="hunt"><b>Mục tiêu săn · ${stars(sel.star)}</b><div>${huntList(sel.star).map(x=>`<span class="${x[1]}">${x[0]}</span>`).join('')}</div></div>
   <div class="stafee"><b>Nhận rương trùm: ${CHEST_STA} thể lực</b> · đang có ${staTick().v}/${STA.max}${staTick().v<CHEST_STA?' · <em>không đủ, lượt này chỉ là tập ải</em>':''}<br><small>${dropTableTxt(sel.star)}</small></div>
   <label class="toggle keo"><input type="checkbox" id="keoChk" ${sel.keo?'checked':''}> <span><b>Kèo săn trùm</b>: phá 2 cột băng trước khi hạ trùm → rương trùm thêm 1 lượt roll dược liệu</span></label>`}
- if(!godOwned(sel.god))sel.god=CM.start;$('#gods').innerHTML=Object.entries(GODS).map(([k,g])=>`<button class="opt gopt${sel.god===k?' on':''}${godOwned(k)?'':' lockg'}" data-o="${k}" ${godOwned(k)?'':'disabled'}><canvas></canvas><span><b>${g.name}</b><small>${g.wname} · ${g.role}</small><small>Hóa thân ${g.dur}s · Hồi ${g.cd}s · ×${g.mult}</small></span><span class="tier" style="background:${TIERC[g.tier]}">${g.tier}</span></button>`).join('');
+ if(!godOwned(sel.god))sel.god=CM.start;$('#gods').innerHTML=Object.entries(GODS).map(([k,g])=>`<button class="opt gopt${sel.god===k?' on':''}${godOwned(k)?'':' lockg'}" data-o="${k}" ${godOwned(k)?'':'disabled'}><canvas></canvas><span><b>${g.name}</b><small>${g.wname} · ${g.role}</small><small>Thần giáng ${g.dur}s · Hồi ${g.cd}s · ×${g.mult}</small></span><span class="tier" style="background:${TIERC[g.tier]}">${g.tier}</span></button>`).join('');
  document.querySelectorAll('#gods canvas').forEach((cn,i)=>{const g=Object.values(GODS)[i];portrait(cn,g.look,g.wpn,'#4a2a0c')});
  const b=save.best?`Kỷ lục: ${save.best>10?'đã hạ Ngưu Ma Vương':'đợt '+save.best}${save.wins?' · '+save.wins+' lần thắng':''} · Tiên ngọc: ${save.ngoc||0}`:'';$('#best').textContent=b;
  $('#lowfx1').checked=LOWFX;
