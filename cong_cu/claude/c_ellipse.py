@@ -15,6 +15,23 @@ def colour(k):                     # k 0=lõi .. 1=mép
     x=k*(len(PAL)-1);i=int(x);f=x-i
     a=PAL[min(i,len(PAL)-1)];b=PAL[min(i+1,len(PAL)-1)]
     return tuple(int(a[j]+(b[j]-a[j])*f) for j in range(3))
+
+def ring_small(d,front,rx,ry,tail,head,wmax,nst,seed):
+    """vòng nhỏ phía trong (24/11, chủ game xin thêm): chùm sợi mảnh sáng, quét nhanh hơn, tan sớm hơn vòng lớn"""
+    rr=random.Random(seed)
+    for i in range(nst):
+        off=(i/(nst-1))*2-1;a0=rr.uniform(0,0.1);b0=rr.uniform(0.9,1.0);n=60;pts=[]
+        u0=tail+(head-tail)*a0;u1=tail+(head-tail)*b0
+        for j in range(n+1):
+            u=u0+(u1-u0)*j/n;sv=(u-tail)/max(1e-6,head-tail)
+            W=wmax*prof(sv);a=ang(u);r=off*W/2
+            nx,ny=math.cos(a)/rx,math.sin(a)/ry;nl=math.hypot(nx,ny);nx/=nl;ny/=nl
+            pts.append((a,CX+rx*math.cos(a)+nx*r,CY+ry*math.sin(a)+ny*r,sv))
+        for j in range(n):
+            a,x,y,sv=pts[j];a2,x2,y2,_=pts[j+1]
+            if (math.sin((a+a2)/2)>0)!=front:continue
+            k=abs(off);col=colour(min(1,k*0.8+0.05))
+            d.line([(x,y),(x2,y2)],fill=col+(255,),width=2 if k<0.3 else 1)
 def strands(rnd):
     S=[]
     for i in range(M):
@@ -69,6 +86,9 @@ def sheet(name,front):
                     xa=CX+RX*sc_*math.cos(ang(ua));ya=CY+RY*sc_*math.sin(ang(ua));xb=CX+RX*sc_*math.cos(ang(ub));yb=CY+RY*sc_*math.sin(ang(ub))
                     col=tuple(int(tone[j]*al+ (44,112,214)[j]*(1-al)) for j in range(3))
                     d.line([(xa,ya),(xb,yb)],fill=col+(255,),width=ww)
+            # vòng nhỏ trong: bắt đầu trễ 0,12, quét nhanh, tan trước vòng lớn
+            h2=min(1,max(0,(p-0.12)*1.7));t2=h2*min(1,max(0,(p-0.5)/0.38))**1.1
+            if h2-t2>0.03:ring_small(d,front,RX*0.46,RY*0.46,t2,h2,26,12,91+(1 if front else 0))
             # vệt gió ngắn ngoài vòng + hạt
             for _ in range(22):
                 u=rnd.uniform(tail,head);a=ang(u)
