@@ -27,3 +27,6 @@ Tên file do Claude đặt theo nội dung. Những tên có dấu (?) là đoá
 
 ## Chuẩn combo Kiếm mới (24/11)
 Chuẩn ưu tiên cao nhất: `anh/17_SWORD_COMBO_KEYFRAME_GUIDE_uu_tien.png` (A1–A7, B1–B7, C1–C12).
+
+## Hovl (24/11)
+`video/06_hovl_artstation_quay_man_hinh.mov` là bản quay màn hình trang Hovl (nguồn thật của ảnh COMPARE/guide). Phân tích từng GIF: `hovl/MOTION_ANALYSIS.md`. Mốc giây trong ảnh guide là giờ của video quay, không phải timeline đòn.
