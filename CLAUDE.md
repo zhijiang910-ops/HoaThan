@@ -155,3 +155,6 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 - **Số sát thương:** gộp số cùng loại gần nhau (<26 px) trong 0,3 s thành một số lớn; trần cùng lúc 60 (điện thoại 34); số nằm trên người chơi mờ còn 40%.
 - **Kiểm đồng bộ:** `cong_cu/claude/sync_qa.js <game> kiem|god` (+ `vfx_peaks.json`): đo lúc vung, khung chạm, lúc số sát thương hiện, lúc VFX sáng nhất. Đã chỉnh: đòn C chuyển khung chạm sang khung 4 (TC) và elip bật sớm 0,24 s (trước đó sát thương rơi 190–320 ms trước vệt sáng nhất); đòn A vệt bật at-0,02; Ngộ Không bổ: wk_arc nhỏ T 0,22; đâm: chớp gậy và va chạm sáng nhất ngay lúc trúng. Kết quả hiện tại: mọi đòn A/B/C và 3 đòn Ngộ Không lệch ≤ 76 ms.
 - Chưa kiểm đồng bộ bằng script: Q/F/X của Kiếm, Thổi Lông, Kim Cô Bổng mở rộng/khổng lồ, Hóa Thân.
+
+## Đổi tên kỹ năng Ngộ Không (24/11, theo gợi ý ChatGPT, chủ game duyệt)
+Hóa Thân (Ngộ Không) = **Tề Thiên Giáng Thế** (`GODS.wukong.tf`; nút và mục chung vẫn ghi "Hóa Thân" vì các thần tướng khác dùng chung, thông báo và bảng thông tin hiện tên riêng). Đánh thường = **Như Ý Liên Bổng** (basic), Q = **Bạt Mao Triệu Hầu**, F = **Cân Đẩu Trấn Địa**, X = **Như Ý Xuyên Thiên**, R = **Định Hải Trấn Thiên**.
