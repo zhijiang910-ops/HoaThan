@@ -1753,11 +1753,13 @@ const isWk=()=>P.god&&P.god.def.look==='wukong';
 const WKG=document.createElement('canvas'),WKGc=WKG.getContext('2d');
 /* ánh vàng dọc thân gậy: vẽ lại chính ảnh gậy, tô vàng bằng source-atop rồi cộng sáng (pos<0 = phủ đều) */
 function staffGlow(c,len,k,alpha,pos){const m=STF[k],W=m.w+8,H=Math.ceil(len)+4;WKG.width=W;WKG.height=H;const g=WKGc;g.clearRect(0,0,W,H);g.save();g.translate(W/2,0);g.imageSmoothingEnabled=false;drawWkStaff(g,len,k);g.restore();g.globalCompositeOperation='source-atop';if(pos>=0){const cy=pos*H,gr=g.createLinearGradient(0,cy-70,0,cy+70);gr.addColorStop(0,'rgba(255,200,60,0)');gr.addColorStop(.5,'rgba(255,238,140,1)');gr.addColorStop(1,'rgba(255,200,60,0)');g.fillStyle=gr;g.fillRect(0,0,W,H);g.fillStyle='rgba(255,205,70,.3)';g.fillRect(0,0,W,H)}else{g.fillStyle='rgba(255,215,90,.55)';g.fillRect(0,0,W,H)}c.save();c.globalCompositeOperation='lighter';c.globalAlpha*=alpha;c.imageSmoothingEnabled=false;c.drawImage(WKG,-W/2,0);c.restore()}
-function drawWkStaff(c,len,k){const I=VFX[k],m=STF[k],w=m.w,x0=-Math.floor(w/2);c.drawImage(I,0,0,w,m.t,x0,0,w,m.t);c.drawImage(I,0,m.t,w,1,x0,m.t,w,Math.max(0,len-m.t-m.b));c.drawImage(I,0,m.t+1,w,m.b,x0,len-m.b,w,m.b)}
+function drawWkStaff(c,len,k){const I=VFX[k],m=STF[k],w=m.w,x0=-Math.floor(w/2);c.drawImage(I,0,0,w,m.t,x0,0,w,m.t);
+ if(m.tile){/* thân có hoa văn (PixelLab 24/11): lặp viên gạch, lật gương xen kẽ để mép nối luôn khớp */let y=m.t,i=0,rem=len-m.t-m.b;while(rem>0){const h=Math.min(m.tile,rem);c.save();c.beginPath();c.rect(x0,y,w,h);c.clip();if(i%2){c.translate(0,2*y+m.tile);c.scale(1,-1)}c.drawImage(I,0,m.t,w,m.tile,x0,y,w,m.tile);c.restore();y+=h;rem-=h;i++}c.drawImage(I,0,m.t+m.tile,w,m.b,x0,len-m.b,w,m.b)}
+ else{c.drawImage(I,0,m.t,w,1,x0,m.t,w,Math.max(0,len-m.t-m.b));c.drawImage(I,0,m.t+1,w,m.b,x0,len-m.b,w,m.b)}}
 // Hào quang lửa khi Ngộ Không hóa thân: fire_aura_01 của KanaWorks_AI (giấy phép KanaWorks_AI VFX Asset License 1.0, phải ghi công), đã chuyển pixel 0.6x, 20 khung 134x240, chân ở tâm vòng lửa (67,212)
 const AURAF={w:134,h:240,c:10,n:20,ax:67,ay:212,fps:15};{const i=new Image();i.src='assets/vfx/wk_aura_fire.png';preDecode(i);VFX.wk_aura_fire=i}
 {const i=new Image();i.src='assets/vfx/wk_crack.png';preDecode(i);VFX.wk_crack=i}/* vết nứt đất (PixelLab, ép dẹt theo góc nhìn) 128x74 */
-const STF={wk_staff:{w:20,t:65,b:65},wk_staff_big:{w:35,t:110,b:111}};
+const STF={wk_staff:{w:20,t:65,b:62+3,tile:62},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 const vok=n=>VFX[n]&&VFX[n].complete&&VFX[n].naturalWidth>0;
@@ -3082,9 +3084,9 @@ function drawFx(f){
   case'staff':{const fall=Math.min(1,k/0.7),ez=fall*fall;c.globalCompositeOperation='source-over';const A0=k>0.85?(1-k)/0.15:1;c.translate(f.x,f.y);
    /* Định Hải Trấn Thiên (24/11): bóng đổ lớn dần trên đất, vệt tốc độ, ánh vàng phủ thân, chớp sáng khi chạm */
    c.save();c.globalAlpha=A0*0.45*ez;c.scale(1,0.4);c.fillStyle='rgba(25,12,0,.7)';c.beginPath();c.arc(0,0,70+120*ez,0,TAU);c.fill();c.restore();
-   if(vok('wk_staff_big')){c.imageSmoothingEnabled=false;const S=2.2,L=600;c.save();c.scale(S,S);const top=-L-520*(1-fall)*(1-fall)+12;
-    if(fall<1){c.globalAlpha=A0*0.5*(1-fall*0.6);c.strokeStyle='#ffe9a0';c.lineWidth=2;for(let i=-3;i<=3;i++){const xx=i*13+(i%2?4:-3);c.beginPath();c.moveTo(xx,top-80-60*((i+7)%3));c.lineTo(xx,top+60);c.stroke()}}
-    c.globalAlpha=A0;c.translate(0,Math.round(top));drawWkStaff(c,L,'wk_staff_big');c.globalAlpha=A0;staffGlow(c,L,'wk_staff_big',0.28+0.14*Math.sin(k*40),-1);c.restore();
+   if(vok('wk_staff')){c.imageSmoothingEnabled=false;const S=4,L=330;c.save();c.scale(S,S);const top=-L-290*(1-fall)*(1-fall)+7;
+    if(fall<1){c.globalAlpha=A0*0.5*(1-fall*0.6);c.strokeStyle='#ffe9a0';c.lineWidth=1;for(let i=-3;i<=3;i++){const xx=i*7+(i%2?2:-2);c.beginPath();c.moveTo(xx,top-45-33*((i+7)%3));c.lineTo(xx,top+33);c.stroke()}}
+    c.globalAlpha=A0;c.translate(0,Math.round(top));drawWkStaff(c,L,'wk_staff');c.globalAlpha=A0;staffGlow(c,L,'wk_staff',0.28+0.14*Math.sin(k*40),-1);c.restore();
     if(k>0.66&&k<0.9){const fk=(k-0.66)/0.24;c.save();c.globalCompositeOperation='lighter';c.globalAlpha=0.8*(1-fk);const g=c.createRadialGradient(0,0,0,0,0,160*(0.5+fk));g.addColorStop(0,'rgba(255,245,200,1)');g.addColorStop(.5,'rgba(255,200,80,.5)');g.addColorStop(1,'rgba(255,160,40,0)');c.fillStyle=g;c.scale(1,0.5);c.beginPath();c.arc(0,0,160*(0.5+fk),0,TAU);c.fill();c.restore()}
     break}
    c.globalAlpha=A0;c.fillStyle='#b5281a';const len=520,top=-len-500*(1-fall);c.fillRect(-18,top,36,len);c.fillStyle='#f0c040';c.fillRect(-22,top,44,60);c.fillRect(-22,top+len-60,44,60);break}
