@@ -1076,6 +1076,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* tạo nhân vật: nhân vật ở cột trái, giữa là tranh minh họa */
 .cx{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)!important}
 .cxL .cxst{flex:1 1 0;min-height:90px;background:radial-gradient(ellipse at 50% 85%,#2a3a34,#0c0a08 70%)}
+.cxL > :not(.cxst){flex-shrink:0}
 .cxL #crPic{inset:0;margin:auto;width:100%;height:100%;object-fit:contain}
 .cxhr{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .cxhr b{font:700 12px "Be Vietnam Pro",sans-serif;color:#ffe9b0;white-space:nowrap}
@@ -1441,7 +1442,6 @@ input,select,textarea,#crName{font-size:16px!important}
     <div class="cravatar-head"><h3 id="crAvatarTitle">Chọn avatar</h3><button id="crAvatarClose" class="btn" type="button">Đóng</button></div>
     <div id="crAvatars" class="cxavatars" role="group" aria-label="Avatar nhân vật"></div>
    </dialog>
-   <h3 class="cxh">Binh khí</h3><div id="crWeapon" class="cxw"></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
     <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước">◀</button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau">▶</button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
@@ -1454,6 +1454,7 @@ input,select,textarea,#crName{font-size:16px!important}
     <div class="cxcap"><b id="crSceneName">Tuyết Sơn <i>雪山</i></b><p id="crSceneDesc">Gió tuyết phủ kín đường Tây hành. Yêu binh nón lá ẩn trong rừng thông, sơn tặc chặn lối qua đèo. Kẻ bước vào giang hồ, trước hết phải sống sót qua mùa đông này.</p></div></div>
   </div>
   <div class="cxp cxR">
+   <h3 class="cxh">Binh khí</h3><div id="crWeapon" class="cxw"></div>
    <h3 class="cxh">Thông tin nhân vật</h3><div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
    <h3 class="cxh">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd"></div>
    <button id="crTry" class="btn" type="button">Thử chiêu</button>
