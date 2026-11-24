@@ -354,4 +354,5 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 
 ## Màn tạo nhân vật chỉ còn 6 avatar phái (24/11, chủ game bỏ 8 avatar cũ)
 - Lưới chọn ảnh đại diện chỉ còn 6 chân dung phái (chỉ số 9–14 = `SECT_KEYS`), chọn nam hoặc nữ theo giới. Hồ sơ cũ có avatar 1–8 (hoặc không hợp lệ) tự đổi sang avatar Mao Sơn Phái (9) qua `avatarIndex`. Đã bỏ code tải sheet `avatar-nam/nu.webp` và 8 tranh cảnh `scene-*.webp`; CÁC FILE ẢNH NÀY VẪN CÒN TRONG `game/assets/portraits/` (chưa xóa, chờ chủ game duyệt rồi xóa).
+- (24/11) **Chân dung phái bị vỡ nét** (chủ game): ảnh chỉ ~225×320 px bị phóng ~2 lần. Đã bỏ chế độ ô pixel cứng cho chân dung phái (`image-rendering:auto`, canvas làm mịn chất lượng cao) nên bớt vỡ ô, nhưng ảnh vẫn mềm vì độ phân giải thấp. Giải pháp thật: nhờ ChatGPT vẽ lại 12 ảnh riêng 1024×1536, brief ở `nguon/master_amgioi/AVATAR_PHAI_CAO_PHAN_GIAI.md`; thay file `phai-*.webp` cùng tên là xong. PixelLab không có công cụ nâng độ phân giải giữ chi tiết (`/resize` chỉ đổi cỡ ảnh pixel).
 

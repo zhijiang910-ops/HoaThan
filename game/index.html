@@ -1131,7 +1131,9 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxavatar{background-size:400% 200%;image-rendering:pixelated}
 .cxavatar{padding:0;min-width:0;aspect-ratio:1;border:1px solid rgba(255,236,190,.42);border-radius:2px;background-color:#241b12;cursor:pointer;box-sizing:border-box;box-shadow:inset 0 0 0 1px rgba(10,6,3,.55),inset 0 0 0 2px rgba(255,236,190,.14)}
 /* ô đang chọn: cùng kích thước với ô khác, vòng sáng nằm TRONG ô (không phình ra ngoài) */
-.cxavatar.sect{border-color:rgba(255,214,140,.75)}
+.cxavatar.sect{border-color:rgba(255,214,140,.75);image-rendering:auto}
+.cxill #crBg.sect,#crBg.sect{image-rendering:auto!important}
+#lbAva,#avaC{image-rendering:auto!important}/* chân dung phái không phải pixel art thật: làm mịn thay vì phóng ô cứng */
 .cxavatar[aria-pressed="true"]{border-color:#ffd47a;box-shadow:inset 0 0 0 1px #ffd47a,inset 0 0 0 2px rgba(10,6,3,.6),0 0 7px rgba(199,140,66,.65)}
 .cxavatar:focus-visible{outline:2px solid #fff1c5;outline-offset:-3px}
 #crBg{image-rendering:pixelated}
@@ -4246,7 +4248,7 @@ function avatarIndex(value){return Number.isInteger(value)&&value>=9&&value<=8+S
 function drawPlayerAvatar(g,gender,value,size){
  const tile=avatarIndex(value);
  const sk=sectOfAvatar(tile);
- if(sk){const si=SECT_AVATAR_IMGS[gender][sk];if(!si?.complete||!si.naturalWidth)return false;g.imageSmoothingEnabled=false;g.drawImage(si,0,0,si.naturalWidth,si.naturalWidth,0,0,size,size);return true}
+ if(sk){const si=SECT_AVATAR_IMGS[gender][sk];if(!si?.complete||!si.naturalWidth)return false;g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(si,0,0,si.naturalWidth,si.naturalWidth,0,0,size,size);return true}
  return false;
 }
 function paintLobbyAvatar(profile){
@@ -4258,6 +4260,7 @@ const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hai
 function renderCreateScene(){
  const gender=cr.gender,n=cr.avatars[gender]||9;
  const img=$('#crBg'),sk=sectOfAvatar(n);
+ img.classList.toggle('sect',!!sk);
  if(sk){img.src=SECTS[sk].avatar[gender];img.alt=SECTS[sk].n+', '+SECTS[sk].weapon;return}
  
 }
