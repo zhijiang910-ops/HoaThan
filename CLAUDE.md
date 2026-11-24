@@ -170,3 +170,4 @@ Chủ game duyệt, cho phép PixelLab ở VFX Ngộ Không nhưng chỉ khi th�
 
 ## Đồng bộ 16 tranh cảnh mới (24/11, commit nguồn 819e7a2)
 Lấy từ `origin/claude/relaxed-heisenberg-72j521` commit `819e7a23d6d9f18e93c42cd6419d56b2eb90b852` ("Ve lai 16 tranh pixel va bo phong anh bang CSS"): 16 file `game/assets/portraits/scene-{nam,nu}-{1..8}.webp` (793×992) và dòng CSS `.cxill #crBg` (inset 0, 100%, `object-fit:contain`, nền #110d0a, không còn `transform:scale`). Thay luật `scale(1.3)` cũ của Claude. Đã kiểm 8 ảnh nam + 8 ảnh nữ đổi theo avatar (script `scratchpad/scene16.js`, ảnh `nguon/tham_chieu/scene16_kiem_tra.png`). Chép file chứ không merge nhánh (nhánh làm việc vẫn `claude/jolly-ritchie-pitrnx`).
+- (24/11 tối) Avatar góc trái trên to thêm ~12%: khung 58→65 px (ảnh 50→57), điện thoại ngang thấp 50→57 (ảnh 43→50); ô xu dịch theo (+7 px). Kiểm ở 667/844/932 px, không đè Lực chiến.
