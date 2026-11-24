@@ -1,0 +1,443 @@
+{
+ "frames": [
+  {
+   "filename": "c-pro2 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 1.png",
+   "frame": {
+    "x": 260,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 2.png",
+   "frame": {
+    "x": 520,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 3.png",
+   "frame": {
+    "x": 780,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 4.png",
+   "frame": {
+    "x": 0,
+    "y": 260,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 5.png",
+   "frame": {
+    "x": 260,
+    "y": 260,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 6.png",
+   "frame": {
+    "x": 520,
+    "y": 260,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 7.png",
+   "frame": {
+    "x": 780,
+    "y": 260,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 8.png",
+   "frame": {
+    "x": 0,
+    "y": 520,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 9.png",
+   "frame": {
+    "x": 260,
+    "y": 520,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 10.png",
+   "frame": {
+    "x": 520,
+    "y": 520,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 11.png",
+   "frame": {
+    "x": 780,
+    "y": 520,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 12.png",
+   "frame": {
+    "x": 0,
+    "y": 780,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 13.png",
+   "frame": {
+    "x": 260,
+    "y": 780,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 14.png",
+   "frame": {
+    "x": 520,
+    "y": 780,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  },
+  {
+   "filename": "c-pro2 15.png",
+   "frame": {
+    "x": 780,
+    "y": 780,
+    "w": 260,
+    "h": 260
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 260,
+    "h": 260
+   },
+   "sourceSize": {
+    "w": 260,
+    "h": 260
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6884615384615385
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "c-pro2.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1040,
+   "h": 1040
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "feet",
+   "x": 130,
+   "y": 179
+  },
+  "frameTags": [
+   {
+    "name": "c-pro2",
+    "from": 0,
+    "to": 15,
+    "direction": "forward"
+   }
+  ]
+ }
+}
