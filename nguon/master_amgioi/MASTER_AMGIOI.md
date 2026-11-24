@@ -22,11 +22,11 @@ Gợi ý: yêu cầu ChatGPT làm **một con mỗi lần** và gửi kèm ảnh
 
 Kích thước canvas gợi ý: trùm 192×192 px, Tinh Anh 160×160 px, quái thường 128×128 px (nhân vật chiếm khoảng 80% chiều cao khung).
 
-### A. Trùm (7 con)
+### A. Trùm (7 con; ảnh mẫu dáng và phong cách chuẩn: `HAC_VO_THUONG_master.png`, đã duyệt)
 | Tầng | Tên | Mô tả hình |
 |---|---|---|
-| 3 | **Ngưu Đầu** | Dùng lại hình Ngưu Ma Vương có sẵn (`game/assets/quytuong.png`), không cần vẽ. |
-| 3 | **Mã Diện** | Người đầu ngựa: đầu ngựa nâu, bờm đen, tai dựng, áo giáp da nâu, cầm đinh ba hoặc chùy. Cặp với Ngưu Đầu (cùng cao to, cùng bộ giáp sơ sài). |
+| 3 | **Ngưu Đầu** | Người đầu trâu/bò: đầu bò đen có hai sừng cong lớn, mũi có khuyên, thân người vạm vỡ, giáp da đen, cầm chĩa ba hoặc búa. Cặp với Mã Diện. (Chủ game KHÔNG duyệt dùng hình Ngưu Ma Vương, nhìn không ra nét Ngưu Đầu.) |
+| 3 | **Mã Diện** | (Hình hổ hiện chỉ là tạm.) Người đầu ngựa: đầu ngựa nâu, bờm đen, tai dựng, áo giáp da nâu, cầm đinh ba hoặc chùy. Cặp với Ngưu Đầu (cùng cao to, cùng bộ giáp sơ sài). |
 | 6 | **Hắc Vô Thường** | Áo dài đen, mũ ống cao đen có chữ trắng ở mặt mũ, lưỡi đỏ dài thè xuống ngực, dải trắng ngang hông, tay cầm gậy khóc tang hoặc phất trần. Mặt trắng nhợt, mắt đen. |
 | 9 | **Bạch Vô Thường** | Áo dài trắng, mũ ống cao trắng có chữ đen, lưỡi đỏ dài, tay cầm quạt hoặc phướn trắng. Mặt trắng nhợt. Cặp đối xứng với Hắc Vô Thường (cùng dáng). |
 | 12 | **Mạnh Bà** | Bà lão còng lưng nhẹ, tóc bạc búi, áo vải xám xanh rách, tay cầm muôi lớn múc canh, bên cạnh hoặc sau lưng có vạc canh nhỏ bốc khói xanh nhạt. Vẻ mặt hiền nhưng đáng sợ. |
