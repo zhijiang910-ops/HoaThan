@@ -1860,19 +1860,21 @@ function startSwordCut(target,basic){
  if(lunge)P.truyPhongT=0;
  swing(angle,dir);
  P.avAlt=dir===-1||heavy;P.runSwing=!heavy&&!lunge;
- P.avAnim=['attack','attack2','attack3'][step];if(!lunge)comboFx(step);
+ P.avAnim=['attack','attack2','attack3'][step];if(!lunge)comboFx(step,angle);
  const Aw=HERO.meta.anims[P.avAnim]||HERO.meta.anims.attack;
  if(Aw&&Aw.dur)P.av=P.avTotal=Aw.dur;
  if(Math.abs(Math.cos(angle))>0.15)P.facing=Math.cos(angle)>=0?1:-1;
  const delay=P.av*(Aw&&Aw.hit!=null?Aw.hit+0.03:0.42);
  P.swordCut={upgrade,angle,step,heavy,dir,lunge,delay,basic};
 }
-function comboFx(step){/* VFX bản mẫu (PixelLab, gói tách lớp, tông trắng bạc - xanh ngọc). A, B nổ đúng khung trúng; C: lớp sau người + lớp trước người */
+function comboFx(step,ang){/* VFX bản mẫu (PixelLab, gói tách lớp, tông trắng bạc - xanh ngọc). A, B nổ đúng khung trúng; C: lớp sau người + lớp trước người */
  if(!(P.kit&&P.kit.w==='kiem')||!vok('zs3'))return;const f=P.facing||1,sc=HERO.SC,an=HERO.meta.anims[['attack','attack2','attack3'][step]],at=(an&&an.dur?an.dur*an.hit:0.2);
- const go=(k,T,gr,m,fd)=>fx({k:'sp',s:k,x:P.x,y:P.y,sc:sc*(m||1),fx:f,T,gr:gr?1:0,follow:1,fade:fd||0});
+ const go=(k,T,gr,m,fd,o)=>fx(Object.assign({k:'sp',s:k,x:P.x,y:P.y,sc:sc*(m||1),fx:f,T,gr:gr?1:0,follow:1,fade:fd||0},o||{}));
+ /* vệt A/B: nghiêng theo hướng chém (tối đa ±0,35 rad); A lật dọc để quét từ trên xuống cùng chiều lưỡi kiếm */
+ const tilt=ang==null?0:clamp(Math.atan2(Math.sin(ang),Math.abs(Math.cos(ang))),-0.35,0.35)*f;
  /* Vệt chém: bộ Slashes (Frostwindz) đổi sang bảng màu game; khung lớn nhất của vệt trùng khung trúng */
- if(step===0)later(Math.max(0,at-0.14),()=>go('zs3',0.42,0,1.35),'h');
- else if(step===1)later(Math.max(0,at-0.16),()=>go('zs2',0.38,0,1.3),'h');
+ if(step===0)later(Math.max(0,at-0.18),()=>go('zs3',0.42,0,1.35,0,{fl:-1,oy:-92,ang:tilt}),'h');
+ else if(step===1)later(Math.max(0,at-0.16),()=>go('zs2',0.38,0,1.3,0,{ang:tilt}),'h');
  else{/* C = một cú quét → một elip → thu thế + mờ dần. Không còn slash zs1 độc lập; elip chỉ sống 0,5 s (tắt trước hết recovery 0,8 s), hai lớp cùng thời điểm và cùng thời gian */later(at,()=>{go('k5c_behind',0.5,1,1,0.2);go('k5c_front',0.5,0,1,0.2)},'h')}}
 function finishSwordCut(dt){
  const cut=P.swordCut;
@@ -3062,7 +3064,7 @@ function drawFx(f){
   case'sword':{const fall=Math.min(1,k/0.45);const y=f.y-260*(1-fall);c.globalAlpha=fall<1?1:a*2;c.translate(f.x,y);c.fillStyle=f.spear?'rgba(160,200,255,.4)':'rgba(140,210,255,.45)';ell(0,-30,8,40);c.fillStyle='#eaf6ff';if(f.spear){c.fillRect(-1.5,-70,3,60);c.beginPath();c.moveTo(-4,-10);c.lineTo(0,4);c.lineTo(4,-10);c.fill()}else{c.beginPath();c.moveTo(-3,-50);c.lineTo(3,-50);c.lineTo(2.5,-6);c.lineTo(0,4);c.lineTo(-2.5,-6);c.fill();c.fillStyle='#ffd36a';c.fillRect(-7,-52,14,3)}break}
   case'scorch':{/* vết cháy dưới đất: mờ dần ra rìa (không viền cứng), nhạt, tan nhanh; trước là hai elip đặc nhìn như cái đĩa đen */c.globalCompositeOperation='source-over';c.globalAlpha=0.34*Math.min(1,(1-k)*2.6)*Math.min(1,k*12+0.4);c.save();c.translate(f.x,f.y);c.scale(1,0.42);const g=c.createRadialGradient(0,0,0,0,0,f.r);g.addColorStop(0,'rgba(30,18,10,.9)');g.addColorStop(0.45,'rgba(42,28,18,.55)');g.addColorStop(1,'rgba(42,28,18,0)');c.fillStyle=g;c.beginPath();c.arc(0,0,f.r,0,TAU);c.fill();c.restore();break}
   case'el':{if(!vok('slash_el'))break;const m=SPX.slash_el,i=Math.min(m.n-1,Math.floor(k*m.n));if(f.follow&&P){f.x=P.x+(f.ox||0);f.y=P.y+(f.oy||0)}c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.translate(Math.round(f.x),Math.round(f.y));c.scale(f.sx,f.sy);c.rotate(f.back?-Math.PI/2:Math.PI/2);c.drawImage(VFX.slash_el,(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
-  case'sp':{if(f.follow&&P){f.x=P.x;f.y=P.y}const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x),Math.round(f.y));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
+  case'sp':{if(f.follow&&P){f.x=P.x;f.y=P.y}const m=SPX[f.s];if(!vok(f.s))break;const f0=f.f0||0,f1=f.f1==null?m.n-1:f.f1,i=Math.min(f1,f0+Math.floor(k*(f1-f0+1)));c.globalCompositeOperation='source-over';c.imageSmoothingEnabled=false;c.globalAlpha=(f.al||1)*(f.fade&&k>1-f.fade?(1-k)/f.fade:1);c.translate(Math.round(f.x),Math.round(f.y+(f.oy||0)*f.sc));if(f.ang)c.rotate(f.ang);c.scale(f.sc*(f.fx||1),f.sc*(f.fl||1)*(f.sy||1));c.drawImage(VFX[f.s],(i%m.c)*m.w,Math.floor(i/m.c)*m.h,m.w,m.h,-m.px,-m.py,m.w,m.h);break}
   case'staff':{const fall=Math.min(1,k/0.7);c.globalCompositeOperation='source-over';c.globalAlpha=k>0.85?(1-k)/0.15:1;c.translate(f.x,f.y);if(vok('wk_staff_big')){c.imageSmoothingEnabled=false;const L=600,top=-L-520*(1-fall)*(1-fall)+12;c.translate(0,Math.round(top));drawWkStaff(c,L,'wk_staff_big');break}c.fillStyle='#b5281a';const len=520,top=-len-500*(1-fall);c.fillRect(-18,top,36,len);c.fillStyle='#f0c040';c.fillRect(-22,top,44,60);c.fillRect(-22,top+len-60,44,60);break}
   case'cloud':{c.globalCompositeOperation='source-over';c.globalAlpha=a*0.85;c.fillStyle='#fff7e8';circle(f.x,f.y-20,16*(1+k));circle(f.x+14,f.y-16,12*(1+k));circle(f.x-14,f.y-15,11*(1+k));break}
   case'throw':{const x=f.x0+(f.x-f.x0)*k,y=f.y0+(f.y-f.y0)*k-Math.sin(k*Math.PI)*60;c.fillStyle='#ffe28a';c.translate(x,y);c.rotate(k*12);c.fillRect(-5,-7,10,14);break}

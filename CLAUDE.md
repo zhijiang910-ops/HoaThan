@@ -126,3 +126,6 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 ## Tàng Bảo Các (24/11)
 - Ô mới ở Sảnh `Tàng Bảo Các` (`LBT` k:'tangbao', `renderTBC`, `tbcData`, `tbcCount`): 4 tab Vũ Khí (loại + tên vũ khí), Trang Bị, Bí Tịch, Đan Dược. Món đã sở hữu hiện màu + ghi rõ (phẩm, tầng, số lượng); chưa có thì bóng đen "Chưa sở hữu". Đầu cửa sổ ghi tổng "đã có X/Y món" = số món đang có trong game.
 - Ghi nhận sở hữu lưu `save.tbc={eq,bk,dan,pot}`; hook ở `addItems` (`tbcNote`), `useDan`, chế đan (`tbcMark`). Danh sách lấy từ `SLOTS`, `BOOKS`, `SEC`, `RECIPE`, `DAN`, `POT` nên thêm món mới vào dữ liệu thì tự xuất hiện; `TBC_LOG` là nhật ký bổ sung tay.
+
+## Sửa vệt chém A/B Kiếm (24/11)
+Đòn A (`zs3`) lật dọc (`fl:-1`, `oy:-92`) để quét từ trên xuống cùng chiều lưỡi kiếm, bật sớm 0,18 s trước khung trúng. Đòn B (`zs2`) giữ chiều gốc (kiếm B quét từ dưới lên), chỉ thêm nghiêng theo hướng chém. `comboFx(step,angle)` truyền góc; `sp` hỗ trợ `oy`. C không đổi.
