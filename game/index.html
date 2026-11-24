@@ -1987,12 +1987,13 @@ const WEAPONS={
     for(let t=LAND+1;t<=end+0.001;t+=1)later(t,()=>{for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*0.6,H({kb:8,stun:0.06}),cx,cy)}},null)}},
   {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:25,range:260,desc:'Ba phi kiếm bay vòng quanh người, tự lao tới chém quái ở gần rồi quay về.',up:'+0.5 giây, +25% sát thương',
    cast(tg,l){sfx('wanjian_launch',0.45,0.2);const n=3;addZone({kind:'blades',follow:1,T:6+0.5*(l-1),n,r:80*Ar(),dmg:this.power*lv(l)*pw(),o:H({kb:20}),hm:new Map(),rot:0,sw:Array.from({length:n},(_,i)=>({st:0,nx:0.3+i*0.25,x:P.x,y:P.y,ang:0}))})}},
-  {id:'k6',hotkey:'X',power:38,name:'Vạn Kiếm Quy Tông',g:'萬',kind:'ult',cd:24,range:560,desc:'Gần hai mươi thanh kiếm hiện ra vây quanh người rồi lần lượt phóng thẳng về phía trước, xuyên mọi kẻ địch trên đường.',up:'+25% sát thương',
+  {id:'k6',hotkey:'X',power:38,name:'Vạn Kiếm Quy Tông',g:'萬',kind:'ult',cd:24,range:560,ground:true,aim:'lane',desc:'Kiếm hiện ra vây quanh người rồi lần lượt phóng thẳng theo hướng đã ngắm, xuyên mọi kẻ địch trong làn kiếm. Ngắm: di chuột hoặc chạm để chọn hướng, thấy rõ làn kiếm trước khi thả.',up:'+25% sát thương',
    /* VFX gói Wuxia (Vạn Kiếm Quy Tông bản gốc, phóng ngang), xuất từ demo Godot: kiếm tụ quanh người ~1,2s rồi phóng */
-   cast(tg,l){const f=tg.x<P.x?-1:1;P.facing=f;const x0=P.x,y0=P.y,dmg=this.power*lv(l)*pw()*0.6;
-    sfx('wanjian_launch',0.6,0.15);fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,T:3.83,follow:0});
-    for(let i=0;i<6;i++)later(1.2+i*0.4,()=>{const ax=x0,ay=y0-20,bx=x0+f*560,by=ay,mx=(ax+bx)/2,hl=280;
-     for(const e of enemiesIn(mx,ay,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70)hit(e,dmg,H({kb:40}),ax,ay)}},null);
+   cast(tg,l){const dd=Math.hypot(tg.x-P.x,tg.y-P.y),a=dd>24?Math.atan2(tg.y-P.y,tg.x-P.x):(P.facing===-1?Math.PI:0),f=Math.cos(a)<0?-1:1;if(Math.abs(Math.cos(a))>0.15)P.facing=f;const x0=P.x,y0=P.y,dmg=this.power*lv(l)*pw()*0.6,ca=Math.cos(a),sa=Math.sin(a);
+    /* sprite gốc phóng sang phải; hướng trái thì lật ngang rồi xoay phần còn lại để kiếm không bị ngược */
+    sfx('wanjian_launch',0.6,0.15);fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
+    for(let i=0;i<6;i++)later(1.2+i*0.4,()=>{const ax=x0,ay=y0-20,bx=x0+ca*560,by=ay+sa*560,mx=(ax+bx)/2,my=(ay+by)/2,hl=280;
+     for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70)hit(e,dmg,H({kb:40}),ax,ay)}},null);
     notice('Vạn Kiếm Quy Tông')}},
  ]},
  dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
@@ -2474,8 +2475,10 @@ function requestHumanSkill(key){
  if(sk.def.ground){
   P.manualQueue=null;
   const dir=P.moving?P.moveAng:P.facing===-1?Math.PI:0;
-  P.skillAim={key,x:P.x+Math.cos(dir)*145,y:P.y+Math.sin(dir)*145};
+  const lane=sk.def.aim==='lane',near=lane?nearest(P.x,P.y,sk.def.range):null;
+  P.skillAim=near?{key,x:near.x,y:near.y}:{key,x:P.x+Math.cos(dir)*145,y:P.y+Math.sin(dir)*145};
   limitSkillAim(P.skillAim);
+  $('#aimHelp span').textContent=lane?'Chạm hoặc nhấp để chọn hướng phóng Vạn Kiếm.':'Chạm hoặc nhấp vào vị trí muốn thả Vạn Kiếm.';
   $('#aimHelp').hidden=false;
  }else{
   queueHumanSkill(key,null);
@@ -2510,6 +2513,14 @@ function drawSkillAim(c){
  if(!P.skillAim)return;
  const {x,y}=P.skillAim;
  c.save();
+ if(hudSkill(P.skillAim.key)?.def.aim==='lane'){
+  const dd=Math.hypot(x-P.x,y-P.y),a=dd>24?Math.atan2(y-P.y,x-P.x):(P.facing===-1?Math.PI:0),L=560,W=70;
+  c.translate(P.x,P.y-20);c.rotate(a);
+  c.fillStyle='#ecd87a26';c.fillRect(0,-W,L,W*2);
+  c.strokeStyle='#ffe291';c.lineWidth=2;c.setLineDash([10,7]);c.strokeRect(0,-W,L,W*2);c.setLineDash([]);
+  c.lineWidth=3;c.beginPath();c.moveTo(0,0);c.lineTo(L-22,0);c.stroke();
+  c.fillStyle='#ffe291';c.beginPath();c.moveTo(L,0);c.lineTo(L-26,-12);c.lineTo(L-26,12);c.closePath();c.fill();
+  c.restore();return}
  c.strokeStyle='#f2cc79aa';c.lineWidth=2;c.setLineDash([9,6]);
  c.beginPath();c.arc(P.x,P.y,VAN_KIEM.range,0,TAU);c.stroke();
  c.setLineDash([]);
@@ -3353,7 +3364,7 @@ const SWORD_INFO={
  k1:{area:'Xuyên nhiều mục tiêu',unit:'mỗi mục tiêu',effect:l=>'Đẩy lùi, xuyên tối đa '+(l+2)+' mục tiêu.'},
  k2:{area:'Vùng tròn quanh điểm rơi (bán kính 125)',unit:'mỗi đòn',effect:l=>'Đòn nổ khi kiếm chạm đất (x1,2), rồi chém mỗi giây (x0,6) trong '+hudNumber(Math.min(5,3+.5*(l-1)))+' giây.'},
  k3:{area:'Quanh nhân vật',unit:'mỗi lần chạm',effect:l=>'Có '+(3+(l>=3)+(l>=5))+' kiếm xoay trong '+hudNumber(5+.5*(l-1))+' giây.'},
- k6:{area:'Diện rộng · quanh từng điểm rơi',unit:'mỗi kiếm trúng',effect:l=>'Thả '+(14+2*(l-1))+' kiếm, mỗi kiếm có thể trúng nhiều mục tiêu và đẩy lùi.'}
+ k6:{area:'Làn thẳng dài 560, rộng 140 theo hướng ngắm',unit:'mỗi đợt (6 đợt)',effect:()=>'Kiếm phóng theo hướng ngắm, xuyên mọi mục tiêu trong làn và đẩy lùi.'}
 };
 const GOD_SKILL_INFO={
  wukong:[
@@ -3392,7 +3403,8 @@ function inspectSkill(key){
   const rows=[['Loại',(d.hotkey?'Chủ động · bấm để dùng':d.kind==='auto'?'Bị động · tự kích hoạt':'Tự kích hoạt')+(sk.lvl===0?' · chưa lĩnh ngộ':'')],['Hồi chiêu',cooldownText(isGod?d.cd:humanSkillCooldown(sk),sk.lvl===0?0:sk.cd)]];
   if(d.mp)rows.push(['Nội lực',String(d.mp)]);
   if(d.hotkey)rows.push(['Phím nhanh',d.hotkey]);
-  if(d.ground)rows.push(['Vùng mưa kiếm','Bán kính '+hudNumber(VAN_KIEM.radius*Ar())+' quanh điểm chọn']);
+  if(d.aim==='lane')rows.push(['Tầm ngắm','Làn kiếm dài 560, rộng 140, chọn hướng trước khi thả']);
+  else if(d.ground)rows.push(['Vùng mưa kiếm','Bán kính '+hudNumber(VAN_KIEM.radius*Ar())+' quanh điểm chọn']);
   const spec=SWORD_INFO[d.id];
   if(spec){
    const follow=d.id==='k2'&&P.hoiPhong>0&&secOn('hoiphong');
