@@ -253,3 +253,4 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - (24/11 đêm) Vạn Kiếm bằng kiếm cầm tay: giảm 16→8 thanh cho đỡ rối mắt (chủ game góp ý). `n` ở zone `vkx` trong cast `k6`. Ảnh: `nguon/tham_chieu/mucanh_vankiem3.png`.
 - (24/11 đêm) Vạn Kiếm bằng kiếm cầm tay: BỎ aura (cả aura Mực Ảnh lẫn aura cường hóa) cho đỡ rối mắt; `drawWeaponArt(c,art,lvl,t,noAura)` tham số thứ 5. Kiếm cầm tay và Hồi Phong vẫn giữ aura. Ảnh: `nguon/tham_chieu/mucanh_vankiem4.png`.
 - (24/11 đêm) Aura chỉ hiện ở vũ khí cầm trên người (chủ game): Hồi Phong và Vạn Kiếm bay không còn aura (`drawWeaponArt(...,noAura)`).
+- (24/11 đêm) Vạn Kiếm: 7 kiếm (mỗi đợt phóng 1 thanh) và 7 đợt sát thương (trước 8 kiếm/6 đợt), T zone 3,8 s. Sát thương mỗi đợt giữ nguyên nên tổng tăng ~17%, chưa cân lại. Ảnh: `nguon/tham_chieu/mucanh_vankiem5.png`.
