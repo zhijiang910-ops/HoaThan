@@ -2066,14 +2066,14 @@ const WEAPONS={
 const GOD=o=>Object.assign({src:'g',t:'w'},o);
 const GODS={
  wukong:{name:'Tôn Ngộ Không',tier:'SSS',mult:3.0,dur:20,cd:60,armor:15,spd:0.2,look:'wukong',wpn:'bong',g:'悟',role:'Sát thương diện rộng, thổi lông hóa khỉ con',wname:'Như Ý Kim Cô Bổng',
-  basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);P._gB=!P._gB;swing(a,P.sw=-(P.sw||1));const fc=Math.cos(a)<0?-1:1,ta=clamp(Math.atan2(Math.sin(a),Math.abs(Math.cos(a))),-0.35,0.35);if(!P._gB){/* Bổ: gậy giơ cao bổ xuống phía trước -> vệt trăng tâm ở tay, quét trên xuống trước mặt; trúng ở khung gậy bổ xuống, đã chạy đi thì hủy */later(0.2,()=>{if(P.form!=='god')return;const sp=vok('wk_slash');arc(P.x,P.y-8,a,138,2.4,14*gp(),GOD({kb:120,nofx:sp}),'#ffd36a',1);if(sp)fx({k:'sp',s:'wk_slash',x:P.x+fc*4,y:P.y-64,ang:ta*fc,sc:1.2,fx:fc,f0:1,T:0.42})},'g')}
+  basic:{name:'Quét Gậy',g:'棒',cd:0.42,range:145,cast(tg){const a=angTo(tg);P._gB=!P._gB;swing(a,P.sw=-(P.sw||1));const fc=Math.cos(a)<0?-1:1,ta=clamp(Math.atan2(Math.sin(a),Math.abs(Math.cos(a))),-0.35,0.35);if(!P._gB){/* Bổ: gậy giơ cao bổ xuống phía trước -> vệt trăng tâm ở tay, quét trên xuống trước mặt; trúng ở khung gậy bổ xuống, đã chạy đi thì hủy */later(0.2,()=>{if(P.form!=='god')return;const sp=vok('wk_slash');arc(P.x,P.y-8,a,138,2.4,14*gp(),GOD({kb:120,nofx:sp}),'#ffd36a',1);if(sp)fx({k:'sp',s:'wk_slash',x:P.x+fc*4,y:P.y-64,ang:ta*fc,sc:1.2,fx:fc,f0:1,T:0.42,al:0.5})},'g')}
    else{/* Đâm: gậy nằm ngang theo hướng mặt, tia vàng phóng ra từ đầu gậy, trúng theo đường thẳng hẹp và xa hơn */later(0.12,()=>{if(P.form!=='god')return;const aa=fc>0?ta:Math.PI-ta,sp=1;arc(P.x,P.y-8,aa,175,1.1,15*gp(),GOD({kb:150,nofx:sp}),'#ffd36a',1);/* gậy không có mũi: chỉ chớp lửa nhỏ ở đầu gậy */if(vok('wk_hit'))fx({k:'sp',s:'wk_hit',x:P.x+fc*96,y:P.y-63,sc:0.45,f0:0,f1:4,T:0.22})},'g')}}},
   skills:[
-   {name:'Thổi Lông Hóa Khỉ',g:'猴',cd:9,range:420,desc:'Nhổ một nhúm lông thổi ra 5 khỉ con. Mỗi con tự tìm quái, lao tới cào cắn trong 8 giây.',cast(){blowMonkeys(5)}},
-   {name:'Cân Đẩu Vân',g:'雲',cd:5,range:460,desc:'Cưỡi mây lao tới đám quái đông nhất, nện xuống diện rộng.',cast(tg){const t=densest(P.x,P.y,460)||tg;const x0=P.x,y0=P.y;const cs=vok('wk_cloud');for(let i=0;i<8;i++){const fx0=x0+(t.x-x0)*i/8,fy0=y0+(t.y-y0)*i/8;if(cs){const d=i*0.03;fx({k:'sp',s:'wk_cloud',x:fx0,y:fy0-14,sc:0.6,f0:3,f1:6,fade:0.95,al:0.85,T:0.16+d*0.5});if(vok('wk_puff'))later(0.08+d*0.5,()=>fx({k:'sp',s:'wk_puff',x:fx0,y:fy0-22,sc:0.6,f0:5,f1:8,al:0.45,fade:0.6,T:0.6}),'g')}else fx({k:'cloud',x:fx0,y:fy0,T:0.6+i*0.03})}P.x=clamp(t.x,30,AW-30);P.y=clamp(t.y+10,30,AH-30);P.inv=Math.max(P.inv,0.35);circ(P.x,P.y,150,22*gp(),GOD({kb:150}),cs?null:'#ffe9a0');if(cs){fx({k:'sp',s:'wk_cloud',x:P.x,y:P.y+14,sc:1.1,f0:4,fade:0.6,T:0.45});fx({k:'scorch',x:P.x,y:P.y,r:95,T:1.6,gr:1});if(vok('wk_whirl'))fx({k:'sp',s:'wk_whirl',x:P.x,y:P.y-4,sc:1.4,f0:2,T:0.55,gr:1});cracks(P.x,P.y,110);G.shake=Math.max(G.shake,8)}G.shake=6}},
-   {name:'Kim Cô Bổng mở rộng',g:'金',cd:6,range:360,desc:'Giữ thế đâm, gậy trên tay dài ra 340 và to lên, xuyên cả hàng quái rồi thu về.',cast(tg){const a=angTo(tg),fc=Math.cos(a)<0?-1:1,ta=0;/* nằm ngang trùng gậy trong tay ở tư thế đâm */P.facing=fc;P._gHold={an:'attack2',fi:2,until:G.t+0.62};addZone({kind:'staffx',T:0.62,len:340,fc,ta,dmg:30*gp(),o:GOD({kb:160}),hs:new Set(),src:'g'})}},
+   {name:'Thổi Lông Hóa Khỉ',g:'猴',hotkey:'Q',cd:9,range:420,desc:'Nhổ một nhúm lông thổi ra 5 khỉ con. Mỗi con tự tìm quái, lao tới cào cắn trong 8 giây.',cast(){blowMonkeys(5)}},
+   {name:'Cân Đẩu Vân',g:'雲',hotkey:'F',cd:5,range:460,desc:'Cưỡi mây lao tới đám quái đông nhất, nện xuống diện rộng.',cast(tg){const t=densest(P.x,P.y,460)||tg;const x0=P.x,y0=P.y;const cs=vok('wk_cloud');for(let i=0;i<8;i++){const fx0=x0+(t.x-x0)*i/8,fy0=y0+(t.y-y0)*i/8;if(cs){const d=i*0.03;fx({k:'sp',s:'wk_cloud',x:fx0,y:fy0-10,sc:0.9,f0:3,f1:6,fade:0.9,al:0.95,T:0.45+d});if(vok('wk_puff'))later(0.08+d*0.5,()=>fx({k:'sp',s:'wk_puff',x:fx0,y:fy0-22,sc:0.6,f0:5,f1:8,al:0.45,fade:0.6,T:0.6}),'g')}else fx({k:'cloud',x:fx0,y:fy0,T:0.6+i*0.03})}P.x=clamp(t.x,30,AW-30);P.y=clamp(t.y+10,30,AH-30);P.inv=Math.max(P.inv,0.35);circ(P.x,P.y,150,22*gp(),GOD({kb:150}),cs?null:'#ffe9a0');if(cs){fx({k:'sp',s:'wk_cloud',x:P.x,y:P.y+14,sc:1.5,f0:3,f1:6,fade:0.5,al:0.95,T:0.9,follow:1,gr:1});fx({k:'scorch',x:P.x,y:P.y,r:95,T:1.6,gr:1});if(vok('wk_whirl'))fx({k:'sp',s:'wk_whirl',x:P.x,y:P.y-4,sc:1.4,f0:2,T:0.55,gr:1});cracks(P.x,P.y,110);G.shake=Math.max(G.shake,8)}G.shake=6}},
+   {name:'Kim Cô Bổng mở rộng',g:'金',hotkey:'X',cd:6,range:360,desc:'Giữ thế đâm, gậy trên tay dài ra 340 và to lên, xuyên cả hàng quái rồi thu về.',cast(tg){const a=angTo(tg),fc=Math.cos(a)<0?-1:1,ta=0;/* nằm ngang trùng gậy trong tay ở tư thế đâm */P.facing=fc;P._gHold={an:'attack2',fi:2,until:G.t+0.62};addZone({kind:'staffx',T:0.62,len:340,fc,ta,dmg:30*gp(),o:GOD({kb:160}),hs:new Set(),src:'g'})}},
   ],
-  ult:{name:'Kim Cô Bổng khổng lồ',g:'天',cd:11,range:420,desc:'Gậy khổng lồ nện xuống, choáng diện rộng.',cast(tg){const t=densest(P.x,P.y,420)||tg;const x=t.x,y=t.y;fx({k:'staff',x,y,T:0.7});addHazVis(x,y,260,0.5);later(0.5,()=>{const sp=vok('wk_stomp');circ(x,y,260,80*gp(),GOD({stun:1,kb:200}),sp?null:'#ffd36a');if(sp){fx({k:'scorch',x,y,r:150,T:2.2,gr:1});fx({k:'sp',s:'wk_stomp',x,y,sc:3,f0:1,T:0.6,gr:1})}G.shake=18;cracks(x,y,260);burst(x,y,'#ffd36a',30)},'g')}}},
+  ult:{name:'Kim Cô Bổng khổng lồ',g:'天',hotkey:'R',cd:11,range:420,desc:'Gậy khổng lồ nện xuống, choáng diện rộng.',cast(tg){const t=densest(P.x,P.y,420)||tg;const x=t.x,y=t.y;fx({k:'staff',x,y,T:0.7});addHazVis(x,y,260,0.5);later(0.5,()=>{const sp=vok('wk_stomp');circ(x,y,260,80*gp(),GOD({stun:1,kb:200}),sp?null:'#ffd36a');if(sp){fx({k:'scorch',x,y,r:150,T:2.2,gr:1});fx({k:'sp',s:'wk_stomp',x,y,sc:3,f0:1,T:0.6,gr:1})}G.shake=18;cracks(x,y,260);burst(x,y,'#ffd36a',30)},'g')}}},
  nezha:{name:'Na Tra',tier:'SS',mult:2.6,dur:17,cd:50,armor:10,spd:0.3,look:'nezha',wpn:'hoa',g:'哪',role:'Tốc độ, sát thương lửa',wname:'Hỏa Tiêm Thương',
   basic:{name:'Đâm Thương',g:'槍',cd:0.32,range:165,cast(tg){const a=angTo(tg);swing(a,1);P.thrust=1;line(P.x,P.y-8,a,158,28,10*gp(),GOD({kb:20,burn:1*gp(),t:'m'}),'#ffb050')}},
   skills:[
@@ -2474,6 +2474,7 @@ function canRequestHumanSkill(){
  return G?.state==='play'&&!G.paused&&!G.inspect&&!G.clearing&&P.form==='human'&&P.transT<=0&&!stOn('choang')&&!tutControl();
 }
 function requestHumanSkill(key){
+ if(key[0]==='g'){requestGodSkill(key);return}
  if(!canRequestHumanSkill())return;
  const sk=hudSkill(key);
  if(!sk?.def.hotkey)return;
@@ -2591,8 +2592,17 @@ function castGod(dt){
  const g=P.god,asp=1+S.aspd/200;
  g.basic.cd-=dt;
  if(g.basic.cd<=0){const tg=nearest(P.x,P.y,g.def.basic.range);if(tg){g.def.basic.cast(tg);g.basic.cd=g.def.basic.cd/asp}}
- for(const s of g.sk){s.cd-=dt;if(s.cd<=0){if(s.def.need&&!s.def.need())continue;const tg=nearest(P.x,P.y,s.def.range);if(tg){s.def.cast(tg);s.cd=s.def.cd;s.fl=0.3}}}
- if(g.ult){g.ult.cd-=dt;if(g.ult.cd<=0){const tg=nearest(P.x,P.y,g.ult.def.range);if(tg){g.ult.def.cast(tg);g.ult.cd=g.ult.def.cd;notice(g.ult.def.name)}}}
+ /* Kỹ năng và tuyệt kỹ của Hóa Thân do người chơi BẤM (chủ game, 24/11); ở đây chỉ hồi chiêu. Thần tướng khác vẫn tự thi triển. */
+ const manual=g.def.look==='wukong';
+ for(const s of g.sk){s.cd=Math.max(0,s.cd-dt);if(manual)continue;if(s.cd<=0){if(s.def.need&&!s.def.need())continue;const tg=nearest(P.x,P.y,s.def.range);if(tg){s.def.cast(tg);s.cd=s.def.cd;s.fl=0.3}}}
+ if(g.ult){g.ult.cd=Math.max(0,g.ult.cd-dt);if(!manual&&g.ult.cd<=0){const tg=nearest(P.x,P.y,g.ult.def.range);if(tg){g.ult.def.cast(tg);g.ult.cd=g.ult.def.cd;notice(g.ult.def.name)}}}
+}
+function requestGodSkill(key){
+ if(!G||G.state!=='play'||G.paused||G.inspect||P.form!=='god'||P.transT>0||stOn('choang'))return;
+ const sk=hudSkill(key);if(!sk||!sk.def.hotkey)return;
+ if(sk.cd>0){notice(sk.def.name,'Còn hồi '+Math.ceil(sk.cd)+' s');return}
+ const tg=nearest(P.x,P.y,sk.def.range)||{x:P.x+(P.facing===-1?-1:1)*140,y:P.y};
+ sk.def.cast(tg);sk.cd=sk.def.cd;sk.fl=0.3;if(key==='gu')notice(sk.def.name);
 }
 function dash(){
  if(!G||G.state!=='play'||G.paused||P.dashCd>0||P.transT>0||stOn('choang')||cutCLocked())return;
@@ -4595,6 +4605,7 @@ addEventListener('keydown',e=>{
   if(e.code==='Escape'&&P.skillAim){cancelSkillAim();e.preventDefault();return}
   const slot=HUMAN_SKILL_KEYS[e.code];
   if(slot&&P.form==='human'){if(!e.repeat)requestHumanSkill(slot);e.preventDefault();return}
+  {const gk={KeyQ:'g0',KeyF:'g1',KeyX:'g2',KeyR:'gu'}[e.code];if(gk&&P.form==='god'&&P.god.def.look==='wukong'){if(!e.repeat)requestGodSkill(gk);e.preventDefault();return}}
  }
  keys[e.code]=true;if(e.code==='Space'){dash();e.preventDefault()}if(e.code==='KeyR'||e.code==='KeyE')tryTransform();if(e.code==='KeyM'){MUTE=!MUTE;try{localStorage.setItem('tdst_mute',MUTE?'1':'0')}catch(_){}setSnd();if(G)notice(MUTE?'Tắt âm thanh':'Bật âm thanh','Phím M')}if(e.code==='Escape'||e.code==='KeyP')togglePause();if(e.code==='Digit1')drinkPot('hp');if(e.code==='Digit2')drinkPot('mp')});
 addEventListener('keyup',e=>{keys[e.code]=false});
