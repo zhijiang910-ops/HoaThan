@@ -1212,10 +1212,12 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .lbmb{padding:10px 14px;overflow:auto;min-height:0;font:500 13px/1.45 "Be Vietnam Pro",sans-serif;color:#e0d4bc}
 .lbmb p{margin:0 0 6px}.lbmb b{color:#ffe08a}.lbmb .warn{color:#ffb090}.lbmb .ok{color:#8fe0c4}
 .dt{display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:center}
-.dtl{display:flex;flex-direction:column;align-items:center;gap:6px}
+.dtl{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
 #dtBun{width:192px;height:160px;image-rendering:pixelated;cursor:default;filter:grayscale(.5) brightness(.7)}
-#dtBun.can{cursor:pointer;filter:none}#dtBun.chew{animation:chew .22s ease-out}
+#dtBun.can{cursor:pointer;filter:none;touch-action:manipulation!important}#dtBun.chew{animation:chew .22s ease-out}
 @keyframes chew{40%{transform:scale(1.08,.92)}100%{transform:none}}
+.dtcrumb{position:absolute;pointer-events:none;z-index:2;width:7px;height:7px;border-radius:3px;background:#f3dbad;box-shadow:0 0 0 1px #b88755;animation:dtCrumbFly .55s ease-out forwards}
+@keyframes dtCrumbFly{from{opacity:1;transform:translate(0,0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(80deg) scale(.4)}}
 .dtbites{display:flex;gap:6px}.dtbites i{width:14px;height:14px;background:#2a1e14;box-shadow:inset 0 0 0 1px #8a6a36;transform:rotate(45deg)}.dtbites i.on{background:#ffd36a}
 .dtmsg{min-height:20px;text-align:center;font:700 14px "Be Vietnam Pro",sans-serif;color:#ffe9b0}
 .mats.big{margin-bottom:8px;font-size:13px}
@@ -3689,27 +3691,85 @@ $('#lbmX').addEventListener('click',()=>{$('#lbm').hidden=true;showLobby()});
 function renderDT(tickOnly){const i=dtInfo(),s0=staTick();$('#lbmT').textContent='Điểm Tâm';
  if(tickOnly&&$('#dtLeft')){$('#dtLeft').textContent=i.open?'Khung còn '+mmss(i.left):'';return}
  const canEat=i.open&&i.rem>0&&s0.v<STA.cap;
- $('#lbmB').innerHTML=`<div class="dt"><div class="dtl"><canvas id="dtBun" width="96" height="80"></canvas><div class="dtbites">${Array.from({length:DT.bites},(_,k)=>`<i class="${k<dtBites?'on':''}"></i>`).join('')}</div><div id="dtMsg" class="dtmsg">${canEat?'Bấm vào bánh bao để ăn ('+DT.bites+' miếng)':''}</div></div>
+ $('#lbmB').innerHTML=`<div class="dt"><div class="dtl"><canvas id="dtBun" width="96" height="80"></canvas><div class="dtbites">${Array.from({length:DT.bites},(_,k)=>`<i class="${k<dtBites?'on':''}"></i>`).join('')}</div><div id="dtMsg" class="dtmsg">${canEat?'Chạm bánh bao để ăn từng miếng · '+dtBites+'/'+DT.bites:i.open&&i.rem<=0?'Đã ăn hết bánh bao trong khung giờ này':''}</div></div>
  <div class="dtr"><p>Ăn điểm tâm theo giờ Việt Nam: <b>07:00, 14:00, 21:00</b>, mỗi khung mở ${DT.win} giờ, mỗi khung nhận một lần <b>+${DT.amt} thể lực</b>. Được vượt trần tới <b>${STA.cap}</b>.</p>
  <p>Thể lực: <b>${s0.v}/${STA.max}</b>${s0.v>STA.max?' (vượt trần)':''}</p>
  <p>${i.open?(i.rem>0?`Khung ${String(i.h).padStart(2,'0')}:00 đang mở. Còn nhận được <b>+${i.rem}</b>.`:`Khung ${String(i.h).padStart(2,'0')}:00 đã nhận đủ.`)+` <span id="dtLeft">Khung còn ${mmss(i.left)}</span>`:`Chưa tới giờ. Khung tiếp theo lúc <b>${String(i.next.h).padStart(2,'0')}:00</b> (sau ${mmss(i.next.inMs)}).`}</p>
  ${i.open&&i.rem>0&&s0.v>=STA.cap?'<p class="warn">Thể lực đã đạt '+STA.cap+'. Tiêu bớt rồi quay lại trong khung này để nhận phần còn lại.</p>':''}</div></div>`;
  paintBun(dtBites);const cn=$('#dtBun');cn.classList.toggle('can',canEat);cn.onclick=()=>eatBite()}
-function paintBun(b){const cn=$('#dtBun');if(!cn)return;const g=cn.getContext('2d');g.clearRect(0,0,96,80);g.imageSmoothingEnabled=false;
+function paintBun(b){
+ const cn=$('#dtBun');if(!cn)return;
+ const g=cn.getContext('2d');g.imageSmoothingEnabled=false;g.clearRect(0,0,96,80);
+ // Đĩa và bóng là lớp cố định; cắn bánh không xóa mất đĩa.
  g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(48,70,34,7,0,0,TAU);g.fill();
  g.fillStyle='#5a3a1a';g.fillRect(14,62,68,6);g.fillStyle='#8a5a2a';g.fillRect(16,60,64,3);
- if(b>=DT.bites){g.fillStyle='#e8d8b8';g.fillRect(36,56,6,3);g.fillRect(50,57,4,2);return}
- g.fillStyle='#3a2a1a';g.beginPath();g.ellipse(48,40,34,24,0,0,TAU);g.fill();g.fillStyle='#f8f0dc';g.beginPath();g.ellipse(48,40,32,22,0,0,TAU);g.fill();
- g.fillStyle='#fffaf0';g.beginPath();g.ellipse(40,32,14,8,0,0,TAU);g.fill();g.strokeStyle='#d8c8a8';g.lineWidth=2;for(let i=0;i<5;i++){g.beginPath();g.moveTo(48,20);g.quadraticCurveTo(48+(i-2)*9,28,48+(i-2)*12,36);g.stroke()}
- g.fillStyle='#c8382a';g.fillRect(46,18,4,3);
- g.globalCompositeOperation='destination-out';const bites=[[80,30],[80,50],[18,30],[18,50],[48,16]];for(let i=0;i<b;i++){const[x,y]=bites[i];for(const[dx,dy,r] of[[0,0,9],[6,5,7],[-5,6,6]]){g.beginPath();g.arc(x+dx*(x>48?-1:1),y+dy,r,0,TAU);g.fill()}}g.globalCompositeOperation='source-over';
- if(b>0){g.fillStyle='#a8643a';g.beginPath();g.ellipse(48,42,10,7,0,0,TAU);g.fill()}}
-function eatBite(){const i=dtInfo(),s0=staTick();if(dtBusy||!i.open||i.rem<=0||s0.v>=STA.cap)return;const t=performance.now();if(t-dtLast<110)return;dtLast=t;
- dtBites++;sfx('sword_hit',0.25,0.15);const cn=$('#dtBun');cn.classList.remove('chew');void cn.offsetWidth;cn.classList.add('chew');paintBun(dtBites);
+ if(b>=DT.bites){
+  // Ăn hết: chỉ còn vụn bánh trên đĩa.
+  for(const [x,y,w,h] of [[26,54,7,4],[41,57,5,3],[53,54,6,4],[65,58,4,2]]){
+   g.fillStyle='#d8b583';g.fillRect(x,y,w,h);g.fillStyle='#fff1d4';g.fillRect(x,y,Math.max(2,w-2),2)
+  }
+  return
+ }
+ const buf=document.createElement('canvas');buf.width=96;buf.height=80;
+ const h=buf.getContext('2d');h.imageSmoothingEnabled=false;
+ h.fillStyle='#926e4d';h.beginPath();h.ellipse(48,43,34,24,0,0,TAU);h.fill();
+ h.fillStyle='#f2e0bd';h.beginPath();h.ellipse(48,40,32,22,0,0,TAU);h.fill();
+ h.fillStyle='#fff7e9';h.beginPath();h.ellipse(40,31,19,9,0,0,TAU);h.fill();
+ h.strokeStyle='#d6bd98';h.lineWidth=1.8;
+ for(let i=0;i<5;i++){h.beginPath();h.moveTo(48,21);h.quadraticCurveTo(48+(i-2)*7,28,48+(i-2)*10,36);h.stroke()}
+ h.fillStyle='#bf6547';h.fillRect(46,19,4,3);
+ // Năm lần nhấn: bánh mất đi rõ ràng từ phải sang trái; không dùng vòng xóa ở ngoài mép.
+ const bites=[[76,34,16],[67,48,18],[55,25,18],[40,43,20]];
+ h.globalCompositeOperation='destination-out';
+ for(let i=0;i<Math.min(b,4);i++){
+  const [x,y,r]=bites[i];
+  h.beginPath();h.arc(x,y,r,0,TAU);h.fill();
+  h.beginPath();h.arc(x-5,y+4,r*.5,0,TAU);h.fill()
+ }
+ h.globalCompositeOperation='source-over';
+ g.drawImage(buf,0,0);
+ // Vụn bánh tăng theo số lần cắn; tới lần 5 chỉ còn vụn trên đĩa.
+ for(let i=0;i<b;i++){g.fillStyle=i%2?'#e8c796':'#fbebcf';g.fillRect(70-i*11,57+i%2,4,3)}
+}
+function popBunCrumbs(){
+ const cn=$('#dtBun');if(!cn)return;
+ const root=cn.parentElement,rect=cn.getBoundingClientRect(),base=root.getBoundingClientRect();
+ const x=rect.left-base.left+rect.width*.62,y=rect.top-base.top+rect.height*.4;
+ for(let i=0;i<6;i++){
+  const p=document.createElement('i');p.className='dtcrumb';
+  p.style.left=(x+(Math.random()-.5)*24)+'px';p.style.top=(y+(Math.random()-.5)*20)+'px';
+  p.style.setProperty('--dx',((Math.random()-.5)*90)+'px');
+  p.style.setProperty('--dy',(-18-Math.random()*65)+'px');
+  root.appendChild(p);setTimeout(()=>p.remove(),600)
+ }
+}
+function eatBite(){
+ const i=dtInfo(),s0=staTick();
+ if(dtBusy||!i.open||i.rem<=0||s0.v>=STA.cap)return;
+ const t=performance.now();if(t-dtLast<150)return;dtLast=t;
+ dtBites++;
+ const cn=$('#dtBun');cn.classList.remove('chew');void cn.offsetWidth;cn.classList.add('chew');
+ paintBun(dtBites);popBunCrumbs();
+ // Dùng âm lượng nhỏ, không thay đổi công thức +15 thể lực sau đủ 5 miếng.
+ sfx('sword_hit',0.12,0.12);
  document.querySelectorAll('.dtbites i').forEach((e,k)=>e.classList.toggle('on',k<dtBites));
- $('#dtMsg').textContent=['Ngoàm!','Nhồm nhoàm...','Thơm quá!','Nóng hổi!','Ực!'][dtBites-1]||'';
- if(dtBites>=DT.bites){dtBusy=true;const ii=dtInfo(),s1=staTick(),add=Math.max(0,Math.min(ii.rem,STA.cap-s1.v));if(add>0){const was=s1.v>=STA.max;s1.v+=add;if(!was&&s1.v>=STA.max)s1.t=Date.now();save.dt={key:ii.key,got:(ii.got||0)+add};persist()}
-  setTimeout(()=>{$('#dtMsg').innerHTML='<b class="ok">+'+add+' thể lực</b>';setTimeout(()=>{dtBites=0;dtBusy=false;renderDT()},1100)},250)}}
+ const msg=$('#dtMsg');
+ if(msg)msg.textContent='Đã ăn '+dtBites+'/'+DT.bites+' miếng · '+(['Ngoàm!','Nhồm nhoàm...','Ngon quá!','Sắp hết bánh!','Ăn hết rồi!'][dtBites-1]||'');
+ if(dtBites>=DT.bites){
+  dtBusy=true;
+  const ii=dtInfo(),s1=staTick(),add=Math.max(0,Math.min(ii.rem,STA.cap-s1.v));
+  if(add>0){
+   const was=s1.v>=STA.max;s1.v+=add;
+   if(!was&&s1.v>=STA.max)s1.t=Date.now();
+   save.dt={key:ii.key,got:(ii.got||0)+add};persist()
+  }
+  setTimeout(()=>{
+   if($('#lbm').hidden||lbmK!=='diemtam'){dtBites=0;dtBusy=false;return}
+   const label=$('#dtMsg');if(label)label.innerHTML='<b class="ok">Ăn hết bánh · +'+add+' thể lực</b>';
+   setTimeout(()=>{if(!$('#lbm').hidden&&lbmK==='diemtam'){dtBites=0;dtBusy=false;renderDT()}else{dtBites=0;dtBusy=false}},1150)
+  },280)
+ }
+}
 /* ---- Luyện Đan ---- */
 const TRUCCO={hp:20};
 function danBag(){return save.danBag||(save.danBag={cuong:0})}
