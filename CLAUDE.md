@@ -356,3 +356,10 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - Lưới chọn ảnh đại diện chỉ còn 6 chân dung phái (chỉ số 9–14 = `SECT_KEYS`), chọn nam hoặc nữ theo giới. Hồ sơ cũ có avatar 1–8 (hoặc không hợp lệ) tự đổi sang avatar Mao Sơn Phái (9) qua `avatarIndex`. Đã bỏ code tải sheet `avatar-nam/nu.webp` và 8 tranh cảnh `scene-*.webp`; CÁC FILE ẢNH NÀY VẪN CÒN TRONG `game/assets/portraits/` (chưa xóa, chờ chủ game duyệt rồi xóa).
 - (24/11) **Chân dung phái bị vỡ nét** (chủ game): ảnh chỉ ~225×320 px bị phóng ~2 lần. Đã bỏ chế độ ô pixel cứng cho chân dung phái (`image-rendering:auto`, canvas làm mịn chất lượng cao) nên bớt vỡ ô, nhưng ảnh vẫn mềm vì độ phân giải thấp. Giải pháp thật: nhờ ChatGPT vẽ lại 12 ảnh riêng 1024×1536, brief ở `nguon/master_amgioi/AVATAR_PHAI_CAO_PHAN_GIAI.md`; thay file `phai-*.webp` cùng tên là xong. PixelLab không có công cụ nâng độ phân giải giữ chi tiết (`/resize` chỉ đổi cỡ ảnh pixel).
 
+## Màn tạo nhân vật: CHỌN MÔN PHÁI thay cho chọn avatar và vũ khí (24/11, chủ game)
+- Bỏ ô chọn ảnh đại diện (trái) và cột "Binh khí" (phải). Cột phải giờ là **Môn phái**: 6 nút (avatar thu nhỏ + tên phái + vũ khí), chọn phái nào thì **avatar của phái đó đi kèm** (chỉ số 9–14 = `SECT_KEYS`), khung giữa hiện chân dung lớn của phái, bên dưới hiện vũ khí, sở trường, màu chủ đạo (từ `SECTS`).
+- Chỉ **Mao Sơn Phái** chơi được (có bộ chiêu Kiếm, hiện "Võ học tiêu biểu"); 5 phái còn lại bị khóa (鎖), hiện "Đang thử nghiệm" và nút Khởi hành/Lưu bị tắt. Mở thêm phái: thêm bộ chiêu rồi sửa điều kiện `open=cr.sect==='maoson'` trong `renderCreate` và kiểm tra ở `#crGo`.
+- Hồ sơ có thêm trường `sect` (khóa phái); `avatar` vẫn lưu (9–14) để các chỗ vẽ avatar cũ dùng được. Hồ sơ cũ không có `sect`: suy từ avatar, nếu không được thì Mao Sơn.
+- Điện thoại ngang: đã thu gọn (tile avatar 26–30 px, ẩn bớt dòng thông tin) để nút Lưu nằm trong khung ở 667×375, 844×390, 932×430.
+- Danh sách `WEAPONS` (Kiếm, Đao, Thương, Côn, Phù Chú) và nút chọn vũ khí cũ không còn hiện ở màn này; `WEAPONS.kiem` vẫn dùng để lấy bộ chiêu của Mao Sơn.
+
