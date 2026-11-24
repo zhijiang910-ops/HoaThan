@@ -26,4 +26,4 @@ Tên file do Claude đặt theo nội dung. Những tên có dấu (?) là đoá
 - wukong_stick.zip, Sun_Wukong_transformation.zip: gói Ngộ Không chủ game gửi.
 
 ## Chuẩn combo Kiếm mới (24/11)
-Chuẩn ưu tiên cao nhất: `anh/17_SWORD_COMBO_KEYFRAME_GUIDE_uu_tien.png` (A1–A7, B1–B7, C1–C12). Ba ảnh nhân vật chủ game gửi cùng lúc: `anh/18_`, `19_`, `20_` (xem tên file).
+Chuẩn ưu tiên cao nhất: `anh/17_SWORD_COMBO_KEYFRAME_GUIDE_uu_tien.png` (A1–A7, B1–B7, C1–C12).
