@@ -4,6 +4,7 @@ Ra k5c_behind.png / k5c_front.png: ô 360x160, 15 khung, 4 cột. python3 c_elli
 import math,random,sys
 from PIL import Image,ImageDraw,ImageFilter
 OUT=sys.argv[1] if len(sys.argv)>1 else 'game/assets/vfx/'
+VAR=sys.argv[2] if len(sys.argv)>2 else ''
 N=15;CW,CH=360,224;COLS=4;CX,CY=180,114
 RX,RY=150,66
 M=18
@@ -88,7 +89,7 @@ def sheet(name,front):
                     d.line([(xa,ya),(xb,yb)],fill=col+(255,),width=ww)
             # vòng nhỏ trong: bắt đầu trễ 0,12, quét nhanh, tan trước vòng lớn
             h2=min(1,max(0,(p-0.12)*1.7));t2=h2*min(1,max(0,(p-0.5)/0.38))**1.1
-            if h2-t2>0.03:ring_small(d,front,RX*0.46,RY*0.46,t2,h2,26,12,91+(1 if front else 0))
+            if VAR=='' and h2-t2>0.03:ring_small(d,front,RX*0.46,RY*0.46,t2,h2,26,12,91+(1 if front else 0))
             # vệt gió ngắn ngoài vòng + hạt
             for _ in range(22):
                 u=rnd.uniform(tail,head);a=ang(u)
@@ -101,6 +102,26 @@ def sheet(name,front):
                 if (math.sin(a)>0)!=front:continue
                 x=CX+RX*math.cos(a)+rnd.uniform(-22,22);y=CY+RY*math.sin(a)+rnd.uniform(-20,20)
                 d.rectangle([x,y,x+rnd.choice([0,1]),y+rnd.choice([0,1])],fill=PAL[rnd.choice([0,1])]+(255,))
+        if VAR=='cross' and head-tail>0.03:
+            # vòng thứ hai cùng cỡ, nghiêng ngược chiều, mờ hơn: nhìn như hai vành xoáy bắt chéo
+            im2=im.rotate(-16,center=(CX,CY),resample=Image.BICUBIC);r_,g_,b_,a_=im2.split();a_=a_.point(lambda v:int(v*0.7));im2=Image.merge('RGBA',(r_,g_,b_,a_))
+            im=Image.alpha_composite(im2,im.rotate(7,center=(CX,CY),resample=Image.BICUBIC))
+        if VAR=='ground' and not front:
+            # sóng xung kích dưới chân: vành elip dẹt nở dần ra rồi mờ, kèm bụi
+            dd=ImageDraw.Draw(im);q=min(1,max(0,(p-0.15)/0.7))
+            if 0<q<1:
+                for k_,(rf,wd,cc) in enumerate(((1.0,3,PAL[2]),(0.86,2,PAL[1]),(0.7,1,PAL[0]))):
+                    rx_=30+190*q*rf;ry_=rx_*0.34;al=int(255*(1-q)**0.8)
+                    dd.ellipse([CX-rx_,CY+38-ry_,CX+rx_,CY+38+ry_],outline=cc+(al,),width=wd)
+        if VAR=='spark' and front and head-tail>0.03 and p>0.2:
+            # tia sao ở đầu nhát chém + tia lửa bắn ra ngoài
+            dd=ImageDraw.Draw(im);a=ang(head);hx=CX+RX*math.cos(a);hy=CY+RY*math.sin(a);fade=max(0,1-max(0,p-0.75)/0.25)
+            if math.sin(a)>0:
+                for L_,w_ in ((26,3),(14,7)):
+                    dd.polygon([(hx,hy-L_),(hx+w_,hy),(hx,hy+L_),(hx-w_,hy)],fill=PAL[0]+(int(255*fade),));dd.polygon([(hx-L_,hy),(hx,hy-w_),(hx+L_,hy),(hx,hy+w_)],fill=PAL[0]+(int(255*fade),))
+                rr=random.Random(f)
+                for _ in range(14):
+                    th=rr.uniform(-1.2,1.2)+math.pi*0.1;L_=rr.uniform(10,34);dd.line([(hx+math.cos(th)*8,hy+math.sin(th)*8),(hx+math.cos(th)*L_,hy+math.sin(th)*L_)],fill=rr.choice([PAL[0],PAL[1],PAL[2]])+(int(230*fade),),width=1)
         out.paste(im,((f%COLS)*CW,(f//COLS)*CH))
     out.save(OUT+name)
 sheet('k5c_behind.png',False)
