@@ -10,6 +10,10 @@ RX,RY=150,66
 M=18
 PAL=[(255,255,255),(214,244,255),(150,214,255),(86,168,250),(44,112,214),(28,72,160)]
 def ang(u):return math.radians(200+330*u)
+def tailmix(col,sv,k=0.75):
+    """từ video Spine (24/11): đuôi tối dần sang xanh đậm - tím, đầu giữ sáng"""
+    w=max(0.0,1-sv)**1.4*k;tc=(60,36,150) if sv<0.25 else (40,70,205)
+    return tuple(int(col[i]*(1-w)+tc[i]*w) for i in range(3))
 def prof(s):                       # độ rộng chùm theo vị trí s (0 đuôi → 1 đầu): dày về phía cuối, mỏng nhọn hai đầu
     return (max(0.0,math.sin(math.pi*min(1,s)**0.7))**0.8)*(0.35+0.65*s)
 def colour(k):                     # k 0=lõi .. 1=mép
@@ -64,7 +68,7 @@ def sheet(name,front):
                         if pass_==0:
                             gd.line([(x,y),(x2,y2)],fill=(70,150,255,255),width=7)
                         else:
-                            col=colour(min(1,k*0.9+0.1*(1-sv)))
+                            col=tailmix(colour(min(1,k*0.9+0.1*(1-sv))),sv)
                             fade=min(1,sv*5)*(1 if sv>0.0 else 0)
                             d.line([(x,y),(x2,y2)],fill=col+(255,),width=s['w'] if k>0.35 else s['w']+1)
             gl=gl.filter(ImageFilter.GaussianBlur(6))
@@ -85,7 +89,7 @@ def sheet(name,front):
                     s_=i/n;al=max(0.0,math.sin(math.pi*s_))**0.6
                     if al<0.25:continue
                     xa=CX+RX*sc_*math.cos(ang(ua));ya=CY+RY*sc_*math.sin(ang(ua));xb=CX+RX*sc_*math.cos(ang(ub));yb=CY+RY*sc_*math.sin(ang(ub))
-                    col=tuple(int(tone[j]*al+ (44,112,214)[j]*(1-al)) for j in range(3))
+                    col=tailmix(tuple(int(tone[j]*al+ (44,112,214)[j]*(1-al)) for j in range(3)),(u0+(u1-u0)*(i/n)-tail)/max(1e-6,head-tail),0.6)
                     d.line([(xa,ya),(xb,yb)],fill=col+(255,),width=ww)
             # vòng nhỏ trong: bắt đầu trễ 0,12, quét nhanh, tan trước vòng lớn
             h2=min(1,max(0,(p-0.12)*1.7));t2=h2*min(1,max(0,(p-0.5)/0.38))**1.1
