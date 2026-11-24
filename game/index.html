@@ -1127,10 +1127,11 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .crscene-dialog img{display:block;max-width:86vw;max-height:85vh;width:auto;height:auto;object-fit:contain;image-rendering:pixelated}
 .crscene-dialog button{position:absolute;top:6px;right:6px}
 .cxavatars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;flex-shrink:0}
-@media (max-width:760px){.cxavatars{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}}
+@media (max-width:760px){.cxavatars{grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}}
 .cxavatar{background-size:400% 200%;image-rendering:pixelated}
 .cxavatar{padding:0;min-width:0;aspect-ratio:1;border:1px solid rgba(255,236,190,.42);border-radius:2px;background-color:#241b12;cursor:pointer;box-sizing:border-box;box-shadow:inset 0 0 0 1px rgba(10,6,3,.55),inset 0 0 0 2px rgba(255,236,190,.14)}
 /* ô đang chọn: cùng kích thước với ô khác, vòng sáng nằm TRONG ô (không phình ra ngoài) */
+.cxavatar.sect{border-color:rgba(255,214,140,.75)}
 .cxavatar[aria-pressed="true"]{border-color:#ffd47a;box-shadow:inset 0 0 0 1px #ffd47a,inset 0 0 0 2px rgba(10,6,3,.6),0 0 7px rgba(199,140,66,.65)}
 .cxavatar:focus-visible{outline:2px solid #fff1c5;outline-offset:-3px}
 #crBg{image-rendering:pixelated}
@@ -4245,9 +4246,17 @@ for(const gender of ['nam','nu']){
  };
  img.src='assets/portraits/avatar-'+gender+'.webp';
 }
-function avatarIndex(value){return Number.isInteger(value)&&value>=1&&value<=8?value:0}
+/* avatar 1-8: tấm ảnh nhỏ cũ (avatar-nam/nu.webp, có tranh cảnh); avatar 9-14: chân dung đại diện 6 môn phái (SECTS, ảnh rời) */
+const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon'];
+const SECT_AVATAR_IMGS={nam:{},nu:{}};
+for(const g of['nam','nu'])for(const k of SECT_KEYS){const im=new Image();im.onload=()=>{const profile=prof();if(profile?.gender===g&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===g)paintAva()};im.src=SECTS[k].avatar[g];SECT_AVATAR_IMGS[g][k]=im}
+const sectOfAvatar=n=>n>8&&n<=8+SECT_KEYS.length?SECT_KEYS[n-9]:null;
+function avatarIndex(value){return Number.isInteger(value)&&value>=1&&value<=8+SECT_KEYS.length?value:0}
 function drawPlayerAvatar(g,gender,value,size){
- const tile=avatarIndex(value),img=PLAYER_AVATAR_SHEETS[gender];
+ const tile=avatarIndex(value);
+ const sk=sectOfAvatar(tile);
+ if(sk){const si=SECT_AVATAR_IMGS[gender][sk];if(!si?.complete||!si.naturalWidth)return false;g.imageSmoothingEnabled=false;g.drawImage(si,0,0,si.naturalWidth,si.naturalWidth,0,0,size,size);return true}
+ const img=PLAYER_AVATAR_SHEETS[gender];
  if(!tile||!img?.complete||!img.naturalWidth)return false;
  const index=tile-1,w=img.naturalWidth/4,h=img.naturalHeight/2;
  g.imageSmoothingEnabled=false;
@@ -4265,7 +4274,9 @@ const AVATAR_SCENES={
 };
 function renderCreateScene(){
  const gender=cr.gender,n=cr.avatars[gender]||1;
- const img=$('#crBg'),name=AVATAR_SCENES[gender][n-1];
+ const img=$('#crBg'),sk=sectOfAvatar(n);
+ if(sk){img.src=SECTS[sk].avatar[gender];img.alt=SECTS[sk].n+', '+SECTS[sk].weapon;return}
+ const name=AVATAR_SCENES[gender][n-1];
  img.src='assets/portraits/scene-'+gender+'-'+n+'.webp';
  img.alt='Nhân vật nhìn ra '+name;
 }
@@ -4273,10 +4284,11 @@ function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*1
 function renderCreateAvatars(){
  const group=$('#crAvatars');
  const gender=cr.gender;
- group.innerHTML=Array.from({length:8},(_,i)=>{
-  const n=i+1,position=avatarPosition(i);
-  const label='Ảnh đại diện '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
-  return `<button type="button" class="cxavatar" data-avatar="${n}" title="${label}" aria-label="${label}" aria-pressed="${cr.avatars[gender]===n}" style="background-image:url('assets/portraits/avatar-${gender}.webp');background-position:${position}"></button>`;
+ group.innerHTML=Array.from({length:8+SECT_KEYS.length},(_,i)=>{
+  const n=i+1,sk=sectOfAvatar(n);
+  const label=sk?SECTS[sk].n+' · '+SECTS[sk].weapon+' ('+(gender==='nu'?'nữ':'nam')+')':'Ảnh đại diện '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
+  const bg=sk?`background-image:url('${SECTS[sk].avatar[gender]}');background-size:cover;background-position:50% 8%`:`background-image:url('assets/portraits/avatar-${gender}.webp');background-position:${avatarPosition(i)}`;
+  return `<button type="button" class="cxavatar${sk?' sect':''}" data-avatar="${n}" title="${label}" aria-label="${label}" aria-pressed="${cr.avatars[gender]===n}" style="${bg}"></button>`;
  }).join('');
  renderCreateScene();
 }
