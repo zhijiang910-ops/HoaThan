@@ -1774,7 +1774,7 @@ for(const n in SPX){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i
 /* điểm va chạm đồng bộ với kiếm (24/11): MỘT chớp chém xanh-tím xoay theo hướng lưỡi, thay bộ swhit (mảnh băng) */
 /* va chạm Vạn Kiếm: biến thể xem thử (window.__vkv) 1=kiếm cắm lại, 2=kiếm khí xuyên, 3=chữ X */
 function vkHit(e,a){const v=window.__vkv||4,ey=e.y-e.r*1.1;if(v===1){if(vok('wanjian_sword'))fx({k:'sp',s:'wanjian_sword',x:e.x-Math.cos(a)*10,y:ey-Math.sin(a)*10,sc:1.25,ang:a+Math.PI/2,T:0.55,fade:0.5,al:1})}else if(v===2){if(vok('swqi'))fx({k:'sp',s:'swqi',x:e.x-Math.cos(a)*30,y:ey,sc:1.3,ang:a,T:0.3,al:0.95})}else if(v===4){/* kiếm khí xuyên + quái chớp trắng cả thân + dư ảnh thanh kiếm ở lại (24/11) */e.flash=Math.max(e.flash||0,0.16);if(vok('swqi'))fx({k:'sp',s:'swqi',x:e.x-Math.cos(a)*30,y:ey,sc:1.3,ang:a,T:0.3,al:0.95});if(vok('wanjian_sword'))fx({k:'sp',s:'wanjian_sword',x:e.x+Math.cos(a)*6,y:ey+Math.sin(a)*6,sc:1.15,ang:a+Math.PI/2,T:0.45,fade:0.7,al:0.55})}else{hitFx(e.x,ey,a+0.55,1.15);hitFx(e.x,ey,a-0.55,1.15)}}
-function hitFx(x,y,ang,sc){if(!vok('wx_slash'))return;fx({k:'sp',s:'wx_slash',x,y,sc:sc||0.8,ang:ang||0,f0:1,f1:4,T:0.2,al:0.95})}
+function hitFx(x,y,ang,sc,sy,T){if(!vok('wx_slash'))return;fx({k:'sp',s:'wx_slash',x,y,sc:sc||0.8,sy:sy||1,ang:ang||0,f0:1,f1:4,T:T||0.2,al:0.95})}
 const vok=n=>VFX[n]&&VFX[n].complete&&VFX[n].naturalWidth>0;
 function arcCell(c,row,fi,sc){c.drawImage(VFX.arc_sheet,Math.max(0,Math.min(7,fi))*96,row*96,96,96,-48*sc,-48*sc,96*sc,96*sc)}
 /* bản đồ gói Wuxia */
@@ -1912,7 +1912,7 @@ function finishSwordCut(dt){
  arc(P.x,P.y-8,angle,(heavy?118:lunge?96:80)*Ar(),heavy?TAU:1.9,damage,
   H({kb:heavy?60:isB?32:20,stun:heavy?0.10:0,swordBasic:true,mark:heavy,pierceArmor:upgrade>=3 ? SWORD_FORGE_PIERCE : 0,
    stop:isB?0.055:0.035,numUp:isB?0.12:0,cutFx:{n:0,ang:angle+(dir>0?1.2:-1.2)},sarc:isB?2:lunge?3:1,nofx:swfx}),color,dir);
- if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);hitFx(P.x+Math.cos(angle)*58,P.y-8+Math.sin(angle)*58,angle,1.1)}
+ if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);hitFx(P.x+Math.cos(angle)*58,P.y+6+Math.sin(angle)*40,angle*0.3,0.8,0.55,0.16)}
  if(heavy&&upgrade>=9){
   const x=P.x+Math.cos(angle)*36,y=P.y+Math.sin(angle)*36-8;
   shoot(x,y,angle,370,{dmg:damage*.35,pierce:3,r:18,life:.26,kind:'crescent',c:color,o:H({pierceArmor:SWORD_FORGE_PIERCE})});
@@ -2406,7 +2406,7 @@ function hit(e,dmg,o,sx,sy){
  if(o.brk){e.brk=o.brk;e.brkT=5;e.vuln=5}
  if(o.burn){e.burnT=2;e.burnD=Math.max(e.burnD,o.burn)}
  num(e.x,e.y-e.r*1.6-14,Math.round(d),crit?'c':o.t==='m'?'m':'w',o.swordBasic?1+Math.min(0.45,(P.combo||0)/120)+(o.numUp||0):1);
- if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n<3&&vok('swhit')){o.cutFx.n++;hitFx(e.x,e.y-e.r*1.3,(o.cutFx.ang||0),0.75)}
+ if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n<1&&vok('wx_slash')){o.cutFx.n++;hitFx(e.x,e.y-e.r*0.3,(o.cutFx.ang||0)*0.35,0.55,0.55,0.14)}
  else if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n++<3){fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:o.cutFx.ang+rnd(-0.35,0.35),T:0.13,wh:1});
   for(let i=0;i<4;i++){const a=o.cutFx.ang+rnd(-0.9,0.9),v=rnd(90,200);part(e.x,e.y-e.r*1.5,Math.cos(a)*v,Math.sin(a)*v-40,rnd(0.15,0.3),rnd(2,4),i%2?'#fff6d8':'#ffd27a',1)}}
  if(o.swordBasic&&o.stop)G.hitstop=Math.max(G.hitstop||0,o.stop);
