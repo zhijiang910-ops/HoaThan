@@ -352,3 +352,6 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - **Đã đăng ký:** 5 cây có trong `WPN` và trong nút "Kiếm" của Luyện Công (bấm nhiều lần để đổi), chỉ để xem trong tay. Chưa là món đồ trong kho, chưa có chỉ số, chưa có bộ chiêu. Neo (`gripX,gripY`) ước lượng, chưa tinh chỉnh theo từng khung.
 - **PixelLab đợt vũ khí:** 10 + 10 (lần đầu mất ảnh vì tao ghi sai đường dẫn, phải chạy lại) + 2 (cung lần 2) = 22 lượt.
 
+## Màn tạo nhân vật chỉ còn 6 avatar phái (24/11, chủ game bỏ 8 avatar cũ)
+- Lưới chọn ảnh đại diện chỉ còn 6 chân dung phái (chỉ số 9–14 = `SECT_KEYS`), chọn nam hoặc nữ theo giới. Hồ sơ cũ có avatar 1–8 (hoặc không hợp lệ) tự đổi sang avatar Mao Sơn Phái (9) qua `avatarIndex`. Đã bỏ code tải sheet `avatar-nam/nu.webp` và 8 tranh cảnh `scene-*.webp`; CÁC FILE ẢNH NÀY VẪN CÒN TRONG `game/assets/portraits/` (chưa xóa, chờ chủ game duyệt rồi xóa).
+
