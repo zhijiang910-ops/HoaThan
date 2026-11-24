@@ -16,11 +16,11 @@ def frame(f):
     q=f/(N-1);grow=min(1,f/4.0);fade=1.0 if f<=6 else max(0,1-(f-6)/5.5)
     arcs=[]
     if fade>0:
-        n=9 if f<=6 else 6
+        n=12 if f<=6 else 8
         for i in range(n):
             ang=i*math.tau/n+rnd.uniform(-0.35,0.35)
             L=rnd.uniform(70,112)*(0.35+0.65*grow)*(0.8+0.2*fade)
-            main=arc(rnd,ang,L,flat=0.5 if rnd.random()<0.85 else 0.95)
+            main=arc(rnd,ang,L,flat=0.42)
             arcs.append((main,1.0))
             if len(main)>5 and rnd.random()<0.8:
                 k=rnd.randint(3,6);bx,by=main[k];ba=ang+rnd.choice([-1,1])*rnd.uniform(0.5,0.9)
@@ -33,11 +33,11 @@ def frame(f):
     ell=int(34*min(1,0.4+grow)*fade+2)
     gd.ellipse([CX-ell,CY-int(ell*0.45),CX+ell,CY+int(ell*0.45)],fill=200)
     glow=glow.filter(ImageFilter.GaussianBlur(3))
-    g=Image.new('RGBA',(W,H),(190,10,25,0));g.putalpha(glow.point(lambda v:int(min(255,v*0.55*fade))));im.alpha_composite(g)
+    g=Image.new('RGBA',(W,H),(120,4,16,0));g.putalpha(glow.point(lambda v:int(min(255,v*0.55*fade))));im.alpha_composite(g)
     d=ImageDraw.Draw(im)
-    for pl,s in arcs:d.line(pl,fill=(14,2,6,255),width=int(5*s)+1,joint='curve')
-    for pl,s in arcs:d.line(pl,fill=(215,24,34,255),width=max(1,int(3*s)),joint='curve')
-    for pl,s in arcs:d.line(pl,fill=(255,170,140,255),width=1,joint='curve')
+    for pl,s in arcs:d.line(pl,fill=(6,0,2,255),width=int(8*s)+1,joint='curve')
+    for pl,s in arcs:d.line(pl,fill=(225,18,28,255),width=max(1,int(3*s)),joint='curve')
+    for pl,s in arcs:d.line(pl,fill=(255,120,90,255),width=1,joint='curve')
     # chớp lõi tại tâm nổ
     if f<=7:
         a=int(255*(1-f/8.0));rx=int(8+22*min(1,f/3.0));ry=max(3,int(rx*0.42))
