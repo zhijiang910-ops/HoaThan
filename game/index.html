@@ -2309,9 +2309,12 @@ MAPS.am_luanhoi=amMap({name:'Luân Hồi Đài',zh:'輪迴臺',desc:'Đài tròn
   for(let i=0;i<8;i++){const a=i*TAU/8+TAU/16,x=AW/2+Math.cos(a)*400,y=AH/2+Math.sin(a)*270;add('Mi_denda',x,y,1.1)}
   add('Mi_luhuong',AW/2-880,AH/2,1.3);add('Mi_luhuong',AW/2+880,AH/2,1.3);add('Mi_luhuong',AW/2,AH/2-640,1.3);add('Mi_luhuong',AW/2,AH/2+640,1.3);
   add('City_stone_lion',1450,420,1.6);add('City_stone_lion',1750,420,1.6)}});
-/* Boss (tier 'boss': ET.boss) và mini-boss (tier 'mini': ET.elite). Tên theo chủ game; hình tạm, số chưa cân bằng. */
-const AM_BOSSES={nguudau:['Ngưu Đầu','boss'],madien:['Mã Diện','boss'],huyetsat:['Huyết Sát Ma Tướng','mini'],hacvo:['Hắc Vô Thường','boss'],nghiethoa:['Nghiệt Hỏa Quỷ Vương','mini'],bachvo:['Bạch Vô Thường','boss'],thietlao:['Thiết Lao Ma Tướng','mini'],manhba:['Mạnh Bà','boss'],vongxuyenqt:['Vong Xuyên Quỷ Tướng','mini'],phanquan:['Phán Quan','boss'],dethinh:['Đế Thính','mini'],diemvuong:['Diêm Vương','boss']};
+/* Trùm (tier 'boss': ET.boss) và Tinh Anh (tier 'elite': ET.elite). Tên theo chủ game; số chưa cân bằng. */
+/* tier 'boss' = trùm (ET.boss); tier 'elite' = Tinh Anh (ET.elite, cờ elite:1, chạy qua mọi luật Tinh Anh sẵn có: khiên ★3, đẩy lùi/choáng giảm...) */
+const AM_BOSSES={nguudau:['Ngưu Đầu','boss'],madien:['Mã Diện','boss'],huyetsat:['Huyết Sát Ma Tướng','elite'],hacvo:['Hắc Vô Thường','boss'],nghiethoa:['Nghiệt Hỏa Quỷ Vương','elite'],bachvo:['Bạch Vô Thường','boss'],thietlao:['Thiết Lao Ma Tướng','elite'],manhba:['Mạnh Bà','boss'],vongxuyenqt:['Vong Xuyên Quỷ Tướng','elite'],phanquan:['Phán Quan','boss'],dethinh:['Đế Thính','elite'],diemvuong:['Diêm Vương','boss']};
 for(const k in AM_BOSSES){const[nm,tier]=AM_BOSSES[k];ET[k]=Object.assign({},ET[tier==='boss'?'boss':'elite'],{name:nm,amgioi:1});ESPR[k]=tier==='boss'?['quytuong',1.45]:['quysai',0.95]}
+/* Hình: Ngưu Đầu = quytuong (Ngưu Ma Vương, chủ game chốt). Mã Diện tạm = ho (người-thú đầu hổ, đủ hoạt ảnh). Hắc/Bạch Vô Thường, Mạnh Bà, Phán Quan, Diêm Vương đang tạm quytuong, chờ PixelLab (chủ game duyệt). Tinh Anh tạm quysai. */
+ESPR.madien=['ho',1.32];
 /* Quái theo chặng: pool = danh sách trọng số (lặp lại = nhiều hơn), elite = số Quỷ Sai mỗi tầng trong chặng (theo thứ tự tầng) */
 const AM_ZONES=[
  {id:'z1',f:[1,3],map:'am_hoangtuyen',pool:['tieu','tieu','tieu','hoa','can'],elite:[0,0,1]},
@@ -2322,8 +2325,8 @@ const AM_ZONES=[
  {id:'z6',f:[15,17],map:'am_diemla',pool:['hoa','can','can','xa','xa','toc'],elite:[3,3,3]},
  {id:'z7',f:[18,18],map:'am_luanhoi',pool:['can','xa','toc','hoa'],elite:[3]}
 ];
-/* Boss/mini-boss theo tầng. pair:1 = hai boss cùng lúc (Ngưu Đầu và Mã Diện), engine hiện chỉ có một G.boss nên cần code riêng sau. */
-const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'mini',types:['huyetsat']},5:{tier:'mini',types:['huyetsat']},6:{tier:'boss',types:['hacvo']},7:{tier:'mini',types:['nghiethoa']},8:{tier:'mini',types:['nghiethoa']},9:{tier:'boss',types:['bachvo']},10:{tier:'mini',types:['thietlao']},11:{tier:'mini',types:['thietlao']},12:{tier:'boss',types:['manhba']},13:{tier:'mini',types:['vongxuyenqt']},14:{tier:'mini',types:['vongxuyenqt']},15:{tier:'boss',types:['phanquan']},16:{tier:'mini',types:['dethinh']},17:{tier:'mini',types:['dethinh']},18:{tier:'boss',types:['diemvuong']}};
+/* Boss/mini-boss theo tầng. pair:1 = hai trùm cùng lúc (Ngưu Đầu và Mã Diện), engine hiện chỉ có một G.boss nên cần code riêng sau. */
+const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'elite',types:['huyetsat']},5:{tier:'elite',types:['huyetsat']},6:{tier:'boss',types:['hacvo']},7:{tier:'elite',types:['nghiethoa']},8:{tier:'elite',types:['nghiethoa']},9:{tier:'boss',types:['bachvo']},10:{tier:'elite',types:['thietlao']},11:{tier:'elite',types:['thietlao']},12:{tier:'boss',types:['manhba']},13:{tier:'elite',types:['vongxuyenqt']},14:{tier:'elite',types:['vongxuyenqt']},15:{tier:'boss',types:['phanquan']},16:{tier:'elite',types:['dethinh']},17:{tier:'elite',types:['dethinh']},18:{tier:'boss',types:['diemvuong']}};
 function amFloor(n){const z=AM_ZONES.find(z=>n>=z.f[0]&&n<=z.f[1]);if(!z)return null;const e=AM_ENC[n]||null;return{n,zone:z.id,map:z.map,pool:z.pool.slice(),elites:z.elite[n-z.f[0]],boss:e&&{tier:e.tier,types:e.types.slice(),pair:!!e.pair}}}
 const WAVE_DUR=[22,26,30,32,35,38,40,42,45];
 const WAVE_TYPES=[['tieu','tieu','tieu','tieu','can'],['tieu','tieu','hoa','toc'],['tieu','hoa','can'],['tieu','hoa','can','xa'],['tieu','hoa','can','xa','toc'],['tieu','hoa','can','xa','toc'],['tieu','hoa','can','xa','toc','toc'],['tieu','hoa','can','can','xa','toc'],['tieu','hoa','can','xa','xa','toc'],['tieu','hoa','can','xa','toc']];
