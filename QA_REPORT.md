@@ -30,3 +30,14 @@ Phạm vi lần này: **chỉ sửa lifecycle code của VFX C**. Chưa đổi p
 
 ## Bằng chứng
 `QA_BEFORE_AFTER/BEFORE_C_nam_60fps_sheet.png`, `AFTER_C_{nam,nu}_60fps_sheet.png`, `AFTER_C_{nam,nu}_60fps.mp4`, `AFTER_C_{nam,nu}_slow5x.mp4`, `AFTER_timeline_{nam,nu}.txt`, `BEFORE_ticks_nam.txt`, `BEFORE_AUDIT_ABC.md`.
+
+## Thử PixelLab pose C (nam) — 24/11/2026 — FAIL, đã dùng hết 2 lần thử có kiểm soát
+Quy trình: `/animate-with-skeleton-v3`, 12 khung C1–C12 từ bảng key pose (`nguon/phac_thao/KEYPOSE_COMBO_KIEM_nam.png`), ảnh gốc `xt_nam_first.png`. Mỗi lần 12 khung = 3 lượt (tổng 6 lượt). Ảnh: `QA_BEFORE_AFTER/TRIAL1_..._FAIL.png`, `TRIAL2_..._FAIL.png`.
+| Tiêu chí | Lần 1 (seed 7) | Lần 2 (seed 11, tay gần buông xuống, mô tả "side profile, long skirt") |
+|---|---|---|
+| Đúng Master (trang phục) | FAIL: lộ quần đen, áo choàng ngắn/xòe, khác Master | FAIL: vẫn lộ quần đen và váy xòe, mất vạt trắng của Master |
+| Góc nhìn | FAIL: thân xoay 3/4 về phía camera | FAIL: vẫn xoay 3/4 |
+| Tay gần | FAIL: bị vẽ thành vật tròn như khiên trước ngực | Đã hết |
+| Chuyển động chém quét | FAIL: C4–C8 chỉ là tay duỗi thẳng kiếm, đọc ra như đâm | FAIL: tương tự; C2 kiếm chĩa ra trước thay vì nâng cao |
+| Chiều dài kiếm / một thanh | Đạt (một thanh) | Đạt |
+Kết luận: **không dùng được frame PixelLab này**. Theo luật: dừng generate ngẫu nhiên, chuyển sang retarget/chỉnh khung có kiểm soát từ Master. Chưa đưa gì vào game.
