@@ -406,3 +406,7 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - **Hiệu ứng đáp xuống điểm đích:** `dqAt(name,tx,ty,a,sc,T,f0,f1,opts,dist)` đặt hiệu ứng sao cho tâm rơi vào (tx,ty); mặc định bake đặt hiệu ứng cách người 240 px về phía đông.
 - Ảnh kiểm: `nguon/tham_chieu/quat_chieu_trong_game.png`, `cung_chieu_trong_game.png`. Đóng sheet: `dq_pack.py <out> <vfx> hl|th`. Số liệu tất cả class TẠM, chưa cân bằng. Chưa kiểm đồng bộ sát thương với VFX, chưa có âm thanh riêng, bảng thông tin kỹ năng chi tiết chưa làm.
 
+## Sửa kích cỡ 7 trùm: "Mạnh Bà hơi to" (24/11)
+- **Phát hiện:** `espScale` trước đây làm tròn bậc nguyên RIÊNG từng con theo hệ số `ESPR`, nên kích cỡ tương đối thay đổi theo máy: máy tính (DPR 1) Mạnh Bà 186 px và Phán Quan 188 px cao hơn các trùm khác (141–165); iPhone DPR 3 thì hai con này bị làm tròn xuống n=2 còn 124 px, nhỏ hơn hẳn.
+- **Sửa:** mọi trùm dùng CHUNG một bậc n theo máy: `n=max(1,round(BOSS_T*DPR*ZOOM))`, `BOSS_T=1,03`; ảnh càng cao càng to theo đúng tỉ lệ ảnh gốc. Hệ số riêng `BOSS_REL`: Mạnh Bà 0,88, Phán Quan 0,88, Ngưu Đầu 1,15 (thấp nhất nên nâng để không lùn hơn Mã Diện); các con khác 1 (nét tuyệt đối, vẽ ở tỉ lệ nguyên); con nào có `BOSS_REL≠1` vẽ bằng lọc mịn (không còn là số nguyên). Hệ số hiển thị `ESPR` của 7 trùm nay KHÔNG còn dùng (chỉ để dự phòng). Kích cỡ CSS px = cao ảnh × n / DPR, không phụ thuộc ZOOM. Ảnh kiểm: `nguon/tham_chieu/bay_trum_dong_ty_le_iphone.png`.
+
