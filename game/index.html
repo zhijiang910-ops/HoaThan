@@ -2101,14 +2101,17 @@ const WEAPONS={
    /* VFX gói Wuxia (Vạn Kiếm Quy Tông), xuất lại từ demo Godot 4.7.1 với 16 kiếm (bản gốc 36; bản cũ ở nguon/vfx_goc/vk_e_36kiem.png). Kiếm tụ quanh người ~1,2s rồi phóng, hết khoảng 2,9s */
    cast(tg,l){const dd=Math.hypot(tg.x-P.x,tg.y-P.y),a=dd>24?Math.atan2(tg.y-P.y,tg.x-P.x):(P.facing===-1?Math.PI:0),f=Math.cos(a)<0?-1:1;if(Math.abs(Math.cos(a))>0.15)P.facing=f;const x0=P.x,y0=P.y,dmg=this.power*lv(l)*pw()*0.6,ca=Math.cos(a),sa=Math.sin(a);
     /* sprite gốc phóng sang phải; hướng trái thì lật ngang rồi xoay phần còn lại để kiếm không bị ngược */
-    sfx('wanjian_launch',0.6,0.15);const wartV=HERO&&HERO.wg?heroWeaponArt(HERO.wg):null;if(wartV&&WPN[wartV]&&WIMG[wartV]&&WIMG[wartV].complete)addZone({kind:'vkx',T:3.8,src:'h',x:x0,y:y0,a,ca,sa,n:7,art:wartV});else fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
+    sfx('wanjian_launch',0.6,0.15);const wartV=HERO&&HERO.wg?heroWeaponArt(HERO.wg):null;if(wartV&&WPN[wartV]&&WIMG[wartV]&&WIMG[wartV].complete)addZone({kind:'vkx',T:3.8,src:'h',x:x0,y:y0,a,ca,sa,n:8,art:wartV});else fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
     for(let i=0;i<6;i++)later(1.2+i*0.32,()=>{const ax=x0,ay=y0-20,bx=x0+ca*560,by=ay+sa*560,mx=(ax+bx)/2,my=(ay+by)/2,hl=280;
      for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70){const dl=clamp(((e.x-ax)*ca+(e.y-ay)*sa)/560,0,1)*0.34;/* kiếm bay tới đâu thì trúng tới đó: trễ theo khoảng cách dọc làn */later(dl,()=>{if(e.dead)return;hit(e,dmg,H({kb:40}),ax,ay);vkHit(e,a);G.shake=Math.max(G.shake||0,2)},null)}}
      },null);
-    /* đòn kết (24/11): sau khi các kiếm bay đi, một ĐẠI KIẾM (chính thanh đang cầm, phóng to) từ trời rơi xuống cuối làn, 0,55 s tới đất, choáng 0,35 s */
-    later(2.75,()=>{let tx=x0+ca*260,ty=y0+sa*260;const es=enemiesIn(x0+ca*280,y0+sa*280,230).filter(e=>!e.dead);if(es.length){tx=es.reduce((s,e)=>s+e.x,0)/es.length;ty=es.reduce((s,e)=>s+e.y,0)/es.length}tx=clamp(tx,x0-560,x0+560);if(wartV&&WPN[wartV]&&WIMG[wartV]&&WIMG[wartV].complete)addZone({kind:'vkbig',T:1.7,src:'h',x:tx,y:ty,art:wartV});
-     later(0.55,()=>{for(const e of enemiesIn(tx,ty,150))hit(e,dmg*2.6,H({kb:140,stun:0.35}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:150,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:96,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:0.72});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.6})},null)}sfx('sword_hit',0.7,0.1)},null)},null);
     notice('Vạn Kiếm Quy Tông')}},
+  {id:'k7',hotkey:'C',power:52,name:'Thiên Kiếm Giáng Thế',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Triệu một cự kiếm từ trời giáng xuống chỗ đông quái nhất, cắm xuống gây sát thương diện rộng, choáng quái trong vùng và nổ sét đen đỏ lan quanh mặt đất.',up:'+25% sát thương, +10 bán kính',
+   /* skill RIÊNG (24/11, chủ game): cự kiếm `cukiem.png` rơi 0,55 s, nổ sét đen đỏ `set_no_do`, trước là đòn kết của Vạn Kiếm */
+   cast(tg,l){const t0=densest(P.x,P.y,this.range)||tg,tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw(),R=150+10*(l-1);sfx('wanjian_launch',0.55,0.12);
+    addZone({kind:'vkbig',T:1.7,src:'h',x:tx,y:ty,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
+    later(0.55,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ff4a3a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#3a0610',T:0.5});burst(tx,ty,'#ff5a46',14);burst(tx,ty,'#2a0a12',10);if(vok('set_no_do')){fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.7,T:0.75,al:0.72});later(0.14,()=>{fx({k:'sp',s:'set_no_do',x:tx,y:ty+4,sc:1.1,T:0.6,al:0.6})},null)}sfx('sword_hit',0.7,0.1)},null);
+    notice('Thiên Kiếm Giáng Thế')}},
  ]},
  dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
   {id:'d0',name:'Trảm Kích',g:'刀',kind:'basic',cd:0.72,range:100,desc:'Nhát chém nặng trước mặt.',
@@ -2588,7 +2591,7 @@ function humanSkillCooldown(s){
  const bonus=s.def.kind==='ult'?1:1-S.cdr/100;
  return s.def.cd*bonus*(1-0.06*(Math.max(1,s.lvl)-1));
 }
-const HUMAN_SKILL_KEYS={KeyQ:'a0',KeyF:'a1',KeyX:'u'};
+const HUMAN_SKILL_KEYS={KeyQ:'a0',KeyF:'a1',KeyC:'a3',KeyX:'u'};
 function canRequestHumanSkill(){
  return G?.state==='play'&&!G.paused&&!G.inspect&&!G.clearing&&P.form==='human'&&P.transT<=0&&!stOn('choang')&&!tutControl();
 }
@@ -3542,7 +3545,8 @@ const SWORD_INFO={
  k1:{area:'Xuyên nhiều mục tiêu',unit:'mỗi mục tiêu',effect:l=>'Đẩy lùi, xuyên tối đa '+(l+2)+' mục tiêu.'},
  k2:{area:'Vùng tròn quanh điểm rơi (bán kính 125)',unit:'mỗi đòn',effect:l=>'Đòn nổ khi kiếm chạm đất (x1,2), rồi chém mỗi giây (x0,6) trong '+hudNumber(Math.min(5,3+.5*(l-1)))+' giây.'},
  k3:{area:'Quanh nhân vật',unit:'mỗi lần chạm',effect:l=>'Chí mạng hoặc mỗi 3 đòn thường gọi 1 kiếm (tối đa 3), mỗi kiếm tồn tại '+hudNumber(7+l)+' giây.'},
- k6:{area:'Làn thẳng dài 560, rộng 140 theo hướng ngắm',unit:'mỗi đợt (6 đợt) và đại kiếm rơi cuối chiêu',effect:()=>'Kiếm phóng theo hướng ngắm, xuyên mọi mục tiêu trong làn và đẩy lùi.'}
+ k7:{area:'Vòng quanh điểm rơi (bán kính 150)',unit:'một đòn nổ',effect:l=>'Cự kiếm rơi xuống chỗ đông quái nhất, choáng 0,5 giây, bán kính '+(150+10*(l-1))+'.'},
+ k6:{area:'Làn thẳng dài 560, rộng 140 theo hướng ngắm',unit:'mỗi đợt (6 đợt, 8 kiếm)',effect:()=>'Kiếm phóng theo hướng ngắm, xuyên mọi mục tiêu trong làn và đẩy lùi.'}
 };
 const GOD_SKILL_INFO={
  wukong:[
