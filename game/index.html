@@ -1062,6 +1062,9 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxskd p{margin:3px 0 0;font:500 11.5px/1.35 "Be Vietnam Pro",sans-serif;color:#e0d4bc}
 .cxbar{display:grid;gap:4px;margin-top:auto;padding-top:6px;flex-shrink:0}.cxbar #crGo{width:100%;min-width:0}.cxbar .crerr:empty{display:none}
 .cxR>*{flex-shrink:0}
+.cxp.cxR{overflow:hidden}
+.cxR .cxskd{flex-shrink:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#866639 #20160f}
+.cxR .cxskd:focus-visible{outline:1px solid #f4d28a;outline-offset:-1px}
 .cxR .cxinfo div{padding:5px 0;line-height:1.4}
 .cxR .cxskd{padding:9px 10px}
 .cxR .cxskd small{margin-top:4px}
@@ -1111,7 +1114,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxavatars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;flex-shrink:0}
 .cxavatar{background-size:400% 200%;image-rendering:pixelated}
 .cxavatar{padding:0;min-width:0;aspect-ratio:1;border:1px solid #725a35;background-color:#241b12;cursor:pointer}
-.cxavatar[aria-pressed="true"],.cxavatar:focus-visible{outline:2px solid #ffd47a;outline-offset:-2px}
+.cxavatar[aria-pressed="true"]{position:relative;z-index:1;border-color:#ffd47a;box-shadow:0 0 0 2px #ffd47a,inset 0 0 0 1px #5f3d17,0 0 8px #c78c42}
+.cxavatar:focus-visible{outline:2px solid #fff1c5;outline-offset:-3px}
 #crBg{image-rendering:pixelated;object-position:50% 42%}
 @media (max-height:520px){
  .cxL .cxst{min-height:60px}.cxhr b{font-size:10.5px}
@@ -1452,7 +1456,7 @@ input,select,textarea,#crName{font-size:16px!important}
   <div class="cxp cxR">
    <h3 class="cxh">Binh khí</h3><div id="crWeapon" class="cxw"></div>
    <div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
-   <h3 class="cxh">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd"></div>
+   <h3 class="cxh">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd" tabindex="0" role="region" aria-label="Mô tả võ học"></div>
   <div class="cxbar"><span class="crerr" id="crErr" role="status"></span><button id="crGo" class="btn gold">Khởi hành</button></div>
   </div>
   <dialog id="crSceneDialog" class="crscene-dialog" aria-label="Tranh toàn cảnh"><img id="crSceneFull" alt=""><button id="crSceneClose" class="btn" type="button">Đóng</button></dialog>
@@ -3868,6 +3872,7 @@ function renderCreate(){const W=WEAPONS[cr.view],H0=HAIR[cr.gender][cr.hairI];
  $('#crSk').innerHTML=rows.map(([lab,arr])=>`<div class="cxskr"><span>${lab}</span><div>${arr.map(x=>{const i=kit.indexOf(x);return `<button class="cxs ${x.kind}${cr.sk===i?' on':''}" data-sk="${i}" title="${x.name}">${x.g}</button>`}).join('')}</div></div>`).join('');
  const X=kit[cr.sk]||kit[0],KN=X.hotkey?'Chủ động · '+X.hotkey:{basic:'Đánh thường tự động',active:'Chiêu tự kích hoạt',auto:'Bị động tự kích hoạt',ult:'Tuyệt kỹ tự kích hoạt',passive:'Nội tại'}[X.kind]||'';
  $('#crSkD').innerHTML=`<b>${X.g} ${X.name}</b><small>${KN}${X.cd&&X.kind!=='basic'?' · hồi '+String(X.cd).replace('.',',')+' giây':''}${X.mp?' · '+X.mp+' nội lực':''}</small><p>${X.desc}</p>`;
+ $('#crSkD').scrollTop=0;
  const go=$('#crGo');go.disabled=cr.view!=='kiem';}
 $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.id==='crGo')return;
  if(b.id==='crSceneOpen'){
