@@ -1010,7 +1010,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cx{position:absolute;inset:0;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:10px;
  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));box-sizing:border-box}
 .cxp{min-width:0;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:10px 12px;background:linear-gradient(#1c1610f2,#0e0a07f2);box-shadow:inset 0 0 0 1px #0a0806,inset 0 0 0 2px #8a6a36,0 8px 24px rgba(0,0,0,.5)}
-.cxh{margin:4px 0 0;padding-bottom:3px;font:700 12px "Be Vietnam Pro",sans-serif;color:#c9a45e;border-bottom:1px solid #4a3a22;letter-spacing:.02em}
+.cxh{margin:4px 0 0;padding-bottom:3px;text-align:center;font:800 14px/1.25 "Noto Serif",Georgia,serif;color:#f0ce8a;border-bottom:1px solid #4a3a22;letter-spacing:.025em}
 .cxh.c{text-align:center}.cxh:first-child{margin-top:0}
 @media (max-height:420px){.cxR .cxwb img,.cxR .cxwb .gi{max-width:28px}.cxR .cxskd{min-height:0}.cxR .cxskr{gap:4px}}
 #crName{background:#0c0805;border:0;box-shadow:inset 0 0 0 1px #8a6a36;color:#ffe9b0;font:700 15px "Be Vietnam Pro",sans-serif;padding:7px 10px;outline:none;min-width:0}
@@ -1076,7 +1076,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #crGo{min-width:180px}#crGo:disabled{opacity:.45;cursor:not-allowed}
 @media (max-height:520px){
  .cx{gap:7px;padding:max(6px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(5px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
- .cxp{padding:6px 8px;gap:4px}.cxh{font-size:10.5px;padding-bottom:2px;margin-top:2px}
+ .cxp{padding:6px 8px;gap:4px}.cxh{font-size:12px;padding-bottom:2px;margin-top:2px}
  #crName{padding:4px 8px}.cxb{padding:4px 0;font-size:12px}
  .cxw{gap:3px}.cxwb{padding:2px 1px}.cxwb img,.cxwb .gi{max-width:36px}.cxwb b{font-size:9px}
  .cxwi{font-size:10px}.cxwi b{font-size:11px}
@@ -1437,7 +1437,7 @@ input,select,textarea,#crName{font-size:16px!important}
    <label for="crName" class="cxh">Tên nhân vật</label>
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
-   <h3 class="cxh">Chọn avatar</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn avatar nhân vật"></div>
+   <h3 class="cxh">Chọn ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
     <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
@@ -3834,7 +3834,7 @@ function renderCreateAvatars(){
  const gender=cr.gender;
  group.innerHTML=Array.from({length:8},(_,i)=>{
   const n=i+1,position=avatarPosition(i);
-  const label='Avatar '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
+  const label='Ảnh đại diện '+(gender==='nu'?'nữ':'nam')+' '+String(n).padStart(2,'0');
   return `<button type="button" class="cxavatar" data-avatar="${n}" title="${label}" aria-label="${label}" aria-pressed="${cr.avatars[gender]===n}" style="background-image:url('assets/portraits/avatar-${gender}.webp');background-position:${position}"></button>`;
  }).join('');
  renderCreateScene();
