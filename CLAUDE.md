@@ -145,3 +145,4 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 ## Đòn C làm lại (24/11, chủ game duyệt phác thảo)
 - Elip `k5c_behind/front` dựng lại bằng `cong_cu/claude/c_ellipse.py` (không PixelLab): nhát cong dày giữa-mỏng đuôi, vẽ dần từ sau lưng qua trước xuống dưới, tan từ đuôi (3 lớp màu bảng A/B). Giữ kích thước ô, 15 khung. Bản dilation cũ không còn.
 - Góc kiếm 10 khung C trong `WSOCK` (khóa `2240..3680,256`, cả nam/nữ) đổi thành -150,-115,-75,-35,0,30,52,62,50,38: kiếm vung từ sau-trên đầu xuống trước theo vệt. Thân nhân vật không đổi (Master).
+- (24/11 tối) Elip C v2: bản đầu bị chê xấu vì phẳng như vector. `c_ellipse.py` giờ dựng 3 dải lồng nhau (ngoài mảnh, chính dày 5 lớp màu viền→lõi trắng, trong ngắn), quầng sáng mờ, vệt tốc độ + hạt. Chạy: `python3 cong_cu/claude/c_ellipse.py` (tham số tùy chọn: thư mục ra).
