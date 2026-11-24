@@ -2334,6 +2334,17 @@ const AM_ZONES=[
 ];
 /* Boss/mini-boss theo tầng. pair:1 = hai trùm cùng lúc (Ngưu Đầu và Mã Diện), engine hiện chỉ có một G.boss nên cần code riêng sau. */
 const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'mini',types:['huyetsat']},5:{tier:'mini',types:['huyetsat']},6:{tier:'boss',types:['hacvo']},7:{tier:'mini',types:['nghiethoa']},8:{tier:'mini',types:['nghiethoa']},9:{tier:'boss',types:['bachvo']},10:{tier:'mini',types:['thietlao']},11:{tier:'mini',types:['thietlao']},12:{tier:'boss',types:['manhba']},13:{tier:'mini',types:['vongxuyenqt']},14:{tier:'mini',types:['vongxuyenqt']},15:{tier:'boss',types:['phanquan']},16:{tier:'mini',types:['dethinh']},17:{tier:'mini',types:['dethinh']},18:{tier:'boss',types:['diemvuong']}};
+/* ===== 6 MÔN PHÁI (chủ game chốt 24/11): chỉ là dữ liệu, CHƯA nối vào game (chưa có màn chọn phái, chưa có bộ chiêu ngoài Kiếm) =====
+   avatar = chân dung đại diện nam/nữ (ảnh ChatGPT do chủ game đưa, cắt từ tấm tổng hợp). Chỉ Mao Sơn Phái (Kiếm) đã có trong game. */
+const SECTS={
+ maoson:{n:'Mao Sơn Phái',zh:'茅山派',weapon:'Kiếm',role:'Đạo thuật, phù chú, trấn tà',color:'Xanh đậm, vàng'},
+ tramyeu:{n:'Trảm Yêu Môn',zh:'斬妖門',weapon:'Đao',role:'Bạo kích, sát thương diện rộng',color:'Đỏ, đen, vàng đồng'},
+ phucma:{n:'Phục Ma Tự',zh:'伏魔寺',weapon:'Trượng',role:'Phòng ngự, hộ thể, trấn ma',color:'Nâu, vàng đồng'},
+ thiencuong:{n:'Thiên Cương Môn',zh:'天罡門',weapon:'Quyền',role:'Cận chiến, liên kích, cương khí',color:'Trắng, đỏ sẫm'},
+ huyenlinh:{n:'Huyền Linh Các',zh:'玄靈閣',weapon:'Quạt',role:'Pháp thuật, khống chế, hỗ trợ',color:'Tím, bạc'},
+ truyhon:{n:'Truy Hồn Cốc',zh:'追魂谷',weapon:'Cung',role:'Tầm xa, xuyên thấu, truy hồn',color:'Xanh rêu, đen'}
+};
+for(const k in SECTS)SECTS[k].avatar={nam:'assets/portraits/phai-'+k+'-nam.webp',nu:'assets/portraits/phai-'+k+'-nu.webp'};
 function amFloor(n){const z=AM_ZONES.find(z=>n>=z.f[0]&&n<=z.f[1]);if(!z)return null;const e=AM_ENC[n]||null;return{n,zone:z.id,map:z.map,pool:z.pool.slice(),elites:z.elite[n-z.f[0]],boss:e&&{tier:e.tier,types:e.types.slice(),pair:!!e.pair}}}
 const WAVE_DUR=[22,26,30,32,35,38,40,42,45];
 const WAVE_TYPES=[['tieu','tieu','tieu','tieu','can'],['tieu','tieu','hoa','toc'],['tieu','hoa','can'],['tieu','hoa','can','xa'],['tieu','hoa','can','xa','toc'],['tieu','hoa','can','xa','toc'],['tieu','hoa','can','xa','toc','toc'],['tieu','hoa','can','can','xa','toc'],['tieu','hoa','can','xa','xa','toc'],['tieu','hoa','can','xa','toc']];
