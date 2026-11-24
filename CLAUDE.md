@@ -243,3 +243,5 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 ## A/B/C nhanh hơn nữa + Vạn Kiếm dùng kiếm đang cầm (24/11 đêm)
 - A/B/C: `A.dur=tot*0.74` (trước 0,88) và hồi chiêu `k0.cd` 0,5→0,4 (cd chặn nhịp đánh). `dps_qa.js`: Kiếm +0 45→54, +6 68→79, +9 77→93 (~+16-20%). Chưa cân lại sát thương.
 - Vạn Kiếm (X, `k6`): zone `vkx` vẽ 16 kiếm bằng chính vũ khí đang cầm + hào quang, xoay quanh người rồi lao theo làn ngắm 6 đợt (1,2 s + 0,32 s/đợt). Không có ảnh vũ khí thì dùng `vk_e`. Ảnh kiểm: `nguon/tham_chieu/vankiem_kiem_cam.png` (bản trước khi phóng kiếm ×1,3).
+
+- (24/11 đêm) **Chuôi kiếm bay:** 4 kiếm Hàn Thiết/Thái A/Tử Điện/Trảm Yêu vốn đã vẽ đủ chuôi; chỉ kiếm mặc định (Thanh Phong/Long Tuyền) bị mất chuôi khi bay. Vạn Kiếm nay dùng `thanhphong_nu_f` (hộ thủ đồng, cán da quấn dây tím, đầu chuôi ngọc tím — TỰ VẼ bằng PIL, không PixelLab; gốc ở `nguon/vfx_goc/thanhphong_nu_f_goc.png`). Hồi Phong cũng dùng ảnh này. Ảnh kiểm: `nguon/tham_chieu/vankiem_chuoi_moi.png`. Chủ game thích Runeknife/Selfence (tranh concept của @magical_scope, chỉ lấy phong cách, KHÔNG chép hình).
