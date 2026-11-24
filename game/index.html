@@ -1112,6 +1112,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .crscene-dialog img{display:block;width:min(86vw,85vh);height:auto;image-rendering:pixelated}
 .crscene-dialog button{position:absolute;top:6px;right:6px}
 .cxavatars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;flex-shrink:0}
+@media (max-width:760px){.cxavatars{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}}
 .cxavatar{background-size:400% 200%;image-rendering:pixelated}
 .cxavatar{padding:0;min-width:0;aspect-ratio:1;border:1px solid #725a35;background-color:#241b12;cursor:pointer}
 .cxavatar[aria-pressed="true"]{position:relative;z-index:1;border-color:#ffd47a;box-shadow:0 0 0 2px #ffd47a,inset 0 0 0 1px #5f3d17,0 0 8px #c78c42}
@@ -1383,6 +1384,10 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
  html body #menu #gods .opt{padding:5px 8px!important;font-size:11px!important}
  html body #menu .mfoot{padding-top:8px!important;padding-bottom:6px!important}
  html body #menu .mfoot .btn{min-height:38px!important}
+ /* điện thoại ngang rộng hơn 900px (iPhone Pro Max 932, Samsung 915): giữ nút Xuất phát/Về sảnh/Kho đồ luôn trong khung như màn nhỏ */
+ html body #menu .mfoot{position:sticky!important;bottom:-14px;z-index:6;background:linear-gradient(transparent,#0c0604 32%)}
+ html body #menu .mfoot .keys{display:none}
+ html body #menu #startBtn{flex:1}
 }
 /* iPhone tự phóng to khi bấm vào ô nhập có chữ < 16px, và trang cấm phóng to nên không kéo về được -> mọi ô nhập luôn 16px */
 input,select,textarea,#crName{font-size:16px!important}
