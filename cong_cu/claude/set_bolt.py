@@ -2,8 +2,8 @@
 Khung 0-5: tia sét dày gấp khúc đổi hình mỗi khung + chớp tròn dẹt dưới đất; 6-11: chớp tan dần, tia lửa."""
 import random,math
 from PIL import Image,ImageDraw,ImageFilter
-W,H=80,120;GX,GY=40,108;N=12;COLS=4
-def bolt_path(rnd,x0=40,y0=2,x1=GX,y1=GY,seg=9,amp=9):
+W,H=80,240;GX,GY=40,228;N=12;COLS=4
+def bolt_path(rnd,x0=40,y0=2,x1=GX,y1=GY,seg=16,amp=5):
     pts=[(x0,y0)]
     for i in range(1,seg):
         t=i/seg;pts.append((x0+(x1-x0)*t+rnd.uniform(-amp,amp)*(1-0.3*t),y0+(y1-y0)*t))
@@ -18,9 +18,9 @@ def frame(f):
     if alive:
         k=1.0 if f<=3 else 0.7
         main=bolt_path(rnd);branches=[]
-        for _ in range(3):
-            i=rnd.randint(2,6);bx,by=main[i];dx=rnd.choice([-1,1])*rnd.uniform(10,22);bp=[(bx,by)]
-            for j in range(1,4):bp.append((bx+dx*j/3+rnd.uniform(-4,4),by+j*rnd.uniform(6,10)))
+        for _ in range(2):
+            i=rnd.randint(5,13);bx,by=main[i];dx=rnd.choice([-1,1])*rnd.uniform(8,16);bp=[(bx,by)]
+            for j in range(1,4):bp.append((bx+dx*j/3+rnd.uniform(-3,3),by+j*rnd.uniform(8,13)))
             branches.append(bp)
         glow=Image.new('L',(W,H),0);gd=ImageDraw.Draw(glow)
         for pl,w in [(main,4)]+[(b,3) for b in branches]:draw_poly(gd,pl,w,255)
