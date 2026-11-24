@@ -1762,6 +1762,8 @@ const AURAF={w:134,h:240,c:10,n:20,ax:67,ay:212,fps:15};{const i=new Image();i.s
 const STF={wk_staff:{w:20,t:65,b:62+3,tile:62},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
+/* điểm va chạm đồng bộ với kiếm (24/11): MỘT chớp chém xanh-tím xoay theo hướng lưỡi, thay bộ swhit (mảnh băng) */
+function hitFx(x,y,ang,sc){if(!vok('wx_slash'))return;fx({k:'sp',s:'wx_slash',x,y,sc:sc||0.8,ang:ang||0,f0:1,f1:4,T:0.2,al:0.95})}
 const vok=n=>VFX[n]&&VFX[n].complete&&VFX[n].naturalWidth>0;
 function arcCell(c,row,fi,sc){c.drawImage(VFX.arc_sheet,Math.max(0,Math.min(7,fi))*96,row*96,96,96,-48*sc,-48*sc,96*sc,96*sc)}
 /* bản đồ gói Wuxia */
@@ -1899,7 +1901,7 @@ function finishSwordCut(dt){
  arc(P.x,P.y-8,angle,(heavy?118:lunge?96:80)*Ar(),heavy?TAU:1.9,damage,
   H({kb:heavy?60:isB?32:20,stun:heavy?0.10:0,swordBasic:true,mark:heavy,pierceArmor:upgrade>=3 ? SWORD_FORGE_PIERCE : 0,
    stop:isB?0.055:0.035,numUp:isB?0.12:0,cutFx:{n:0,ang:angle+(dir>0?1.2:-1.2)},sarc:isB?2:lunge?3:1,nofx:swfx}),color,dir);
- if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);/* điểm chạm đòn C (24/11): vòng xung kích, bụi tuyết bắn lên, vết cắt, chớp sáng */const ix=P.x+Math.cos(angle)*62,iy=P.y-8+Math.sin(angle)*62;fx({k:'ring',x:ix,y:iy+6,r0:10,r1:74,c:'#d8efff',T:0.3});fx({k:'ring',x:ix,y:iy+6,r0:6,r1:46,c:'#ffffff',T:0.22});if(!LOWFX){burst(ix,iy,'#eef8ff',16);for(let i=0;i<10;i++)part(ix+rnd(-10,10),iy+4,Math.cos(angle)*rnd(30,110)+rnd(-60,60),rnd(-150,-40),rnd(0.35,0.6),rnd(3,6),'rgba(235,245,255,.8)',1)}if(vok('swhit'))fx({k:'sp',s:'swhit',x:ix,y:iy,sc:1.7,T:0.22});fx({k:'crack',x:ix,y:iy+10,r:70,sc:1,T:0.5,seed:0,gr:1})}
+ if(swfx&&heavy){G.shake=Math.max(G.shake||0,5);hitFx(P.x+Math.cos(angle)*58,P.y-8+Math.sin(angle)*58,angle,1.1)}
  if(heavy&&upgrade>=9){
   const x=P.x+Math.cos(angle)*36,y=P.y+Math.sin(angle)*36-8;
   shoot(x,y,angle,370,{dmg:damage*.35,pierce:3,r:18,life:.26,kind:'crescent',c:color,o:H({pierceArmor:SWORD_FORGE_PIERCE})});
@@ -2033,7 +2035,7 @@ const WEAPONS={
     later(2,()=>fx({k:'sp',s:'tx_loop',x:cx,y:cy,sc,T:loopT,f0:0,f1:loopN-1,gr:1}),null);
     later(2+loopT-0.04,()=>fx({k:'sp',s:'tx_out',x:cx,y:cy,sc,T:0.73,gr:1}),null);
     /* vòng sét giật nằm trong vòng kiếm (PixelLab 8 lượt, 24/11): lặp 12 khung/0,75 s từ lúc kiếm chạm đất đến hết trận, nháy mạnh hơn lúc đòn nổ */
-    if(vok('set_ring')){/* sét giật lúc hiện lúc tắt (24/11): mỗi đợt 2-4 khung (khung ngẫu nhiên), nghỉ 0,1-0,4 s */{let t0=LAND;while(t0<end-0.15){const nf=2+Math.floor(Math.random()*3),f0=Math.floor(Math.random()*(12-nf+1));const T0=t0;later(T0,()=>{/* sét đánh xuống và NỔ va chạm trên quái trong trận (chủ game: giống hiệu ứng trúng đòn xanh ngọc) */if(G.fx.length<(MOBILE?60:150)){const es=enemiesIn(cx,cy,125).filter(e=>!e.dead);for(let i=es.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[es[i],es[j]]=[es[j],es[i]]}const pick=es.slice(0,2);if(!pick.length)pick.push({x:cx+rnd(-70,70),y:cy+rnd(-25,25),r:6});for(const e of pick){if(vok('set_ring'))fx({k:'sp',s:'set_ring',x:e.x,y:e.y-e.r*0.4,sc:0.85,f0,f1:f0+nf-1,T:nf/16,al:1});if(vok('swhit'))fx({k:'sp',s:'swhit',x:e.x,y:e.y-e.r*1.0,sc:2.2,T:0.34});fx({k:'ring',x:e.x,y:e.y-e.r*0.6,r0:6,r1:40,c:'#aef4ff',T:0.2});if(!LOWFX)burst(e.x,e.y-e.r,'#9ef0ff',6)}sfx('sword_hit',0.2,0.15)}},null);t0+=nf/16+0.1+Math.random()*0.3}}fx({k:'ring',x:cx,y:cy,r0:20,r1:110,c:'#cfe6ff',T:0.3})}
+    if(vok('set_ring')){/* sét giật lúc hiện lúc tắt (24/11): mỗi đợt 2-4 khung (khung ngẫu nhiên), nghỉ 0,1-0,4 s */{let t0=LAND;while(t0<end-0.15){const nf=2+Math.floor(Math.random()*3),f0=Math.floor(Math.random()*(12-nf+1));const T0=t0;later(T0,()=>{/* sét đánh xuống và NỔ va chạm trên quái trong trận (chủ game: giống hiệu ứng trúng đòn xanh ngọc) */if(G.fx.length<(MOBILE?60:150)){const es=enemiesIn(cx,cy,125).filter(e=>!e.dead);for(let i=es.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[es[i],es[j]]=[es[j],es[i]]}const pick=es.slice(0,2);if(!pick.length)pick.push({x:cx+rnd(-70,70),y:cy+rnd(-25,25),r:6});for(const e of pick){if(vok('set_ring'))fx({k:'sp',s:'set_ring',x:e.x,y:e.y-e.r*0.4,sc:0.85,f0,f1:f0+nf-1,T:nf/16,al:1});hitFx(e.x,e.y-e.r,-Math.PI/2+rnd(-0.3,0.3),0.8)}sfx('sword_hit',0.2,0.15)}},null);t0+=nf/16+0.1+Math.random()*0.3}}fx({k:'ring',x:cx,y:cy,r0:20,r1:110,c:'#cfe6ff',T:0.3})}
     later(LAND,()=>{G.shake=Math.max(G.shake||0,4);for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*1.2,H({kb:22,stun:0.12}),cx,cy)}},null);
     for(let t=LAND+1;t<=end+0.001;t+=1)later(t,()=>{for(const e of enemiesIn(cx,cy,125)){if(e.dead)continue;hit(e,base*0.6,H({kb:8,stun:0.06}),cx,cy)}},null)}},
   {id:'k3',power:12,name:'Hồi Phong Quy Sao',g:'旋',kind:'auto',cd:9,mp:25,range:260,desc:'Ba phi kiếm bay vòng quanh người, tự lao tới chém quái ở gần rồi quay về.',up:'+0.5 giây, +25% sát thương',
@@ -2044,8 +2046,8 @@ const WEAPONS={
     /* sprite gốc phóng sang phải; hướng trái thì lật ngang rồi xoay phần còn lại để kiếm không bị ngược */
     sfx('wanjian_launch',0.6,0.15);fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
     for(let i=0;i<6;i++)later(1.2+i*0.32,()=>{const ax=x0,ay=y0-20,bx=x0+ca*560,by=ay+sa*560,mx=(ax+bx)/2,my=(ay+by)/2,hl=280;
-     for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70){hit(e,dmg,H({kb:40}),ax,ay);/* điểm va chạm (24/11): chớp kiếm của gói Wuxia + vòng sáng + hạt tại quái trúng */if(G.fx.length<(MOBILE?60:150)){if(vok('swhit'))fx({k:'sp',s:'swhit',x:e.x,y:e.y-e.r*1.1,sc:2.0,T:0.3});fx({k:'ring',x:e.x,y:e.y-e.r*0.8,r0:6,r1:38,c:'#cfeaff',T:0.2});if(!LOWFX)burst(e.x,e.y-e.r,'#d8f0ff',6);sfx('sword_hit',0.22,0.12)}}}
-     /* điểm kiếm cắm xuống cuối làn mỗi đợt */if(vok('swhit')&&G.fx.length<(MOBILE?60:150)){const tx=clamp(bx,30,AW-30),ty=clamp(by,30,AH-30);fx({k:'sp',s:'swhit',x:tx,y:ty,sc:2.6,T:0.36,gr:1});fx({k:'ring',x:tx,y:ty+4,r0:10,r1:70,c:'#bfe0ff',T:0.3})}},null);
+     for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70){hit(e,dmg,H({kb:40}),ax,ay);hitFx(e.x,e.y-e.r*1.1,a,0.85)}}
+     },null);
     notice('Vạn Kiếm Quy Tông')}},
  ]},
  dao:{name:'Đao',g:'刀',role:'DPS diện rộng',tr:'Chém nặng, quét rộng, phá giáp',kit:[
@@ -2385,7 +2387,7 @@ function hit(e,dmg,o,sx,sy){
  if(e.shield>0){e.shT=0;const sd=d*(o.mark?2:1);e.shield-=sd;if(e.shield>0){e.flash=0.06;num(e.x,e.y-e.r*1.6-14,Math.round(sd),'b');addCombo();return}d=Math.max(1,-e.shield);e.shield=0;e.stun=Math.max(e.stun,1.6);G.shake=Math.max(G.shake,6);burst(e.x,e.y-e.r,'#9fe8ff',18);notice('Phá Cương Khí','Tinh anh choáng 1,6 giây')}
  if(e.boss&&G.route&&G.star>=5&&!e.phase2&&e.hp-d<e.mhp*0.5){e.phase2=true;bossPhase2(e)}
  e.hp-=d;e.flash=0.09;G.dmgDealt+=d;G.wD+=d;if(o.src==='g'&&P.form==='god'&&P.god.def.look==='wukong'&&!LOWFX&&G.t-(e._wkh||0)>0.18&&G.fx.length<(MOBILE?50:140)&&vok('wk_hit')){e._wkh=G.t;fx({k:'sp',s:'wk_hit',x:e.x+rnd(-5,5),y:e.y-e.r*1.3,sc:e.boss?1:0.6,T:0.45})}
- if(o.src==='h'){sfx('sword_hit',0.2,0.07);if(!LOWFX&&!o.swordBasic&&P.form!=='god'&&G.fx.length<(MOBILE?50:140)&&Math.random()<(MOBILE?0.25:0.55))fx({k:'imp',x:e.x+rnd(-6,6),y:e.y-e.r*1.5,T:0.3,row:P.kit.w==='kiem'?1:3,sc:0.55+Math.random()*0.2})}
+ if(o.src==='h'){sfx('sword_hit',0.2,0.07);if(!LOWFX&&!o.swordBasic&&P.form!=='god'&&G.fx.length<(MOBILE?50:140)&&Math.random()<(MOBILE?0.25:0.55))hitFx(e.x,e.y-e.r*1.3,Math.atan2(e.y-sy,e.x-sx),0.7)}
  const ct=P.pf.conthe&&o.src==='h';
  if(o.kb&&!e.boss){const a=Math.atan2(e.y-sy,e.x-sx);const k=o.kb*(ct?1.4:1)*(e.elite?0.3:1)*3;e.kx+=Math.cos(a)*k;e.ky+=Math.sin(a)*k}
  if(o.stun&&!e.boss)e.stun=Math.max(e.stun,o.stun*(ct?1.6:1)*(e.elite?0.5:1));
@@ -2393,7 +2395,7 @@ function hit(e,dmg,o,sx,sy){
  if(o.brk){e.brk=o.brk;e.brkT=5;e.vuln=5}
  if(o.burn){e.burnT=2;e.burnD=Math.max(e.burnD,o.burn)}
  num(e.x,e.y-e.r*1.6-14,Math.round(d),crit?'c':o.t==='m'?'m':'w',o.swordBasic?1+Math.min(0.45,(P.combo||0)/120)+(o.numUp||0):1);
- if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n<3&&vok('swhit')){o.cutFx.n++;fx({k:'sp',s:'swhit',x:e.x+rnd(-4,4),y:e.y-e.r*1.5,sc:1,fx:Math.random()<.5?-1:1,T:0.3})}
+ if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n<3&&vok('swhit')){o.cutFx.n++;hitFx(e.x,e.y-e.r*1.3,(o.cutFx.ang||0),0.75)}
  else if(o.swordBasic&&!LOWFX&&o.cutFx&&o.cutFx.n++<3){fx({k:'ccut',x:e.x,y:e.y-e.r*1.5,ang:o.cutFx.ang+rnd(-0.35,0.35),T:0.13,wh:1});
   for(let i=0;i<4;i++){const a=o.cutFx.ang+rnd(-0.9,0.9),v=rnd(90,200);part(e.x,e.y-e.r*1.5,Math.cos(a)*v,Math.sin(a)*v-40,rnd(0.15,0.3),rnd(2,4),i%2?'#fff6d8':'#ffd27a',1)}}
  if(o.swordBasic&&o.stop)G.hitstop=Math.max(G.hitstop||0,o.stop);
@@ -2799,7 +2801,7 @@ function updZones(dt){
      if(z.t>s.nx&&z.t<z.T-0.5){let best=null,bd=1e9;for(const e of enemiesIn(z.x,z.y,240)){if(e.dead||e.brk)continue;const dd=Math.hypot(e.x-z.x,e.y-z.y);if(dd<bd&&!z.sw.some(q=>q!==s&&q.e===e&&q.st===1)){bd=dd;best=e}}
       if(best){s.st=1;s.t=0;s.e=best;s.fx0=s.x;s.fy0=s.y}else s.nx=z.t+0.25}}
     else if(s.st===1){const e=s.e,tx=e.x,ty=e.y-(e.r||14)*1.2,k=Math.min(1,s.t/0.16);s.ang=Math.atan2(ty-s.fy0,tx-s.fx0);s.x=s.fx0+(tx-s.fx0)*k;s.y=s.fy0+(ty-s.fy0)*k;
-     if(k>=1){if(!e.dead){hit(e,z.dmg,z.o,s.x,s.y);fx({k:'sp',s:'hp_imp',x:s.x,y:s.y,sc:0.9,T:0.5});fx({k:'sp',s:'hp_star',x:s.x,y:s.y,sc:0.9,T:0.5})}s.st=2;s.t=0;s.fx0=s.x;s.fy0=s.y;s.e=null}}
+     if(k>=1){if(!e.dead){hit(e,z.dmg,z.o,s.x,s.y);hitFx(s.x,s.y,Math.atan2(ty-s.fy0,tx-s.fx0),0.9)}s.st=2;s.t=0;s.fx0=s.x;s.fy0=s.y;s.e=null}}
     else{const k=Math.min(1,s.t/0.24),q=k*k*(3-2*k);s.x=s.fx0+(ox-s.fx0)*q;s.y=s.fy0+(oy-s.fy0)*q;s.ang=Math.atan2(oy-s.fy0,ox-s.fx0)+Math.PI;if(k>=1){s.st=0;s.nx=z.t+0.55}}}}
   else if(z.kind==='staffx'){const k=z.t/z.T,e=k<0.45?1-Math.pow(1-k/0.45,3):k<0.72?1:1-Math.pow((k-0.72)/0.28,1.6);z.e=e;const L=40+z.len*e,ux=Math.cos(z.ta)*z.fc,uy=Math.sin(z.ta),hx=P.x+z.fc*(-27),hy=P.y-63;z.x=P.x;z.y=P.y;
    if(!z.tip&&e>=0.97){z.tip=1;if(vok('wk_hit'))fx({k:'sp',s:'wk_hit',x:hx+ux*L,y:hy+uy*L,sc:0.8,f0:2,f1:5,T:0.18});if(vok('wk_stomp'))fx({k:'sp',s:'wk_stomp',x:hx+ux*L,y:hy+uy*L+16,sc:0.9,f0:1,T:0.45,al:0.9});fx({k:'ring',x:hx+ux*L,y:hy+uy*L,r0:14,r1:80,c:'#ffe9a0',T:0.32});burst(hx+ux*L,hy+uy*L,'#ffd36a',14)}
