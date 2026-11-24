@@ -141,3 +141,7 @@ Chủ game xem các bản làm lại (khung 7/7/12 theo guide, chuỗi Hovl, VFX
 - `wx_slash` (đòn A) đổi sang bảng màu của `zs2` (đòn B), bớt đậm (gốc: `nguon/vfx_goc/wx_slash_goc.png`). Elip C (`k5c_behind/front`) dày thêm ~6px bằng chồng bản dịch ±1..3px trong từng ô (gốc: `nguon/vfx_goc/k5c_*_goc.png`).
 - Lớp tay `hero_nam_hand.png` và `hero_nam_hg_hand.png`: thêm bàn tay ở ô `1280,128` và `1440,128` (chép từ ô `1120,128`). Hai file này vì thế khác Master khóa (chủ game đã cho vẽ thêm tay). `hero_*_ns.png`, `hero_*.png`, `hero_nu_hand.png` vẫn trùng hash Master.
 - Kiểm đối chiếu Master: sheet thân không kiếm của Nam/Nữ trùng Master. Nữ Huyền Giáp: không phát hiện mất cổ so với Master (xem mục trên). Kiếm dùng chung bản nữ dài 32 so với kiếm Master của Nam ~28.
+
+## Đòn C làm lại (24/11, chủ game duyệt phác thảo)
+- Elip `k5c_behind/front` dựng lại bằng `cong_cu/claude/c_ellipse.py` (không PixelLab): nhát cong dày giữa-mỏng đuôi, vẽ dần từ sau lưng qua trước xuống dưới, tan từ đuôi (3 lớp màu bảng A/B). Giữ kích thước ô, 15 khung. Bản dilation cũ không còn.
+- Góc kiếm 10 khung C trong `WSOCK` (khóa `2240..3680,256`, cả nam/nữ) đổi thành -150,-115,-75,-35,0,30,52,62,50,38: kiếm vung từ sau-trên đầu xuống trước theo vệt. Thân nhân vật không đổi (Master).
