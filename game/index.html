@@ -2318,7 +2318,7 @@ const AM_SIZE={mini:{r:36,spr:1.2},boss:{r:46,spr:1.45}};
 const AM_BOSSES={nguudau:['Ngưu Đầu','boss'],madien:['Mã Diện','boss'],huyetsat:['Huyết Sát Ma Tướng','mini'],hacvo:['Hắc Vô Thường','boss'],nghiethoa:['Nghiệt Hỏa Quỷ Vương','mini'],bachvo:['Bạch Vô Thường','boss'],thietlao:['Thiết Lao Ma Tướng','mini'],manhba:['Mạnh Bà','boss'],vongxuyenqt:['Vong Xuyên Quỷ Tướng','mini'],phanquan:['Phán Quan','boss'],dethinh:['Đế Thính','mini'],diemvuong:['Diêm Vương','boss']};
 for(const k in AM_BOSSES){const[nm,tier]=AM_BOSSES[k],z=AM_SIZE[tier];ET[k]=Object.assign({},ET[tier==='boss'?'boss':'elite'],{name:nm,amgioi:1,r:z.r},tier==='mini'?{mini:1}:{});ESPR[k]=[tier==='boss'?'quytuong':'quysai',z.spr]}
 /* Hình: Ngưu Đầu và Mã Diện = PixelLab (24/11). Hắc/Bạch Vô Thường, Mạnh Bà, Phán Quan, Diêm Vương đang tạm quytuong, chờ hình. Mini-boss tạm quysai, riêng Huyết Sát dùng quytuong. */
-ESPR.nguudau=['nguudau',1.1];ESPR.madien=['madien',1.1];/* hình PixelLab, giữ 1,1 để trùm cao hơn mini-boss */
+ESPR.nguudau=['nguudau',1.25];ESPR.madien=['madien',1.1];/* hình PixelLab. Ảnh Ngưu Đầu thấp hơn Mã Diện (sừng 141 px so với đầu ngựa 147 px, chưa tính chùy 160), nên phóng 1,25 để Ngưu Đầu cao hơn một chút; cả hai vẫn cao hơn mini-boss */
 ESPR.huyetsat=['quytuong',AM_SIZE.mini.spr];/* chủ game: hình Ngưu Ma Vương dùng làm quái (Huyết Sát Ma Tướng, mini-boss T4/5), không làm Ngưu Đầu */
 /* Quái theo chặng: pool = danh sách trọng số (lặp lại = nhiều hơn), elite = số Quỷ Sai mỗi tầng trong chặng (theo thứ tự tầng) */
 const AM_ZONES=[
