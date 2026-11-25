@@ -1142,7 +1142,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxsect{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px}
 .cxavw{padding:6px 8px 8px;flex-shrink:0}.cxavw .cxh{margin:0 0 4px}.cxsb .sic.big img{width:34px;height:34px}.cxill #crBg{object-fit:cover;image-rendering:auto}
 /* 25/11 (chủ game): ô avatar chuyển lên đầu cột phải; ảnh minh họa chiếm trọn cột giữa */
-.cxR .cxavw{padding:0 0 4px}.cxR .cxavw .cxh{margin:0 0 4px}
+.cxavw.top{padding:0 0 4px}.cxavw.top .cxh{margin:0 0 4px}
 @media (max-height:440px){.cxavw{padding:3px 6px 4px}.cxavw .cxh{display:none}.cxsb .sic.big img{width:24px;height:24px}}
 .cxsb{align-items:center;justify-content:center;align-content:center;text-align:center;min-width:0;gap:2px;height:auto}.cxsect{align-items:stretch}.cxsect .cxsb{justify-content:center;padding:6px 3px 8px;gap:4px;overflow:hidden}.cxsb .sic{margin-bottom:2px}.cxsb .sav{width:100%;max-width:56px;aspect-ratio:1;border-radius:4px;background-size:cover;background-position:50% 8%;box-shadow:inset 0 0 0 1px rgba(255,236,190,.4);image-rendering:auto}
 .cxsb b{font-size:9.5px;line-height:1.15;white-space:normal;min-height:0;margin:0;display:block;letter-spacing:0}.cxsb small{display:block;font:600 9.5px "Be Vietnam Pro",sans-serif;color:#a8987a}.cxsb .sic{display:flex;justify-content:center;align-items:center;height:18px;margin-top:1px}.cxsb .sic img{flex:none;min-width:18px;max-width:none;width:18px;height:18px;display:block;image-rendering:auto}/* icon phái: ảnh 128x128 (vector gốc của chủ game, đã thu bằng lọc mịn, bỏ nhiễu viền), hiển thị 36px; mỗi thẻ 1 icon */
@@ -1602,6 +1602,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <label for="crName" class="cxh">Tên nhân vật</label>
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
+   <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
     <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
@@ -1613,7 +1614,6 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    </div>
   </div>
   <div class="cxp cxR">
-   <div class="cxavw top"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
    <h3 class="cxh">Môn phái</h3><div id="crSect" class="cxw cxsect" role="group" aria-label="Chọn môn phái"></div>
    <div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
    <h3 class="cxh" id="crSkH">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd" tabindex="0" role="region" aria-label="Mô tả võ học"></div>
