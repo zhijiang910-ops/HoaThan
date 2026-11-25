@@ -2579,13 +2579,13 @@ ESPR.nguudau=['nguudau',1.25];ESPR.diemvuong=['diemvuong',1.07];ET.diemvuong.r=5
 for(const k of ['huyetsat','nghiethoa','thietlao','vongxuyenqt'])ESPR[k]=[k,1.1];/* 25/11: hình ChatGPT riêng cho 5 mini-boss *//* chủ game: hình Ngưu Ma Vương dùng làm quái (Huyết Sát Ma Tướng, mini-boss T4/5), không làm Ngưu Đầu */
 /* Quái theo chặng: pool = danh sách trọng số (lặp lại = nhiều hơn), elite = số Quỷ Sai mỗi tầng trong chặng (theo thứ tự tầng) */
 const AM_ZONES=[
- {id:'z1',f:[1,3],map:'am_hoangtuyen',pool:['tieu','tieu','tieu','hoa','can'],elite:[0,0,1]},
- {id:'z2',f:[4,6],map:'am_biangan',pool:['tieu','tieu','hoa','can','xa'],elite:[1,1,1]},
- {id:'z3',f:[7,9],map:'am_nghiepkinh',pool:['tieu','hoa','can','xa','toc'],elite:[1,2,2]},
- {id:'z4',f:[10,11],map:'am_uongtu',pool:['tieu','hoa','can','can','xa','toc'],elite:[2,2]},
- {id:'z5',f:[12,14],map:'am_vongxuyen',pool:['tieu','hoa','hoa','xa','xa','toc'],elite:[2,2,3]},
- {id:'z6',f:[15,17],map:'am_diemla',pool:['hoa','can','can','xa','xa','toc'],elite:[3,3,3]},
- {id:'z7',f:[18,18],map:'am_luanhoi',pool:['can','xa','toc','hoa'],elite:[3]}
+ {id:'z1',f:[1,3],map:'am_hoangtuyen',pool:['tieu','tieu','tieu','tieu','hoa','can'],elite:[0,0,1]},
+ {id:'z2',f:[4,6],map:'am_biangan',pool:['hoa','hoa','hoa','tieu','tieu','can','xa'],elite:[1,1,1]},
+ {id:'z3',f:[7,9],map:'am_nghiepkinh',pool:['can','can','xa','xa','tieu','hoa','toc'],elite:[1,2,2]},
+ {id:'z4',f:[10,11],map:'am_uongtu',pool:['tieu','tieu','toc','toc','can','can','xa'],elite:[2,2]},
+ {id:'z5',f:[12,14],map:'am_vongxuyen',pool:['hoa','hoa','tieu','tieu','xa','xa','toc'],elite:[2,2,3]},
+ {id:'z6',f:[15,17],map:'am_diemla',pool:['can','can','can','xa','xa','toc','toc','hoa'],elite:[3,3,4]},
+ {id:'z7',f:[18,18],map:'am_luanhoi',pool:['can','xa','toc','hoa','tieu'],elite:[4]}
 ];
 /* Boss/mini-boss theo tầng. pair:1 = hai trùm cùng lúc (Ngưu Đầu và Mã Diện), engine hiện chỉ có một G.boss nên cần code riêng sau. */
 const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'mini',types:['huyetsat']},5:{tier:'mini',types:['huyetsat']},6:{tier:'boss',types:['hacvo']},7:{tier:'mini',types:['nghiethoa']},8:{tier:'mini',types:['nghiethoa']},9:{tier:'boss',types:['bachvo']},10:{tier:'mini',types:['thietlao']},11:{tier:'mini',types:['thietlao']},12:{tier:'boss',types:['manhba']},13:{tier:'mini',types:['vongxuyenqt']},14:{tier:'mini',types:['vongxuyenqt']},15:{tier:'boss',types:['phanquan']},18:{tier:'boss',types:['diemvuong']}};
@@ -4719,8 +4719,8 @@ function exitArena(){const A=G.arena;if(!A)return;$('#tacloot').hidden=true;$('#
    Một lượt = mạch leo liên tục từ MỐC (tầng 1, 4, 7...). Mỗi tầng: diệt âm binh -> kẻ canh tầng xuất hiện (trùm / mini-boss / Quỷ Sai đầu đàn)
    -> hạ kẻ canh: RƯƠNG rơi tại chỗ -> mở rương -> CỔNG lên tầng kế hiện ra -> bước vào cổng: bảng tu luyện (thẻ) rồi xuống tầng mới.
    Qua mỗi trùm lưu mốc. Chết = mất lượt (không nhận thưởng thông quan, giữ mốc). 2 lượt/ngày, đặt lại 0 giờ giờ Việt Nam (UTC+7).
-   AM_OPEN = số tầng đang mở (chặng 1: tầng 1-3). Số liệu quái/trùm TẠM, chưa cân bằng. */
-const AM_OPEN=3;
+   AM_OPEN = số tầng đang mở (25/11: mở đủ 18 tầng). Số liệu quái/trùm TẠM, chưa cân bằng. */
+const AM_OPEN=18;
 const vnDay=()=>new Date(Date.now()+7*3600*1000).toISOString().slice(0,10);
 function amSave(){const a=save.am||(save.am={day:vnDay(),used:0,cp:1,best:0,runs:0});if(a.day!==vnDay()){a.day=vnDay();a.used=0}return a}
 const AM_TEST=!window.__amLimit;/* 25/11 (chủ game, nhánh bên kia): đang thử nghiệm => KHÔNG giới hạn lượt/ngày. Đặt `const AM_TEST=false` khi phát hành để trả 2 lượt/ngày. Test hết lượt: đặt window.__amLimit=1 trước khi tải trang. */
@@ -4733,7 +4733,7 @@ function renderAM(){const a=amSave(),left=amLeft();$('#lbmT').textContent='Âm G
  $('#lbmB').innerHTML=`<div class="amh"><p>Xuống 18 tầng địa ngục. Diệt âm binh, hạ kẻ canh tầng để rương báu rơi, mở rương rồi bước vào cổng lên tầng kế. Qua mỗi trùm được lưu mốc. <b>Gục ngã là mất lượt</b>, không nhận thưởng thông quan.</p>
   <div class="amt"><span>Lượt hôm nay</span><b>${AM_TEST?'Thử nghiệm':left+'/'+AM_RULES.dailyRuns}</b><small>${AM_TEST?'Không giới hạn lượt':'Đặt lại 0 giờ (giờ Việt Nam)'}</small></div>
   <button id="amGo" class="btn gold" ${left>0&&a.cp<=AM_OPEN?'':'disabled'}>Xuống tầng ${a.cp}</button>
-  <p class="dim sm">${a.best>=AM_OPEN?'Đã thông chặng 1 (tầng 1–'+AM_OPEN+'). Các chặng sau sắp mở.':'Tầng cao nhất đã qua: '+(a.best||0)+'. Đang mở tầng 1–'+AM_OPEN+'.'}</p></div><div class="aml">${rows}</div>`}
+  <p class="dim sm">${a.best>=AM_OPEN?'Đã thông cả '+AM_OPEN+' tầng địa ngục.':'Tầng cao nhất đã qua: '+(a.best||0)+'. Mốc lưu sau mỗi trùm (tầng 3, 6, 9, 12, 15).'}</p></div><div class="aml">${rows}</div>`}
 $('#lbmB').addEventListener('click',e=>{if(e.target.closest('#amGo'))amStartRun()});
 function amStartRun(){const a=amSave();if(amLeft()<=0){lobbyToast('Hết lượt hôm nay, đặt lại lúc 0 giờ (giờ Việt Nam)');return}if(a.cp>AM_OPEN)a.cp=1;
  if(!AM_TEST)a.used++;a.runs=(a.runs||0)+1;persist();$('#lbm').hidden=true;
@@ -4746,15 +4746,15 @@ function amEnterFloor(f){const F=amFloor(f),A=G.am;
   G.cfg.map=F.map;buildDecor(F.map);G.diff=amDiff(f);G.stage=1+Math.floor((f-1)/3);G.wave=Math.min(9,2+f);G.sw=f;G.state='play';
   G.enemies=[];G.spawnQ=[];G.brk=[];G.orbs=[];G.eproj=[];G.pproj=[];G.haz=[];G.zones=[];G.corpses=[];G.decals=[];G.later=[];G.allies=[];G.ev=null;G.boss=null;G.chest=null;G.clearing=0;
   P.x=AW/2;P.y=AH/2;G.cam.x=P.x;G.cam.y=P.y;P.inv=1.5;P.hp=S.hp;P.mp=Math.max(P.mp,S.mp*0.6);
-  const n=14+4*f;A.total=n+F.elites;
+  const n=Math.min(64,14+3*f);A.total=n+F.elites;
   for(let i=0;i<n;i++){const a=rnd(0,TAU),d=rnd(330,560);G.spawnQ.push({x:clamp(P.x+Math.cos(a)*d,80,AW-80),y:clamp(P.y+Math.sin(a)*d*0.8,120,AH-80),type:pick(F.pool),t:0.8+i*0.12})}
   for(let i=0;i<F.elites;i++){const a=rnd(0,TAU);G.spawnQ.push({x:clamp(P.x+Math.cos(a)*460,80,AW-80),y:clamp(P.y+Math.sin(a)*360,120,AH-80),type:'elite',t:1.4+i*0.5,big:1})}
   hudSkills();document.body.classList.add('playing');
   notice('Âm Giới · tầng '+f,MAPS[F.map].name+' · hạ '+amGuardName(f)+' để mở lối lên');renderQuests()})}
-function amSpawnGuards(){const A=G.am,F=amFloor(A.floor);const types=F.boss?F.boss.types:['elite'];
+function amSpawnGuards(){const A=G.am,F=amFloor(A.floor);const types=F.boss?F.boss.types:(A.floor>=16?['elite','elite']:['elite']);
  types.forEach((t,i)=>{const a=rnd(0,TAU)+i*Math.PI;G.spawnQ.push({x:clamp(P.x+Math.cos(a)*360,120,AW-120),y:clamp(P.y+Math.sin(a)*280,160,AH-120),type:t,t:1.2+i*0.3,big:1,amG:1,amName:F.boss?null:'Quỷ Sai Gác Tầng'})});
  notice(amGuardName(A.floor),'xuất hiện!');G.shake=12}
-function amTagGuard(e,s){e.amG=1;e.nm=s.amName||ET[s.type].name;if(!ET[s.type].amgioi){e.hp*=2.6;e.mhp=e.hp;e.dmg*=1.15}}
+function amTagGuard(e,s){e.amG=1;e.nm=s.amName||ET[s.type].name;if(!ET[s.type].amgioi){e.hp*=(G.am.floor>=16?1.5:2.6);e.mhp=e.hp;e.dmg*=1.15}else if(ET[s.type].mini){e.hp*=4;e.mhp=e.hp}}/* 25/11: mini-boss x4 máu (trước yếu hơn Quỷ Sai canh tầng); Quỷ Sai canh tầng 16-17 chỉ x1,5 và có 2 con. SỐ TẠM */
 function amGuardKill(e){const A=G.am;sfx('rulai_fall',0.7,0);G.slow=1.2;G.shake=18;burst(e.x,e.y-40,'#c88cff',50);dropOrb(e.x,e.y,'xp',e.xp);
  G.boss=G.enemies.find(o=>o.boss&&!o.dead&&o!==e)||null;
  const left=G.enemies.filter(o=>o.amG&&!o.dead&&o!==e).length+G.spawnQ.filter(s=>s.amG).length;if(left>0)return;
@@ -4800,8 +4800,8 @@ function amEnd(win){const A=G.am;if(!A||G.over)return;cancelSkillAim();P.manualQ
  const ngoc=win?Math.floor(G.coins*0.5+A.floor*40+60):0;save.ngoc=(save.ngoc||0)+ngoc;const pxp=win?Math.round(G.xpGain||0):0,pup=pxp?profGain(pxp):false;
  if(win)save.wins=(save.wins||0)+1;persist();
  setTimeout(()=>{$('#hud').hidden=true;$('#end').hidden=false;document.body.classList.remove('playing');$('#tacloot').hidden=true;
-  $('#endTitle').textContent=win?'Thông quan chặng 1':'Gục ngã';$('#endTitle').style.color=win?'#ffd34a':'#ff7a6a';
-  $('#endSub').textContent=win?'Hạ trùm Ngưu Đầu và Mã Diện, qua Quỷ Môn Quan. Mốc đã về tầng 1, các chặng sau sẽ mở ở bản sau.':'Gục ngã ở Âm Giới tầng '+A.floor+'. Lượt này đã mất, mốc đã lưu giữ nguyên: '+(amSave().cp>1?'tầng '+amSave().cp:'tầng 1')+'. Trang bị đã nhận trong các rương vẫn giữ.';
+  $('#endTitle').textContent=win?'Thông quan Âm Giới':'Gục ngã';$('#endTitle').style.color=win?'#ffd34a':'#ff7a6a';
+  $('#endSub').textContent=win?'Hạ Diêm Vương, bước qua Luân Hồi Đài. Mốc đã về tầng 1.':'Gục ngã ở Âm Giới tầng '+A.floor+'. Lượt này đã mất, mốc đã lưu giữ nguyên: '+(amSave().cp>1?'tầng '+amSave().cp:'tầng 1')+'. Trang bị đã nhận trong các rương vẫn giữ.';
   $('#againBtn').hidden=true;
   $('#endStats').innerHTML=[['Tầng đạt tới',A.floor+'/'+AM_RULES.floors],['Tổng hạ gục',G.kills],['Sát thương gây ra',fmt(G.dmgDealt)],['Cấp trong lượt',G.level],['Tiền đồng',G.coins],['Tiên ngọc nhận',win?ngoc+' (tổng '+save.ngoc+')':'0 (gục ngã)'],['Lượt còn lại hôm nay',amLeft()+'/'+AM_RULES.dailyRuns],['EXP nhân vật',win?'+'+pxp+(pup?' · lên cấp '+prof().lv:''):'0']].map(s=>`<div class="tile"><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')},win?200:900)}
 function drawAmPortal(c){const A=G&&G.am,p=A&&A.portal;if(!p)return;const t=G.t,x=p.x,y=p.y;c.save();c.translate(x,y);
