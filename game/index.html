@@ -1089,6 +1089,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 }
 .cxbar .crerr{color:#ff8a70;font:700 13px "Be Vietnam Pro",sans-serif}
 #crGo{min-width:180px}#crGo:disabled{opacity:.45;cursor:not-allowed}
+.amst{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 4px}.amsb{display:flex;flex-direction:column;gap:4px;padding:10px 6px;text-align:center}.amsb b{font:800 20px "Noto Serif",serif}.amsb span{font-size:11px;opacity:.85}.amsb:disabled{opacity:.45}
 /* 25/11: nút Khởi hành/Lưu luôn hiện (ghim đáy cột phải, cột cuộn bên trong) — màn thấp trước đây đẩy nút ra ngoài khung */
 .cxR .cxbar{position:sticky;bottom:-6px;z-index:5;margin-top:auto;padding:6px 0 4px;background:linear-gradient(rgba(14,10,7,0),#0e0a07 28%)}
 @media (max-height:520px){.cxR .cxbar{bottom:-4px;padding:4px 0 2px}.cxR #crGo{font-size:14px;line-height:1.1;padding:7px 6px;white-space:nowrap;min-height:0}}
@@ -2484,12 +2485,12 @@ const keys={};const joy={on:false,id:null,x:0,y:0,dx:0,dy:0};
 let grid=new Map();
 
 function warmGPU(){const c=ctx;c.save();c.globalAlpha=0.003;const L=[...Object.values(VFX)];for(const h of Object.values(CH)){L.push(h.img);if(h.flash)L.push(h.flash)}const M=MAPS[sel.map];if(M&&M.ground)for(const k in MIMG)if(k.startsWith(M.houses?'City':M.ground==='g_snow'?'Snow':'Forest')||k===M.ground||k===M.patch)L.push(MIMG[k]);for(const im of L){try{if(im.width||im.naturalWidth)c.drawImage(im,0,0,4,4)}catch(e){}}c.restore()}
-function newRun(skip){
+function newRun(skip,amStar){
  G=null;
  for(const k of['lobby','create','menu','inv'])$('#'+k).hidden=true;
- if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
+ if(amStar)sel.map=amFloor(1).map;else if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}if(amStar)sel.star=amStar;else sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
  const W=WEAPONS[sel.weapon],Gd=GODS[sel.god];buildDecor(sel.map);warmGPU();
- G={cfg:{...sel},diff:STARS[sel.star],route:'tuyet',rmap:sel.map,star:sel.star,keo:!!sel.keo,keoN:0,keoDone:false,path:null,matRun:{duoc:0,hiem:0},wave:0,t:0,waveT:0,waveDur:0,enemies:[],corpses:[],decals:[],stage:sel.star,sw:1,chest:null,nextStage:false,eproj:[],pproj:[],zones:[],haz:[],fx:[],nums:[],orbs:[],allies:[],spawnQ:[],later:[],parts:[],
+ G={cfg:{...sel},diff:STARS[sel.star],route:amStar?null:'tuyet',am:amStar?{star:amStar,floor:1,ngoc:0,mat:0}:null,rmap:sel.map,star:sel.star,keo:!!sel.keo,keoN:0,keoDone:false,path:null,matRun:{duoc:0,hiem:0},wave:0,t:0,waveT:0,waveDur:0,enemies:[],corpses:[],decals:[],stage:sel.star,sw:1,chest:null,nextStage:false,eproj:[],pproj:[],zones:[],haz:[],fx:[],nums:[],orbs:[],allies:[],spawnQ:[],later:[],parts:[],
   kills:0,coins:0,dmgDealt:0,level:1,xp:0,picks:0,lvWave:0,reroll:3,shake:0,freeze:0,slow:0,paused:false,over:false,cam:{x:AW/2,y:AH/2},spawnAcc:0,packT:6,eliteT:[],clearing:0,qs:[],ev:null,evT:40,noHit:0,mk:[],mkRe:0,brk:[],brkT:4,wTarget:30,wK:0,wC:0,wD:0,wT:0,flash:0};
  P={x:AW/2,y:AH/2,r:14,facing:1,moveAng:0,aimAng:0,t:0,moving:false,av:0,atkT:0,atkAng:0,swingDir:1,thrust:0,dashT:0,dashCd:0,dashAng:0,inv:0,hurt:0,kx:0,ky:0,
   form:'human',rage:0,godCd:0,refund:0,transT:0,godDur:Gd.dur,combo:0,comboT:0,comboAtHit:0,comboPeak:0,hidden:0,buffSpd:0,trail:0,trailAcc:0,mods:{},stacks:{},pf:{},hp:100,mp:60,
@@ -2500,6 +2501,7 @@ function newRun(skip){
  for(const id of['menu','brk','end','pause'])$('#'+id).hidden=true;
  $('#hud').hidden=false;
  tutInit();if(skip===true)return;
+ if(G.am){G.tut=null;tutRender();amStartFloor(1);return}
  save.cp=null;persist();saveCP('ready',1);startWave(1);
 }
 /* Lực chiến: tổng chỉ số quy đổi + cấp nhân vật (chỉ để hiển thị, không ảnh hưởng chiến đấu) */
@@ -2543,7 +2545,7 @@ function director(dt){
  if(G.heal){const h=G.heal;h.t+=dt;if(Math.hypot(P.x-h.x,P.y-h.y)<h.r&&P.hp<S.hp){P.hp=Math.min(S.hp,P.hp+S.hp*0.06*dt);if(Math.random()<dt*10)part(P.x+rnd(-14,14),P.y-rnd(0,30),0,rnd(-70,-30),rnd(.4,.7),rnd(2,4),'#9fffd0',1,0)}}
  const cap=Math.min(150,40+n*11);
  G.spawnAcc+=rate*dt;
- while(G.spawnAcc>=1){G.spawnAcc--;if(alive<cap){const p=edgePos();G.spawnQ.push({x:p.x,y:p.y,type:pick(WAVE_TYPES[n-1]),t:0.7})}}
+ while(G.spawnAcc>=1){G.spawnAcc--;if(alive<cap){const p=edgePos();G.spawnQ.push({x:p.x,y:p.y,type:pick(G.am?G.am.F.pool:WAVE_TYPES[n-1]),t:0.7})}}
  G.packT-=dt;if(G.packT<=0&&alive<cap){G.packT=rnd(8,11);const p=edgePos();const k=5+n;for(let i=0;i<k;i++)G.spawnQ.push({x:clamp(p.x+rnd(-60,60),30,AW-30),y:clamp(p.y+rnd(-60,60),30,AH-30),type:n>=6&&Math.random()<.3?'toc':'tieu',t:0.7+i*0.04})}
  if(!G.ambush&&n<10&&G.wK>=G.wTarget*0.55){G.ambush=1;const a=rnd(0,TAU),R=Math.max(VW,VH)/ZOOM*0.5+40,k=Math.round(4+n*1.5);
   notice('Phục kích!','Yêu binh ập tới từ hai phía');G.shake=Math.max(G.shake||0,4);
@@ -2563,7 +2565,7 @@ function spawnEnemy(type,x,y){
  const e={type,ai:d.ai,x,y,r:d.r,hp:d.hp*hpM,spd:d.spd*rnd(.9,1.1),dmg:d.dmg*dmM,armor:d.armor||0,xp:d.xp,elite:!!d.elite,boss:!!d.boss,kx:0,ky:0,stun:0,slowT:0,slowF:0,brk:0,brkT:0,vuln:0,burnT:0,burnD:0,burnAcc:0,flash:0,contact:0,st:'move',stT:0,cd:rnd(1,2.5),ph:rnd(0,TAU),dead:false,side:Math.random()<.5?1:-1,aAng:0,f:1};
  if(G.route&&G.star>=3&&e.elite&&!e.boss){e.shMax=e.shield=d.hp*hpM*0.35;e.shT=0}
  e.mhp=e.hp;if(G.arena&&type===G.arena.bossT){e.hp*=1.5;e.mhp=e.hp;e.nm=d.name}G.enemies.push(e);
- if(e.boss){G.boss=e;$('#bossbar').hidden=false;G.shake=16;burst(x,y,'#ff6a2a',40)}
+ if(e.boss){G.boss=e;{const bn=document.querySelector('#bossbar .bn');if(bn)bn.textContent=d.name}$('#bossbar').hidden=false;G.shake=16;burst(x,y,'#ff6a2a',40)}
  return e;
 }
 function endWave(fast){
@@ -2575,15 +2577,55 @@ function endWave(fast){
  G.clearing=1.9;G.slow=0.5;G.shake=Math.max(G.shake,6);sfx('taiji_open',0.6,0);
  for(const o of G.orbs){o.mag=1;o.t=Math.max(o.t,1.5)}
  fx({k:'ring',x:P.x,y:P.y,r0:20,r1:340,c:'#ffe08a',T:0.7});
- const b=$('#clearBan');b.querySelector('b').textContent=G.wave>=10?'Phá Trận Trùm':(G.route?'Ải ':'Đợt ')+G.sw+' / 5';b.querySelector('em').textContent=G.wave>=10?'Ngưu Ma Vương bại trận':'Hoàn thành';b.classList.remove('on');void b.offsetWidth;b.classList.add('on');
+ const b=$('#clearBan');b.querySelector('b').textContent=G.am?'Tầng '+G.sw+' / '+AM_RULES.floors:G.wave>=10?'Phá Trận Trùm':(G.route?'Ải ':'Đợt ')+G.sw+' / 5';b.querySelector('em').textContent=G.am?(G.wave>=10?'Trùm bại trận':'Hoàn thành'):G.wave>=10?'Ngưu Ma Vương bại trận':'Hoàn thành';b.classList.remove('on');void b.offsetWidth;b.classList.add('on');
 }
 function finishWave(){
  G.clearing=0;$('#clearBan').classList.remove('on');qHook('wave',1);
  for(const o of G.orbs)collect(o);G.orbs=[];
- cancelSkillAim();P.manualQueue=null;G.state='break';G.picks=1+G.lvWave;G.reroll=3;G.cards=rollCards();
+ amFloorReward();cancelSkillAim();P.manualQueue=null;G.state='break';G.picks=1+G.lvWave;G.reroll=3;G.cards=rollCards();
  if(G.route){profGain(Math.round(G.xpGain||0));G.xpGain=0;saveCP('rest')}
  openBreak('cul');
 }
+
+
+/* ================= ÂM GIỚI 18 TẦNG (Mốc 1, 25/11) =================
+   Mỗi tầng = một trận ngắn (như đợt) trên map riêng của tầng; tầng 3/6/9/12/15/18 có trùm, tầng 4,5,7,8,10,11,13,14,16,17 có mini-boss.
+   Chết là thua. 2 lượt/ngày (đặt lại 0h giờ Việt Nam). Số liệu quái/thưởng là TẠM, chưa cân bằng. */
+function amDay(){return new Date(Date.now()+7*3600e3).toISOString().slice(0,10)}
+function amSave(){const a=save.am||(save.am={});if(a.day!==amDay()){a.day=amDay();a.used=0}a.best=a.best||{};a.clear=a.clear||{};return a}
+function amLeft(){return Math.max(0,AM_RULES.dailyRuns-amSave().used)}
+function amStarOpen(st){const a=amSave();return st===1||(st===3&&!!a.clear[1])||(st===5&&!!a.clear[3])}
+function amNextHint(){const F=amFloor(G.am.floor+1);if(!F)return '';return 'Tầng '+F.n+' sẵn sàng'+(F.boss?(F.boss.tier==='boss'?' · trùm '+F.boss.types.map(t=>ET[t].name).join(' và '):' · '+ET[F.boss.types[0]].name):'')+'.'}
+function amStartRun(st){const a=amSave();if(amLeft()<=0||!amStarOpen(st))return;a.used++;persist();$('#lbm').hidden=true;newRun(false,st)}
+function amStartFloor(f){
+ const F=amFloor(f);if(!F)return;G.am.floor=f;G.am.F=F;G.cfg.map=F.map;buildDecor(F.map);
+ cancelSkillAim();P.manualQueue=null;P.swordGuard=null;if(P.cutC)endCutC();
+ const boss=!!F.boss&&F.boss.tier==='boss',mini=!!F.boss&&F.boss.tier==='mini';
+ G.sw=f;const n=boss?10:Math.min(9,Math.max(1,Math.ceil(f/2)));G.wave=n;G.stage=1+(f-1)/6;
+ G.waveT=0;G.ambush=0;G.waveDur=n<10?WAVE_DUR[n-1]:Infinity;G.wTarget=n<10?Math.round(WAVE_DUR[n-1]*((0.9+n*0.5)*G.diff.spawn+(5+n)/9.5)*0.62):Infinity;G.spawnAcc=0;G.packT=6;G.wK=0;G.wGear=0;G.wC=0;G.wD=0;G.wT=0;G.lvWave=0;G.enemies=[];G.spawnQ=[];G.boss=null;
+ P.hp=S.hp;P.mp=Math.max(P.mp,S.mp*0.6);P.x=AW/2;P.y=AH/2;G.cam.x=P.x;G.cam.y=P.y;
+ G.eliteT=[];for(let i=0;i<(F.elites||0);i++)G.eliteT.push(Math.round((G.wTarget===Infinity?60:G.wTarget)*(0.25+0.6*i/Math.max(1,F.elites))));
+ spawnBrk(true);G.heal=null;
+ const nm=t=>ET[t].name;
+ if(boss){notice('Tầng '+f+'/'+AM_RULES.floors+' · Trùm',F.boss.types.map(nm).join(' và ')+' giáng lâm');F.boss.types.forEach((t,i)=>later(1.2+i*0.4,()=>{G.spawnQ.push({x:clamp(P.x+(i?260:-260)*(F.boss.types.length>1?1:0),200,AW-200),y:clamp(P.y-340,150,AH-150),type:t,t:1.6,big:1})}))}
+ else{notice('Tầng '+f+'/'+AM_RULES.floors+' · '+stars(G.am.star),mini?nm(F.boss.types[0])+' canh giữ':(F.elites?'Quỷ Sai tuần tra':''));if(mini)later(Math.max(4,(G.wTarget||40)*0.12),()=>{if(G&&G.am&&G.am.floor===f&&G.state==='play')G.spawnQ.push({x:clamp(P.x,200,AW-200),y:clamp(P.y-320,150,AH-150),type:F.boss.types[0],t:1.6,big:1})})}
+ G.state='play';tutRender();tutPractice();hudSkills();document.body.classList.add('playing');if(!G.qs.length)initQuests();else renderQuests();
+}
+function amBossDown(e){
+ const o=G.enemies.find(x=>!x.dead&&x.boss&&x!==e);
+ if(o){G.boss=o;notice(ET[e.type].name+' ngã!','Còn '+ET[o.type].name);burst(e.x,e.y-40,'#ffcf4a',40);G.shake=12;return}
+ G.boss=null;const f=G.am.floor;notice(ET[e.type].name+' bại trận!',f>=AM_RULES.floors?'Âm Giới đã được thanh tẩy':'Tầng '+f+' hoàn thành');G.slow=1.6;burst(e.x,e.y-40,'#ffcf4a',60);G.shake=20;
+ G.am.ngoc+=60*f/3;G.am.mat+=2;
+ later(1.4,()=>{if(!G||!G.am||G.over)return;if(f>=AM_RULES.floors){for(const q of G.enemies)if(!q.dead){burst(q.x,q.y-10,'#553322',4);q.dead=true}G.spawnQ=[];G.eproj=[];G.haz=[];endRun(true)}else endWave()})
+}
+function amFloorReward(){if(!G||!G.am)return;if(G.wave<10)G.am.ngoc+=5*G.am.floor}
+function amEndNgoc(win){const a=G.am;return Math.floor(G.coins*0.5)+Math.round(a.ngoc)+(win?150*a.star:0)}
+function amEndRecord(win){const a=amSave(),st=G.am.star,fl=win?AM_RULES.floors:Math.max(0,G.am.floor-1);a.best[st]=Math.max(a.best[st]||0,fl);if(win)a.clear[st]=1;if(G.am.mat){const m=mats();m.duoc+=G.am.mat}}
+function renderAM(){$('#lbmT').textContent='Âm Giới 陰界';const a=amSave(),left=amLeft();
+ $('#lbmB').innerHTML=`<div class="tbch"><b>18 tầng địa phủ</b><span class="dim sm">Chết là thua, mất lượt. Mỗi ngày ${AM_RULES.dailyRuns} lượt, đặt lại lúc ${AM_RULES.resetAt}. Hôm nay còn <b>${left}/${AM_RULES.dailyRuns}</b> lượt.</span></div>
+ <div class="amst">${AM_RULES.stars.map(st=>{const ok=amStarOpen(st);return `<button class="btn amsb${left>0&&ok?' gold':''}" data-am="${st}" ${left>0&&ok?'':'disabled'}><b>${stars(st)}</b><span>${ok?'Cao nhất: tầng '+(a.best[st]||0)+'/'+AM_RULES.floors:'Khóa · vượt '+stars(st===3?1:3)}</span></button>`}).join('')}</div>
+ <p class="dim sm" style="margin:8px 4px">Trùm: T3 Ngưu Đầu · Mã Diện, T6 Hắc Vô Thường, T9 Bạch Vô Thường, T12 Mạnh Bà, T15 Phán Quan, T18 Diêm Vương. Mini-boss ở các tầng giữa. Thưởng: tiên ngọc theo tầng, thêm khi hạ trùm và khi thanh tẩy 18 tầng.</p>`}
+$('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-am]');if(!b||lbmK!=='amgioi'||b.disabled)return;amStartRun(+b.dataset.am)});
 
 /* ================= COMBAT HELPERS ================= */
 function buildGrid(){grid.clear();for(const e of G.enemies){if(e.dead)continue;const k=Math.floor(e.x/CELL)*4096+Math.floor(e.y/CELL);let a=grid.get(k);if(!a){a=[];grid.set(k,a)}a.push(e)}}
@@ -2679,6 +2721,7 @@ function hit(e,dmg,o,sx,sy){
 function rawDmg(e,d){if(e.dead)return;e.hp-=d;G.dmgDealt+=d;G.wD+=d;num(e.x,e.y-e.r*1.6-10,Math.round(d),'b');if(e.hp<=0)kill(e)}
 function kill(e){
  if(e.dead)return;e.dead=true;G.kills++;if(e.elite&&!e.boss&&G.route&&Math.random()<(G.path==='trai'&&G.sw>=3&&G.sw<5?0.4:0.12)+(S.luck||0)*0.004)G.orbs.push({x:e.x,y:e.y,k:'mat',v:1,it:'duoc',vx:rnd(-50,50),vy:rnd(-50,50),mag:0,t:0});if(e.boss&&G.route&&G.keo){G.keoDone=G.keoN>=2;notice(G.keoDone?'Kèo săn trùm thành công':'Kèo săn trùm thất bại',G.keoDone?'Rương trùm thêm 1 lượt roll dược liệu':'Chưa phá đủ cột băng trước khi trùm ngã')}if(!G.arena)G.wK++;if(G.arena&&e.nm){const x=e.x,y=e.y;later(0.9,()=>arenaChest(x,y))}qHook('kill',1);if(e.elite)qHook('elite',1);if(G.ev&&G.ev.on&&!G.ev.fail)evKill(e);if(ESPR[e.type]&&G.corpses.length<60)G.corpses.push({type:e.type,x:e.x,y:e.y,f:e.f||1,t:0});if(e.elite){sfx('moying_impact',0.5,0.1);fx({k:'ink',x:e.x,y:e.y-30,T:0.45})}if(e.boss)sfx('rulai_fall',0.7,0);
+ if(e.boss&&G.am){amBossDown(e);return}
  if(e.boss){if(G.route)recordBossVictory();G.boss=null;notice('Ngưu Ma Vương bại trận!');G.slow=1.6;burst(e.x,e.y-40,'#ffcf4a',60);G.shake=20;const bx=e.x,by=e.y;later(1.2,()=>{for(const o of G.enemies)if(!o.dead){burst(o.x,o.y-10,'#553322',4);o.dead=true}G.spawnQ=[];G.eproj=[];G.haz=[];dropChest(bx,by)});return}
  const L=S.luck;
  dropOrb(e.x,e.y,'xp',e.xp);
@@ -2984,7 +3027,7 @@ function updEnemy(e,dt){
  }
 }
 function bossAI(e,dt,d,ux,uy){
- if(!e.enr&&e.hp<e.mhp*0.4){e.enr=true;notice('Ngưu Ma Vương cuồng nộ!','Tốc độ và nhịp tấn công tăng');G.shake=14;for(let i=0;i<10;i++){const a=i*TAU/10;G.spawnQ.push({x:clamp(e.x+Math.cos(a)*200,40,AW-40),y:clamp(e.y+Math.sin(a)*200,40,AH-40),type:i%3?'tieu':'hoa',t:0.8})}}
+ if(!e.enr&&e.hp<e.mhp*0.4){e.enr=true;notice((ET[e.type]&&ET[e.type].name||'Ngưu Ma Vương')+' cuồng nộ!','Tốc độ và nhịp tấn công tăng');G.shake=14;for(let i=0;i<10;i++){const a=i*TAU/10;G.spawnQ.push({x:clamp(e.x+Math.cos(a)*200,40,AW-40),y:clamp(e.y+Math.sin(a)*200,40,AH-40),type:i%3?'tieu':'hoa',t:0.8})}}
  const k=e.enr?0.68:1;
  if(e.st==='wind'){e.stT-=dt;if(e.stT<=0){if(e.next==='charge'){e.st='charge';e.stT=0.75}else{e.st='move';e.cd=1.3*k}}return[0,0]}
  if(e.st==='charge'){e.stT-=dt;e.x+=Math.cos(e.aAng)*720*dt;e.y+=Math.sin(e.aAng)*720*dt;if(Math.random()<.6)part(e.x,e.y,rnd(-40,40),rnd(-60,-10),0.5,6,'rgba(120,80,60,.6)',0);if(e.stT<=0||e.x<=22||e.x>=AW-22||e.y<=22||e.y>=AH-22){e.st='move';e.cd=1.4*k;G.shake=8}return[0,0]}
@@ -4140,7 +4183,7 @@ function renderTBC(){$('#lbmT').textContent='Tàng Bảo Các';const D=tbcData()
  <h3 class="tbcs">Nhật ký bổ sung</h3><div class="tbcl">${TBC_LOG.map(([d,t])=>`<div><b>${d}</b> ${t}</div>`).join('')}</div>`;
  $('#lbmB').querySelectorAll('canvas[data-s]').forEach(cn=>{try{drawItemIcon(cn,{id:'tbc',slot:cn.dataset.s,tier:+cn.dataset.t,st:1,name:cn.dataset.n,base:{},aff:[]})}catch(e){}})}
 $('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-tbc]');if(!b||lbmK!=='tangbao')return;tbcTab=b.dataset.tbc;renderTBC()});
-function openLbm(k){lbmK=k;$('#lbm').hidden=false;dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM,tangbao:renderTBC})[k]()}
+function openLbm(k){lbmK=k;$('#lbm').hidden=false;dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM,tangbao:renderTBC,amgioi:renderAM})[k]()}
 $('#lbmX').addEventListener('click',()=>{$('#lbm').hidden=true;showLobby()});
 function renderDT(tickOnly){const i=dtInfo(),s0=staTick();$('#lbmT').textContent='Điểm Tâm';
  if(tickOnly&&$('#dtLeft')){$('#dtLeft').textContent=i.open?'Khung còn '+mmss(i.left):'';return}
@@ -4413,6 +4456,7 @@ const LBT=[
  {k:'luyendan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
  {k:'luyenvk',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
  {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Thần Giáng '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
+ {k:'amgioi',g:'陰',n:'Âm Giới',st:()=>'18 tầng · còn '+amLeft()+'/'+AM_RULES.dailyRuns+' lượt'},
  {k:'tangbao',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
  {k:'luyencong',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
  {k:'banghoi',g:'幫',n:'Bang Hội',st:()=>'Cần máy chủ',off:1,hide:1}];
@@ -4444,7 +4488,7 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
  if(k==='inv'){invFrom='lobby';$('#lobby').hidden=true;$('#inv').hidden=false;renderInv();return}
- if(['diemtam','luyendan','luyenvk','chieumo','tangbao'].includes(k)){openLbm(k);return}
+ if(['diemtam','luyendan','luyenvk','chieumo','tangbao','amgioi'].includes(k)){openLbm(k);return}
  const T=LBT.find(x=>x.k===k);lobbyToast(T.n+(T.off?': cần máy chủ trực tuyến, sẽ mở khi có máy chủ.':': đang xây dựng, sẽ mở ở bản sau.'))});
 let lbToastT=0;function lobbyToast(t){let d=$('#lbToast');if(!d){d=document.createElement('div');d.id='lbToast';$('#lobby').appendChild(d)}d.textContent=t;d.classList.add('on');clearTimeout(lbToastT);lbToastT=setTimeout(()=>d.classList.remove('on'),2200)}
 $('#lbSwap').addEventListener('click',e=>{e.stopPropagation();openCreate()});
@@ -4604,8 +4648,8 @@ function hud(dt){
   last.cbv=P.combo;
  }
  const wl2=$('#wl2'),wr2=$('#wr2');
- if(G.wave<10){const p=Math.min(1,G.wK/G.wTarget);setT('ts',$('#tStage'),G.route?stars(G.star):'Màn '+G.stage);setT('tw',$('#tWave'),(G.route?'Ải ':'Đợt ')+G.sw+'/5');setT('tp',$('#tPct'),Math.floor(p*100)+'%');setW('wf',el.wfill,p);const r=Math.floor(G.waveT);setT('wt',$('#wtimeT'),String(Math.floor(r/60)).padStart(2,'0')+':'+String(r%60).padStart(2,'0'))}
- else{setT('ts',$('#tStage'),G.route?stars(G.star):'Màn '+G.stage);setT('tw',$('#tWave'),'Trùm');setT('tp',$('#tPct'),G.boss?Math.ceil(G.boss.hp/G.boss.mhp*100)+'%':'');setW('wf',el.wfill,G.boss?G.boss.hp/G.boss.mhp:0);setT('wt',$('#wtimeT'),G.chest?'Mở bảo rương':G.boss?'Hạ Ngưu Ma Vương':'')}
+ if(G.wave<10){const p=Math.min(1,G.wK/G.wTarget);setT('ts',$('#tStage'),G.am?'Âm Giới '+stars(G.am.star):G.route?stars(G.star):'Màn '+G.stage);setT('tw',$('#tWave'),G.am?'Tầng '+G.sw+'/'+AM_RULES.floors:(G.route?'Ải ':'Đợt ')+G.sw+'/5');setT('tp',$('#tPct'),Math.floor(p*100)+'%');setW('wf',el.wfill,p);const r=Math.floor(G.waveT);setT('wt',$('#wtimeT'),String(Math.floor(r/60)).padStart(2,'0')+':'+String(r%60).padStart(2,'0'))}
+ else{setT('ts',$('#tStage'),G.am?'Âm Giới '+stars(G.am.star):G.route?stars(G.star):'Màn '+G.stage);setT('tw',$('#tWave'),G.am?'Tầng '+G.sw+' · Trùm':'Trùm');setT('tp',$('#tPct'),G.boss?Math.ceil(G.boss.hp/G.boss.mhp*100)+'%':'');setW('wf',el.wfill,G.boss?G.boss.hp/G.boss.mhp:0);setT('wt',$('#wtimeT'),G.chest?'Mở bảo rương':G.boss?'Hạ Ngưu Ma Vương':'')}
  const boss=G.arena?G.enemies.find(e=>e.nm&&!e.dead):G.boss;
  const waveBar=$('#tbar');
  waveBar.classList.toggle('boss-phase',!!boss);
@@ -4685,10 +4729,10 @@ let tab='cul';
 function openBreak(t){
  tab=t;$('#hud').hidden=true;$('#brk').hidden=false;
  for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('on',b.dataset.t===tab);
- $('#bcoin').textContent=G.coins;$('#bwave').textContent=G.route?RN(G.rmap)+' '+stars(G.star)+' · Xong ải '+G.sw+'/5':'Màn '+G.stage+' · '+(G.wave>=10?'Đã hạ trùm':'Xong đợt '+G.sw+'/5');
+ $('#bcoin').textContent=G.coins;$('#bwave').textContent=G.am?'Âm Giới '+stars(G.am.star)+' · Xong tầng '+G.am.floor+'/'+AM_RULES.floors:G.route?RN(G.rmap)+' '+stars(G.star)+' · Xong ải '+G.sw+'/5':'Màn '+G.stage+' · '+(G.wave>=10?'Đã hạ trùm':'Xong đợt '+G.sw+'/5');
  const body=$('#bbody');
  if(tab==='cul'){
-  body.innerHTML=G.picks>0?`<div class="cards">${G.cards.map(cardHTML).join('')}</div>`:`<div class="panel center"><h2>Tu luyện hoàn tất</h2><p class="dim">${G.nextStage?'Màn '+(G.stage+1)+' · Đợt 1 sẵn sàng. Quái mạnh hơn, rương phẩm cao hơn.':(G.route?'Ải ':'Màn '+G.stage+' · Đợt ')+(G.sw+1)+(G.route?'/5':'')+(G.sw+1===5?' là trận trùm: Ngưu Ma Vương sẽ xuất hiện.':' sẵn sàng.')} Khí huyết hồi đầy khi vào ${G.route?'ải':'đợt'} mới.</p></div>`;
+  body.innerHTML=G.picks>0?`<div class="cards">${G.cards.map(cardHTML).join('')}</div>`:G.am?`<div class="panel center"><h2>Tu luyện hoàn tất</h2><p class="dim">${amNextHint()} Khí huyết hồi đầy khi xuống tầng mới. Chết là thua, mất lượt hôm nay.</p></div>`:`<div class="panel center"><h2>Tu luyện hoàn tất</h2><p class="dim">${G.nextStage?'Màn '+(G.stage+1)+' · Đợt 1 sẵn sàng. Quái mạnh hơn, rương phẩm cao hơn.':(G.route?'Ải ':'Màn '+G.stage+' · Đợt ')+(G.sw+1)+(G.route?'/5':'')+(G.sw+1===5?' là trận trùm: Ngưu Ma Vương sẽ xuất hiện.':' sẵn sàng.')} Khí huyết hồi đầy khi vào ${G.route?'ải':'đợt'} mới.</p></div>`;
  }else if(tab==='gear'){body.innerHTML=gearTabHTML();paintIcons(body);
  }else if(tab==='shop'){const p=pots();
   body.innerHTML=`<div class="panel"><div class="mkh"><img class="shopkeep" src="assets/npc/dansu_p.png" alt=""><div class="mkt"><h2>Tạp hóa</h2><small>Độc Thủ Đan Sư · mua thuốc ngay tại chỗ</small></div></div>${danCarryHTML()}<p class="dim sm">Bình thuốc mang theo qua mọi lượt chơi, tối đa ${POTMAX} bình mỗi loại. Trong trận bấm ô bình cạnh thanh máu (hoặc phím 1, 2) để uống.</p><div class="shopg">${['hp','mp'].map(k=>`<div class="shopc"><i class="pi ${k}"></i><div class="sinfo"><b>${POT[k].n}</b><span>${POT[k].desc}</span><small>Đang có ${p[k]}/${POTMAX}</small></div><button class="btn gold" data-buy="${k}" ${G.coins<POT[k].price||p[k]>=POTMAX?'disabled':''}>${p[k]>=POTMAX?'Đã đầy':POT[k].price+' đồng'}</button></div>`).join('')}</div></div>`;
@@ -4723,19 +4767,19 @@ $('#bbody').addEventListener('click',e=>{const dn=e.target.closest('[data-dan]')
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)openBreak(b.dataset.t)});
 $('#bbody').addEventListener('click',e=>{const b=e.target.closest('[data-buy]');if(!b||b.disabled)return;const k=b.dataset.buy,p=pots();if(G.coins<POT[k].price||p[k]>=POTMAX)return;G.coins-=POT[k].price;p[k]++;saveCP('rest');persist();sfx('sword_hit',0.4,0);updPots(true);openBreak('shop')});
 $('#rerollBtn').addEventListener('click',()=>{if(G.reroll>0&&G.picks>0){G.reroll--;G.cards=rollCards();saveCP('rest');openBreak('cul')}});
-$('#contBtn').addEventListener('click',()=>{if(G.picks>0||needFork())return;$('#brk').hidden=true;$('#hud').hidden=false;if(G.route){saveCP('ready',G.sw+1);startWave(G.sw+1)}else startWave(G.wave+1)});
+$('#contBtn').addEventListener('click',()=>{if(G.picks>0||needFork())return;$('#brk').hidden=true;$('#hud').hidden=false;if(G.am){amStartFloor(G.am.floor+1);return}if(G.route){saveCP('ready',G.sw+1);startWave(G.sw+1)}else startWave(G.wave+1)});
 
 function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* bảng Luyện Công không được đè lên màn kết thúc */
  if(G.over)return;cancelSkillAim();P.manualQueue=null;G.over=true;G.state='end';if(!win)P.deadAt=performance.now();
- const cp0=G.route?save.cp:null,ngoc=G.route?Math.floor(Math.max(0,G.coins-((cp0&&cp0.paid)||0))*0.5+(win?60*G.star:0)):Math.floor(G.coins*0.5+((G.stage-1)*5+G.sw)*10+(win?60*G.stage:0));if(cp0)cp0.paid=Math.max(cp0.paid||0,G.coins);
+ const cp0=G.route?save.cp:null,ngoc=G.am?amEndNgoc(win):G.route?Math.floor(Math.max(0,G.coins-((cp0&&cp0.paid)||0))*0.5+(win?60*G.star:0)):Math.floor(G.coins*0.5+((G.stage-1)*5+G.sw)*10+(win?60*G.stage:0));if(cp0)cp0.paid=Math.max(cp0.paid||0,G.coins);
  if(G.route&&win)save.cp=null;
- save.ngoc=(save.ngoc||0)+ngoc;const pxp=Math.round(G.xpGain||0),pup=profGain(pxp);save.bestStage=Math.max(save.bestStage||0,G.stage-(win?0:1));save.best=Math.max(save.best||0,win?11:G.wave);if(win)save.wins=(save.wins||0)+1;persist();
+ save.ngoc=(save.ngoc||0)+ngoc;const pxp=Math.round(G.xpGain||0),pup=profGain(pxp);if(G.am)amEndRecord(win);else{save.bestStage=Math.max(save.bestStage||0,G.stage-(win?0:1));save.best=Math.max(save.best||0,win?11:G.wave);if(win)save.wins=(save.wins||0)+1}persist();
  setTimeout(()=>{
   $('#hud').hidden=true;$('#end').hidden=false;
   $('#endTitle').textContent=win?'Đại thắng':'Thất bại';$('#endTitle').style.color=win?'#ffd34a':'#ff7a6a';
-  $('#endSub').textContent=G.route?(win?'Vượt qua '+RN(G.rmap)+' '+stars(G.star)+(G.star<5?'. Đã mở '+stars(G.star+1)+'.':'.'):'Gục ngã ở ải '+G.sw+'/5. Nhân vật, cấp, thẻ tu luyện và trang bị được giữ, quay lại đúng ải này.'):win?'Rút về thành sau '+G.stage+' màn. Trang bị đã cất trong kho đồ.':'Gục ngã ở màn '+G.stage+', đợt '+G.sw+'. Mặc trang bị tốt hơn rồi quay lại.';
-  {const cp=save.cp;$('#againBtn').textContent=G.route&&!win&&cp?'Thử lại ải '+(cp.phase==='rest'?cp.ai+1:cp.next):'Vượt ải lại'}document.body.classList.remove('playing');
-  $('#endStats').innerHTML=[[G.route?'Ải đạt tới':'Màn đạt tới',G.route?stars(G.star)+' · ải '+G.sw+'/5':G.stage+' · đợt '+G.sw],['Tổng hạ gục',G.kills],['Sát thương gây ra',fmt(G.dmgDealt)],['Cấp',G.level],['Tiền đồng',G.coins],['Tiên ngọc nhận',ngoc+' (tổng '+save.ngoc+')'],['EXP nhân vật','+'+pxp+(pup?' · lên cấp '+prof().lv:'')]].map(s=>`<div class="tile"><b>${s[1]}</b><span>${s[0]}</span></div>`).join('');
+  $('#endSub').textContent=G.am?(win?'Diêm Vương bại trận. Âm Giới '+stars(G.am.star)+' được vượt qua.':'Gục ngã ở tầng '+G.am.floor+'/'+AM_RULES.floors+'. Chết là thua: lượt hôm nay đã mất, không có thưởng tầng này.'):G.route?(win?'Vượt qua '+RN(G.rmap)+' '+stars(G.star)+(G.star<5?'. Đã mở '+stars(G.star+1)+'.':'.'):'Gục ngã ở ải '+G.sw+'/5. Nhân vật, cấp, thẻ tu luyện và trang bị được giữ, quay lại đúng ải này.'):win?'Rút về thành sau '+G.stage+' màn. Trang bị đã cất trong kho đồ.':'Gục ngã ở màn '+G.stage+', đợt '+G.sw+'. Mặc trang bị tốt hơn rồi quay lại.';
+  {const cp=save.cp;$('#againBtn').textContent=G.am?'Về sảnh':G.route&&!win&&cp?'Thử lại ải '+(cp.phase==='rest'?cp.ai+1:cp.next):'Vượt ải lại'}document.body.classList.remove('playing');
+  $('#endStats').innerHTML=[[G.am?'Tầng đạt tới':G.route?'Ải đạt tới':'Màn đạt tới',G.am?stars(G.am.star)+' · tầng '+G.am.floor+'/'+AM_RULES.floors:G.route?stars(G.star)+' · ải '+G.sw+'/5':G.stage+' · đợt '+G.sw],['Tổng hạ gục',G.kills],['Sát thương gây ra',fmt(G.dmgDealt)],['Cấp',G.level],['Tiền đồng',G.coins],['Tiên ngọc nhận',ngoc+' (tổng '+save.ngoc+')'],['EXP nhân vật','+'+pxp+(pup?' · lên cấp '+prof().lv:'')]].map(s=>`<div class="tile"><b>${s[1]}</b><span>${s[0]}</span></div>`).join('');
  },win?200:900);
 }
 
@@ -5179,7 +5223,7 @@ function pauseStats(){const t=Math.floor(G.t),mm=String(Math.floor(t/60)).padSta
 for(const id of['#lowfx1','#lowfx2'])$(id).addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&!rotationBlocked()&&G&&G.state==='play'&&!G.paused&&!G.inspect)togglePause()});
 $('#startBtn').addEventListener('click',newRun);
-$('#againBtn').addEventListener('click',()=>{if(save.cp){$('#end').hidden=true;resumeCP()}else newRun()});
+$('#againBtn').addEventListener('click',()=>{if(G&&G.am){document.body.classList.remove('playing');G=null;$('#end').hidden=true;$('#hud').hidden=true;showLobby();return}if(save.cp){$('#end').hidden=true;resumeCP()}else newRun()});
 $('#menuBtn').addEventListener('click',()=>{document.body.classList.remove('playing');G=null;$('#end').hidden=true;$('#hud').hidden=true;showLobby()});
 
 /* ================= LOOP ================= */
