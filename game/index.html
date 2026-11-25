@@ -139,15 +139,15 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 #loot div b{color:var(--tc,#1a6a50)}
 @keyframes lin{from{transform:translateX(-30px);opacity:0}}
 /* ---- phẩm cấp ---- */
-.t0{--tc:#c9c9c9}.t1{--tc:#6fe07a}.t2{--tc:#58b4ff}.t3{--tc:#c27dff}.t4{--tc:#ffc23a}.t5{--tc:#ff5a4a}.t6{--tc:#ff8af0}
+.t0{--tc:#eeeae3}.t1{--tc:#6fe07a}.t2{--tc:#58b4ff}.t3{--tc:#ffc23a}.t4{--tc:#c27dff}.t5{--tc:#ff5a4a}.t6{--tc:#343744;--tt:#c5cad6}
 .item{position:relative;width:56px;height:56px;border:2px solid var(--tc);border-radius:4px;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--tc) 30%,#1a120c),#0e0906);box-shadow:inset 0 0 10px color-mix(in srgb,var(--tc) 45%,transparent),0 0 0 1px #000;cursor:pointer;display:grid;place-items:center}
 .item canvas{width:44px;height:44px;image-rendering:pixelated}
 .item.weapon canvas{width:52px;height:52px;image-rendering:pixelated} /* kiếm/gậy chiếm khung, không phóng cả ô */
 .item.t6{animation:chaos 2.4s linear infinite}
-@keyframes chaos{0%{border-color:#ff8af0}25%{border-color:#7ad7ff}50%{border-color:#ffe36a}75%{border-color:#8aff9a}100%{border-color:#ff8af0}}
+@keyframes chaos{0%,100%{border-color:#343744}50%{border-color:#707584}}
 .item.sel{outline:2px solid #fff;outline-offset:2px}
 .item .eqd{position:absolute;right:-4px;top:-6px;font:800 10px "Be Vietnam Pro";background:#d9b46b;color:#1a1008;border-radius:2px;padding:0 3px}
-.tname{color:var(--tc);font-weight:800}
+.tname{color:var(--tt,var(--tc));font-weight:800}
 .istat{font:600 13px/1.55 "Be Vietnam Pro";color:#e9dcc4}.istat .aff{color:#9fe0b0}.istat .sp{color:#ffd47a}
 #chest .wrap,#inv .wrap{max-width:900px}
 #chestArt{display:block;margin:6px auto 2px;width:192px;height:144px;image-rendering:pixelated}
@@ -155,7 +155,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .lcard{width:230px;padding:12px;border:1px solid var(--tc);border-radius:4px;background:linear-gradient(180deg,color-mix(in srgb,var(--tc) 16%,#1b120c),#110a07);box-shadow:0 0 18px color-mix(in srgb,var(--tc) 35%,transparent);opacity:0;transform:translateY(14px) scale(.96);transition:all .35s}
 .lcard.on{opacity:1;transform:none}
 .lcard .lh{display:flex;gap:10px;align-items:center;margin-bottom:6px}
-.lcard .lh small{display:block;color:var(--tc);font:700 12px "Be Vietnam Pro"}
+.lcard .lh small{display:block;color:var(--tt,var(--tc));font:700 12px "Be Vietnam Pro"}
 .lcard button{margin-top:8px;min-height:36px;font-size:14px;width:100%}
 .invg{display:grid;grid-template-columns:minmax(270px,36%) minmax(0,1fr);gap:16px}
 .slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -623,7 +623,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .mkh{display:flex;align-items:center;justify-content:space-between}.mkh .chip{display:flex;align-items:center;gap:6px}.coinc{width:18px;height:18px;image-rendering:pixelated}
 .mkg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 .mkc{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid color-mix(in srgb,var(--tc) 60%,#3a2a1a);border-radius:8px;background:rgba(0,0,0,.25)}
-.mkc.sold{opacity:.75}.mki{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.mki .tname{font:700 14px "Noto Serif",serif;color:var(--tc)}.mki small{font-size:11px;color:#9fb8ae}.mki .istat{font-size:11px;line-height:1.3;color:#d8cdb4;max-height:44px;overflow:hidden}
+.mkc.sold{opacity:.75}.mki{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.mki .tname{font:700 14px "Noto Serif",serif;color:var(--tt,var(--tc))}.mki small{font-size:11px;color:#9fb8ae}.mki .istat{font-size:11px;line-height:1.3;color:#d8cdb4;max-height:44px;overflow:hidden}
 .mkc .btn{min-width:84px;min-height:36px;padding:0 10px;font-size:13px}
 @media (max-height:520px){.mkg{gap:6px;margin:6px 0}.mkc{padding:4px 6px;gap:6px}.mkc .item{transform:scale(.8);margin:-5px}.mki .tname{font-size:12px}.mki small,.mki .istat{font-size:9.5px}.mki .istat{max-height:24px}.mkc .btn{min-width:66px;min-height:30px;font-size:11px}}
 
@@ -5121,13 +5121,10 @@ function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* 
 
 
 /* ================= TRANG BỊ: 7 PHẨM CẤP ================= */
-const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300},
- /* Phẩm 8-12 (Lv71-200): khóa lúc ra mắt */
- {n:'Hồng Hoang',k:'Hồng Hoang khí',m:14,a:5,v:700,lock:1},{n:'Thái Cổ',k:'Thái Cổ khí',m:19,a:6,v:1500,lock:1},{n:'Vô Cực',k:'Vô Cực khí',m:25,a:6,v:3000,lock:1},{n:'Tạo Hóa',k:'Tạo Hóa khí',m:33,a:6,v:6000,lock:1},{n:'Thiên Đạo',k:'Thiên Đạo khí',m:45,a:6,v:12000,lock:1}];
-/* Cấp nhân vật: tối đa Lv200, 12 phẩm; ra mắt mở đến Lv70 (7 phẩm đầu), phẩm 8-12 khóa */
-const LV_MAX=200,LV_OPEN=70,TIER_OPEN=TIERS.filter(t=>!t.lock).length;
-/* Cấp bắt đầu của từng phẩm: số cấp mỗi phẩm 6,7,8,10,11,13,15 | 19,23,27,30,31 (phẩm đầu ngắn, sau dài dần; phẩm 7 hết ở Lv70) */
-const TIER_LV=[1,7,14,22,32,43,56,71,90,113,140,170];
+const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300}];
+/* Bảy phẩm trang bị · Bạch, Lục, Lam, Hoàng, Tử, Hồng, Hắc. */
+const LV_MAX=200,LV_OPEN=70,TIER_OPEN=TIERS.length;
+const TIER_LV=[1,7,14,22,32,43,56];
 const tierOfLv=lv=>{let t=0;for(let i=0;i<TIER_LV.length;i++)if(lv>=TIER_LV[i])t=i;return t};
 const heroLv=()=>(prof()&&prof().lv)||1;
 const SLOTS={vk:{n:'Vũ khí',base:[['dmgW',6],['dmgM',6]],names:['Thanh Phong Kiếm','Hàn Thiết Kiếm','Long Tuyền Kiếm','Tử Điện Kiếm','Trảm Yêu Kiếm','Thái A Kiếm']},
@@ -5279,7 +5276,7 @@ function renderInv(){const inv=invList(),eq=eqMap();
  paintIcons($('#inv'));
  const it=inv.find(x=>x.id===invSel);
  $('#idet').classList.toggle('is-empty',!it);
- $('#idet').innerHTML=it?`<div class="lh" style="display:flex;gap:10px;align-items:center">${itemEl(it,0)}<div><div class="tname t${it.tier}">${it.name}</div><small class="t${it.tier}" style="color:var(--tc)">${TIERS[it.tier].n} · ${TIERS[it.tier].k} · ${SLOTS[it.slot].n} · ${it.lv?'Cấp '+it.lv:'Màn '+it.st}</small></div></div><div class="istat">${itemStats(it)}</div>${forgeMarkup(it)}
+ $('#idet').innerHTML=it?`<div class="lh" style="display:flex;gap:10px;align-items:center">${itemEl(it,0)}<div><div class="tname t${it.tier}">${it.name}</div><small class="t${it.tier}" style="color:var(--tt,var(--tc))">${TIERS[it.tier].n} · ${TIERS[it.tier].k} · ${SLOTS[it.slot].n} · ${it.lv?'Cấp '+it.lv:'Màn '+it.st}</small></div></div><div class="istat">${itemStats(it)}</div>${forgeMarkup(it)}
   <div class="cbtns" style="justify-content:flex-start">${eq[it.slot]===it.id?'<button class="btn" id="ueq">Tháo ra</button>':it.damaged?'':'<button class="btn gold" id="deq">Trang bị</button>'}<button class="btn" id="dsc" ${eq[it.slot]===it.id?'disabled title="Đang mặc, tháo ra trước"':''}>${eq[it.slot]===it.id?'Đang mặc · không phân giải':'Phân giải (+'+TIERS[it.tier].v+' Tiên ngọc)'}</button></div>`:'<span class="dim">Chọn một món đồ để xem chi tiết.</span>';
  if(it){paintIcons($('#idet'));const q=$('#deq'),u=$('#ueq');if(q)q.onclick=()=>{equip(it.id);renderInv()};if(u)u.onclick=()=>{unequip(it.slot);renderInv()};
   const forge=$('#forgeDo');
