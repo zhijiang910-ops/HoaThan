@@ -1040,7 +1040,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxwb .gi{display:block;background-image:url(assets/ui/gear.png);background-size:1000% 500%}
 .cxwb b{font:700 10.5px "Be Vietnam Pro",sans-serif;color:#d8c8a8}
 .cxwb.on{box-shadow:inset 0 0 0 2px #ffd36a,0 0 10px rgba(255,200,90,.35)}.cxwb.on b{color:#ffe08a}
-.cxwb.lock img,.cxwb.lock .gi{filter:grayscale(.7) brightness(.6)}
+.cxwb.lock img:not(.lkimg),.cxwb.lock .gi{filter:grayscale(.7) brightness(.6)}.cxwb .lkimg{position:absolute;right:3px;top:3px;width:16px;height:16px;image-rendering:pixelated}.amr .lkimg{width:16px;height:16px;image-rendering:pixelated;justify-self:center}
 .cxwb .lk{position:absolute;right:2px;top:1px;font:400 11px "Ma Shan Zheng","Noto Serif",serif;font-style:normal;color:#c08a70}
 .cxwi{display:flex;flex-direction:column;gap:2px;font:600 11.5px "Be Vietnam Pro",sans-serif;color:#cfc3a8}
 .cxwi b{color:#ffe08a;font-size:12.5px}.cxwi em{font-style:normal;color:#ff9a80}
@@ -1146,7 +1146,7 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .cxsb b{font-size:9.5px;line-height:1.15;white-space:normal;min-height:0;margin:0;display:block;letter-spacing:0}.cxsb small{display:block;font:600 9.5px "Be Vietnam Pro",sans-serif;color:#a8987a}.cxsb .sic{display:flex;justify-content:center;align-items:center;height:18px;margin-top:1px}.cxsb .sic img{flex:none;min-width:18px;max-width:none;width:18px;height:18px;display:block;image-rendering:auto}/* icon phái: ảnh 128x128 (vector gốc của chủ game, đã thu bằng lọc mịn, bỏ nhiễu viền), hiển thị 36px; mỗi thẻ 1 icon */
 .cxsb.on .sav{box-shadow:inset 0 0 0 2px #ffd36a}
 @media (max-height:680px){#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}}
-@media (max-height:440px){.cxsect{gap:3px}.cxsb{padding:2px 1px 1px}.cxsb .sav{max-width:30px}.cxsb b{font-size:8px;line-height:1.15;min-height:0}.cxsb small{font-size:8px}.cxsb .lk{font-size:9px}#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}.cxR h3.cxh{margin:2px 0}}
+@media (max-height:440px){.cxsect{gap:3px}.cxsb{padding:2px 1px 1px}.cxsb .sav{max-width:30px}.cxsb b{font-size:8px;line-height:1.15;min-height:0}.cxsb small{font-size:8px}.cxsb .lk{font-size:9px}.cxsb .lkimg{width:12px;height:12px;right:1px;top:1px}#crWInfo{display:none}.cxR .cxinfo div:nth-child(3){display:none}.cxR h3.cxh{margin:2px 0}}
 @media (max-height:440px){.cxR .cxinfo div:nth-child(2){display:none}.cxR #crSkD{max-height:28px;overflow:auto}}
 @media (max-height:400px){.cxsb .sav{max-width:26px}.cxR .cxs{width:25px!important;height:25px!important;font-size:14px!important}.cxR .cxskr>span{font-size:9px!important}.cxR #crSkD{max-height:22px}.cxR #crSkH{display:none}}
 .cxill #crBg.sect,#crBg.sect{image-rendering:auto!important}
@@ -4457,6 +4457,9 @@ const WICON={kiem:{g:0},phu:{g:10},dao:{src:'data:image/png;base64,iVBORw0KGgoAA
 const SECT_WEAPON={maoson:'kiem',tramyeu:'dao',phucma:'truong',thiencuong:'quyen',huyenlinh:'quat',truyhon:'cung'};
 function profWeapon(){const P0=prof();return P0&&P0.sect&&SECT_WEAPON[P0.sect]||'kiem'}
 const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon'];
+/* 25/11 (chủ game): chỉ MỞ Kiếm (Mao Sơn) + Quyền (Thiên Cương) khi tạo nhân vật; 4 phái còn lại khóa, hiện hình ổ khóa (assets/ui/khoa.png). Bộ chiêu Đao/Trượng/Quạt/Cung vẫn nằm trong code; hồ sơ ĐÃ có phái bị khóa vẫn chơi được (sectOpen). Mở lại: thêm khóa phái vào SECT_OPEN. */
+const SECT_OPEN=['maoson','thiencuong'];const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
+const LOCK_IMG='<img class="lkimg" src="assets/ui/khoa.png" alt="khóa" width="16" height="16">';
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
 for(const g of['nam','nu'])for(const k of SECT_KEYS){const im=new Image();im.onload=()=>{const profile=prof();if(profile?.gender===g&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===g)paintAva()};im.src=SECTS[k].avatar[g];SECT_AVATAR_IMGS[g][k]=im}
 const sectOfAvatar=n=>n>8&&n<=8+SECT_KEYS.length?SECT_KEYS[n-9]:null;
@@ -4498,10 +4501,10 @@ function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d'
   drawHeroFrame(g,'idle',fi,x,y,1,scale,false);
   HERO=prev;
  }}
-function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=!!SECT_WEAPON[cr.sect],W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
+function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=sectOpen(cr.sect),W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
- $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${SECT_WEAPON[k]?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${SECT_WEAPON[k]?'':' · đang thử nghiệm'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="34" height="34" alt=""></span><b>${S0.n}</b><small>${S0.weapon}</small>${SECT_WEAPON[k]?'':'<i class="lk">鎖</i>'}</button>`}).join('');
- $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này đang được chuẩn bị, chưa chơi được</em>'}`;
+ $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="34" height="34" alt=""></span><b>${S0.n}</b><small>${S0.weapon}</small>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
+ $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này chưa mở khóa, chưa chơi được</em>'}`;
  $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crHairC').innerHTML=HAIRC.map(h=>`<button class="cxc${cr.hairC===h.k?' on':''}${h.on?'':' lock'}" data-cc="${h.k}" ${h.on?'':'disabled'} title="${h.n}${h.on?'':' · chưa có sprite'}"><i style="background:${h.c}"></i></button>`).join('');
  $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${SC.weapon}</b></div><div><span>Sở trường</span><b>${SC.role}</b></div><div><span>Màu chủ đạo</span><b>${SC.color}</b></div>`;
@@ -4524,7 +4527,7 @@ $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(
 $('#crName').addEventListener('input',()=>{$('#crErr').textContent=''});
 $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click()});
 $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim();
- if(!SECT_WEAPON[cr.sect]){$('#crErr').textContent='Phái này đang được chuẩn bị, chưa chơi được';return}
+ if(!sectOpen(cr.sect)){$('#crErr').textContent='Phái này chưa mở khóa, chưa chơi được';return}
  if(!HAIR[cr.gender][cr.hairI].on){$('#crErr').textContent='Kiểu tóc này chưa mở';return}
  if(n.length<2){$('#crErr').textContent='Tên cần ít nhất 2 ký tự';$('#crName').focus();return}if(n.length>14){$('#crErr').textContent='Tên tối đa 14 ký tự';return}
  if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.sect=cr.sect;P0.weapon=SECT_WEAPON[cr.sect]||'kiem';sel.weapon=P0.weapon;P0.hair=cr.hair;P0.hairC=cr.hairC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
@@ -4682,7 +4685,7 @@ const amIsBoss=f=>{const e=AM_ENC[f];return !!e&&e.tier==='boss'};
 const amGuardName=f=>{const e=AM_ENC[f];return e?(e.pair?'Ngưu Đầu và Mã Diện':AM_BOSSES[e.types[0]][0]):'Quỷ Sai Gác Tầng'};
 function amStatus(){const a=amSave();return 'Mốc tầng '+a.cp+(AM_TEST?' · thử nghiệm, không giới hạn lượt':' · còn '+amLeft()+'/'+AM_RULES.dailyRuns+' lượt')}
 function renderAM(){const a=amSave(),left=amLeft();$('#lbmT').textContent='Âm Giới · 幽冥';
- const rows=Array.from({length:AM_RULES.floors},(_,i)=>{const n=i+1,F=amFloor(n),open=n<=AM_OPEN,e=AM_ENC[n];return `<div class="amr${open?'':' off'}${n===a.cp?' cur':''}"><b>${n}</b><span>${MAPS[F.map].name}</span><em>${e?(e.tier==='boss'?'Trùm ':'Mini-boss ')+amGuardName(n):'Canh tầng: '+amGuardName(n)}</em>${open?'':'<i>鎖</i>'}</div>`}).join('');
+ const rows=Array.from({length:AM_RULES.floors},(_,i)=>{const n=i+1,F=amFloor(n),open=n<=AM_OPEN,e=AM_ENC[n];return `<div class="amr${open?'':' off'}${n===a.cp?' cur':''}"><b>${n}</b><span>${MAPS[F.map].name}</span><em>${e?(e.tier==='boss'?'Trùm ':'Mini-boss ')+amGuardName(n):'Canh tầng: '+amGuardName(n)}</em>${open?'':LOCK_IMG}</div>`}).join('');
  $('#lbmB').innerHTML=`<div class="amh"><p>Xuống 18 tầng địa ngục. Diệt âm binh, hạ kẻ canh tầng để rương báu rơi, mở rương rồi bước vào cổng lên tầng kế. Qua mỗi trùm được lưu mốc. <b>Gục ngã là mất lượt</b>, không nhận thưởng thông quan.</p>
   <div class="amt"><span>Lượt hôm nay</span><b>${AM_TEST?'Thử nghiệm':left+'/'+AM_RULES.dailyRuns}</b><small>${AM_TEST?'Không giới hạn lượt':'Đặt lại 0 giờ (giờ Việt Nam)'}</small></div>
   <button id="amGo" class="btn gold" ${left>0&&a.cp<=AM_OPEN?'':'disabled'}>Xuống tầng ${a.cp}</button>
