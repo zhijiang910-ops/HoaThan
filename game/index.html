@@ -8,7 +8,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
  document.documentElement.classList.add('touch-device');
 }
 </script>
-<link rel="preload" as="image" href="assets/ui/nen_tao_nhan_vat.jpg">
+<link rel="preload" as="image" href="assets/ui/creation/co-mieu.webp">
 <script>
 /* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
 (function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
@@ -1582,6 +1582,15 @@ html body #wbar{background:linear-gradient(#3a2e3c,#1c1420)!important;box-shadow
 html body #wbar:before,html body #wbar:after{background:linear-gradient(90deg,#1a0c14,#5a2a3c 45%,#14080e)!important}
 html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 </style>
+<style>
+#create .cxC .cx-preview{position:absolute;inset:0;z-index:3;display:grid;grid-template-rows:minmax(0,1fr) auto;align-items:stretch}
+#create .cx-preview .cxst{min-height:0;background:transparent;box-shadow:none}
+#create .cx-preview #crPic{height:100%;width:100%;object-fit:contain;inset:0}
+#create .cx-preview .cxhr{padding:5px 3px 7px;background:#111a20e8;border-top:1px solid #746047;min-width:0}
+#create .cxill #crBg{object-fit:cover;object-position:50% 60%}
+#create .cxL{overflow-y:auto}
+#create .cxR .cxbar{flex-shrink:0}
+</style>
 </head>
 <body>
 <canvas id="cv"></canvas>
@@ -1640,14 +1649,16 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
-   <h3 class="cxh">Ngoại hình</h3>
-   <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
-    <div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
-   <div class="cxhr"><b id="crHairN"></b><div class="cxsw2"><div id="crOutC" class="cxsw" title="Màu áo"></div></div></div>
-   
   </div>
   <div class="cxp cxC">
-   <div class="cxill"><img id="crBg" alt="" src="assets/ui/nen_tao_nhan_vat.jpg">
+   <div class="cxill">
+    <img id="crBg" alt="" src="assets/ui/creation/co-mieu.webp">
+    <div class="cx-preview">
+     <div class="cxst"><canvas id="crPic" width="240" height="200" aria-label="Ngoại hình trong game"></canvas>
+      <div class="cxlock" id="crLock" hidden>Chưa có sprite</div>
+     </div>
+     <div class="cxhr"><b id="crHairN"></b><div class="cxsw2"><div id="crOutC" class="cxsw" title="Màu áo"></div></div></div>
+    </div>
    </div>
   </div>
   <div class="cxp cxR">
@@ -4716,7 +4727,15 @@ const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hai
 
 /* 25/11: ảnh nền CHUNG (không còn tranh minh họa theo phái). Muốn đổi: thay file assets/ui/nen_tao_nhan_vat.jpg (cùng tên), không cần sửa code. */
 /* 25/11 (chủ game: "chọn avatar hình nào thì hình minh họa hình đó"): ảnh giữa theo avatar đang chọn. 1-8 = tranh cảnh scene-<giới>-<n>.webp, 9-14 = chân dung lớn của phái. Gọi từ renderCreateAvatars (mọi lần chọn avatar hay đổi giới). */
-function renderCreateScene(){const img=$('#crBg');if(!img)return;const g=cr.gender,n=cr.avatars[g]||1,sk=null;const src=sk?SECTS[sk].avatar[g]:'assets/portraits/scene-'+g+'-'+n+'.webp';if(img.getAttribute('src')!==src)img.src=src;img.alt=sk?SECTS[sk].n:'Tranh minh họa '+n;img.classList.toggle('sect',!!sk)}
+const CREATE_SCENE_BY_AVATAR=['co-mieu','hoang-thon','co-mieu','hoang-thon','vong-xuyen','hoang-thon','co-mieu','vong-xuyen'];
+function renderCreateScene(){
+ const img=$('#crBg');
+ if(!img)return;
+ const index=(cr.avatars[cr.gender]||1)-1;
+ const scene=CREATE_SCENE_BY_AVATAR[index]||CREATE_SCENE_BY_AVATAR[0];
+ const src='assets/ui/creation/'+scene+'.webp';
+ if(img.getAttribute('src')!==src)img.src=src;
+}
 function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*100+'%'}
 /* 25/11: avatar TỰ CHỌN (6 chân dung, chỉ số 9–14), tách khỏi môn phái; môn phái chỉ quyết định vũ khí và bộ chiêu */
 function setCreateSect(k){if(!SECTS[k])k='maoson';cr.sect=k}
