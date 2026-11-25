@@ -76,3 +76,20 @@ for y in range(lum.shape[0]):
     for x in range(lum.shape[1]):
         if a[y,x,3]>0:col[y,x]=lut(lum[y,x])
 a[...,:3]=col;Image.fromarray(a.clip(0,255).astype(np.uint8),'RGBA').save(OUT+'set_bolt_vang.png');print('bolt',src.size)
+
+# ---- biến thể ĐỎ CHU SA (cho Q): bát quái đỏ + lá bùa đỏ chữ vàng ----
+import numpy as np
+def remap(im,mp):
+    a=np.array(im.convert('RGBA')).astype(int);out=a.copy()
+    for src,dst in mp:
+        m=(np.abs(a[...,:3]-np.array(src)).sum(2)<42)&(a[...,3]>0);out[m,:3]=dst
+    return Image.fromarray(out.clip(0,255).astype(np.uint8),'RGBA')
+bq=Image.open(OUT+'bagua_vang.png');a=np.array(bq).astype(float)
+# bát quái đỏ: xoay kênh (vàng -> đỏ cam, đỏ -> vàng) bằng tráo kênh G/B rồi chỉnh
+r,g,b_=a[...,0],a[...,1],a[...,2]
+lum=(r*.3+g*.59+b_*.11)/255
+new=np.zeros_like(a);new[...,0]=np.clip(60+lum*215,0,255);new[...,1]=np.clip(lum*110,0,255);new[...,2]=np.clip(lum*70,0,255);new[...,3]=a[...,3]
+Image.fromarray(new.astype(np.uint8),'RGBA').save(OUT+'bagua_do.png')
+bu=Image.open(OUT+'bua_vang.png')
+bud=remap(bu,[((232,200,96),(186,46,38)),((206,168,64),(158,36,30)),((120,84,24),(92,18,16)),((190,50,42),(250,214,110))])
+bud.save(OUT+'bua_do.png');print('do ok')
