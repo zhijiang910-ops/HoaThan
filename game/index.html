@@ -1807,7 +1807,7 @@ function drawSpr(c,h,an,fi,x,y,f,sc,flash,alpha){const M=h.meta,A=M.anims[an]||M
  if(Q){const K=M.hq;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(Q,fr[0]*K,fr[1]*K,M.w*K,M.h*K,-M.ax,-M.ay,M.w,M.h)}
  else c.drawImage(flash&&h.flash?h.flash:h.img,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.restore()}
 /* quái dùng sprite gói Wuxia: [nhân vật, tỉ lệ] */
-const ESPR={boss:['quytuong',1.45],tieu:['vonghon',0.74],hoa:['matroi',0.55],can:['ambinh',0.78],xa:['oanhonxa',0.74],toc:['khuyen',0.8],elite:['quysai',0.95],tac:['vonghon',0.8],tacdao:['ambinh',0.82],tacxa:['oanhonxa',0.78],tacvuong:['quysai',1.3],soi:['khuyen',0.78],langvuong:['khuyen',1.35]};
+const ESPR={boss:['quytuong',1.45],tieu:['vonghon',0.74],hoa:['matroi',0.85],can:['ambinh',0.78],xa:['oanhonxa',0.74],toc:['khuyen',0.8],elite:['quysai',0.95],tac:['vonghon',0.8],tacdao:['ambinh',0.82],tacxa:['oanhonxa',0.78],tacvuong:['quysai',1.3],soi:['khuyen',0.78],langvuong:['khuyen',1.35]};
 /* 24/11 (chủ game: trùm phải thật nét). Phóng pixel art bằng hệ số lẻ làm pixel to nhỏ không đều, nhìn như vỡ nét. Với 7 trùm Âm Giới:
    (1) nếu tỉ lệ NGUYÊN theo pixel màn hình (n = làm tròn của hệ số × DPR × ZOOM) chỉ lệch kích cỡ tối đa 20% thì vẽ ở tỉ lệ nguyên, mỗi pixel ảnh = đúng n pixel màn hình (nét tuyệt đối);
    (2) nếu không thì giữ kích cỡ, dùng sheet phóng sẵn ×4 rồi thu về bằng lọc chất lượng cao (đều pixel, hơi mềm mép). */
