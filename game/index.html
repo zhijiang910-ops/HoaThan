@@ -155,6 +155,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .item canvas{width:44px;height:44px;image-rendering:pixelated}
 .item.weapon canvas{width:52px;height:52px;image-rendering:pixelated} /* kiếm/gậy chiếm khung, không phóng cả ô */
 .item.t6{animation:chaos 2.4s linear infinite}
+/* 25/11: icon bộ trang bị Âm Giới đã có khung phẩm riêng trong ảnh, nên bỏ khung CSS để khỏi viền chồng viền; phẩm 5 và 6 (icon dùng màu Tử) chỉ thêm quầng sáng màu phẩm */
+.item.gset{border:none;background:none;box-shadow:none;border-radius:0;animation:none}.item.gset canvas{width:100%;height:100%}.item.gset.t5{box-shadow:0 0 9px var(--tc)}.item.gset.t6{box-shadow:0 0 11px var(--tc)}
 @keyframes chaos{0%,100%{border-color:#343744}50%{border-color:#707584}}
 .item.sel{outline:2px solid #fff;outline-offset:2px}
 .item .eqd{position:absolute;right:-4px;top:-6px;font:800 10px "Be Vietnam Pro";background:#d9b46b;color:#1a1008;border-radius:2px;padding:0 3px}
@@ -5376,7 +5378,7 @@ function drawItemIcon(cn,it){const gn=it&&GNAME[it.name];if(gn){const at=gearAtl
  }
  else{g.fillStyle=c;g.beginPath();g.arc(11,12,7,0,TAU);g.fill();g.fillStyle=d;g.beginPath();g.arc(11,12,2.5,0,TAU);g.fill();R(10,2,2,4,'#b3261e');R(9,19,4,2,'#b3261e')}
 }
-function itemEl(it,eqd){return `<div class="item t${it.tier}${it.slot==='vk'?' weapon':''}" data-id="${it.id}"><canvas></canvas>${it.lv?'<span class="ilv">'+it.lv+'</span>':''}${it.damaged?'<span class="forge-tag">Hỏng</span>':forgeLevel(it)?'<span class="forge-tag">+'+forgeLevel(it)+'</span>':''}${eqd?'<span class="eqd">Mặc</span>':''}</div>`}
+function itemEl(it,eqd){return `<div class="item t${it.tier}${it.slot==='vk'?' weapon':''}${GNAME[it.name]?' gset':''}" data-id="${it.id}"><canvas></canvas>${it.lv?'<span class="ilv">'+it.lv+'</span>':''}${it.damaged?'<span class="forge-tag">Hỏng</span>':forgeLevel(it)?'<span class="forge-tag">+'+forgeLevel(it)+'</span>':''}${eqd?'<span class="eqd">Mặc</span>':''}</div>`}
 function paintIcons(root){root.querySelectorAll('.item').forEach(d=>{const it=invList().find(x=>x.id===d.dataset.id)||(save.pend||[]).find(x=>x.id===d.dataset.id)||(G&&G.chestItems||[]).find(x=>x.id===d.dataset.id)||(G&&G.mk||[]).map(m=>m.it).find(x=>x.id===d.dataset.id);if(it)drawItemIcon(d.querySelector('canvas'),it)})}
 function equip(id){const it=invList().find(x=>x.id===id);if(!it||it.damaged)return;if(heroLv()<TIER_LV[it.tier]){notice('Cần đạt Cấp '+TIER_LV[it.tier]+' để mặc đồ '+TIERS[it.tier].n);return}eqMap()[it.slot]=id;persist();if(G&&P)recalc()}
 function unequip(sl){delete eqMap()[sl];persist();if(G&&P)recalc()}
