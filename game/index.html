@@ -2678,10 +2678,11 @@ function finishWave(){
    Chết là thua. 2 lượt/ngày (đặt lại 0h giờ Việt Nam). Số liệu quái/thưởng là TẠM, chưa cân bằng. */
 function amDay(){return new Date(Date.now()+7*3600e3).toISOString().slice(0,10)}
 function amSave(){const a=save.am||(save.am={});if(a.day!==amDay()){a.day=amDay();a.used=0}a.best=a.best||{};a.clear=a.clear||{};return a}
-function amLeft(){return Math.max(0,AM_RULES.dailyRuns-amSave().used)}
+const AM_TEST=true;/* 25/11: đang thử nghiệm => KHÔNG trừ lượt ngày (đặt false khi phát hành) */
+function amLeft(){return AM_TEST?99:Math.max(0,AM_RULES.dailyRuns-amSave().used)}
 function amStarOpen(st){const a=amSave();return st===1||(st===3&&!!a.clear[1])||(st===5&&!!a.clear[3])}
 function amNextHint(){const F=amFloor(G.am.floor+1);if(!F)return '';return 'Tầng '+F.n+' sẵn sàng'+(F.boss?(F.boss.tier==='boss'?' · trùm '+F.boss.types.map(t=>ET[t].name).join(' và '):' · '+ET[F.boss.types[0]].name):'')+'.'}
-function amStartRun(st){const a=amSave();if(amLeft()<=0||!amStarOpen(st))return;a.used++;persist();$('#lbm').hidden=true;newRun(false,st)}
+function amStartRun(st){const a=amSave();if(amLeft()<=0||!amStarOpen(st))return;if(!AM_TEST){a.used++;persist()}$('#lbm').hidden=true;newRun(false,st)}
 function amStartFloor(f){
  const F=amFloor(f);if(!F)return;G.am.floor=f;G.am.F=F;G.cfg.map=F.map;buildDecor(F.map);
  cancelSkillAim();P.manualQueue=null;P.swordGuard=null;if(P.cutC)endCutC();
@@ -2707,7 +2708,7 @@ function amFloorReward(){if(!G||!G.am)return;if(G.wave<10)G.am.ngoc+=5*G.am.floo
 function amEndNgoc(win){const a=G.am;return Math.floor(G.coins*0.5)+Math.round(a.ngoc)+(win?150*a.star:0)}
 function amEndRecord(win){const a=amSave(),st=G.am.star,fl=win?AM_RULES.floors:Math.max(0,G.am.floor-1);a.best[st]=Math.max(a.best[st]||0,fl);if(win)a.clear[st]=1;if(G.am.mat){const m=mats();m.duoc+=G.am.mat}}
 function renderAM(){$('#lbmT').textContent='Âm Giới 陰界';const a=amSave(),left=amLeft();
- $('#lbmB').innerHTML=`<div class="tbch"><b>18 tầng địa phủ</b><span class="dim sm">Chết là thua, mất lượt. Mỗi ngày ${AM_RULES.dailyRuns} lượt, đặt lại lúc ${AM_RULES.resetAt}. Hôm nay còn <b>${left}/${AM_RULES.dailyRuns}</b> lượt.</span></div>
+ $('#lbmB').innerHTML=`<div class="tbch"><b>18 tầng địa phủ</b><span class="dim sm">Chết là thua, mất lượt. Mỗi ngày ${AM_RULES.dailyRuns} lượt, đặt lại lúc ${AM_RULES.resetAt}. ${AM_TEST?'<b>Đang thử nghiệm: không giới hạn lượt.</b>':'Hôm nay còn <b>'+left+'/'+AM_RULES.dailyRuns+'</b> lượt.'}</span></div>
  <div class="amst">${AM_RULES.stars.map(st=>{const ok=amStarOpen(st);return `<button class="btn amsb${left>0&&ok?' gold':''}" data-am="${st}" ${left>0&&ok?'':'disabled'}><b>${stars(st)}</b><span>${ok?'Cao nhất: tầng '+(a.best[st]||0)+'/'+AM_RULES.floors:'Khóa · vượt '+stars(st===3?1:3)}</span></button>`}).join('')}</div>
  <p class="dim sm" style="margin:8px 4px">Trùm: T3 Ngưu Đầu · Mã Diện, T6 Hắc Vô Thường, T9 Bạch Vô Thường, T12 Mạnh Bà, T15 Phán Quan, T18 Diêm Vương. Mini-boss ở các tầng giữa. Thưởng: tiên ngọc theo tầng, thêm khi hạ trùm và khi thanh tẩy 18 tầng.</p>`}
 $('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-am]');if(!b||lbmK!=='amgioi'||b.disabled)return;amStartRun(+b.dataset.am)});
@@ -4545,7 +4546,7 @@ const LBT=[
  {k:'luyendan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
  {k:'luyenvk',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
  {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Thần Giáng '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
- {k:'amgioi',g:'陰',n:'Âm Giới',st:()=>'18 tầng · còn '+amLeft()+'/'+AM_RULES.dailyRuns+' lượt'},
+ {k:'amgioi',g:'陰',n:'Âm Giới',st:()=>AM_TEST?'18 tầng · thử nghiệm, không giới hạn lượt':'18 tầng · còn '+amLeft()+'/'+AM_RULES.dailyRuns+' lượt'},
  {k:'tangbao',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
  {k:'luyencong',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
  {k:'banghoi',g:'幫',n:'Bang Hội',st:()=>'Cần máy chủ',off:1,hide:1}];
