@@ -1607,7 +1607,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
-    <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
+    <div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
    <div class="cxhr"><b id="crHairN"></b><div class="cxsw2"><div id="crOutC" class="cxsw" title="Màu áo"></div></div></div>
    
   </div>
@@ -4657,7 +4657,7 @@ function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=sectOpen(cr.s
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
  $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="34" height="34" alt=""></span><b>${S0.n}</b>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
  $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này chưa mở khóa, chưa chơi được</em>'}`;
- $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
+ $('#crHairN').textContent='Nhuộm màu trang phục';$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crOutC').innerHTML=OUTC.map(o=>`<button class="cxc${(cr.outC||'goc')===o.k?' on':''}" data-oc="${o.k}" title="${o.n}"><i style="background:${outSw(o,cr.gender)}"></i></button>`).join('');
  $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${SC.weapon}</b></div><div><span>Sở trường</span><b>${SC.role}</b></div><div><span>Màu chủ đạo</span><b>${SC.color}</b></div>`;
  const go=$('#crGo');go.disabled=!open;
