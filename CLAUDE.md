@@ -15,6 +15,8 @@ Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây 
 6. Gửi video/ảnh kiểm tra khi xong mỗi phần. Báo đúng sự thật, kể cả lỗi.
 7. **PixelLab chỉ dùng khi thật sự cần thiết, không lạm dụng** (chủ game dặn 24/11). Làm trước bằng cách rẻ: phác thảo/xem trước, dùng lại asset đã có, chỉnh timing/vị trí/code, bản mẫu thử trong game. Chỉ gọi PixelLab khi bản đó không ổn. Không "thử cho biết": mỗi lần gọi nói rõ vì sao cần và số lượt dự kiến.
 
+8. **CỠ QUÁI (chủ game 25/11, bắt buộc):** quái thường và Tinh Anh PHẢI NHỎ HƠN nhân vật chính (main cao ~104 px thế giới). Mini-boss, trùm, thủ lĩnh sự kiện thì to hơn. Trước khi đưa quái mới vào game: chạy `python3 cong_cu/claude/size_check.py` (mã thoát 1 nếu có quái thường/Tinh Anh >= main). Khi nhờ ChatGPT/PixelLab vẽ quái thường, đặt cao ≤ 100 px, đừng "ngang quái cũ" mà không so với main.
+
 ## Hiện trạng game (23/11)
 - **Bộ Kiếm (nam và nữ chung):**
   - Đánh thường A → B (khởi kiếm, hồi kiếm); +6 mở C Phá Thế Trảm (quét 360°, vòng elip PixelLab `k5c_*`). Vệt chém A/B/C: bộ Slashes Frostwindz (`zs1-3`), đã đổi màu theo game.
