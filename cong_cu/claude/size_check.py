@@ -28,7 +28,8 @@ for k,body in sorted(et.items()):
     if 'boss:1' in body or 'mini:1' in body or k in THULINH:continue
     try:h=vh(sp)*sc
     except Exception as e:continue
-    ok=h<HERO
+    lim=0.92 if (k in ('elite','quailiem')) else 0.85
+    ok=h<=HERO*lim
     if not ok:bad+=1
-    print(f'{"OK " if ok else "LON"} {k:12s} {sp:12s} {h:5.0f} px')
+    print(f'{"OK " if ok else "LON"} {k:12s} {sp:12s} {h:5.0f} px  (giới hạn {HERO*lim:.0f})')
 sys.exit(1 if bad else 0)
