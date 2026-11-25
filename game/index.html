@@ -1933,15 +1933,30 @@ function drawFloorFx(M,c,cx,cy,hw,hh){if(!M.floor)return;const t=performance.now
   }else if(f.t==='fog'){for(let i=0;i<f.n;i++){const fx_=f.x0+((i*733)%(f.x1-f.x0))+Math.sin(t*.12+i)*70,fy_=f.y0+((i*311)%Math.max(1,f.y1-f.y0))+Math.sin(t*.1+i*2)*16;if(Math.abs(fx_-cx)>hw+260||Math.abs(fy_-cy)>hh+120)continue;const g=c.createRadialGradient(fx_,fy_,0,fx_,fy_,230);g.addColorStop(0,f.c);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.save();c.translate(fx_,fy_);c.scale(1,.28);c.translate(-fx_,-fy_);c.fillRect(fx_-230,fy_-230,460,460);c.restore()}
   }else if(f.t==='boat'){const m=MM[f.n],im=MIMG[f.n];if(!im||!im.complete||!im.naturalWidth)continue;const S=PS*(f.sc||1),bx=f.x+Math.sin(t*.12+f.x)*f.drift,by=f.y+Math.sin(t*.9+f.x*.01)*3;if(Math.abs(bx-cx)>hw+200||Math.abs(by-cy)>hh+200)continue;c.save();c.globalAlpha=.28;c.fillStyle='#000';c.beginPath();c.ellipse(bx,by+2,m.w*S*.42,m.h*S*.1,0,0,TAU);c.fill();c.globalAlpha=1;c.drawImage(im,Math.round(bx-m.ax*S),Math.round(by-m.ay*S),Math.round(m.w*S),Math.round(m.h*S));c.restore()}
  }}
+/* Rìa riêng từng map (M.rim.k): cliff vách đá + hố sương đỏ, petal biển hoa tối, water sông bao quanh, wall hàng cột/tường, star vực sao */
+function drawRim(M,c,L,R,T,B,t,ph){const K=M.rim;if(!K||((K.k==='cliff')!==(ph===2)))return;const D=420;
+ const pt=(sd,u,d)=>sd===0?[u,AH+d]:sd===1?[u,-d]:sd===2?[-d,u]:[AW+d,u],len=sd=>sd<2?AW:AH;
+ const vis=(sd)=>sd===0?B>AH-20:sd===1?T<20:sd===2?L<20:R>AW-20;
+ for(let sd=0;sd<4;sd++){if(!vis(sd))continue;const n=len(sd);
+  if(K.k==='cliff'){c.beginPath();let [x,y]=pt(sd,0,D);c.moveTo(x,y);[x,y]=pt(sd,0,0);c.lineTo(x,y);for(let u=0;u<=n;u+=34){const h=18+((Math.sin(u*.021+sd)+Math.sin(u*.057+sd*2)*.6+Math.sin(u*.13)*.35)*.5+.5)*70;[x,y]=pt(sd,u,-h);c.lineTo(x,y)}[x,y]=pt(sd,n,D);c.lineTo(x,y);c.closePath();c.fillStyle='#17100f';c.fill();c.strokeStyle='#5a3a36';c.lineWidth=3;c.stroke();
+   c.beginPath();for(let u=0;u<=n;u+=34){const h=18+((Math.sin(u*.021+sd)+Math.sin(u*.057+sd*2)*.6+Math.sin(u*.13)*.35)*.5+.5)*70-9;const[x,y]=pt(sd,u,-h-5);u?c.lineTo(x,y):c.moveTo(x,y)}c.strokeStyle='rgba(190,70,55,.55)';c.lineWidth=2;c.stroke()}
+  else if(K.k==='water'){const[ax,ay]=pt(sd,0,0),[bx,by]=pt(sd,n,D);const x0=Math.min(ax,bx),y0=Math.min(ay,by),w=Math.abs(bx-ax),h=Math.abs(by-ay);const g=sd<2?c.createLinearGradient(0,sd===0?AH:0,0,sd===0?AH+D:-D):c.createLinearGradient(sd===2?0:AW,0,sd===2?-D:AW+D,0);g.addColorStop(0,'#0f3a44');g.addColorStop(1,'#061418');c.fillStyle=g;c.fillRect(x0,y0,w,h);
+   c.lineWidth=2;for(let r=0;r<8;r++){c.strokeStyle=r%2?'rgba(170,230,235,.20)':'rgba(120,200,215,.14)';c.beginPath();for(let u=0;u<=n;u+=24){const d=20+r*(D-30)/8+Math.sin(u*.017+t+r*1.7)*5;const[x,y]=pt(sd,u,d);u?c.lineTo(x,y):c.moveTo(x,y)}c.stroke()}}
+  else if(K.k==='star'){const[ax,ay]=pt(sd,0,0),[bx,by]=pt(sd,n,D);const x0=Math.min(ax,bx),y0=Math.min(ay,by),w=Math.abs(bx-ax),h=Math.abs(by-ay);c.fillStyle='rgba(60,30,110,.55)';c.fillRect(x0,y0,w,h);for(let i=0;i<90;i++){const u=(i*733)%n,d=((i*379)%D)+6,[x,y]=pt(sd,u,d);const a=.35+.45*Math.sin(t*1.5+i);c.fillStyle=`rgba(${i%3?220:170},${i%3?210:150},255,${Math.max(0,a)})`;c.fillRect(x,y,i%7?2:3,i%7?2:3)}}
+  else if(K.k==='petal'||K.k==='wall'){const im=MIMG[K.n],m=MM[K.n];if(im&&im.complete&&im.naturalWidth){const S=PS*(K.sc||1.4),step=Math.max(30,m.w*S*(K.gap||.9));for(let row=0;row<(K.rows||2);row++)for(let u=-40+(row%2)*step*.5;u<n+40;u+=step){const d=24+row*(K.rows>1?(K.rows===2?110:70):0);const[x,y]=pt(sd,u,d+(K.k==='wall'?m.ay*S*.15:0));if(x<L-300||x>R+300||y<T-300||y>B+300)continue;c.save();c.globalAlpha=K.al||.9;c.drawImage(im,Math.round(x-m.ax*S),Math.round(y-m.ay*S),Math.round(m.w*S),Math.round(m.h*S));c.restore()}}}
+ }}
 /* Rìa map: bên ngoài là vực tối đặc (màu M.edge) + dải mờ dần vào trong + sương trôi, thay cho dải nền sẫm cứng trước đây (chủ game: nhìn dỏm) */
+/*RIM*/
 function drawMapEdge(M,c,cx,cy,hw,hh){const e=(M.edge||'#0a0a0a').replace('#',''),r=parseInt(e.slice(0,2),16),g=parseInt(e.slice(2,4),16),b=parseInt(e.slice(4,6),16),t=performance.now()/1000,W=340;
  const col=a=>`rgba(${r},${g},${b},${a})`;
  const L=cx-hw,R=cx+hw,T=cy-hh,B=cy+hh;
  c.fillStyle=col(1);if(T<0)c.fillRect(L,T,R-L,-T);if(B>AH)c.fillRect(L,AH,R-L,B-AH);if(L<0)c.fillRect(L,0,-L,AH);if(R>AW)c.fillRect(AW,0,R-AW,AH);
+ drawRim(M,c,L,R,T,B,t,1);
  if(T<W){const g1=c.createLinearGradient(0,0,0,W);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(L,0,R-L,W)}
  if(B>AH-W){const g1=c.createLinearGradient(0,AH,0,AH-W);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(L,AH-W,R-L,W)}
  if(L<W){const g1=c.createLinearGradient(0,0,W,0);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(0,T,W,B-T)}
  if(R>AW-W){const g1=c.createLinearGradient(AW,0,AW-W,0);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(AW-W,T,W,B-T)}
+ drawRim(M,c,L,R,T,B,t,2);
  const fc=M.edgeFog||'rgba(150,150,160,.10)';
  for(let i=0;i<14;i++){const side=i%4,k=((i*977)%1000)/1000;let x,y;if(side===0){x=L+(R-L)*k+Math.sin(t*.1+i)*60;y=AH-40}else if(side===1){x=L+(R-L)*k+Math.sin(t*.1+i)*60;y=40}else if(side===2){x=40;y=T+(B-T)*k+Math.sin(t*.1+i)*40}else{x=AW-40;y=T+(B-T)*k+Math.sin(t*.1+i)*40}
   if(x<L-260||x>R+260||y<T-160||y>B+160)continue;const rg=c.createRadialGradient(x,y,0,x,y,260);rg.addColorStop(0,fc);rg.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=rg;c.save();c.translate(x,y);c.scale(1,side<2?.3:1);c.translate(-x,-y);c.fillRect(x-260,y-260,520,520);c.restore()}}
@@ -2379,7 +2394,7 @@ const AM_RULES={floors:18,stars:[1,3,5],dailyRuns:2,resetAt:'0h giờ Việt Nam
 const amSkip=(x,y)=>Math.abs(x-AW/2)<240&&Math.abs(y-AH/2)<240;/* giữ trống chỗ xuất phát */
 const amRow=(add,n,x0,y0,dx,dy,c,sc,j)=>{for(let i=0;i<c;i++){const x=x0+dx*i,y=y0+dy*i;if(!amSkip(x,y))add(n,x,y,sc,j)}};
 const amMap=(o)=>Object.assign({hidden:1,am:1,dens:1.2},o);
-MAPS.am_hoangtuyen=amMap({floor:[{t:'road',x0:1440,x1:1760,y0:700,y1:2320,c:'rgba(190,150,70,.34)'},{t:'fog',x0:300,x1:2900,y0:900,y1:2100,n:9,c:'rgba(210,190,130,.10)'}],name:'Hoàng Tuyền & Quỷ Môn Quan',zh:'黃泉・鬼門關',desc:'Con đường vàng đục dẫn xuống âm phủ, cuối đường là cổng Quỷ Môn Quan. Đèn lồng trắng dẫn lối, hoa bỉ ngạn đỏ nở dọc hai bên.',ground:'g_hoangtuyen',patch:'g_amdia_co',edge:'#12100f',dark:.1,
+MAPS.am_hoangtuyen=amMap({rim:{k:'cliff'},floor:[{t:'road',x0:1440,x1:1760,y0:700,y1:2320,c:'rgba(190,150,70,.34)'},{t:'fog',x0:300,x1:2900,y0:900,y1:2100,n:9,c:'rgba(210,190,130,.10)'}],name:'Hoàng Tuyền & Quỷ Môn Quan',zh:'黃泉・鬼門關',desc:'Con đường vàng đục dẫn xuống âm phủ, cuối đường là cổng Quỷ Môn Quan. Đèn lồng trắng dẫn lối, hoa bỉ ngạn đỏ nở dọc hai bên.',ground:'g_hoangtuyen',patch:'g_amdia_co',edge:'#12100f',dark:.1,
  border:['Am_caykho1','Am_caykho2','Am_denlong2','Am_caykho1'],inner:[['Forest_reeds',4],['Am_caykho2',2],['Am_bia2',2],['Dp_hoa1',4]],
  layout(add){add('Dp_quanmon',1600,500,2.1);
   amRow(add,'Am_denlong',1430,780,0,190,6,1);amRow(add,'Am_denlong',1770,780,0,190,6,1);
@@ -2388,7 +2403,7 @@ MAPS.am_hoangtuyen=amMap({floor:[{t:'road',x0:1440,x1:1760,y0:700,y1:2320,c:'rgb
   add('Dp_loncong',1000,1500,1.3);add('Dp_loncong',2200,1500,1.3);
   add('Am_quantai1',1000,1900);add('Am_quantai2',2200,1900);add('Am_quantai3',620,1000);add('Am_quantai3',2580,1300);
   add('Am_caykho1',520,420,1.2);add('Am_caykho2',2680,420);add('Am_caykho1',520,1950,1.2);add('Am_caykho2',2680,1950)}});
-MAPS.am_biangan=amMap({floor:[{t:'glow',x:1600,y:1050,r:620,c:'rgba(170,30,56,.16)'},{t:'fog',x0:300,x1:2900,y0:700,y1:2000,n:8,c:'rgba(200,150,190,.08)'}],name:'Bỉ Ngạn & Vọng Hương Đài',zh:'彼岸・望鄉臺',desc:'Bờ bên kia của sông, hoa bỉ ngạn đỏ nở kín. Trên Vọng Hương Đài, kẻ chết nhìn lần cuối về quê nhà.',ground:'g_biangan',edge:'#0e0f13',dark:.15,
+MAPS.am_biangan=amMap({rim:{k:'petal',n:'Dp_hoa2',sc:1.6,gap:.85,rows:2,al:.85},floor:[{t:'glow',x:1600,y:1050,r:620,c:'rgba(170,30,56,.16)'},{t:'fog',x0:300,x1:2900,y0:700,y1:2000,n:8,c:'rgba(200,150,190,.08)'}],name:'Bỉ Ngạn & Vọng Hương Đài',zh:'彼岸・望鄉臺',desc:'Bờ bên kia của sông, hoa bỉ ngạn đỏ nở kín. Trên Vọng Hương Đài, kẻ chết nhìn lần cuối về quê nhà.',ground:'g_biangan',edge:'#0e0f13',dark:.15,
  border:['Mi_cayphong','Dp_hoa1','Mi_cayphong','Mi_cotda'],inner:[['Dp_hoa1',9],['Dp_hoa2',7],['Forest_reeds',10],['Am_bia1',2]],
  layout(add){add('Dp_vonghuong',1600,620,1.9);
   amRow(add,'Dp_hoa2',1100,1000,0,230,5,1.4,14);amRow(add,'Dp_hoa2',2100,1000,0,230,5,1.4,14);
@@ -2396,7 +2411,7 @@ MAPS.am_biangan=amMap({floor:[{t:'glow',x:1600,y:1050,r:620,c:'rgba(170,30,56,.1
   amRow(add,'Dp_cotden',1400,1500,0,150,4,1.1);amRow(add,'Dp_cotden',1800,1500,0,150,4,1.1);
   add('City_stone_stele',800,700);add('City_stone_stele',2400,700);add('City_stone_stele',800,1700);add('City_stone_stele',2400,1700);
   add('Mi_cayphong',520,500,1.15);add('Mi_cayphong',2680,500,1.15);add('Mi_cayphong',520,1900,1.15);add('Mi_cayphong',2680,1900,1.15)}});
-MAPS.am_nghiepkinh=amMap({floor:[{t:'glow',x:1250,y:930,r:230,c:'rgba(150,240,235,.22)'},{t:'glow',x:1950,y:930,r:230,c:'rgba(150,240,235,.22)'},{t:'glow',x:1600,y:860,r:300,c:'rgba(255,200,120,.08)'}],name:'Nghiệt Kính & Sâm La Điện',zh:'孽鏡・森羅殿',desc:'Điện đá lạnh lẽo, nơi gương nghiệt chiếu rõ tội nghiệt cả đời. Cột đá và đèn đá xếp thành hàng.',ground:'g_nghiep',edge:'#0c0d12',dark:.22,
+MAPS.am_nghiepkinh=amMap({rim:{k:'wall',n:'Dp_cotden',sc:1.6,gap:2.2,rows:1},floor:[{t:'glow',x:1250,y:930,r:230,c:'rgba(150,240,235,.22)'},{t:'glow',x:1950,y:930,r:230,c:'rgba(150,240,235,.22)'},{t:'glow',x:1600,y:860,r:300,c:'rgba(255,200,120,.08)'}],name:'Nghiệt Kính & Sâm La Điện',zh:'孽鏡・森羅殿',desc:'Điện đá lạnh lẽo, nơi gương nghiệt chiếu rõ tội nghiệt cả đời. Cột đá và đèn đá xếp thành hàng.',ground:'g_nghiep',edge:'#0c0d12',dark:.22,
  border:['Dp_cotden','Mi_denda','Dp_cotden','Mi_phuon'],inner:[['Mi_denda',3],['Dp_guong',2],['City_stone_stele',3]],
  layout(add){add('Dp_samla',1600,560,1.75);
   add('Dp_banphan',1600,860,1.4);add('Dp_guong',1250,920,1.7);add('Dp_guong',1950,920,1.7);
@@ -2405,21 +2420,21 @@ MAPS.am_nghiepkinh=amMap({floor:[{t:'glow',x:1250,y:930,r:230,c:'rgba(150,240,23
   amRow(add,'Mi_denda',1400,1550,0,150,4,1);amRow(add,'Mi_denda',1800,1550,0,150,4,1);
   add('Mi_luhuong',760,1100,1.2);add('Mi_luhuong',2440,1100,1.2);
   add('City_stone_stele',800,600);add('City_stone_stele',2400,600);add('City_stone_stele',800,1800);add('City_stone_stele',2400,1800)}});
-MAPS.am_uongtu=amMap({floor:[{t:'glow',x:1000,y:1100,r:300,c:'rgba(255,170,90,.10)'},{t:'glow',x:2200,y:1100,r:300,c:'rgba(255,170,90,.10)'},{t:'fog',x0:300,x1:2900,y0:900,y1:2100,n:8,c:'rgba(180,170,160,.08)'}],name:'Uổng Tử Thành & Vạc Dầu',zh:'枉死城・油鍋',desc:'Thành của những kẻ chết oan, nhà cửa đổ nát, đèn lồng trắng. Giữa phố là hàng vạc đồng nguội lạnh.',ground:'g_amdia',patch:'g_amdia_co',edge:'#140e0c',dark:.18,
+MAPS.am_uongtu=amMap({rim:{k:'wall',n:'Dp_tuongdo',sc:1.8,gap:.95,rows:1},floor:[{t:'glow',x:1000,y:1100,r:300,c:'rgba(255,170,90,.10)'},{t:'glow',x:2200,y:1100,r:300,c:'rgba(255,170,90,.10)'},{t:'fog',x0:300,x1:2900,y0:900,y1:2100,n:8,c:'rgba(180,170,160,.08)'}],name:'Uổng Tử Thành & Vạc Dầu',zh:'枉死城・油鍋',desc:'Thành của những kẻ chết oan, nhà cửa đổ nát, đèn lồng trắng. Giữa phố là hàng vạc đồng nguội lạnh.',ground:'g_amdia',patch:'g_amdia_co',edge:'#140e0c',dark:.18,
  border:['Am_nha2','Am_caykho1','Am_denlong2','Am_nha1'],inner:[['Am_denlong',3],['Dp_vac',3],['Dp_tuongdo',2],['City_clay_jar',2]],
  layout(add){amRow(add,'City_inn',700,520,0,0,1,0.9);add('City_tea_house',1100,430,0.9);add('City_warehouse',2100,430,0.9);add('City_escort_agency',2500,560,0.9);
   add('Am_nha1',520,1250,1.2);add('Am_nha2',480,1800,1.2);add('Am_nha1',2700,1250,1.2);add('Am_nha2',2740,1800,1.2);
   amRow(add,'Dp_vac',1000,1050,300,0,6,1.3);amRow(add,'Dp_loncong',1000,1450,300,0,7,1.2);
   add('Dp_tuongdo',820,900,1.5);add('Dp_tuongdo',2380,900,1.5);add('Dp_tuongdo',1600,1900,1.5);
   amRow(add,'Am_bia1',900,1950,260,0,6,1,10);add('City_wood_cart',1500,420);add('City_clay_jar',1700,430)}});
-MAPS.am_vongxuyen=amMap({floor:[{t:'water',y0:830,y1:1040},{t:'fog',x0:200,x1:3000,y0:800,y1:1090,n:10,c:'rgba(170,215,225,.14)'},{t:'boat',n:'Dp_thuyen1',x:1000,y:960,sc:1.7,drift:70},{t:'boat',n:'Dp_thuyen2',x:2250,y:980,sc:1.7,drift:70}],name:'Vong Xuyên & Cầu Nại Hà',zh:'忘川・奈何橋',desc:'Dòng sông quên lãng, bờ sậy và liễu rủ. Cầu Nại Hà bắc qua, nơi Mạnh Bà đứng canh.',ground:'g_vongxuyen',patch:null,edge:'#0b0f14',dark:.2,
+MAPS.am_vongxuyen=amMap({rim:{k:'water'},floor:[{t:'water',y0:830,y1:1040},{t:'fog',x0:200,x1:3000,y0:800,y1:1090,n:10,c:'rgba(170,215,225,.14)'},{t:'boat',n:'Dp_thuyen1',x:1000,y:960,sc:1.7,drift:70},{t:'boat',n:'Dp_thuyen2',x:2250,y:980,sc:1.7,drift:70}],name:'Vong Xuyên & Cầu Nại Hà',zh:'忘川・奈何橋',desc:'Dòng sông quên lãng, bờ sậy và liễu rủ. Cầu Nại Hà bắc qua, nơi Mạnh Bà đứng canh.',ground:'g_vongxuyen',patch:null,edge:'#0b0f14',dark:.2,
  border:['Forest_willow','Forest_reeds','Forest_willow','Am_caykho2'],inner:[['Forest_reeds',14],['Forest_willow',3],['Dp_hoa1',3],['Am_bia2',3]],
  layout(add){add('Dp_naiha',1600,1000,2.3);add('Dp_manhba',2330,1230,1.7);
   amRow(add,'Forest_willow',700,560,300,0,3,1,20);amRow(add,'Forest_willow',2200,560,300,0,3,1,20);
   amRow(add,'Forest_reeds',700,1120,150,0,14,1,12);amRow(add,'Forest_reeds',700,1420,150,0,14,1,12);
   amRow(add,'Dp_loncong',1300,1180,0,200,4,1.2);amRow(add,'Dp_loncong',1900,1180,0,200,4,1.2);
   add('Am_nha2',560,1850,1.2);add('Am_nha1',2640,1850,1.2);add('Forest_stone_lantern',900,1750,1.6);add('Forest_stone_lantern',2300,1750,1.6)}});
-MAPS.am_diemla=amMap({floor:[{t:'carpet',x0:1500,x1:1700,y0:760,y1:2350},{t:'glow',x:1600,y:760,r:460,c:'rgba(255,196,90,.13)'}],name:'Diêm La Bảo Điện',zh:'閻羅寶殿',desc:'Đại điện của Diêm La, cột đỏ cao, phướn bùa phủ kín. Mỗi bước tiến là một bước gần phán quyết.',ground:'g_diemla',edge:'#0a0a0e',dark:.28,
+MAPS.am_diemla=amMap({rim:{k:'wall',n:'Dp_cotdo',sc:1.8,gap:2.4,rows:1},floor:[{t:'carpet',x0:1500,x1:1700,y0:760,y1:2350},{t:'glow',x:1600,y:760,r:460,c:'rgba(255,196,90,.13)'}],name:'Diêm La Bảo Điện',zh:'閻羅寶殿',desc:'Đại điện của Diêm La, cột đỏ cao, phướn bùa phủ kín. Mỗi bước tiến là một bước gần phán quyết.',ground:'g_diemla',edge:'#0a0a0e',dark:.28,
  border:['Dp_cotdo','Mi_phuon','Dp_cotdo','Mi_denda'],inner:[['Mi_phuon',3],['Mi_denda',3],['Dp_cotdo',2]],
  layout(add){add('Dp_samla',1600,330,1.5);add('Dp_ngai',1600,700,2.1);
   add('City_stone_lion',1380,960,1.7);add('City_stone_lion',1820,960,1.7);
@@ -2427,7 +2442,7 @@ MAPS.am_diemla=amMap({floor:[{t:'carpet',x0:1500,x1:1700,y0:760,y1:2350},{t:'glo
   add('Dp_banphan',1300,1050,1.4);add('Dp_banphan',1900,1050,1.4);
   amRow(add,'Mi_luhuong',1450,1580,300,0,2,1.4);
   add('Mi_luhuong',700,1100,1.3);add('Mi_luhuong',2500,1100,1.3);add('City_banner',900,600,1.5);add('City_banner',2300,600,1.5)}});
-MAPS.am_luanhoi=amMap({floor:[{t:'glow',x:1600,y:1310,r:620,c:'rgba(140,100,235,.20)'},{t:'fog',x0:300,x1:2900,y0:600,y1:1900,n:8,c:'rgba(180,160,240,.07)'}],name:'Luân Hồi Đài',zh:'輪迴臺',desc:'Đài tròn cuối cùng của âm phủ. Vòng cột đá bao quanh, đèn đá chỉ đường vào giữa đài, nơi luân hồi bắt đầu.',ground:'g_luanhoi',edge:'#08080c',dark:.3,
+MAPS.am_luanhoi=amMap({rim:{k:'star'},floor:[{t:'glow',x:1600,y:1310,r:620,c:'rgba(140,100,235,.20)'},{t:'fog',x0:300,x1:2900,y0:600,y1:1900,n:8,c:'rgba(180,160,240,.07)'}],name:'Luân Hồi Đài',zh:'輪迴臺',desc:'Đài tròn cuối cùng của âm phủ. Vòng cột đá bao quanh, đèn đá chỉ đường vào giữa đài, nơi luân hồi bắt đầu.',ground:'g_luanhoi',edge:'#08080c',dark:.3,
  border:['Dp_cotden','Mi_denda','Dp_cotdo','Dp_cotden'],inner:[['Mi_denda',2]],
  layout(add){add('Dp_daitron',AW/2,AH/2+110,2.7);add('Dp_luanhoi',AW/2,AH/2-300,2);
   for(let i=0;i<16;i++){const a=i*TAU/16,x=AW/2+Math.cos(a)*700,y=AH/2+Math.sin(a)*470;if(Math.abs(Math.sin(a))>0.97||Math.abs(Math.cos(a))>0.97){add('Dp_cotdo',x,y,1.3);continue}add('Dp_cotden',x,y,1.3)}
