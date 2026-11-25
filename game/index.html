@@ -1089,6 +1089,9 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 }
 .cxbar .crerr{color:#ff8a70;font:700 13px "Be Vietnam Pro",sans-serif}
 #crGo{min-width:180px}#crGo:disabled{opacity:.45;cursor:not-allowed}
+/* 25/11: nút Khởi hành/Lưu luôn hiện (ghim đáy cột phải, cột cuộn bên trong) — màn thấp trước đây đẩy nút ra ngoài khung */
+.cxR .cxbar{position:sticky;bottom:-6px;z-index:5;margin-top:auto;padding:6px 0 4px;background:linear-gradient(rgba(14,10,7,0),#0e0a07 28%)}
+@media (max-height:520px){.cxR .cxbar{bottom:-4px;padding:4px 0 2px}.cxR #crGo{font-size:14px;line-height:1.1;padding:7px 6px;white-space:nowrap;min-height:0}}
 @media (max-height:520px){
  .cx{gap:7px;padding:max(6px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(5px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
  .cxp{padding:6px 8px;gap:4px}.cxh{font-size:12px;padding-bottom:2px;margin-top:2px}
