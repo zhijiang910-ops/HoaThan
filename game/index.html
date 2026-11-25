@@ -1133,8 +1133,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .crscene-dialog::backdrop{background:#090605e8}
 .crscene-dialog img{display:block;max-width:86vw;max-height:85vh;width:auto;height:auto;object-fit:contain;image-rendering:pixelated}
 .crscene-dialog button{position:absolute;top:6px;right:6px}
-.cxavatars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;flex-shrink:0}
-@media (max-width:760px){.cxavatars{grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}}
+.cxavatars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;flex-shrink:0}
+@media (max-width:760px){.cxavatars{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}}
 .cxavatar{background-size:400% 200%;image-rendering:pixelated}
 .cxavatar{padding:0;min-width:0;aspect-ratio:1;border:1px solid rgba(255,236,190,.42);border-radius:2px;background-color:#241b12;cursor:pointer;box-sizing:border-box;box-shadow:inset 0 0 0 1px rgba(10,6,3,.55),inset 0 0 0 2px rgba(255,236,190,.14)}
 /* ô đang chọn: cùng kích thước với ô khác, vòng sáng nằm TRONG ô (không phình ra ngoài) */
@@ -4585,10 +4585,10 @@ const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon']
 const SECT_OPEN=['maoson','thiencuong'];const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
 const LOCK_IMG='<img class="lkimg" src="assets/ui/khoa.png" alt="khóa" width="16" height="16">';
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
-for(const g of['nam','nu'])for(const k of SECT_KEYS){const im=new Image();im.onload=()=>{const profile=prof();if(profile?.gender===g&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===g)paintAva()};im.src=SECTS[k].avatar[g];SECT_AVATAR_IMGS[g][k]=im}
+/* 25/11 (chủ game): bỏ ô avatar 9-14 (chân dung phái); không nạp ảnh phai-*.webp nữa */
 const sectOfAvatar=n=>n>8&&n<=8+SECT_KEYS.length?SECT_KEYS[n-9]:null;
 /* 24/11: bỏ 8 avatar cũ (chủ game). Hồ sơ cũ có avatar 1-8 tự chuyển sang avatar Mao Sơn Phái (9). */
-function avatarIndex(value){return Number.isInteger(value)&&value>=1&&value<=8+SECT_KEYS.length?value:0}
+function avatarIndex(value){return Number.isInteger(value)&&value>=1&&value<=8?value:Number.isInteger(value)&&value>=9&&value<=14?1:0}
 function drawPlayerAvatar(g,gender,value,size){
  const tile=avatarIndex(value);
  const sk=sectOfAvatar(tile);
@@ -4604,19 +4604,19 @@ function paintLobbyAvatar(profile){
  const cn=$('#lbAva');
  if(!drawPlayerAvatar(cn.getContext('2d'),profile.gender,profile.avatar,160))portrait(cn,profile.gender,profile.weapon||'kiem','#22403a');
 }
-const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hairC:'den',sk:0,avatars:{nam:9,nu:9},sect:'maoson'};
+const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hairC:'den',sk:0,avatars:{nam:1,nu:1},sect:'maoson'};
 
 /* 25/11: ảnh nền CHUNG (không còn tranh minh họa theo phái). Muốn đổi: thay file assets/ui/nen_tao_nhan_vat.jpg (cùng tên), không cần sửa code. */
 /* 25/11 (chủ game: "chọn avatar hình nào thì hình minh họa hình đó"): ảnh giữa theo avatar đang chọn. 1-8 = tranh cảnh scene-<giới>-<n>.webp, 9-14 = chân dung lớn của phái. Gọi từ renderCreateAvatars (mọi lần chọn avatar hay đổi giới). */
-function renderCreateScene(){const img=$('#crBg');if(!img)return;const g=cr.gender,n=cr.avatars[g]||9,sk=sectOfAvatar(n);const src=sk?SECTS[sk].avatar[g]:'assets/portraits/scene-'+g+'-'+n+'.webp';if(img.getAttribute('src')!==src)img.src=src;img.alt=sk?SECTS[sk].n:'Tranh minh họa '+n;img.classList.toggle('sect',!!sk)}
+function renderCreateScene(){const img=$('#crBg');if(!img)return;const g=cr.gender,n=cr.avatars[g]||1,sk=null;const src=sk?SECTS[sk].avatar[g]:'assets/portraits/scene-'+g+'-'+n+'.webp';if(img.getAttribute('src')!==src)img.src=src;img.alt=sk?SECTS[sk].n:'Tranh minh họa '+n;img.classList.toggle('sect',!!sk)}
 function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*100+'%'}
 /* 25/11: avatar TỰ CHỌN (6 chân dung, chỉ số 9–14), tách khỏi môn phái; môn phái chỉ quyết định vũ khí và bộ chiêu */
 function setCreateSect(k){if(!SECTS[k])k='maoson';cr.sect=k}
-function renderCreateAvatars(){const g=cr.gender,cur=cr.avatars[g]||9;const box=$('#crAvatars');if(!box)return;box.innerHTML=Array.from({length:8+SECT_KEYS.length},(_,i)=>{const n=i+1,on=cur===n,sk=sectOfAvatar(n);const bg=sk?`background-image:url('${SECTS[sk].avatar[g]}');background-size:cover;background-position:50% 12%`:`background-image:url('assets/portraits/avatar-${g}.webp');background-position:${avatarPosition(i)}`;return `<button type="button" class="cxavatar${sk?' sect':''}" data-av="${n}" aria-pressed="${on}" aria-label="Ảnh đại diện ${n}" style="${bg}"></button>`}).join('');renderCreateScene()}
+function renderCreateAvatars(){const g=cr.gender,cur=cr.avatars[g]||1;const box=$('#crAvatars');if(!box)return;box.innerHTML=Array.from({length:8},(_,i)=>{const n=i+1,on=cur===n,sk=sectOfAvatar(n);const bg=sk?`background-image:url('${SECTS[sk].avatar[g]}');background-size:cover;background-position:50% 12%`:`background-image:url('assets/portraits/avatar-${g}.webp');background-position:${avatarPosition(i)}`;return `<button type="button" class="cxavatar${sk?' sect':''}" data-av="${n}" aria-pressed="${on}" aria-label="Ảnh đại diện ${n}" style="${bg}"></button>`}).join('');renderCreateScene()}
 function wIconHTML(k){const w=WICON[k]||{};if(w.src)return `<img src="${w.src}" alt="">`;const ci=w.g||0;return `<span class="gi" style="background-position:${-(ci%10)*100}% ${-((ci/10)|0)*100}%"></span>`}
 function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=P0?P0.gender:save.gender==='nu'?'nu':'nam';cr.hairI=Math.max(0,P0?HAIR[cr.gender].findIndex(h=>h.k===P0.hair):0);cr.hair=HAIR[cr.gender][cr.hairI].k;
  setCreateSect(P0&&P0.sect&&SECTS[P0.sect]?P0.sect:P0&&sectOfAvatar(avatarIndex(P0.avatar))||'maoson');
- {const a0=P0?(avatarIndex(P0.avatar)||9):9;cr.avatars={nam:a0,nu:a0}}
+ {const a0=P0?(avatarIndex(P0.avatar)||1):1;cr.avatars={nam:a0,nu:a0}}
  renderCreateScene();renderCreateAvatars();
  $('#crGo').textContent=P0?'Lưu và về sảnh':'Khởi hành';
 cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
