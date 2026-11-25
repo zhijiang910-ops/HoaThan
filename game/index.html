@@ -1779,7 +1779,7 @@ const WAURA={"3":[39,15,4,16,16,17,-11],"6":[39,15,4,16,16,17,-11],"9":[39,15,4,
 const WIMG={},AIMG={};for(const n in WPN){const i=new Image();i.src='assets/wpn/'+n+'.png';WIMG[n]=i}for(const k in WAURA){const i=new Image();i.src='assets/vfx/aura_'+k+'.png';AIMG[k]=i}
 const WART={'Thanh Phong Kiếm':'thanhphong','Hàn Thiết Kiếm':'hanthiet','Long Tuyền Kiếm':'thanhphong','Tử Điện Kiếm':'tudien','Trảm Yêu Kiếm':'tramyeu','Thái A Kiếm':'thaia'};
 /* Thương: cây thương (cầm ở 40% cán); Song Quyền: tay không */
-const MELEE_ANIM=new Set(['kiem','dao','truong','quat']);/* lớp dùng khung đánh của Kiếm (chưa có khung riêng) */
+const MELEE_ANIM=new Set(['kiem','dao','truong','quat','quyen']);/* lớp dùng khung đánh của Kiếm (chưa có khung riêng) */
 const WCLASS_ART={thuong:'thuong1',quyen:null,dao:'daoquy',truong:'tichtruong',quat:'quatban',cung:'cungluc'};
 function heroWeaponArt(g){let n='thanhphong';if(G&&G.training&&TR.wpn)n=TR.wpn;else{const wc=G&&G.cfg&&G.cfg.weapon;if(wc&&wc in WCLASS_ART)return WCLASS_ART[wc]}if(n==='none')return null;if(n!=='thanhphong'&&WPN[n])return n;if(n==='thanhphong'&&!(G&&G.training&&TR.wpn))try{const it=invList().find(x=>x.id===eqMap().vk);if(it&&!it.damaged&&WART[it.name])n=WART[it.name]}catch(e){}return n==='thanhphong'?'thanhphong_nu':n}/* nam và nữ dùng chung một thanh kiếm (bản nữ, chủ game chọn 24/11) */
 function auraLv(){const f=weaponForge();return f>=12?12:f>=9?9:f>=6?6:f>=3?3:0}
@@ -2000,14 +2000,29 @@ function startSwordCut(target,basic){
  const delay=P.av*(Aw&&Aw.hit!=null?Aw.hit+0.03:0.42);
  P.swordCut={upgrade,angle,step,heavy,dir,lunge,delay,basic};
 }
+function startFist(target,basic){/* Quyền: A (tay xa) -> B (tay gần) -> C (quét chân), dùng khung đánh hero_*_qy; tái dùng P.swordCut để mọi chỗ hủy/khóa đòn (lướt, choáng, Thần Giáng) áp dụng như Kiếm */
+ const angle=angTo(target);if(P.t-(basic.lastT||-9)>1.2)basic.step=0;basic.lastT=P.t;
+ const step=(basic.step||0)%3,dir=step===1?-1:1;swing(angle,dir);P.avAlt=step===1;P.runSwing=step!==2;P.avAnim=['attack','attack2','attack3'][step];comboFx(step,angle);
+ const Aw=HERO.meta.anims[P.avAnim]||HERO.meta.anims.attack;if(Aw&&Aw.dur)P.av=P.avTotal=Aw.dur;
+ if(Math.abs(Math.cos(angle))>0.15)P.facing=Math.cos(angle)>=0?1:-1;
+ P.swordCut={fist:1,angle,step,dir,delay:P.av*(Aw&&Aw.hit!=null?Aw.hit+0.03:0.42),basic};
+}
+function finishFist(cut){
+ const {angle,step,dir,basic}=cut,sweep=step===2;basic.step=(step+1)%3;P.swordGuard={anim:['attack','attack2','attack3'][step],until:P.t+0.42};
+ {const tg_=nearest(P.x,P.y,200),room=tg_?clamp((Math.hypot(tg_.x-P.x,tg_.y-P.y)-tg_.r-34)/60,0,1):1,push=(sweep?40:step===1?110:130)*room;if(!P.moving){P.kx+=Math.cos(angle)*push;P.ky+=Math.sin(angle)*push}}
+ const dmg=(sweep?16:step===1?10:9)*pw();
+ arc(P.x,P.y-(sweep?2:8),angle,(sweep?125:78)*Ar(),sweep?2.6:1.5,dmg,H({kb:sweep?130:step===1?40:25,stun:sweep?0.12:0,stop:step===1?0.05:0.03,numUp:step===1?0.12:0,nofx:1,swordBasic:true}),sweep?'#fff0d0':'#ffe6de',dir);
+ if(sweep)G.shake=Math.max(G.shake||0,4);
+}
 function comboFx(step,ang){/* VFX bản mẫu (PixelLab, gói tách lớp, tông trắng bạc - xanh ngọc). A, B nổ đúng khung trúng; C: lớp sau người + lớp trước người */
- if(!(P.kit&&P.kit.w==='kiem')||!vok('zs3'))return;const f=(ang!=null&&Math.abs(Math.cos(ang))>0.15)?(Math.cos(ang)>=0?1:-1):(P.facing||1)/* 24/11: hướng theo GÓC ĐÁNH, không theo P.facing cũ (mặt chưa kịp xoay khi mục tiêu ở phía đối diện) */,sc=HERO.SC,an=HERO.meta.anims[['attack','attack2','attack3'][step]],at=(an&&an.dur?an.dur*an.hit:0.2);
+ if(!(P.kit&&(P.kit.w==='kiem'||P.kit.w==='quyen'))||!vok('zs3'))return;const f=(ang!=null&&Math.abs(Math.cos(ang))>0.15)?(Math.cos(ang)>=0?1:-1):(P.facing||1)/* 24/11: hướng theo GÓC ĐÁNH, không theo P.facing cũ (mặt chưa kịp xoay khi mục tiêu ở phía đối diện) */,sc=HERO.SC,an=HERO.meta.anims[['attack','attack2','attack3'][step]],at=(an&&an.dur?an.dur*an.hit:0.2);
  const go=(k,T,gr,m,fd,o)=>fx(Object.assign({k:'sp',s:k,x:P.x,y:P.y,sc:sc*(m||1),fx:f,T,gr:gr?1:0,follow:1,fade:fd||0},o||{}));
  /* vệt A/B: nghiêng theo hướng chém (tối đa ±0,35 rad); A lật dọc để quét từ trên xuống cùng chiều lưỡi kiếm */
  const tilt=ang==null?0:clamp(Math.atan2(Math.sin(ang),Math.abs(Math.cos(ang))),-0.35,0.35)*f;
  /* Vệt chém: bộ Slashes (Frostwindz) đổi sang bảng màu game; khung lớn nhất của vệt trùng khung trúng */
- if(step===0)later(Math.max(0,at-0.02),()=>go(vok('wx_slash')?'wx_slash':'zs3',0.34,0,1.9,0.35,{dx:34*sc,dy:-62*sc,ang:tilt}),'h');
- else if(step===1)later(Math.max(0,at-0.16),()=>go('zs2',0.38,0,1.3,0,{ang:tilt}),'h');
+ const qy=HERO.id&&HERO.id.endsWith('_qy');/* Quyền: vệt đấm ngắn ngang tầm nắm tay thay vì vệt kiếm */
+ if(step===0)later(Math.max(0,at-0.02),()=>{if(qy)go('wx_slash',0.2,0,1.05,0.4,{dx:46*sc,dy:-38*sc,sy:0.5,ang:tilt*0.4});else go(vok('wx_slash')?'wx_slash':'zs3',0.34,0,1.9,0.35,{dx:34*sc,dy:-62*sc,ang:tilt})},'h');
+ else if(step===1)later(Math.max(0,at-(qy?0.02:0.16)),()=>{if(qy)go('wx_slash',0.2,0,1.05,0.4,{dx:46*sc,dy:-34*sc,sy:0.5,fl:-1,ang:tilt*0.4});else go('zs2',0.38,0,1.3,0,{ang:tilt})},'h');
  else{/* C = một cú quét → một elip → thu thế + mờ dần. Không còn slash zs1 độc lập; elip chỉ sống 0,5 s (tắt trước hết recovery 0,8 s), hai lớp cùng thời điểm và cùng thời gian *//* vành PixelLab dày (24/11): vệt chính phía trước, bản code ở dưới làm sợi mảnh + đuôi tím */later(Math.max(0,at-0.12),()=>{if(vok('k5c_pro')){if(HERO.id&&HERO.id.endsWith('_qy'))go('k5c_pro',0.5,0,1.35,0.3,{dx:38*sc,dy:(4+(ang==null?0:Math.sin(ang)*8))*sc,sy:0.42,ang:tilt*0.5})/* 25/11: Quyền C = quét chân, vành elip dẹt sát mặt đất */;else go('k5c_pro',0.56,0,1.25,0.3,{dx:22*sc,dy:(-48+(ang==null?0:Math.sin(ang)*26))*sc,ang:tilt*0.8})}/* 24/11: vành C dời lên/xuống và nghiêng theo góc đánh như A/B */},'h')}}
 function finishSwordCut(dt){
  const cut=P.swordCut;
@@ -2015,6 +2030,7 @@ function finishSwordCut(dt){
  cut.delay-=dt;
  if(cut.delay>0)return;
  P.swordCut=null;
+ if(cut.fist)return finishFist(cut);
  const {upgrade,angle,step,heavy,dir,lunge,basic}=cut;
  basic.step=(step+1)%(upgrade>=6?3:2);tutHook('cut',step);
  // Hold the recovery pose through the short gap between basic strikes.
@@ -2253,6 +2269,20 @@ const WEAPONS={
   {id:'c6',hotkey:'X',power:55,name:'Thực Nguyệt Quy Khư',g:'蝕',kind:'ult',cd:25,range:380,desc:'Trăng khuyết nuốt trọn vùng chỉ định: ba đợt chém trăng liên tiếp, làm chậm và gây sát thương lớn.',up:'+25% sát thương',
    cast(tg,l){const t0=densest(P.x,P.y,380)||tg,a=angTo(t0),tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw();notice('Thực Nguyệt Quy Khư');dqAt('th_eclipse',tx,ty,a,1.15,1.35,0,27,{add:1,al:1});sfx('rulai_fall',0.4,0.1);
     for(const [t,m] of [[0.35,0.7],[0.7,0.9],[1.0,1.6]])later(t,()=>{circ(tx,ty,200*Ar(),dmg*m,H({kb:100,slow:0.5,slowT:2}),null);G.shake=Math.max(G.shake||0,t>0.9?10:4)},'h')}}
+ ]},
+ quyen:{name:'Quyền',g:'拳',role:'Cận chiến, liên kích, cương khí',tr:'Liên quyền, quyền khí xuyên, chấn địa, liên hoàn cương quyền',kit:[
+  /* Thiên Cương Môn (25/11): động tác Quyền v2 (A tay xa, B tay gần, C quét chân), VFX dùng lại tài nguyên có sẵn (vệt wx_slash, vành k5c_pro dẹt, vòng ring, đạn crescent). Không PixelLab. Số liệu TẠM, chưa cân bằng. */
+  {id:'y0',name:'Thiên Cương Quyền',g:'拳',kind:'basic',cd:0.45,range:85,desc:'Liên quyền: tay trước đấm thẳng, tay sau đấm xoay hông, nhát thứ ba hạ thấp quét chân quét ngang mọi phía.',
+   cast(tg,s){startFist(tg,s)}},
+  {id:'y1',hotkey:'Q',power:22,name:'Cương Khí Phá Không',g:'氣',kind:'active',cd:5,mp:16,range:340,desc:'Tung quyền khí trắng xuyên qua năm kẻ địch trước mặt, đẩy lùi.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();P.avAnim='attack';swing(a,1);sfx('sword_wave',0.45,0.1);
+    later(0.22,()=>{shoot(P.x+Math.cos(a)*30,P.y-18+Math.sin(a)*30,a,560,{dmg,pierce:5,r:26,life:0.55,kind:'crescent',c:'#ffe6de',o:H({kb:90,stop:0.03})});G.shake=Math.max(G.shake||0,3)},'h')}},
+  {id:'y2',hotkey:'F',power:30,name:'Chấn Địa Quyền',g:'震',kind:'active',cd:9,mp:20,range:200,desc:'Hạ thấp người đấm xuống đất, sóng chấn lan ra hất văng và làm choáng mọi quái trước mặt.',up:'+25% sát thương, -6% hồi chiêu',
+   cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();P.avAnim='attack3';swing(a,1);sfx('rulai_impact',0.5,0.1);
+    later(0.3,()=>{const cx=P.x+Math.cos(a)*95,cy=P.y+Math.sin(a)*95;circ(cx,cy,165*Ar(),dmg,H({kb:210,stun:0.4}),null);fx({k:'ring',x:cx,y:cy,r0:20,r1:165,c:'#ffffff',T:0.35});fx({k:'ring',x:cx,y:cy,r0:10,r1:120,c:'#b8323a',T:0.45});G.shake=Math.max(G.shake||0,10)},'h')}},
+  {id:'y6',hotkey:'X',power:34,name:'Thiên Cương Liên Hoàn',g:'罡',kind:'ult',cd:24,range:240,desc:'Dồn cương khí tung loạt quyền liên hoàn trong 3 giây: mỗi 0,2 giây một cú đấm quét vòng cung trước mặt, đẩy lùi quái gần nhất.',up:'+25% sát thương, +0,5 giây',
+   cast(tg,l){const dmg=this.power*lv(l)*pw(),dur=3+0.5*(l-1);notice('Thiên Cương Liên Hoàn');P.inv=Math.max(P.inv,0.4);sfx('rulai_fall',0.45,0.1);let k=0;
+    for(let t=0.2;t<=dur;t+=0.2){const kk=k++;later(t,()=>{const e=nearest(P.x,P.y,300),a2=angTo(e||tg);P.avAnim=kk%2?'attack2':'attack';swing(a2,kk%2?-1:1);P.runSwing=true;if(Math.abs(Math.cos(a2))>0.15)P.facing=Math.cos(a2)>=0?1:-1;arc(P.x,P.y-8,a2,150*Ar(),1.7,dmg*0.3,H({kb:70,stop:0.02,nofx:1}),'#fff0e8',kk%2?-1:1);if(kk%3===0){fx({k:'ring',x:P.x+Math.cos(a2)*50,y:P.y-10+Math.sin(a2)*50,r0:10,r1:60,c:'#ffd0c8',T:0.2});G.shake=Math.max(G.shake||0,3)}},'h')}}}
  ]},
  thuong:{name:'Thương',g:'槍',role:'DPS tầm trung',tr:'Đâm xuyên, tầm đánh dài',kit:[
   {id:'t0',name:'Liên Thứ',g:'槍',kind:'basic',cd:0.42,range:150,desc:'Đâm thương liên tiếp theo đường thẳng.',
@@ -4334,7 +4364,7 @@ const WICON={kiem:{g:0},phu:{g:10},dao:{src:'data:image/png;base64,iVBORw0KGgoAA
 /* 24/11: bỏ sheet avatar cũ (avatar-nam/nu.webp) và 8 tranh cảnh; chỉ còn chân dung 6 phái */
 /* avatar 1-8: tấm ảnh nhỏ cũ (avatar-nam/nu.webp, có tranh cảnh); avatar 9-14: chân dung đại diện 6 môn phái (SECTS, ảnh rời) */
 /* môn phái chơi được và lớp vũ khí tương ứng (24/11): Mao Sơn = Kiếm, Trảm Yêu Môn = Đao */
-const SECT_WEAPON={maoson:'kiem',tramyeu:'dao',phucma:'truong',huyenlinh:'quat',truyhon:'cung'};
+const SECT_WEAPON={maoson:'kiem',tramyeu:'dao',phucma:'truong',thiencuong:'quyen',huyenlinh:'quat',truyhon:'cung'};
 function profWeapon(){const P0=prof();return P0&&P0.sect&&SECT_WEAPON[P0.sect]||'kiem'}
 const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon'];
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
