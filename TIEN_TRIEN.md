@@ -38,3 +38,4 @@ Game vốn là bản Tây Du, đang chuyển chủ đề sang **khử tà diệt
 - Đổi hướng trang phục: phái chỉ quyết định vũ khí và bộ chiêu; trang phục thành món trang bị (Bát Quái Bào = bộ Mao Sơn, Huyền Giáp = bộ Huyền Giáp). Không làm trang phục riêng cho từng phái (tốn 330–480 lượt PixelLab mỗi bộ).
 - Màn tạo nhân vật: avatar tự chọn (6 ảnh), ảnh nền chung `assets/ui/nen_tao_nhan_vat.jpg` (đang là ảnh tạm, chủ game sẽ thay).
 - PixelLab bị chủ game cấm từ 25/11 (số dư thật ~1.683/4.600 lượt).
+- **Âm Giới đã nối vào game (25/11):** ô ở sảnh, 2 lượt/ngày, mốc mỗi trùm, mỗi tầng: diệt âm binh → kẻ canh → rương → cổng lên tầng. Đang mở tầng 1–3 (chặng 1). Số liệu tạm, chưa cân bằng.
