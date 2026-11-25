@@ -4760,6 +4760,8 @@ const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hai
 
 /* 25/11: ảnh nền CHUNG (không còn tranh minh họa theo phái). Muốn đổi: thay file assets/ui/nen_tao_nhan_vat.jpg (cùng tên), không cần sửa code. */
 /* 25/11 (chủ game: "chọn avatar hình nào thì hình minh họa hình đó"): ảnh giữa theo avatar đang chọn. 1-8 = tranh cảnh scene-<giới>-<n>.webp, 9-14 = chân dung lớn của phái. Gọi từ renderCreateAvatars (mọi lần chọn avatar hay đổi giới). */
+/* 25/11: cảnh nền RIÊNG theo môn phái (ưu tiên hơn cảnh theo avatar); hiện có Mao Sơn = cổng quán bát quái + phướn bùa */
+const SECT_SCENE={maoson:'maoson'};
 const CREATE_SCENE_BY_AVATAR=['co-mieu','hoang-thon','co-mieu','hoang-thon','vong-xuyen','hoang-thon','co-mieu','vong-xuyen'];
 /* 25/11: tranh toàn thân RIÊNG theo (môn phái, giới); chưa có thì dùng tranh toàn thân của avatar đang chọn. Thêm tranh mới: chép file vào assets/ui/creation và khai báo ở đây. */
 const SECT_ART={'maoson-nam':'assets/ui/creation/sect-maoson-nam.webp'};
@@ -4767,7 +4769,7 @@ function renderCreateScene(){
  const img=$('#crBg');
  if(!img)return;
  const index=(cr.avatars[cr.gender]||1)-1;
- const scene=CREATE_SCENE_BY_AVATAR[index]||CREATE_SCENE_BY_AVATAR[0];
+ const scene=SECT_SCENE[cr.sect]||CREATE_SCENE_BY_AVATAR[index]||CREATE_SCENE_BY_AVATAR[0];
  const src='assets/ui/creation/'+scene+'.webp';
  if(img.getAttribute('src')!==src)img.src=src;
  const dc=$('#crDeco');if(dc){const ds='assets/ui/creation/'+(((cr.avatars[cr.gender]||1)%2)?'deco-dam':'deco-duong')+'.webp';if(dc.getAttribute('src')!==ds)dc.src=ds;dc.style.objectPosition=ds.indexOf('dam')>0?'16% 75%':'50% 85%'}
