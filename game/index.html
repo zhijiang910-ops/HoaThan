@@ -3454,7 +3454,7 @@ function drawOrb(o){const c=X,bob=Math.sin(G.t*5+o.x*0.05)*2;
   if(DROPS.complete&&DROPS.naturalWidth){c.save();c.imageSmoothingEnabled=false;c.drawImage(DROPS,mp?40:0,0,40,40,x-15,y-29,30,30);c.restore()}}
  else if(o.k==='gear'){const col=GEARC[o.it.tier]||'#ddd',ci=gearCell(o.it),x=o.x,y=o.y-14+bob;c.save();
   c.fillStyle='rgba(0,0,0,.3)';ell(o.x,o.y,9,3);c.globalAlpha=0.5+0.2*Math.sin(G.t*6);c.fillStyle=col;c.fillRect(x-1,y-34,2,26);c.globalAlpha=0.28;circle(x,y,15);c.globalAlpha=1;
-  if(ci>=0&&GEARIMG.complete&&GEARIMG.naturalWidth){c.imageSmoothingEnabled=false;c.drawImage(GEARIMG,(ci%10)*64,((ci/10)|0)*64,64,64,x-19,y-19,38,38)}else{c.fillStyle='#7a5a2a';c.fillRect(x-7,y-6,14,12)}c.restore()}
+  const oi=outfitIconOf(o.it);if(oi){c.imageSmoothingEnabled=false;c.drawImage(oi,x-19,y-19,38,38)}else if(ci>=0&&GEARIMG.complete&&GEARIMG.naturalWidth){c.imageSmoothingEnabled=false;c.drawImage(GEARIMG,(ci%10)*64,((ci/10)|0)*64,64,64,x-19,y-19,38,38)}else{c.fillStyle='#7a5a2a';c.fillRect(x-7,y-6,14,12)}c.restore()}
 }
 const DROPS=new Image();DROPS.src='assets/ui/drops.png';
 const POT={hp:{n:'Bình Khí Huyết',price:15,ratio:0.4,desc:'Hồi ngay 40% khí huyết.'},mp:{n:'Bình Nội Lực',price:12,ratio:0.5,desc:'Hồi ngay 50% nội lực.'}},POTMAX=9,POT_CD=1.2;
@@ -4854,7 +4854,11 @@ function weaponIconBounds(ci){
  }catch(e){} // Nếu texture không đọc alpha được, giữ nguyên hình.
  return (GEAR_WEAPON_BOUNDS[ci]=box)
 }
-function drawItemIcon(cn,it){const ci=gearCell(it);if(ci>=0&&GEARIMG.complete&&GEARIMG.naturalWidth){const g=cn.getContext('2d');cn.width=cn.height=64;g.imageSmoothingEnabled=false;g.clearRect(0,0,64,64);
+/* 25/11: icon riêng cho 2 món y phục đầu tiên có hình nhân vật: Bát Quái Bào (bộ Mao Sơn) và Huyền Giáp. Gốc: icon áo gói Wuxia (gear.png ô 36 và 35) tô lại màu theo bộ đồ trong game, bỏ quầng sáng dựng sẵn. */
+const OUTFIT_ICON={'Bát Quái Bào':'assets/ui/icon_ao_ms.png','Huyền Giáp':'assets/ui/icon_ao_hg.png'},OUTFIT_IMG={};
+for(const k in OUTFIT_ICON){const im=new Image();im.onload=()=>{try{document.querySelectorAll('.item').length&&paintIcons(document)}catch(e){}};im.src=OUTFIT_ICON[k];OUTFIT_IMG[k]=im}
+const outfitIconOf=it=>{const im=it&&it.slot==='ao'&&OUTFIT_IMG[it.name];return im&&im.complete&&im.naturalWidth?im:null};
+function drawItemIcon(cn,it){const oi=outfitIconOf(it);if(oi){const g=cn.getContext('2d');cn.width=cn.height=64;g.imageSmoothingEnabled=false;g.clearRect(0,0,64,64);g.drawImage(oi,0,0,64,64);return}const ci=gearCell(it);if(ci>=0&&GEARIMG.complete&&GEARIMG.naturalWidth){const g=cn.getContext('2d');cn.width=cn.height=64;g.imageSmoothingEnabled=false;g.clearRect(0,0,64,64);
  if(it.slot==='vk'){
   const b=weaponIconBounds(ci);
   if(b){const scale=Math.min(58/b.w,58/b.h),w=b.w*scale,h=b.h*scale;g.drawImage(GEARIMG,(ci%10)*64+b.x,((ci/10)|0)*64+b.y,b.w,b.h,(64-w)/2,(64-h)/2,w,h)}
