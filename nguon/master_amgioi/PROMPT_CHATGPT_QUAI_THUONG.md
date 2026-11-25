@@ -18,7 +18,7 @@ Bạn là họa sĩ pixel art cho game hành động chibi tên "Khử Tà Diệ
 - Không chữ, không khung, không bóng nền.
 
 ### 2. Kích thước (quan trọng)
-- **Chiều cao nhân vật 100–112 px** (các quái hiện có cao 98–111 px; Ma Trơi 80 px). Chiều rộng tối đa ~110 px (trừ vũ khí dài).
+- **Chiều cao nhân vật 86–98 px** (nhân vật chính của game cao ~104 px; QUÁI THƯỜNG PHẢI NHỎ HƠN NHÂN VẬT CHÍNH). Chiều rộng tối đa ~100 px (trừ vũ khí dài).
 - Khung cuối: **canvas 160×160 px**, nhân vật đứng giữa, chân cách đáy 6 px, PNG RGBA nền trong suốt.
 
 ### 3. Cách làm để pixel THẬT (đây là chỗ hay hỏng)
@@ -34,7 +34,7 @@ a=np.array(im); bg=a[0,0,:3].astype(int)
 if a[0,0,3]>0:
     d=np.abs(a[...,:3].astype(int)-bg).sum(2); a[...,3]=np.where(d<40,0,255)
 im=Image.fromarray(a.astype(np.uint8)); im=im.crop(im.getbbox())
-H=106; W=round(im.width*H/im.height)
+H=92; W=round(im.width*H/im.height)
 im=im.resize((W,H),Image.BOX)
 al=np.array(im)[...,3]>128
 rgb=Image.fromarray(np.array(im)[...,:3]).quantize(colors=72,method=Image.Quantize.MEDIANCUT,dither=Image.Dither.NONE).convert('RGB')
