@@ -1594,6 +1594,10 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cx-preview .cxhr{padding:5px 3px 7px;background:#111a20e8;border-top:1px solid #746047;min-width:0}
 #create .cxill #crBg{object-fit:cover;object-position:50% 60%}
 #create .cxL{overflow-y:auto}
+/* 25/11 (chủ game): 2 ảnh phong cảnh (đầm cây treo bùa, đường đá hoa bỉ ngạn) lấp khung trống dưới lưới avatar */
+#create .cxL > .cxdeco{flex:1 1 0;min-height:0;margin-top:8px;border:1px solid #746047;box-shadow:inset 0 0 0 2px #0a0806;border-radius:3px;overflow:hidden;background:#06100f}
+#create .cxdeco img{width:100%;height:100%;object-fit:cover;object-position:50% 70%;display:block}
+@media (max-height:340px){#create .cxdeco{display:none}}
 #create .cxR .cxbar{flex-shrink:0}
 </style>
 </head>
@@ -1654,6 +1658,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
+   <div class="cxdeco"><img id="crDeco" alt="" decoding="async"></div>
   </div>
   <div class="cxp cxC">
    <div class="cxill">
@@ -4742,6 +4747,7 @@ function renderCreateScene(){
  const scene=CREATE_SCENE_BY_AVATAR[index]||CREATE_SCENE_BY_AVATAR[0];
  const src='assets/ui/creation/'+scene+'.webp';
  if(img.getAttribute('src')!==src)img.src=src;
+ const dc=$('#crDeco');if(dc){const ds='assets/ui/creation/'+(((cr.avatars[cr.gender]||1)%2)?'deco-dam':'deco-duong')+'.webp';if(dc.getAttribute('src')!==ds)dc.src=ds;dc.style.objectPosition=ds.indexOf('dam')>0?'16% 75%':'50% 85%'}
  const fl=$('#crFull');if(fl){const fs='assets/ui/creation/av-'+cr.gender+'-0'+((cr.avatars[cr.gender]||1))+'.png';if(fl.getAttribute('src')!==fs)fl.src=fs}
 }
 function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*100+'%'}
