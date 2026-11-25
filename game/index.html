@@ -1464,6 +1464,10 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
  html body #skills .skr.s2 .sk.sk{width:42px!important;height:42px!important}
  html body #bars#bars{width:min(440px,calc(calc(100*var(--vw)) - 400px))!important}
 }
+
+/* Blend the decoration into the available space beneath the avatar grid. */
+#create .cxL > .cxdeco{position:relative;background:transparent;margin:0 -12px -10px;min-height:0}
+#create .cxL > .cxdeco > img{width:100%;height:100%;object-fit:cover;object-position:left bottom;-webkit-mask-image:linear-gradient(transparent,#000 45%);mask-image:linear-gradient(transparent,#000 45%)}
 </style>
 
 <style id="hudPhone">
@@ -1587,7 +1591,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 <style>
 #create .cxC .cx-preview{position:absolute;inset:0;z-index:3;display:grid;grid-template-rows:minmax(0,1fr) auto;align-items:stretch}
 /* 25/11 (zip avatar-nam-nu-16): tranh toàn thân 320x480 đứng trong cảnh; nhân vật game thu nhỏ thành ô "Trong game" ở góc phải dưới (bố cục theo mau-tao-nhan-vat.png) */
-#create .cxill #crFull{position:absolute;left:50%;bottom:max(14%,56px);height:68%;max-width:96%;width:auto;object-fit:contain;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));pointer-events:none}
+
 #create .cx-preview .cxst{position:relative;justify-self:end;align-self:end;width:26%;max-width:130px;height:28%;max-height:130px;margin:0 6px 6px 0;min-height:0;background:#0b1013d8;box-shadow:inset 0 0 0 1px #746047;border-radius:3px}
 /* 25/11 SKIN TẠO NHÂN VẬT THEO ẢNH MẪU (chủ game: "y chang này"): bảng xanh đêm viền vàng có góc, cảnh phủ kín khung giữa, hàng màu áo nổi trên cảnh (không còn thanh nền), Nam/Nữ xanh lục */
 #create{background:radial-gradient(ellipse at 50% 40%,#0d2a2c 0%,#071819 55%,#030a0b 100%)!important}
@@ -1612,7 +1616,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxc{width:30px;height:30px}
 #create .cxC .cx-preview .cxhr{background:linear-gradient(rgba(3,10,11,0),rgba(3,10,11,.55) 60%);border-top:0;padding:16px 3px 6px;gap:3px}
 #create .cx-preview .cxhr b{font-size:10px;line-height:1.15}
-#create .cxill #crFull{bottom:70px;height:calc(100% - 118px);max-height:none}
+
 #create .cx-preview .cxst{margin-bottom:64px}
 #create .cxR .cxRb{display:flex;flex-direction:column}
 #create .cxR #crSkD{flex:1 1 auto;max-height:none!important;min-height:70px;overflow-y:auto}
@@ -1686,12 +1690,12 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
-   <div class="cxdeco"><img id="crDeco" alt="" decoding="async"></div>
+   <div class="cxdeco"><img id="crDeco" src="assets/ui/creation/deco-dam.webp" alt="" decoding="async"></div>
   </div>
   <div class="cxp cxC">
    <div class="cxill">
-    <img id="crBg" alt="" src="assets/ui/creation/co-mieu.webp">
-    <img id="crFull" alt="" decoding="async">
+    <img id="crBg" alt="" src="assets/ui/creation/maoson.webp">
+
     <div class="cx-preview">
      <div class="cxst"><b class="cxig">Trong game</b><canvas id="crPic" width="240" height="200" aria-label="Ngoại hình trong game"></canvas>
       <div class="cxlock" id="crLock" hidden>Chưa có sprite</div>
@@ -4771,26 +4775,15 @@ const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hai
 const SECT_SCENE={maoson:'maoson'};
 const CREATE_SCENE_BY_AVATAR=['co-mieu','hoang-thon','co-mieu','hoang-thon','vong-xuyen','hoang-thon','co-mieu','vong-xuyen'];
 /* 25/11: tranh toàn thân RIÊNG theo (môn phái, giới); chưa có thì dùng tranh toàn thân của avatar đang chọn. Thêm tranh mới: chép file vào assets/ui/creation và khai báo ở đây. */
-const SECT_ART={'maoson-nam':'assets/ui/creation/sect-maoson-nam.webp'};
-function renderCreateScene(){
- const img=$('#crBg');
- if(!img)return;
- const index=(cr.avatars[cr.gender]||1)-1;
- const scene='maoson';/* 25/11: một nền CHUNG cho mọi phái/avatar (nen-chung-tao-nhan-vat); SECT_SCENE và CREATE_SCENE_BY_AVATAR không còn dùng */
- const src='assets/ui/creation/'+scene+'.webp';
- if(img.getAttribute('src')!==src)img.src=src;
- const dc=$('#crDeco');if(dc){const ds='assets/ui/creation/deco-dam.webp';if(dc.getAttribute('src')!==ds)dc.src=ds}
- const fl=$('#crFull');if(fl){const fs=SECT_ART[cr.sect+'-'+cr.gender]||('assets/ui/creation/av-'+cr.gender+'-0'+((cr.avatars[cr.gender]||1))+'.png');if(fl.getAttribute('src')!==fs)fl.src=fs}
-}
 function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*100+'%'}
 /* 25/11: avatar TỰ CHỌN (6 chân dung, chỉ số 9–14), tách khỏi môn phái; môn phái chỉ quyết định vũ khí và bộ chiêu */
 function setCreateSect(k){if(!SECTS[k])k='maoson';cr.sect=k}
-function renderCreateAvatars(){const g=cr.gender,cur=cr.avatars[g]||1;const box=$('#crAvatars');if(!box)return;box.innerHTML=Array.from({length:8},(_,i)=>{const n=i+1,on=cur===n,sk=sectOfAvatar(n);const bg=sk?`background-image:url('${SECTS[sk].avatar[g]}');background-size:cover;background-position:50% 12%`:`background-image:url('assets/portraits/avatar-${g}.webp');background-position:${avatarPosition(i)}`;return `<button type="button" class="cxavatar${sk?' sect':''}" data-av="${n}" aria-pressed="${on}" aria-label="Ảnh đại diện ${n}" style="${bg}"></button>`}).join('');renderCreateScene()}
+function renderCreateAvatars(){const g=cr.gender,cur=cr.avatars[g]||1;const box=$('#crAvatars');if(!box)return;box.innerHTML=Array.from({length:8},(_,i)=>{const n=i+1,on=cur===n,sk=sectOfAvatar(n);const bg=sk?`background-image:url('${SECTS[sk].avatar[g]}');background-size:cover;background-position:50% 12%`:`background-image:url('assets/portraits/avatar-${g}.webp');background-position:${avatarPosition(i)}`;return `<button type="button" class="cxavatar${sk?' sect':''}" data-av="${n}" aria-pressed="${on}" aria-label="Ảnh đại diện ${n}" style="${bg}"></button>`}).join('')}
 function wIconHTML(k){const w=WICON[k]||{};if(w.src)return `<img src="${w.src}" alt="">`;const ci=w.g||0;return `<span class="gi" style="background-position:${-(ci%10)*100}% ${-((ci/10)|0)*100}%"></span>`}
 function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=P0?P0.gender:save.gender==='nu'?'nu':'nam';cr.hairI=Math.max(0,P0?HAIR[cr.gender].findIndex(h=>h.k===P0.hair):0);cr.hair=HAIR[cr.gender][cr.hairI].k;cr.hairC=(P0&&P0.hairC)||'den';cr.outC=(P0&&OUTC.some(o=>o.k===P0.outC&&(!o.g||o.g===P0.gender))&&P0.outC)||'goc';
  setCreateSect(P0&&P0.sect&&SECTS[P0.sect]?P0.sect:P0&&sectOfAvatar(avatarIndex(P0.avatar))||'maoson');
  {const a0=P0?(avatarIndex(P0.avatar)||1):1;cr.avatars={nam:a0,nu:a0}}
- renderCreateScene();renderCreateAvatars();
+ renderCreateAvatars();
  $('#crGo').textContent=P0?'Lưu và về sảnh':'Khởi hành';
 cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
   clearInterval(window.__crh);let t=0;window.__crh=setInterval(()=>{if($('#create').hidden){clearInterval(window.__crh);return}crHero(t);t+=0.125},125)}
