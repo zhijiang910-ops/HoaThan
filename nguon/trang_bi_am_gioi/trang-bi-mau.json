@@ -1,0 +1,359 @@
+{
+  "pieces": [
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "y-phuc",
+      "icon": "icon-goc/hanh-gia/y-phuc.png"
+    },
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "hai",
+      "icon": "icon-goc/hanh-gia/hai.png"
+    },
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "dai-lung",
+      "icon": "icon-goc/hanh-gia/dai-lung.png"
+    },
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "ho-phu",
+      "icon": "icon-goc/hanh-gia/ho-phu.png"
+    },
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "phu-kien",
+      "icon": "icon-goc/hanh-gia/nhan.png"
+    },
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "phu-kien",
+      "icon": "icon-goc/hanh-gia/ngoc-boi.png"
+    },
+    {
+      "setId": "hanh-gia",
+      "name": null,
+      "minLevel": 1,
+      "slot": "non",
+      "icon": "icon-goc/hanh-gia/non.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": "Huyền Giáp",
+      "minLevel": 30,
+      "slot": "y-phuc",
+      "icon": "icon-goc/huyet-sa/y-phuc.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": null,
+      "minLevel": 30,
+      "slot": "hai",
+      "icon": "icon-goc/huyet-sa/hai.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": null,
+      "minLevel": 30,
+      "slot": "dai-lung",
+      "icon": "icon-goc/huyet-sa/dai-lung.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": null,
+      "minLevel": 30,
+      "slot": "ho-phu",
+      "icon": "icon-goc/huyet-sa/ho-phu.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": null,
+      "minLevel": 30,
+      "slot": "phu-kien",
+      "icon": "icon-goc/huyet-sa/nhan.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": null,
+      "minLevel": 30,
+      "slot": "phu-kien",
+      "icon": "icon-goc/huyet-sa/ngoc-boi.png"
+    },
+    {
+      "setId": "huyet-sa",
+      "name": null,
+      "minLevel": 30,
+      "slot": "non",
+      "icon": "icon-goc/huyet-sa/non.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": "Bát Quái Bào",
+      "minLevel": 60,
+      "slot": "y-phuc",
+      "icon": "icon-goc/han-thiet/y-phuc.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": null,
+      "minLevel": 60,
+      "slot": "hai",
+      "icon": "icon-goc/han-thiet/hai.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": null,
+      "minLevel": 60,
+      "slot": "dai-lung",
+      "icon": "icon-goc/han-thiet/dai-lung.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": null,
+      "minLevel": 60,
+      "slot": "ho-phu",
+      "icon": "icon-goc/han-thiet/ho-phu.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": null,
+      "minLevel": 60,
+      "slot": "phu-kien",
+      "icon": "icon-goc/han-thiet/nhan.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": null,
+      "minLevel": 60,
+      "slot": "phu-kien",
+      "icon": "icon-goc/han-thiet/ngoc-boi.png"
+    },
+    {
+      "setId": "han-thiet",
+      "name": null,
+      "minLevel": 60,
+      "slot": "non",
+      "icon": "icon-goc/han-thiet/non.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "y-phuc",
+      "icon": "icon-goc/hac-vu/y-phuc.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "hai",
+      "icon": "icon-goc/hac-vu/hai.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "dai-lung",
+      "icon": "icon-goc/hac-vu/dai-lung.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "ho-phu",
+      "icon": "icon-goc/hac-vu/ho-phu.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "phu-kien",
+      "icon": "icon-goc/hac-vu/nhan.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "phu-kien",
+      "icon": "icon-goc/hac-vu/ngoc-boi.png"
+    },
+    {
+      "setId": "hac-vu",
+      "name": null,
+      "minLevel": 90,
+      "slot": "non",
+      "icon": "icon-goc/hac-vu/non.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "y-phuc",
+      "icon": "icon-goc/vong-xuyen/y-phuc.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "hai",
+      "icon": "icon-goc/vong-xuyen/hai.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "dai-lung",
+      "icon": "icon-goc/vong-xuyen/dai-lung.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "ho-phu",
+      "icon": "icon-goc/vong-xuyen/ho-phu.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "phu-kien",
+      "icon": "icon-goc/vong-xuyen/nhan.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "phu-kien",
+      "icon": "icon-goc/vong-xuyen/ngoc-boi.png"
+    },
+    {
+      "setId": "vong-xuyen",
+      "name": null,
+      "minLevel": 120,
+      "slot": "non",
+      "icon": "icon-goc/vong-xuyen/non.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "y-phuc",
+      "icon": "icon-goc/bach-cot/y-phuc.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "hai",
+      "icon": "icon-goc/bach-cot/hai.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "dai-lung",
+      "icon": "icon-goc/bach-cot/dai-lung.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "ho-phu",
+      "icon": "icon-goc/bach-cot/ho-phu.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "phu-kien",
+      "icon": "icon-goc/bach-cot/nhan.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "phu-kien",
+      "icon": "icon-goc/bach-cot/ngoc-boi.png"
+    },
+    {
+      "setId": "bach-cot",
+      "name": null,
+      "minLevel": 150,
+      "slot": "non",
+      "icon": "icon-goc/bach-cot/non.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "y-phuc",
+      "icon": "icon-goc/diem-la/y-phuc.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "hai",
+      "icon": "icon-goc/diem-la/hai.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "dai-lung",
+      "icon": "icon-goc/diem-la/dai-lung.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "ho-phu",
+      "icon": "icon-goc/diem-la/ho-phu.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "phu-kien",
+      "icon": "icon-goc/diem-la/nhan.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "phu-kien",
+      "icon": "icon-goc/diem-la/ngoc-boi.png"
+    },
+    {
+      "setId": "diem-la",
+      "name": null,
+      "minLevel": 180,
+      "slot": "non",
+      "icon": "icon-goc/diem-la/non.png"
+    }
+  ],
+  "setBonusesAt": [
+    4,
+    6
+  ],
+  "weaponCountsTowardSet": false,
+  "testTiers": [
+    "bach",
+    "luc",
+    "lam",
+    "hoang",
+    "tu"
+  ]
+}
