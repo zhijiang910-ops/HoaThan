@@ -5628,10 +5628,10 @@ const LDG_TIPS=['Chạm giữ vòng điều khiển ở góc trái dưới để
  'Kiếm cường hóa +6 sẽ mở đòn C Phá Thế Trảm.',
  'Mỗi môn phái một vũ khí và bộ chiêu riêng; hiện Mao Sơn Phái và Thiên Cương Môn đã mở.',
  'Thần Giáng: bấm ô thần tướng để hóa thân, mỗi thần tướng có kỹ năng riêng.'];
-const LDG={el:$('#ldg'),bar:$('#ldgB'),pct:$('#ldgP'),sub:$('#ldgS'),tip:$('#ldgTip'),shown:false,p:0,tgt:0,tipI:Math.floor(Math.random()*LDG_TIPS.length),tipT:0,anim:0,hideT:0};
+const LDG={slow:0,el:$('#ldg'),bar:$('#ldgB'),pct:$('#ldgP'),sub:$('#ldgS'),tip:$('#ldgTip'),shown:false,p:0,tgt:0,tipI:Math.floor(Math.random()*LDG_TIPS.length),tipT:0,anim:0,hideT:0};
 function ldgTipNext(){const t=LDG.tip;t.style.opacity=0;setTimeout(()=>{t.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];t.style.opacity=1},220)}
 function ldgDraw(){LDG.bar.classList.remove('ind');LDG.p+=(LDG.tgt-LDG.p)*0.22;if(Math.abs(LDG.tgt-LDG.p)<0.002)LDG.p=LDG.tgt;const v=Math.round(LDG.p*100);LDG.bar.style.width=v+'%';LDG.pct.textContent=v+'%'}
-function ldgOpen(label){clearTimeout(LDG.hideT);LDG.el.hidden=false;LDG.el.classList.remove('out');LDG.shown=true;LDG.p=0;LDG.tgt=0;LDG.sub.textContent=label||'Đang chuẩn bị…';LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tip.style.opacity=1;ldgDraw();clearInterval(LDG.anim);LDG.anim=setInterval(ldgDraw,60);clearInterval(LDG.tipT);LDG.tipT=setInterval(ldgTipNext,4200)}
+function ldgOpen(label){LDG.slow=0;clearTimeout(LDG.hideT);LDG.el.hidden=false;LDG.el.classList.remove('out');LDG.shown=true;LDG.p=0;LDG.tgt=0;LDG.sub.textContent=label||'Đang chuẩn bị…';LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tip.style.opacity=1;ldgDraw();clearInterval(LDG.anim);LDG.anim=setInterval(ldgDraw,60);clearInterval(LDG.tipT);LDG.tipT=setInterval(ldgTipNext,4200)}
 function ldgClose(){window.__ldgOut=Math.round(performance.now());LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
 const assetsBusy=()=>PENDING.size>0||!!(HERO&&!HERO.ok);
 function loadGate(label){/* gọi sau khi dựng map + chọn vũ khí: chờ mọi ảnh cần cho trận */
@@ -5642,7 +5642,8 @@ function loadGate(label){/* gọi sau khi dựng map + chọn vũ khí: chờ m�
  poll=setInterval(()=>{const el=performance.now()-t0;
   if(!shown&&el>250){shown=true;ldgOpen(label)}
   if(shown){const done=1-PENDING.size/Math.max(n0,PENDING.size);LDG.tgt=Math.min(0.98,Math.max(LDG.tgt,done*0.97+(HERO&&HERO.ok?0.03:0)))}
-  if(!assetsBusy()||el>25000)finish()},80)}
+  if(shown&&el>8000&&!LDG.slow){LDG.slow=1;LDG.sub.textContent=label.replace('…','')+' · mạng chậm, xin đợi thêm…'}
+  if(!assetsBusy()||el>60000)finish()},80)}
 /* mở game: màn chờ tới khi nhân vật sẵn sàng */
 (function(){const t0=performance.now(),g=(save.prof&&save.prof.gender)||'nam',ready=()=>{const h=CH['hero_'+g];return !h||h.ok};chEnsure(CH['hero_'+g]);
  LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tipT=setInterval(ldgTipNext,4200);LDG.anim=setInterval(()=>{const el=performance.now()-t0;LDG.tgt=Math.max(LDG.tgt,Math.min(0.92,1-Math.exp(-el/1600)));ldgDraw()},60);
