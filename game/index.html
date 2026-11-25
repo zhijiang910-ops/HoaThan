@@ -4386,6 +4386,7 @@ function huntList(st){const L=[['Trùm Ngưu Ma Vương','boss'],[CHEST_T[st].th
  if(!sec().own.truyphong)L.splice(1,0,['Truy Phong Kiếm (rương đầu)','new']);L.push([MATN.duoc+' từ tinh anh','mat']);
  if(st>=3)L.push(['Tinh anh có Cương Khí: phá giáp khí để làm choáng','mech']);if(st>=5)L.push(['Trùm có pha 2 khi còn 50% máu','mech']);return L}
 function wPick(w){let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<w.length;i++){if((r-=w[i])<=0)return i}return 0}
+for(const k in CHEST_T){const w=CHEST_T[k].tw;w[4]+=w[5]+w[6];w[5]=w[6]=0}/* phẩm 6 và 7 khóa: gộp tỉ lệ vào phẩm 5 */
 function dropTableTxt(st){const T=CHEST_T[st]||CHEST_T[1],tot=T.tw.reduce((a,b)=>a+b,0),ph=T.tw.map((v,i)=>v?TIERS[i].n.replace(' phẩm','')+' '+Math.round(v/tot*1000)/10+'%':'').filter(Boolean).join(', ');
  return `Luôn có ${T.thiet} ${MATN.thiet} và 1 lượt dược liệu (+1 nếu kèo) · Trang bị ${T.gear[0]===T.gear[1]?T.gear[0]:T.gear[0]+'–'+T.gear[1]} món, mỗi món ${Math.round(T.gp*100)}% · Phẩm: ${ph} · Bí tịch ${Math.round(T.book*100)}%`}
 function chestRoll(st,keo){const T=CHEST_T[st]||CHEST_T[1],out={items:[],mat:{thiet:T.thiet},txt:[]};
@@ -4866,8 +4867,8 @@ function bfOn(k){return !!(P&&P.bf&&P.bf[k]>0)}
 function useDan(k,picked){try{tbcMark('dan',k)}catch(e){}
 const D=DAN[k];P.bf=P.bf||{};P.bf[k]=D.T;if(k==='hothe')P.st={};sfx('suodi_cast',0.4,0);
  fx({k:'ring',x:P.x,y:P.y,r0:10,r1:80,c:D.c,T:0.45});for(let i=0;i<10;i++)part(P.x+rnd(-16,16),P.y-rnd(0,40),0,rnd(-90,-40),rnd(.4,.7),rnd(2,4),D.c,1,0);if(picked)notice(D.n,D.d)}
-function chestTier(L){const w=[100,30,8,2,.5,.12,.03].map((b,i)=>b*Math.pow(1+(L||0)*0.02,i));let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
-function brkTier(L){const w=[100,24,5,1,.2,.04,.008].map((b,i)=>b*Math.pow(1+(L||0)*0.02,i));let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
+function chestTier(L){const w=[100,30,8,2,.5,.12,.03].map((b,i)=>b*Math.pow(1+(L||0)*0.02,i));let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return Math.min(i,4)}return 0}
+function brkTier(L){const w=[100,24,5,1,.2,.04,.008].map((b,i)=>b*Math.pow(1+(L||0)*0.02,i));let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return Math.min(i,4)}return 0}
 function brkTrap(b){const k=pick(['doc','doc','cham','choang']),C={doc:['#8be04a','Bẫy độc!','Khói độc bốc lên, mất máu theo giây'],cham:['#8fb0ff','Mê hồn hương','Chân tay rã rời, chạy chậm lại'],choang:['#ffb347','Thuốc nổ giấu trong đó!','Choáng váng một lúc']}[k];
  for(let i=0;i<(LOWFX?10:24);i++)part(b.x+rnd(-14,14),b.y-rnd(4,30),rnd(-60,60),rnd(-110,-30),rnd(.6,1.1),rnd(4,8),C[0],0,-40);
  if(k==='choang'){G.shake=Math.max(G.shake,9);fx({k:'ring',x:b.x,y:b.y,r0:10,r1:100,c:'#ffb347',T:0.35});sfx('rulai_impact',0.35,0.05)}
@@ -5230,7 +5231,7 @@ function endRun(win){{const b=document.getElementById('trP');if(b)b.remove()}/* 
 /* ================= TRANG BỊ: 7 PHẨM CẤP ================= */
 const TIERS=[{n:'Phàm phẩm',k:'Phàm khí',m:1,a:0,v:1},{n:'Linh phẩm',k:'Linh khí',m:1.6,a:1,v:3},{n:'Bảo phẩm',k:'Pháp bảo',m:2.4,a:2,v:8},{n:'Tiên phẩm',k:'Tiên khí',m:3.5,a:3,v:20},{n:'Thần phẩm',k:'Thần binh',m:5,a:3,v:50},{n:'Thánh phẩm',k:'Thánh khí',m:7,a:4,v:120},{n:'Hỗn Độn',k:'Chí bảo',m:10,a:5,v:300}];
 /* Bảy phẩm trang bị · Bạch, Lục, Lam, Hoàng, Tử, Hồng, Hắc. */
-const LV_MAX=200,LV_OPEN=70,TIER_OPEN=TIERS.length;
+const LV_MAX=200,LV_OPEN=70,TIER_OPEN=5;/* 25/11 chủ game: chỉ mở 5 phẩm (Phàm, Linh, Bảo, Tiên, Thần); Thánh phẩm và Hỗn Độn khóa tạm */
 const TIER_LV=[1,7,14,22,32,43,56];
 const tierOfLv=lv=>{let t=0;for(let i=0;i<TIER_LV.length;i++)if(lv>=TIER_LV[i])t=i;return t};
 const heroLv=()=>(prof()&&prof().lv)||1;
@@ -5254,7 +5255,7 @@ const SPEC=['Khí linh hộ chủ','Nhận chủ','Biến hóa kích thước','
 const STATN={hp:['Khí huyết',''],armor:['Hộ giáp',''],dodge:['Né tránh','%'],speed:['Thân pháp','%'],regen:['Hồi huyết/giây',''],dmgW:['Ngoại công','%'],dmgM:['Nội công','%'],area:['Phạm vi chiêu','%'],aspd:['Tốc độ ra chiêu','%'],crit:['Bạo kích','%'],critD:['Bạo thương','%'],mp:['Nội lực',''],mpR:['Hồi nội lực/giây',''],luck:['Cơ duyên',''],cdr:['Giảm hồi chiêu','%'],pickup:['Tầm hút vật phẩm','%'],lifeKill:['Hồi huyết khi hạ',''],dashCdr:['Giảm hồi Dash','%'],bSpd:['Tốc độ đòn thường','%'],godDmg:['Uy lực thần giáng','%'],xp:['Tu vi nhận','%']};
 const sn=k=>STATN[k]||[k,''];
 const fmtv=(k,v)=>{const u=sn(k)[1];return '+'+(Math.abs(v)<10&&v%1?v.toFixed(1):Math.round(v))+(u||'')};
-function rollTier(st,boss){const w=[60,28,9,2.5,.4,.08,.02].map((b,i)=>b*Math.pow(1+0.55*(st-1),i));if(boss&&st>=2)w[0]=0;let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return i}return 0}
+function rollTier(st,boss){const w=[60,28,9,2.5,.4,.08,.02].map((b,i)=>b*Math.pow(1+0.55*(st-1),i));if(boss&&st>=2)w[0]=0;let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<7;i++){if((r-=w[i])<=0)return Math.min(i,4)}return 0}
 /* 25/11: tên món theo PHẨM: danh sách names xếp từ thấp lên cao, phẩm t (0..6) ứng vị trí t*(n-1)/6, chọn ngẫu nhiên trong khoảng ±1 vị trí quanh đó (Huyền Giáp rơi ở phẩm 2-3, Bát Quái Bào ở 5-6). */
 function nameForTier(names,t){const n=names.length,c=t*(n-1)/6,L=names.filter((_,i)=>Math.abs(i-c)<=1);return pick(L.length?L:[names[Math.round(c)]])}
 function makeItem(st,tier,lv,o){tier=Math.max(0,Math.min(tier,tierOfLv(heroLv()),TIER_OPEN-1));lv=lv||(G?itemLv():0);const sk=(o&&o.slot)||pick(Object.keys(SLOTS)),S0=SLOTS[sk],T=TIERS[tier],f=T.m*(lv?1+0.025*(lv-1):1+0.12*(st-1));
@@ -5420,7 +5421,7 @@ $('#invTest').addEventListener('click',()=>{const T=window.__tg,inv=invList(),eq
  const ids={};for(const nm in GNAME){if(GNAME[nm][0]!==T.s)continue;const ci=GNAME[nm][1],sk=GSLOT[ci][1],it=makeItem(2,0,60,{slot:sk,name:nm});it.tier=T.t;const f=TIERS[T.t].m,b={};for(const[k,v]of SLOTS[sk].base)b[k]=+(v*f*1.2).toFixed(1);it.base=b;it.aff=[];it.test=1;it.lv=Math.max(1,TIER_LV[T.t]);inv.push(it);if(nm!==GSETS[T.s][1]+' Ngọc Bội')ids[sk]=it.id}
  for(const sk in ids)eq[sk]=ids[sk];notice('Đã mặc: Bộ '+GSETS[T.s][1]+' · '+TIERS[T.t].n);T.s++;if(T.s>=GSETS.length){T.s=0;T.t=(T.t+1)%5}persist();renderInv();if(G&&P)recalc()});
 $('#invTestAll').addEventListener('click',()=>{const inv=invList();for(let i=inv.length-1;i>=0;i--)if(inv[i].test)inv.splice(i,1);let n=0;
- for(let t=0;t<TIERS.length;t++)for(let si=0;si<GSETS.length;si++)for(const nm in GNAME){if(GNAME[nm][0]!==si)continue;const sk=GSLOT[GNAME[nm][1]][1],it=makeItem(2,0,60,{slot:sk,name:nm});it.tier=t;const f=TIERS[t].m,b={};for(const[k,v]of SLOTS[sk].base)b[k]=+(v*f*1.2).toFixed(1);it.base=b;it.aff=[];it.test=1;it.lv=Math.max(1,TIER_LV[t]);inv.push(it);n++}
+ for(let t=0;t<TIER_OPEN;t++)for(let si=0;si<GSETS.length;si++)for(const nm in GNAME){if(GNAME[nm][0]!==si)continue;const sk=GSLOT[GNAME[nm][1]][1],it=makeItem(2,0,60,{slot:sk,name:nm});it.tier=t;const f=TIERS[t].m,b={};for(const[k,v]of SLOTS[sk].base)b[k]=+(v*f*1.2).toFixed(1);it.base=b;it.aff=[];it.test=1;it.lv=Math.max(1,TIER_LV[t]);inv.push(it);n++}
  notice('TEST: đã thêm '+n+' món (7 bộ x 7 phẩm x 8 món). Bấm "Dọn đồ TEST" để xóa.');persist();renderInv()});
 $('#invTestClr').addEventListener('click',()=>{const inv=invList(),eq=eqMap(),ids=new Set(inv.filter(x=>x.test).map(x=>x.id));for(const k in eq)if(ids.has(eq[k]))delete eq[k];for(let i=inv.length-1;i>=0;i--)if(inv[i].test)inv.splice(i,1);persist();renderInv();if(G&&P)recalc()});
 $('#invClose').addEventListener('click',()=>{$('#inv').hidden=true;if(invFrom==='lobby'){showLobby();return}$('#menu').hidden=false;buildMenu();paintMap()}); $('#invBackTop').addEventListener('click',()=>$('#invClose').click());
