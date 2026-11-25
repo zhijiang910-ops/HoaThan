@@ -1933,6 +1933,18 @@ function drawFloorFx(M,c,cx,cy,hw,hh){if(!M.floor)return;const t=performance.now
   }else if(f.t==='fog'){for(let i=0;i<f.n;i++){const fx_=f.x0+((i*733)%(f.x1-f.x0))+Math.sin(t*.12+i)*70,fy_=f.y0+((i*311)%Math.max(1,f.y1-f.y0))+Math.sin(t*.1+i*2)*16;if(Math.abs(fx_-cx)>hw+260||Math.abs(fy_-cy)>hh+120)continue;const g=c.createRadialGradient(fx_,fy_,0,fx_,fy_,230);g.addColorStop(0,f.c);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.save();c.translate(fx_,fy_);c.scale(1,.28);c.translate(-fx_,-fy_);c.fillRect(fx_-230,fy_-230,460,460);c.restore()}
   }else if(f.t==='boat'){const m=MM[f.n],im=MIMG[f.n];if(!im||!im.complete||!im.naturalWidth)continue;const S=PS*(f.sc||1),bx=f.x+Math.sin(t*.12+f.x)*f.drift,by=f.y+Math.sin(t*.9+f.x*.01)*3;if(Math.abs(bx-cx)>hw+200||Math.abs(by-cy)>hh+200)continue;c.save();c.globalAlpha=.28;c.fillStyle='#000';c.beginPath();c.ellipse(bx,by+2,m.w*S*.42,m.h*S*.1,0,0,TAU);c.fill();c.globalAlpha=1;c.drawImage(im,Math.round(bx-m.ax*S),Math.round(by-m.ay*S),Math.round(m.w*S),Math.round(m.h*S));c.restore()}
  }}
+/* Rìa map: bên ngoài là vực tối đặc (màu M.edge) + dải mờ dần vào trong + sương trôi, thay cho dải nền sẫm cứng trước đây (chủ game: nhìn dỏm) */
+function drawMapEdge(M,c,cx,cy,hw,hh){const e=(M.edge||'#0a0a0a').replace('#',''),r=parseInt(e.slice(0,2),16),g=parseInt(e.slice(2,4),16),b=parseInt(e.slice(4,6),16),t=performance.now()/1000,W=340;
+ const col=a=>`rgba(${r},${g},${b},${a})`;
+ const L=cx-hw,R=cx+hw,T=cy-hh,B=cy+hh;
+ c.fillStyle=col(1);if(T<0)c.fillRect(L,T,R-L,-T);if(B>AH)c.fillRect(L,AH,R-L,B-AH);if(L<0)c.fillRect(L,0,-L,AH);if(R>AW)c.fillRect(AW,0,R-AW,AH);
+ if(T<W){const g1=c.createLinearGradient(0,0,0,W);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(L,0,R-L,W)}
+ if(B>AH-W){const g1=c.createLinearGradient(0,AH,0,AH-W);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(L,AH-W,R-L,W)}
+ if(L<W){const g1=c.createLinearGradient(0,0,W,0);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(0,T,W,B-T)}
+ if(R>AW-W){const g1=c.createLinearGradient(AW,0,AW-W,0);g1.addColorStop(0,col(1));g1.addColorStop(.25,col(.88));g1.addColorStop(.5,col(.58));g1.addColorStop(.75,col(.26));g1.addColorStop(1,col(0));c.fillStyle=g1;c.fillRect(AW-W,T,W,B-T)}
+ const fc=M.edgeFog||'rgba(150,150,160,.10)';
+ for(let i=0;i<14;i++){const side=i%4,k=((i*977)%1000)/1000;let x,y;if(side===0){x=L+(R-L)*k+Math.sin(t*.1+i)*60;y=AH-40}else if(side===1){x=L+(R-L)*k+Math.sin(t*.1+i)*60;y=40}else if(side===2){x=40;y=T+(B-T)*k+Math.sin(t*.1+i)*40}else{x=AW-40;y=T+(B-T)*k+Math.sin(t*.1+i)*40}
+  if(x<L-260||x>R+260||y<T-160||y>B+160)continue;const rg=c.createRadialGradient(x,y,0,x,y,260);rg.addColorStop(0,fc);rg.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=rg;c.save();c.translate(x,y);c.scale(1,side<2?.3:1);c.translate(-x,-y);c.fillRect(x-260,y-260,520,520);c.restore()}}
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
  if(pat){c.fillStyle=pat;c.fillRect(cx-hw,cy-hh,hw*2,hh*2)}
@@ -1942,7 +1954,7 @@ function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;c.save();c.globalAlpha=Math.min(1,(1-k)*2)*(d.a||1);c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w/2,-d.h/2,d.w,d.h);c.restore()}
  drawFloorFx(M,c,cx,cy,hw,hh);
  for(const d of decor)if(d.flat&&Math.abs(d.x-cx)<hw+400&&Math.abs(d.y-cy)<hh+300)drawProp(d);
- c.fillStyle='rgba(0,0,0,.42)';c.fillRect(cx-hw,cy-hh,hw*2,-(cy-hh));c.fillRect(cx-hw,AH,hw*2,cy+hh-AH);c.fillRect(cx-hw,0,-(cx-hw),AH);c.fillRect(AW,0,cx+hw-AW,AH)}
+ drawMapEdge(M,c,cx,cy,hw,hh)}
 
 const RUN_SWING_RETURN=0.88;
 function swingProgress(){
