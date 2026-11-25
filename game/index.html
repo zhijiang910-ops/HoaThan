@@ -1608,7 +1608,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <h3 class="cxh">Ngoại hình</h3>
    <div class="cxst"><canvas id="crPic" width="240" height="200"></canvas>
     <button class="cxar l" data-hair="-1" aria-label="Kiểu tóc trước"></button><button class="cxar r" data-hair="1" aria-label="Kiểu tóc sau"></button><div class="cxlock" id="crLock" hidden>Chưa có sprite</div></div>
-   <div class="cxhr"><b id="crHairN"></b><div class="cxsw2"><div id="crHairC" class="cxsw" title="Màu tóc"></div><i class="cxdiv"></i><div id="crOutC" class="cxsw" title="Màu áo"></div></div></div>
+   <div class="cxhr"><b id="crHairN"></b><div class="cxsw2"><div id="crOutC" class="cxsw" title="Màu áo"></div></div></div>
    
   </div>
   <div class="cxp cxC">
@@ -4562,18 +4562,25 @@ function finishRoute(){if(!G||!G.route)return;const rp=rprog();rp.clear[G.star]=
 /* ================= HỒ SƠ NHÂN VẬT · SẢNH · THỂ LỰC ================= */
 const HAIR={nam:[{k:'duoi',n:'Đuôi ngựa',on:1},{k:'bui',n:'Búi tó'},{k:'xoa',n:'Xõa dài'}],nu:[{k:'builua',n:'Búi dải lụa',on:1},{k:'buidoi',n:'Búi đôi'},{k:'duoi',n:'Đuôi ngựa'}]};
 const HAIRC=[{k:'den',n:'Đen',c:'#1a1210',on:1},{k:'nau',n:'Nâu',c:'#6a3a1a',on:1},{k:'bac',n:'Bạc',c:'#d8d8d0',on:1},{k:'do',n:'Đỏ',c:'#a8281a',on:1}];
-/* 25/11 (chủ game: chỉ nhuộm màu tóc, không làm kiểu tóc mới): nhuộm lúc chạy trên canvas. Tóc = pixel tối, ít bão hòa, trong đầu (40 px tính từ đỉnh sprite mỗi ô 160x128); viền (độ sáng <12) và đồ trang sức giữ nguyên. Độ sáng cũ ánh xạ sang dải màu mới. */
-const HAIR_RAMP={nau:[[28,14,6],[106,58,26],[176,112,64]],bac:[[96,98,106],[190,192,196],[244,244,240]],do:[[52,10,8],[168,40,26],[232,96,64]]};
-function hairKey(){try{if(!$('#create').hidden)return cr.hairC||'den';const p=prof();return(p&&p.hairC)||'den'}catch(e){return'den'}}
-/* 25/11 (chủ game: "đổi màu tóc và đổi màu trang phục cơ bản"): áo cơ bản (thân master: nam xanh navy hue ~218, nữ đỏ hue ~358) đổi sang Lục/Tím/Xám bằng cách xoay hue các pixel áo (độ sáng giữ nguyên). Chỉ áp cho sheet mặc định và sheet Quyền, KHÔNG áp cho áo mặc từ trang bị (Huyền Giáp, Bát Quái Bào). */
-const OUTC=[{k:'goc',n:'Gốc'},{k:'luc',n:'Lục',h:145,s:.9},{k:'tim',n:'Tím',h:275,s:.9},{k:'xam',n:'Xám',s:.08,v:.95}];
-const OUTC_SW={nam:{goc:'#445777',luc:'#3f7a55',tim:'#6a4a9a',xam:'#4a4a50'},nu:{goc:'#a53d3e',luc:'#3f7a55',tim:'#6a4a9a',xam:'#4a4a50'}};
+function hairKey(){return'den'}/* 25/11 (chủ game): bỏ chọn màu tóc, tóc luôn đen gốc */
+/* 25/11 (chủ game gửi ảnh 6 bộ áo, "lấy màu này, màu tóc khỏi"): màu áo cơ bản theo 6 bộ trong ảnh. Mỗi bộ = dải 3 mốc cho THÂN ÁO (pixel áo gốc, ánh xạ theo độ sáng) + dải 3 mốc cho VIỀN ÁO và dải buộc tóc (pixel xám xanh nhạt của sheet gốc). Bộ "Gốc" = sheet nguyên (nam xanh navy, nữ đỏ). Chỉ áp cho sheet mặc định và sheet Quyền, không áp cho áo trang bị (Huyền Giáp, Bát Quái Bào). Màu lấy từ ảnh: nguon/tham_chieu/trang_phuc_6_mau.png. */
+const OUTC=[{k:'goc',n:'Gốc'},
+{k:'nau',n:'Nâu',b:[[28,18,20],[70,47,52],[104,76,80]],t:[[98,86,68],[150,135,110],[200,184,150]]},
+{k:'denlam',n:'Đen viền lam',b:[[14,14,14],[38,38,38],[62,62,62]],t:[[76,100,100],[120,144,150],[176,200,204]]},
+{k:'luc',n:'Lục',b:[[30,38,30],[54,61,52],[84,98,80]],t:[[96,120,96],[144,168,144],[196,216,188]]},
+{k:'denkem',n:'Đen viền kem',b:[[14,13,13],[39,37,37],[64,60,60]],t:[[150,136,110],[216,204,180],[244,236,216]]},
+{k:'tiavang',n:'Tía viền vàng',b:[[26,16,20],[42,30,34],[72,50,54]],t:[[150,106,50],[212,166,90],[244,212,140]]}];
+const OUTC_SW={nam:{goc:'#445777'},nu:{goc:'#a53d3e'}};
+function outSw(o,g){if(o.k==='goc')return OUTC_SW[g].goc;return `linear-gradient(135deg,rgb(${o.b[1]}) 62%,rgb(${o.t[1]}) 62%)`}
 function outKey(){try{if(!$('#create').hidden)return cr.outC||'goc';const p=prof();return(p&&p.outC)||'goc'}catch(e){return'goc'}}
-function hairSheet(h){const k=hairKey(),R=HAIR_RAMP[k],ok=outKey(),O=OUTC.find(o=>o.k===ok),baseOut=/^hero_(nam|nu)(_qy)?$/.test(h&&h.id||''),doO=!!(O&&O.k!=='goc'&&baseOut),doH=!!(R&&h&&!h.id.endsWith('_hg'));if(!h||!h.ok||(!doO&&!doH))return h?h.img:null;const key=(doH?k:'den')+'|'+(doO?ok:'goc');h._hc=h._hc||{};if(h._hc[key])return h._hc[key];try{const W=h.img.width,H=h.img.height,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(h.img,0,0);const d=g.getImageData(0,0,W,H),a=d.data,hc=h.wg==='nu'?358:218;
- for(let cy=0;cy<H;cy+=128)for(let cx=0;cx<W;cx+=160){let top=-1;for(let y=0;y<128&&top<0;y++)for(let x=0;x<160;x++)if(a[((cy+y)*W+cx+x)*4+3]>0){top=y;break}if(top<0)continue;
-  for(let y=0;y<128;y++)for(let x=0;x<160;x++){const i=((cy+y)*W+cx+x)*4;if(a[i+3]<200)continue;const r=a[i],gg=a[i+1],b=a[i+2],mx=Math.max(r,gg,b),mn=Math.min(r,gg,b),L=0.3*r+0.59*gg+0.11*b;
-   if(doH&&y>=top&&y<top+40&&L>=12&&L<=100&&mx-mn<=26){const t=Math.min(1,Math.max(0,(L-12)/84)),u=t*2,j=u<1?0:1,f=u-j,A0=R[j],B0=R[j+1];a[i]=A0[0]+(B0[0]-A0[0])*f;a[i+1]=A0[1]+(B0[1]-A0[1])*f;a[i+2]=A0[2]+(B0[2]-A0[2])*f;continue}
-   if(doO&&mx>0){const sat=(mx-mn)/mx;if(sat>0.3){let hh;const dl=mx-mn;if(mx===r)hh=((gg-b)/dl+6)%6;else if(mx===gg)hh=(b-r)/dl+2;else hh=(r-gg)/dl+4;hh*=60;let dh=Math.abs(hh-hc);if(dh>180)dh=360-dh;if(dh<=26){const ns=Math.min(1,sat*(O.s==null?1:O.s)),nv=mx/255*(O.v||1),H2=(O.h==null?hh:O.h+(hh-hc))/60,hi=Math.floor(((H2%6)+6)%6),ff=((H2%6)+6)%6-hi,p_=nv*(1-ns),q_=nv*(1-ns*ff),t_=nv*(1-ns*(1-ff));const rgb=[[nv,t_,p_],[q_,nv,p_],[p_,nv,t_],[p_,q_,nv],[t_,p_,nv],[nv,p_,q_]][hi];a[i]=rgb[0]*255;a[i+1]=rgb[1]*255;a[i+2]=rgb[2]*255}}}}}
+function hairSheet(h){const ok=outKey(),O=OUTC.find(o=>o.k===ok),baseOut=/^hero_(nam|nu)(_qy)?$/.test(h&&h.id||'');if(!h||!h.ok||!O||O.k==='goc'||!baseOut)return h?h.img:null;const key=ok;h._hc=h._hc||{};if(h._hc[key])return h._hc[key];
+ const ramp=(R,t)=>{const u=Math.min(1,Math.max(0,t))*2,j=u<1?0:1,f=u-j,A0=R[j],B0=R[j+1];return[A0[0]+(B0[0]-A0[0])*f,A0[1]+(B0[1]-A0[1])*f,A0[2]+(B0[2]-A0[2])*f]};
+ try{const W=h.img.width,H=h.img.height,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(h.img,0,0);const d=g.getImageData(0,0,W,H),a=d.data,hc=h.wg==='nu'?358:218;
+ for(let q=0;q<a.length;q+=4){if(a[q+3]<200)continue;const r=a[q],gg=a[q+1],b=a[q+2],mx=Math.max(r,gg,b),mn=Math.min(r,gg,b),dl=mx-mn,L=0.3*r+0.59*gg+0.11*b;if(mx===0)continue;const sat=dl/mx;let hh=0;if(dl>0){if(mx===r)hh=((gg-b)/dl+6)%6;else if(mx===gg)hh=(b-r)/dl+2;else hh=(r-gg)/dl+4}hh*=60;
+  let dh=Math.abs(hh-hc);if(dh>180)dh=360-dh;let o=null;
+  if(sat>0.3&&dh<=26)o=ramp(O.b,(L-8)/82);
+  else if(hh>=195&&hh<=265&&sat>=0.06&&sat<=0.30&&L>=95&&L<=215)o=ramp(O.t,(L-95)/120);
+  if(o){a[q]=o[0];a[q+1]=o[1];a[q+2]=o[2]}}
  g.putImageData(d,0,0);h._hc[key]=c;return c}catch(e){h._hc[key]=h.img;return h.img}}
 const STA={max:100,cap:115,regenMs:15*60*1000};
 function prof(){return save.prof||null}
@@ -4651,8 +4658,7 @@ function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=sectOpen(cr.s
  $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="34" height="34" alt=""></span><b>${S0.n}</b>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
  $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này chưa mở khóa, chưa chơi được</em>'}`;
  $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
- $('#crHairC').innerHTML=HAIRC.map(h=>`<button class="cxc${cr.hairC===h.k?' on':''}${h.on?'':' lock'}" data-cc="${h.k}" ${h.on?'':'disabled'} title="${h.n}${h.on?'':' · chưa có sprite'}"><i style="background:${h.c}"></i></button>`).join('');
- $('#crOutC').innerHTML=OUTC.map(o=>`<button class="cxc${(cr.outC||'goc')===o.k?' on':''}" data-oc="${o.k}" title="${o.n}"><i style="background:${OUTC_SW[cr.gender][o.k]}"></i></button>`).join('');
+ $('#crOutC').innerHTML=OUTC.map(o=>`<button class="cxc${(cr.outC||'goc')===o.k?' on':''}" data-oc="${o.k}" title="${o.n}"><i style="background:${outSw(o,cr.gender)}"></i></button>`).join('');
  $('#crInfo').innerHTML=`<div><span>Vũ khí</span><b>${SC.weapon}</b></div><div><span>Sở trường</span><b>${SC.role}</b></div><div><span>Màu chủ đạo</span><b>${SC.color}</b></div>`;
  const go=$('#crGo');go.disabled=!open;
  if(!open){$('#crSkH').hidden=true;$('#crSk').innerHTML='';$('#crSkD').innerHTML=`<p>Bộ chiêu của ${SC.n} đang được chuẩn bị.</p>`;return}
