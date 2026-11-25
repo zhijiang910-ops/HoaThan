@@ -1136,6 +1136,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 /* ô đang chọn: cùng kích thước với ô khác, vòng sáng nằm TRONG ô (không phình ra ngoài) */
 .cxavatar.sect{border-color:rgba(255,214,140,.75);image-rendering:auto}
 .cxsect{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px}
+.cxavw{padding:6px 8px 8px;flex-shrink:0}.cxavw .cxh{margin:0 0 4px}.cxsb .sic.big img{width:34px;height:34px}.cxill #crBg{object-fit:cover;image-rendering:auto}
+@media (max-height:440px){.cxavw{padding:3px 6px 4px}.cxavw .cxh{display:none}.cxsb .sic.big img{width:24px;height:24px}}
 .cxsb{align-items:center;justify-content:center;align-content:center;text-align:center;min-width:0;gap:2px;height:auto}.cxsect{align-items:stretch}.cxsect .cxsb{justify-content:center;padding:6px 3px 8px;gap:4px;overflow:hidden}.cxsb .sic{margin-bottom:2px}.cxsb .sav{width:100%;max-width:56px;aspect-ratio:1;border-radius:4px;background-size:cover;background-position:50% 8%;box-shadow:inset 0 0 0 1px rgba(255,236,190,.4);image-rendering:auto}
 .cxsb b{font-size:9.5px;line-height:1.15;white-space:normal;min-height:0;margin:0;display:block;letter-spacing:0}.cxsb small{display:block;font:600 9.5px "Be Vietnam Pro",sans-serif;color:#a8987a}.cxsb .sic{display:flex;justify-content:center;align-items:center;height:18px;margin-top:1px}.cxsb .sic img{flex:none;min-width:18px;max-width:none;width:18px;height:18px;display:block;image-rendering:auto}/* icon phái: ảnh 128x128 (vector gốc của chủ game, đã thu bằng lọc mịn, bỏ nhiễu viền), hiển thị 36px; mỗi thẻ 1 icon */
 .cxsb.on .sav{box-shadow:inset 0 0 0 2px #ffd36a}
@@ -1557,9 +1559,9 @@ input,select,textarea,#crName{font-size:16px!important}
    
   </div>
   <div class="cxp cxC">
-   <div class="cxill"><img id="crBg" alt="">
-    <button id="crSceneOpen" class="crscene-open" type="button" aria-label="Xem tranh toàn cảnh" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button>
+   <div class="cxill"><img id="crBg" alt="" src="assets/ui/nen_tao_nhan_vat.jpg">
    </div>
+   <div class="cxavw"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
   </div>
   <div class="cxp cxR">
    <h3 class="cxh">Môn phái</h3><div id="crSect" class="cxw cxsect" role="group" aria-label="Chọn môn phái"></div>
@@ -1567,7 +1569,6 @@ input,select,textarea,#crName{font-size:16px!important}
    <h3 class="cxh" id="crSkH">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd" tabindex="0" role="region" aria-label="Mô tả võ học"></div>
   <div class="cxbar"><span class="crerr" id="crErr" role="status"></span><button id="crGo" class="btn gold">Khởi hành</button></div>
   </div>
-  <dialog id="crSceneDialog" class="crscene-dialog" aria-label="Tranh toàn cảnh"><img id="crSceneFull" alt=""><button id="crSceneClose" class="btn" type="button">Đóng</button></dialog>
  </div>
 </section>
 <section id="lobby" class="screen" hidden>
@@ -1788,7 +1789,7 @@ function drawWeaponArt(c,art,lvl,t,noAura){const w=WPN[art],im=WIMG[art];if(!w||
  if(noAura)return;const a=WAURA[lvl],ai=AIMG[lvl];if(!a||!ai||!ai.complete||!ai.naturalWidth)return;const fi=Math.floor(t*a[4])%a[3],sx=w[4]/56,sy=Math.max(0.6,Math.min(1,sx));
  c.save();c.scale(sx,sy);c.drawImage(ai,(fi%a[2])*a[0],Math.floor(fi/a[2])*a[1],a[0],a[1],a[5],a[6],a[0],a[1]);c.restore()}
 /* Trang phục theo bộ: mỗi bộ = 1 sheet nhân vật (không kiếm) dùng chung socket vũ khí. OUTFIT[tên Y phục] = hậu tố sheet */
-const OUTFIT={'Huyền Giáp':'hg'};/* trang phục theo MÔN PHÁI (24/11, theo ảnh minh họa chủ game): hậu tố sheet; chỉ dùng khi không mặc bộ đồ nào khác */const SECT_OUTFIT={maoson:'ms'};
+const OUTFIT={'Huyền Giáp':'hg','Bát Quái Bào':'ms'};/* 25/11: trang phục là MÓN TRANG BỊ (mặc y phục nào thì hiện bộ đó), không còn gắn theo môn phái: Bát Quái Bào = bộ Mao Sơn (sheet ms) *//* trang phục theo MÔN PHÁI (24/11, theo ảnh minh họa chủ game): hậu tố sheet; chỉ dùng khi không mặc bộ đồ nào khác */const SECT_OUTFIT={};
 for(const g of ['nam','nu'])for(const sfx of new Set([...Object.values(OUTFIT),...Object.values(SECT_OUTFIT)])){const m=JSON.parse(JSON.stringify(CHM['hero_'+g]));m.src='assets/hero_'+g+'_'+sfx+'.png';CHM['hero_'+g+'_'+sfx]=m}
 /* Song Quyền (24/11): thân không kiếm + 3 động tác đấm PixelLab (hàng y=384/512/640 của hero_{g}_qy.png, build_qy.py). Dùng khi weapon==='quyen' hoặc Luyện Công 'Tay không'. */
 for(const g of['nam','nu']){const m=JSON.parse(JSON.stringify(CHM['hero_'+g]));m.src='assets/hero_'+g+'_qy.png';const row=(y,fps,dur,hit)=>({fps,dur,hit,f:Array.from({length:8},(_,i)=>[i*160,y])});m.anims.attack=row(384,14,0.43,0.45);m.anims.attack2=row(512,14,0.41,0.45);m.anims.attack3=row(640,12,0.6,0.5);CHM['hero_'+g+'_qy']=m}
@@ -3624,7 +3625,7 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
  <button data-t="godmode" class="${TR.god_on?'on':''}">Bất tử</button>
  <button data-t="mob">+ Quái thật</button>
  <button data-t="reset">Đặt lại cọc</button>
- <button data-t="ao">Áo: ${TR.outfit==='hg'?'Huyền Giáp':'Mặc định'}</button>
+ <button data-t="ao">Áo: ${({hg:'Huyền Giáp',ms:'Bát Quái Bào'})[TR.outfit]||'Mặc định'}</button>
  <button data-t="wpn">Kiếm: ${({thanhphong:'Thanh Phong',thaia:'Thái A',tudien:'Tử Điện',hanthiet:'Hàn Thiết',tramyeu:'Trảm Yêu',thuong1:'Thương',mucanh:'Mực Ảnh',daoquy:'Quỷ Đầu Đao (Trảm Yêu Môn)',tichtruong:'Tích Trượng (Phục Ma Tự)',quyengang:'Găng Quyền (Thiên Cương Môn)',quatban:'Quạt Sắt (Huyền Linh Các)',cungluc:'Cung Truy Hồn (Truy Hồn Cốc)',none:'Tay không (Song Quyền)'})[TR.wpn||'thanhphong']}</button>
  <span id="trDps">ST/giây: 0</span>
  <button data-t="exit">Ra sảnh</button>`;
@@ -3641,7 +3642,7 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
   else if(k==='godmode'){TR.god_on=G.trGod=!TR.god_on;t.classList.toggle('on',TR.god_on)}
   else if(k==='mob'){for(let i=0;i<4;i++){const a=rnd(0,TAU);spawnEnemy(i===3?'can':'tieu',clamp(P.x+Math.cos(a)*260,40,AW-40),clamp(P.y+Math.sin(a)*200,40,AH-40))}}
   else if(k==='reset'){trPlaceDummies()}
-  else if(k==='ao'){TR.outfit=TR.outfit==='hg'?'':'hg';const g=HERO.wg||'nam';useHero(g,'kiem');t.textContent='Áo: '+(TR.outfit==='hg'?'Huyền Giáp':'Mặc định')}
+  else if(k==='ao'){TR.outfit=({'':'hg',hg:'ms',ms:''})[TR.outfit||'']||'hg';const g=HERO.wg||'nam';useHero(g,'kiem');t.textContent='Áo: '+(({hg:'Huyền Giáp',ms:'Bát Quái Bào'})[TR.outfit]||'Mặc định')}
   else if(k==='wpn'){const L=['thanhphong','thaia','tudien','hanthiet','tramyeu','mucanh','thuong1','daoquy','tichtruong','quyengang','quatban','cungluc','none'],N={mucanh:'Mực Ảnh',thanhphong:'Thanh Phong',thaia:'Thái A',tudien:'Tử Điện',hanthiet:'Hàn Thiết',tramyeu:'Trảm Yêu',thuong1:'Thương',daoquy:'Quỷ Đầu Đao (Trảm Yêu Môn)',tichtruong:'Tích Trượng (Phục Ma Tự)',quyengang:'Găng Quyền (Thiên Cương Môn)',quatban:'Quạt Sắt (Huyền Linh Các)',cungluc:'Cung Truy Hồn (Truy Hồn Cốc)',none:'Tay không (Song Quyền)'};TR.wpn=L[(L.indexOf(TR.wpn||'thanhphong')+1)%L.length];t.textContent='Kiếm: '+N[TR.wpn]}
   else if(k==='exit'){b.remove();showLobby();return}
   trSave()})}
@@ -4344,21 +4345,17 @@ function paintLobbyAvatar(profile){
 }
 const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hairC:'den',sk:0,avatars:{nam:9,nu:9},sect:'maoson'};
 
-function renderCreateScene(){
- const gender=cr.gender,n=cr.avatars[gender]||9;
- const img=$('#crBg'),sk=sectOfAvatar(n);
- img.classList.toggle('sect',!!sk);
- if(sk){img.src=SECTS[sk].avatar[gender];img.alt=SECTS[sk].n+', '+SECTS[sk].weapon;return}
- 
-}
+/* 25/11: ảnh nền CHUNG (không còn tranh minh họa theo phái). Muốn đổi: thay file assets/ui/nen_tao_nhan_vat.jpg (cùng tên), không cần sửa code. */
+function renderCreateScene(){const img=$('#crBg');if(img&&!img.getAttribute('src'))img.src='assets/ui/nen_tao_nhan_vat.jpg'}
 function avatarPosition(index){return (index%4)*100/3+'% '+Math.floor(index/4)*100+'%'}
-/* 24/11: không còn chọn avatar riêng; chọn môn phái thì avatar của phái đó đi kèm (chỉ số 9–14 theo SECT_KEYS) */
-function setCreateSect(k){if(!SECTS[k])k='maoson';cr.sect=k;const a=9+SECT_KEYS.indexOf(k);cr.avatars={nam:a,nu:a}}
-function renderCreateAvatars(){renderCreateScene()}
+/* 25/11: avatar TỰ CHỌN (6 chân dung, chỉ số 9–14), tách khỏi môn phái; môn phái chỉ quyết định vũ khí và bộ chiêu */
+function setCreateSect(k){if(!SECTS[k])k='maoson';cr.sect=k}
+function renderCreateAvatars(){const g=cr.gender,cur=cr.avatars[g]||9;const box=$('#crAvatars');if(!box)return;box.innerHTML=SECT_KEYS.map((k,i)=>{const n=9+i,on=cur===n;return `<button type="button" class="cxavatar sect" data-av="${n}" aria-pressed="${on}" aria-label="Ảnh đại diện ${i+1}" style="background-image:url('${SECTS[k].avatar[g]}');background-size:cover;background-position:50% 12%"></button>`}).join('')}
 function wIconHTML(k){const w=WICON[k]||{};if(w.src)return `<img src="${w.src}" alt="">`;const ci=w.g||0;return `<span class="gi" style="background-position:${-(ci%10)*100}% ${-((ci/10)|0)*100}%"></span>`}
 function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=P0?P0.gender:save.gender==='nu'?'nu':'nam';cr.hairI=Math.max(0,P0?HAIR[cr.gender].findIndex(h=>h.k===P0.hair):0);cr.hair=HAIR[cr.gender][cr.hairI].k;
  setCreateSect(P0&&P0.sect&&SECTS[P0.sect]?P0.sect:P0&&sectOfAvatar(avatarIndex(P0.avatar))||'maoson');
- renderCreateAvatars();
+ {const a0=P0?(avatarIndex(P0.avatar)||9):9;cr.avatars={nam:a0,nu:a0}}
+ renderCreateScene();renderCreateAvatars();
  $('#crGo').textContent=P0?'Lưu và về sảnh':'Khởi hành';
 cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
   clearInterval(window.__crh);let t=0;window.__crh=setInterval(()=>{if($('#create').hidden){clearInterval(window.__crh);return}crHero(t);t+=0.125},125)}
@@ -4374,7 +4371,7 @@ function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d'
  }}
 function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=!!SECT_WEAPON[cr.sect],W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
- $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${SECT_WEAPON[k]?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${SECT_WEAPON[k]?'':' · đang thử nghiệm'}"><span class="sav" style="background-image:url('${S0.avatar[cr.gender]}')"></span><b>${S0.n}</b><span class="sic" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="18" height="18" alt=""></span>${SECT_WEAPON[k]?'':'<i class="lk">鎖</i>'}</button>`}).join('');
+ $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${SECT_WEAPON[k]?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${SECT_WEAPON[k]?'':' · đang thử nghiệm'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="34" height="34" alt=""></span><b>${S0.n}</b><small>${S0.weapon}</small>${SECT_WEAPON[k]?'':'<i class="lk">鎖</i>'}</button>`}).join('');
  $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này đang được chuẩn bị, chưa chơi được</em>'}`;
  $('#crHairN').textContent=H0.n+' '+(cr.hairI+1)+'/'+HAIR[cr.gender].length;$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crHairC').innerHTML=HAIRC.map(h=>`<button class="cxc${cr.hairC===h.k?' on':''}${h.on?'':' lock'}" data-cc="${h.k}" ${h.on?'':'disabled'} title="${h.n}${h.on?'':' · chưa có sprite'}"><i style="background:${h.c}"></i></button>`).join('');
@@ -4388,17 +4385,13 @@ function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=!!SECT_WEAPON
  $('#crSkD').innerHTML=`<b>${X.g} ${X.name}</b><small>${KN}${X.cd&&X.kind!=='basic'?' · hồi '+String(X.cd).replace('.',',')+' giây':''}${X.mp?' · '+X.mp+' nội lực':''}</small><p>${X.desc}</p>`;
  $('#crSkD').scrollTop=0;}
 $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.id==='crGo')return;
- if(b.id==='crSceneOpen'){
-  const img=$('#crBg'),full=$('#crSceneFull');
-  full.src=img.src;full.alt=img.alt;$('#crSceneDialog').showModal();return;
- }
- if(b.id==='crSceneClose'){$('#crSceneDialog').close();return}
- if(b.dataset.sect){setCreateSect(b.dataset.sect);cr.sk=1;renderCreateScene()}
- if(b.dataset.cg){cr.gender=b.dataset.cg;cr.hairI=0;renderCreateAvatars()}
+ if(b.dataset.sect){setCreateSect(b.dataset.sect);cr.sk=1}
+ if(b.dataset.av){cr.avatars[cr.gender]=+b.dataset.av}
+ if(b.dataset.cg){cr.gender=b.dataset.cg;cr.hairI=0}
  if(b.dataset.hair){const n=HAIR[cr.gender].length;cr.hairI=(cr.hairI+(+b.dataset.hair)+n)%n}
  if(b.dataset.cc&&!b.disabled)cr.hairC=b.dataset.cc;
  if(b.dataset.sk)cr.sk=+b.dataset.sk;
- const H0=HAIR[cr.gender][cr.hairI];if(H0.on)cr.hair=H0.k;$('#crErr').textContent='';renderCreate()});
+ const H0=HAIR[cr.gender][cr.hairI];if(H0.on)cr.hair=H0.k;$('#crErr').textContent='';renderCreateAvatars();renderCreate()});
 $('#crName').addEventListener('input',()=>{$('#crErr').textContent=''});
 $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click()});
 $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim();

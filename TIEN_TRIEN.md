@@ -33,3 +33,8 @@ Game vốn là bản Tây Du, đang chuyển chủ đề sang **khử tà diệt
 5. Báo đúng sự thật, kể cả lỗi. Gửi ảnh hoặc video kiểm tra khi xong mỗi phần.
 6. Không tạo PR nếu chủ game không yêu cầu. Không ghi tên model vào commit hay code.
 7. Repo riêng tư, có asset mua giấy phép. Không công khai repo hay link game.
+
+## Cập nhật 25/11
+- Đổi hướng trang phục: phái chỉ quyết định vũ khí và bộ chiêu; trang phục thành món trang bị (Bát Quái Bào = bộ Mao Sơn, Huyền Giáp = bộ Huyền Giáp). Không làm trang phục riêng cho từng phái (tốn 330–480 lượt PixelLab mỗi bộ).
+- Màn tạo nhân vật: avatar tự chọn (6 ảnh), ảnh nền chung `assets/ui/nen_tao_nhan_vat.jpg` (đang là ảnh tạm, chủ game sẽ thay).
+- PixelLab bị chủ game cấm từ 25/11 (số dư thật ~1.683/4.600 lượt).
