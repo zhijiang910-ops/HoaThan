@@ -3291,6 +3291,8 @@ setInterval(hudFit,300);addEventListener('resize',()=>setTimeout(hudFit,50));
 function resize(){
  DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);/* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
  ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700),0.5,1.5);
+ /* 25/11: ép ZOOM×DPR về SỐ NGUYÊN (mỗi pixel art = cả số nguyên pixel màn hình) để nền/quái/nhân vật nét, không lởm chởm. Làm tròn lên nếu ≤+25%, không thì xuống nếu ≥-20%; tắt bằng window.__noSnap=1 */
+ if(!window.__noSnap){const S0=ZOOM*DPR,cu=Math.ceil(S0-0.02),fl=Math.floor(S0+0.02);let n=0;if(cu>=1&&cu/S0<=1.25)n=cu;else if(fl>=1&&fl/S0>=0.8)n=fl;if(n){const z=n/DPR;if(z>=0.5&&z<=1.5)ZOOM=z}}
  vign=document.createElement('canvas');vign.width=VW;vign.height=VH;const v=vign.getContext('2d');const g=v.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*0.3,VW/2,VH/2,Math.max(VW,VH)*0.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(12,3,0,.78)');v.fillStyle=g;v.fillRect(0,0,VW,VH);
 }
 addEventListener('resize',resize);viewApply();resize();
@@ -3779,7 +3781,7 @@ function render(){
  const c=ctx;X=ctx;
  c.setTransform(DPR,0,0,DPR,0,0);c.clearRect(0,0,VW,VH);
  if(G){const k=1-Math.pow(0.0005,1/60);G.cam.x+=(P.x-G.cam.x)*0.12;G.cam.y+=(P.y-G.cam.y)*0.12}
- const sh=G&&SET.shake&&!P.skillAim?G.shake:0,cx=G?G.cam.x:AW/2+Math.sin(performance.now()/6000)*300,cy=G?G.cam.y:AH/2+Math.cos(performance.now()/7000)*200;
+ const sh=G&&SET.shake&&!P.skillAim?G.shake:0,cx0=G?G.cam.x:AW/2+Math.sin(performance.now()/6000)*300,cy0=G?G.cam.y:AH/2+Math.cos(performance.now()/7000)*200,Sc=ZOOM*DPR,cx=Math.round(cx0*Sc)/Sc,cy=Math.round(cy0*Sc)/Sc;/* làm tròn camera theo pixel màn hình để nền không rung/mờ khi di chuyển */
  c.save();c.translate(VW/2+rnd(-sh,sh),VH/2+rnd(-sh,sh));c.scale(ZOOM,ZOOM);c.translate(-cx,-cy);
  if(G)G.cam.dx=cx,G.cam.dy=cy;
  drawWorld();
