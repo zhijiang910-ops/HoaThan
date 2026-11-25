@@ -1,0 +1,2 @@
+job c21d08ab-0f78-4a9a-9890-d33db42a9fa5 {'usage': None, 'background_job_id': 'c21d08ab-0f78-4a9a-9890-d33db42a9fa5', 'status': 'processing'}
+done 8 in 68 s {'seed': 31, 'type': 'done', 'action': 'finalizing', 'status': 'initializing', 'progress': 0.17659134621167447, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': 'ec24aede-9479-42f0-af7a-d49a0901b8a7', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-25T02:33:19.295893+00:00', 'estimated_wait_seconds': 0}

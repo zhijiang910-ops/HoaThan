@@ -1,0 +1,2 @@
+job 9ab939a2-04ac-4d93-9041-18b2062046bd {'usage': None, 'background_job_id': '9ab939a2-04ac-4d93-9041-18b2062046bd', 'status': 'processing'}
+done 8 in 62 s {'seed': 47, 'type': 'message_progress', 'action': 'finalizing', 'status': 'initializing', 'progress': 1.0, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': '5818c728-2912-4911-be65-07767ace1d03', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-25T02:33:31.265507+00:00', 'estimated_wait_seconds': 0}

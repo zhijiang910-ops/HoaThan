@@ -1,0 +1,2 @@
+job 702f025b-ca26-4b45-bc7f-e2476e06d0f3 {'usage': None, 'background_job_id': '702f025b-ca26-4b45-bc7f-e2476e06d0f3', 'status': 'processing'}
+done 8 in 99 s {'seed': 47, 'type': 'done', 'action': 'finalizing', 'status': 'initializing', 'progress': 0.925, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': '29213db8-34bf-45af-b841-c5c8c14f2fbc', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-25T02:33:15.328153+00:00', 'estimated_wait_seconds': 0}

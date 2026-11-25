@@ -1,0 +1,2 @@
+job fc198039-000b-48cf-83f2-86efa2a8eba6 {'usage': None, 'background_job_id': 'fc198039-000b-48cf-83f2-86efa2a8eba6', 'status': 'processing'}
+done 8 in 49 s {'seed': 31, 'type': 'message_done', 'action': 'finalizing', 'status': 'initializing', 'progress': 0.13790246340413093, 'flow_kind': 'animation', 'billing_usage': {'usd': 0.0, 'type': 'generations', 'generations': 3}, 'generation_id': 'b416c5fc-6433-4c2c-b01b-1a92db4fedf5', 'queue_position': 0, 'billing_charged': True, 'generation_started_at': '2026-11-25T02:33:11.866912+00:00', 'estimated_wait_seconds': 0}
