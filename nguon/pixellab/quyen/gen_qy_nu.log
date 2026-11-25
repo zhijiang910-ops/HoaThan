@@ -1,0 +1,3 @@
+nu a 9 {'usd': 0.0, 'type': 'generations', 'generations': 3, 'cost_if_paid': 0.016758818050225575}
+nu b 9 {'usd': 0.0, 'type': 'generations', 'generations': 3, 'cost_if_paid': 0.020313515563805895}
+nu c 9 {'usd': 0.0, 'type': 'generations', 'generations': 3, 'cost_if_paid': 0.020552446683247884}
