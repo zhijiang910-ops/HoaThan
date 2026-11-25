@@ -8,6 +8,16 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
  document.documentElement.classList.add('touch-device');
 }
 </script>
+<script>
+/* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
+(function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
+ var Q=[],ESS=/hero_(nam|nu)(_ns|_hand)?\.png|portraits\/avatar-(nam|nu)\.webp|assets\/ui\/|\/ava_/;
+ window.__bootQ={hold:true};
+ Object.defineProperty(HTMLImageElement.prototype,'src',{configurable:true,enumerable:true,get:function(){return d.get.call(this)},set:function(v){if(window.__bootQ.hold&&!ESS.test(String(v))){Q.push([this,v]);return}d.set.call(this,v)}});
+ window.__bootRelease=function(){window.__bootQ.hold=false;var a=Q.splice(0);for(var i=0;i<a.length;i++)d.set.call(a[i][0],a[i][1])};
+ setTimeout(function(){if(window.__bootQ.hold)window.__bootRelease()},20000);/* chốt an toàn */
+})();
+</script>
 <title>Khử Tà Diệt Ma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Noto+Serif:wght@600;800&family=Ma+Shan+Zheng&family=Silkscreen:wght@700&display=swap" rel="stylesheet">
@@ -829,6 +839,23 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .tlbook b{font:400 24px/1 "Ma Shan Zheng","Noto Serif",serif;color:#ffd36a}
 .tlbook span{font:700 13px "Be Vietnam Pro",sans-serif;color:#ffe9b0}
 .tlcoin{margin-top:6px;font:700 13px "Be Vietnam Pro",sans-serif;color:#f0c45a}
+
+/* ===== màn chờ + thanh tải (25/11) ===== */
+#ldg{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));background:#0a070d;color:#e6dcc8;opacity:1;transition:opacity .35s;font-family:"Be Vietnam Pro",sans-serif}
+#ldg[hidden]{display:none}#ldg.out{opacity:0;pointer-events:none}
+#ldg .lbg{position:absolute;inset:0;background:url(assets/ui/nen_tao_nhan_vat.jpg) center 35%/cover no-repeat;filter:saturate(.9) brightness(.8)}
+#ldg .lbg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(8,5,10,.55),rgba(8,5,10,.12) 34%,rgba(8,5,10,.78) 72%,rgba(8,5,10,.96))}
+#ldg .lt{position:absolute;top:max(12px,env(safe-area-inset-top));left:0;right:0;text-align:center;font:700 clamp(20px,5.6vh,34px) "Noto Serif","Ma Shan Zheng",serif;color:#e8c878;letter-spacing:.06em;text-shadow:0 2px 10px #000,0 0 18px rgba(200,120,40,.35)}
+#ldg .lt small{display:block;font-size:.5em;letter-spacing:.5em;color:#c9a45e;margin-top:2px}
+#ldg .lbx{position:relative;width:min(560px,92vw);display:grid;gap:7px;justify-items:center}
+#ldg .ls{font:600 13px "Be Vietnam Pro",sans-serif;color:#d8c9a8}
+#ldg .lbar{width:100%;height:12px;border:1px solid #7a3448;background:rgba(10,6,10,.8);padding:2px;box-sizing:border-box;box-shadow:0 0 0 1px #000,inset 0 0 6px #000}
+#ldg .lbar i{display:block;height:100%;width:0;background:linear-gradient(#e8a24a,#b8423a 60%,#7a2430);box-shadow:0 0 8px rgba(232,162,74,.55);transition:width .12s linear}
+#ldg .lp{font:700 12px "Be Vietnam Pro",sans-serif;color:#c9a45e}
+#ldg .ltip{width:100%;border:1px solid #5a2f3c;background:rgba(14,9,12,.78);padding:7px 11px;box-sizing:border-box;text-align:left;min-height:48px}
+#ldg .ltip span{display:block;font:700 10.5px "Be Vietnam Pro",sans-serif;letter-spacing:.14em;color:#b8955a;text-transform:uppercase;margin-bottom:3px}
+#ldg .ltip p{margin:0;font:500 13px/1.4 "Be Vietnam Pro",sans-serif;color:#e6dcc8;transition:opacity .25s}
+@media (max-height:340px){#ldg .lt{font-size:18px}#ldg .lt small{display:none}#ldg .lbx{gap:4px}#ldg .ls{font-size:11.5px}#ldg .ltip{padding:4px 9px;min-height:36px}#ldg .ltip span{display:none}#ldg .ltip p{font-size:11.5px;line-height:1.3}#ldg .lbar{height:10px}}
 #fade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:60;transition:opacity .4s}
 #fade.on{opacity:1}
 @media (max-height:520px){.tnl{max-height:calc(44*var(--vh));gap:3px;margin-top:4px}.tnr{padding:3px 6px}.tng,.tnr .item{width:28px;height:28px;font-size:17px}.tni b{font-size:12px}.tni small{font-size:10px}.tnr .btn{min-height:28px;min-width:66px;font-size:12px}
@@ -1554,6 +1581,9 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 </head>
 <body>
 <canvas id="cv"></canvas>
+<div id="ldg" role="status" aria-live="polite"><div class="lbg"></div><div class="lt">Khử Tà Diệt Ma<small>驅邪滅魔</small></div>
+ <div class="lbx"><div class="ls" id="ldgS">Đang khai mở thiên địa…</div><div class="lbar"><i id="ldgB"></i></div><b class="lp" id="ldgP">0%</b>
+  <div class="ltip"><span>Chỉ dẫn</span><p id="ldgTip"></p></div></div></div>
 
 <div id="hud" hidden>
  <div id="ava"><button id="avaBtn" tabindex="-1" aria-hidden="true"><canvas id="avaC" width="64" height="64"></canvas><b id="avaLv">1</b><em class="avtag">Thần Giáng!</em></button><div class="avn"><span id="avaName">Người phàm</span><div class="axp"><b id="lvlv">Cấp 1</b><div class="axb"><i id="xpfill"></i></div><em id="xptxt"></em></div><div class="acp" title="Lực chiến"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="cpv">0</b></div><small id="avaSt" hidden></small><div id="avaFx"></div></div></div>
@@ -1901,7 +1931,8 @@ function sfx(n,vol,gap){if(MUTE||!AC||AC.state!=='running'||!SBUF[n])return;cons
  const src=AC.createBufferSource();src.buffer=SBUF[n];const g=AC.createGain();g.gain.value=Math.min(1,vol==null?0.5:vol);src.connect(g);g.connect(AC._g);s.live++;voices++;src.onended=()=>{s.live--;voices--;try{g.disconnect()}catch(e){}};src.start()}
 const preDecode=i=>{try{i.decode&&i.decode().catch(()=>{})}catch(e){}};
 /* 25/11 tối ưu tải: ảnh lớn chỉ tải khi dùng lần đầu (getter không liệt kê được nên Object.values/for-in không kéo cả đống về). Trước đây 420 file 37,6 MB tải ngay khi mở game. */
-const lazyImg=(obj,key,i,src,after)=>{let on=false;Object.defineProperty(obj,key,{configurable:true,enumerable:false,get(){if(!on){on=true;i.src=src;after&&after(i)}return i}});return i};
+const PENDING=new Set();
+const lazyImg=(obj,key,i,src,after)=>{let on=false;Object.defineProperty(obj,key,{configurable:true,enumerable:false,get(){if(!on){on=true;if(!i.complete||!i.naturalWidth){PENDING.add(i);const dn=()=>PENDING.delete(i);i.addEventListener('load',dn);i.addEventListener('error',dn)}i.src=src;after&&after(i)}return i}});return i};
 const VFX_CLASS={god:'wk_',dao:'dq_',truong:'pm_',quat:'hl_',cung:'th_',quyen:'qy_'},LAZY_VFX_RE=/^(pm_|th_|dq_|hl_|qy_|wk_)/,_nvf=new Set();
 function needVfxFor(w){const pf=VFX_CLASS[w];if(!pf||_nvf.has(pf))return;_nvf.add(pf);for(const n in SPX)if(n.startsWith(pf))VFX[n]}/* chạm vào để bắt đầu tải hiệu ứng của phái đang chơi */
 var pmT=0;
@@ -2717,7 +2748,7 @@ function newRun(skip){
  G=null;
  for(const k of['lobby','create','menu','inv'])$('#'+k).hidden=true;
  if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();needVfxFor(sel.weapon);if(sel.god==='wukong')needVfxFor('god');if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
- const W=WEAPONS[sel.weapon],Gd=GODS[sel.god];buildDecor(sel.map);warmGPU();
+ const W=WEAPONS[sel.weapon],Gd=GODS[sel.god];buildDecor(sel.map);warmGPU();loadGate('Đang mở lối: '+((MAPS[sel.map]&&MAPS[sel.map].name)||'chiến trường')+'…');
  G={cfg:{...sel},diff:STARS[sel.star],route:'tuyet',rmap:sel.map,star:sel.star,keo:!!sel.keo,keoN:0,keoDone:false,path:null,matRun:{duoc:0,hiem:0},wave:0,t:0,waveT:0,waveDur:0,enemies:[],corpses:[],decals:[],stage:sel.star,sw:1,chest:null,nextStage:false,eproj:[],pproj:[],zones:[],haz:[],fx:[],nums:[],orbs:[],allies:[],spawnQ:[],later:[],parts:[],
   kills:0,coins:0,dmgDealt:0,level:1,xp:0,picks:0,lvWave:0,reroll:3,shake:0,freeze:0,slow:0,paused:false,over:false,cam:{x:AW/2,y:AH/2},spawnAcc:0,packT:6,eliteT:[],clearing:0,qs:[],ev:null,evT:40,noHit:0,mk:[],mkRe:0,brk:[],brkT:4,wTarget:30,wK:0,wC:0,wD:0,wT:0,flash:0};
  P={x:AW/2,y:AH/2,r:14,facing:1,moveAng:0,aimAng:0,t:0,moving:false,av:0,atkT:0,atkAng:0,swingDir:1,thrust:0,dashT:0,dashCd:0,dashAng:0,inv:0,hurt:0,kx:0,ky:0,
@@ -4863,7 +4894,7 @@ const amDiff=f=>({n:'Âm Giới',hp:1+0.14*(f-1),dmg:1+0.07*(f-1),spawn:1});
 function amEnterFloor(f){const F=amFloor(f),A=G.am;
  fade(()=>{cancelSkillAim();P.manualQueue=null;P.swordGuard=null;if(P.cutC)endCutC();if(P.form==='god')revert(true);
   A.floor=f;A.phase='clear';A.guardOut=false;A.chest=null;A.portal=null;A.leaving=false;A.prog='';A.pct=0;A.hint='';
-  G.cfg.map=F.map;buildDecor(F.map);G.diff=amDiff(f);G.stage=1+Math.floor((f-1)/3);G.wave=Math.min(9,2+f);G.sw=f;G.state='play';
+  G.cfg.map=F.map;buildDecor(F.map);loadGate('Đang xuống tầng '+f+': '+((MAPS[F.map]&&MAPS[F.map].name)||'Âm Giới')+'…');G.diff=amDiff(f);G.stage=1+Math.floor((f-1)/3);G.wave=Math.min(9,2+f);G.sw=f;G.state='play';
   G.enemies=[];G.spawnQ=[];G.brk=[];G.orbs=[];G.eproj=[];G.pproj=[];G.haz=[];G.zones=[];G.corpses=[];G.decals=[];G.later=[];G.allies=[];G.ev=null;G.boss=null;G.chest=null;G.clearing=0;
   P.x=AW/2;P.y=AH/2;G.cam.x=P.x;G.cam.y=P.y;P.inv=1.5;P.hp=S.hp;P.mp=Math.max(P.mp,S.mp*0.6);
   const n=Math.min(64,14+3*f);A.total=n+F.elites;
@@ -5580,13 +5611,45 @@ $('#menuBtn').addEventListener('click',()=>{document.body.classList.remove('play
 /* ================= LOOP ================= */
 let lastT=performance.now(),lastTutControl=null;
 let __cov=null;function coverOn(){__cov=__cov||['lobby','create','inv'].map(k=>document.getElementById(k));return __cov.some(e=>e&&!e.hidden)}
+/* ===== MÀN CHỜ + THANH TẢI (25/11, chủ game: nên có màn chờ kèm tranh minh họa và chỉ dẫn) =====
+   - Lúc mở game: màn chờ đến khi nhân vật sẵn sàng (tối thiểu 0,7 s), rồi thả hàng đợi tải nền (xem script đầu head).
+   - Mỗi lần vào trận/xuống tầng: sau khi dựng map, nếu còn ảnh đang tải (nền map, vật, hiệu ứng phái) thì đóng băng game và hiện thanh tải thật (đếm số ảnh); xong mới chơi tiếp. */
+const LDG_TIPS=['Chạm giữ vòng điều khiển ở góc trái dưới để di chuyển; nhân vật tự đánh quái gần nhất.',
+ 'Bấm các ô kỹ năng (Q, F, X, C) để thi triển chiêu; chiêu có hồi chiêu và tốn nội lực.',
+ 'Nút Lướt giúp thoát khỏi vòng vây của âm binh.',
+ 'Âm Giới: diệt âm binh, hạ kẻ canh tầng, mở rương rồi bước vào cổng tím để xuống tầng sau.',
+ 'Gục ngã trong Âm Giới là mất lượt, nhưng mốc các trùm đã hạ vẫn được giữ.',
+ 'Rương trùm luôn có trang bị; có thể rơi Bát Quái Bào hoặc Huyền Giáp.',
+ 'Mặc trang bị phải đủ cấp của phẩm; xem "Yêu cầu Cấp" trong chi tiết món đồ.',
+ 'Kiếm cường hóa +6 sẽ mở đòn C Phá Thế Trảm.',
+ 'Mỗi môn phái một vũ khí và bộ chiêu riêng; hiện Mao Sơn Phái và Thiên Cương Môn đã mở.',
+ 'Thần Giáng: bấm ô thần tướng để hóa thân, mỗi thần tướng có kỹ năng riêng.'];
+const LDG={el:$('#ldg'),bar:$('#ldgB'),pct:$('#ldgP'),sub:$('#ldgS'),tip:$('#ldgTip'),shown:false,p:0,tgt:0,tipI:Math.floor(Math.random()*LDG_TIPS.length),tipT:0,anim:0,hideT:0};
+function ldgTipNext(){const t=LDG.tip;t.style.opacity=0;setTimeout(()=>{t.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];t.style.opacity=1},220)}
+function ldgDraw(){LDG.p+=(LDG.tgt-LDG.p)*0.22;if(Math.abs(LDG.tgt-LDG.p)<0.002)LDG.p=LDG.tgt;const v=Math.round(LDG.p*100);LDG.bar.style.width=v+'%';LDG.pct.textContent=v+'%'}
+function ldgOpen(label){clearTimeout(LDG.hideT);LDG.el.hidden=false;LDG.el.classList.remove('out');LDG.shown=true;LDG.p=0;LDG.tgt=0;LDG.sub.textContent=label||'Đang chuẩn bị…';LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tip.style.opacity=1;ldgDraw();clearInterval(LDG.anim);LDG.anim=setInterval(ldgDraw,60);clearInterval(LDG.tipT);LDG.tipT=setInterval(ldgTipNext,4200)}
+function ldgClose(){LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
+const assetsBusy=()=>PENDING.size>0||!!(HERO&&!HERO.ok);
+function loadGate(label){/* gọi sau khi dựng map + chọn vũ khí: chờ mọi ảnh cần cho trận */
+ try{useHero(sel.gender,sel.weapon)}catch(e){}
+ if(!assetsBusy())return;
+ window.__LOADING=true;const t0=performance.now(),n0=Math.max(1,PENDING.size);let shown=false,poll=0;
+ const finish=()=>{clearInterval(poll);window.__LOADING=false;if(shown)ldgClose()};
+ poll=setInterval(()=>{const el=performance.now()-t0;
+  if(!shown&&el>250){shown=true;ldgOpen(label)}
+  if(shown){const done=1-PENDING.size/Math.max(n0,PENDING.size);LDG.tgt=Math.min(0.98,Math.max(LDG.tgt,done*0.97+(HERO&&HERO.ok?0.03:0)))}
+  if(!assetsBusy()||el>25000)finish()},80)}
+/* mở game: màn chờ tới khi nhân vật sẵn sàng */
+(function(){const t0=performance.now(),g=(save.prof&&save.prof.gender)||'nam',ready=()=>{const h=CH['hero_'+g];return !h||h.ok};
+ LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tipT=setInterval(ldgTipNext,4200);LDG.anim=setInterval(()=>{const el=performance.now()-t0;LDG.tgt=Math.max(LDG.tgt,Math.min(0.92,1-Math.exp(-el/1600)));ldgDraw()},60);
+ const poll=setInterval(()=>{const el=performance.now()-t0;if((ready()&&el>=700)||el>20000){clearInterval(poll);if(window.__bootRelease)window.__bootRelease();window.__bootDone=Math.round(el);LDG.tgt=1;setTimeout(()=>{clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.shown=false;ldgClose()},150)}},100)})();
 function frame(now){
  const dt=Math.min(0.05,(now-lastT)/1000);lastT=now;
  if(rotationBlocked()){lastTutControl=null;requestAnimationFrame(frame);return}
  try{
   const tutorial=tutControl(), waiting=tutorial||G?.inspect;
   if(tutorial&&$('#tutShade').hidden||G?.tut&&G.tut.step!==2)tutRender();
-  if(G&&G.state==='play'&&!G.paused&&!waiting){update(dt*(G.trScale||1));if(G&&G.training)trainingTick(dt)}
+  if(G&&G.state==='play'&&!G.paused&&!waiting&&!window.__LOADING){update(dt*(G.trScale||1));if(G&&G.training)trainingTick(dt)}
   if((!waiting||waiting!==lastTutControl)&&(G||!coverOn()))render();
   lastTutControl=waiting;
   hud(waiting?0:dt);
