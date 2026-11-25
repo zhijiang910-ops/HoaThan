@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""VFX Thiên Cương Môn (Quyền), tự vẽ pixel bằng code (0 lượt PixelLab): trắng bạc + đỏ sẫm.
+"""VFX Thiên Cương Môn (Quyền), tự vẽ pixel bằng code (0 lượt PixelLab): trắng tím + tím lam (đổi 25/11 từ trắng bạc + đỏ sẫm).
  qy_an.png  = Thiên Cương ấn dưới đất (vòng bạc, 7 sao Bắc Đẩu nối vạch, vòng đỏ, ba nan)
  qy_hit.png = chớp va chạm quyền: 6 khung 96x96 (sheet 3 cột x 2 hàng): lõi trắng nổ + vòng đỏ + tia tỏa
 Chạy: python3 cong_cu/claude/qy_assets.py"""
@@ -7,12 +7,12 @@ import math,random
 from PIL import Image,ImageDraw,ImageFilter
 import numpy as np
 OUT='game/assets/vfx/'
-SIL=(226,228,236,255);SIL2=(150,154,170,255);RED=(176,36,44,255);RED2=(110,20,28,255);WH=(255,255,255,255)
+SIL=(214,200,255,255);SIL2=(130,112,214,255);RED=(120,72,236,255);RED2=(62,34,150,255);WH=(255,255,255,255)
 # ---- ấn ----
 S=220;C=110
 img=Image.new('RGBA',(S,S),(0,0,0,0))
 bg=Image.new('RGBA',(S,S),(0,0,0,0));bd=ImageDraw.Draw(bg)
-bd.ellipse((C-104,C-104,C+104,C+104),fill=(150,154,170,40));bd.ellipse((C-62,C-62,C+62,C+62),fill=(176,36,44,52))
+bd.ellipse((C-104,C-104,C+104,C+104),fill=(130,112,214,40));bd.ellipse((C-62,C-62,C+62,C+62),fill=(120,72,236,52))
 img=Image.alpha_composite(bg,img);d=ImageDraw.Draw(img)
 def ring(r,w,col):d.ellipse((C-r,C-r,C+r,C+r),outline=col,width=w)
 ring(106,2,SIL);ring(101,1,SIL2);ring(64,2,RED);ring(58,1,RED2)
@@ -41,11 +41,11 @@ for f in range(N):
     r=6+k*34;al=int(255*(1-k**1.6))
     core=int(16*(1-k)+3)
     fd.ellipse((cx-core,cy-core,cx+core,cy+core),fill=(255,255,255,al))
-    fd.ellipse((cx-r,cy-r,cx+r,cy+r),outline=(220,226,240,al),width=2)
-    r2=r*0.62;fd.ellipse((cx-r2,cy-r2,cx+r2,cy+r2),outline=(176,36,44,int(al*0.95)),width=2)
+    fd.ellipse((cx-r,cy-r,cx+r,cy+r),outline=(206,196,255,al),width=2)
+    r2=r*0.62;fd.ellipse((cx-r2,cy-r2,cx+r2,cy+r2),outline=(120,72,236,int(al*0.95)),width=2)
     for ang,ln in rays:
         l0=r*0.6;l1=r*(0.9+0.55*ln)
-        fd.line((cx+math.cos(ang)*l0,cy+math.sin(ang)*l0,cx+math.cos(ang)*l1,cy+math.sin(ang)*l1),fill=(255,236,230,int(al*0.9)),width=1)
+        fd.line((cx+math.cos(ang)*l0,cy+math.sin(ang)*l0,cx+math.cos(ang)*l1,cy+math.sin(ang)*l1),fill=(232,224,255,int(al*0.9)),width=1)
     gl=fr.filter(ImageFilter.GaussianBlur(2));g=np.array(gl).astype(float);g[...,3]*=0.6
     fr=Image.alpha_composite(Image.fromarray(g.clip(0,255).astype(np.uint8)),fr)
     sheet.alpha_composite(fr,((f%3)*W,(f//3)*W))
