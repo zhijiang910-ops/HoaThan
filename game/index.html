@@ -3608,7 +3608,7 @@ function drawZone(z){
    c.save();c.translate(s.x,s.y);if(wart){c.rotate(s.ang);c.scale(wk,wk);c.translate(-WPN[wart][4]/2+WPN[wart][2]*0,0);drawWeaponOutline(c,wart,1.3/wk);drawWeaponArt(c,wart,0,0,1);}else{c.rotate(s.ang-Math.PI/2);c.scale(S0,S0);c.drawImage(VFX.hp_guard,-64,-64,128,128)}c.restore()}}
  else if(z.kind==='blades'){c.globalCompositeOperation='lighter';for(let i=0;i<z.n;i++){const an=z.rot+i*TAU/z.n,bx=z.x+Math.cos(an)*z.r,by=z.y-10+Math.sin(an)*z.r*0.8;c.save();c.translate(bx,by);c.rotate(an+Math.PI/2);if(vok('wanjian_sword')){c.globalCompositeOperation='source-over';c.drawImage(VFX.wanjian_sword,-30,-36,60,60);c.globalCompositeOperation='lighter';c.restore();continue}c.fillStyle='rgba(120,200,255,.35)';ell(0,0,7,20);c.fillStyle='#dff2ff';c.beginPath();c.moveTo(0,-18);c.lineTo(3,4);c.lineTo(0,9);c.lineTo(-3,4);c.fill();c.restore()}}
  else if(z.kind==='vkx'){/* VẠN KIẾM QUY TÔNG (ultimate, 24/11 làm lại theo video mod kiếm băng): nền tối đi + trận pháp rune xoay dưới chân + 8 kiếm CẦM TAY nhô lên từ đất (cột sáng, tia điện, phát sáng) + đại kiếm giữa trận; 6 đợt bay theo làn ngắm (1,2 s + 0,32 s/đợt) kèm luồng sáng quét làn, đại kiếm phóng cuối */
-  const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,AS=1.7,wk=(()=>{const nz=Math.max(1,ZOOM*DPR);return Math.max(1,Math.round(1.0*nz))/nz})(),L=WPN[art][4]*wk,gy0=z.y+6,ca=z.ca,sa=z.sa,tt=z.t,N=z.n,order=[],LAST=1.2+5*0.32,BIG=LAST+0.1,ENDT=BIG+0.4+0.2;
+  const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,AS=1.7,wk=(()=>{const nz=Math.max(1,ZOOM*DPR);return Math.max(1,Math.round(2.0*nz))/nz})(),CKok=CKI.complete&&CKI.naturalWidth>0,ks1=(()=>{const nz=Math.max(1,ZOOM*DPR);return Math.max(1,Math.round(nz))/nz})(),L=WPN[art][4]*wk,gy0=z.y+6,ca=z.ca,sa=z.sa,tt=z.t,N=z.n,order=[],LAST=1.2+5*0.32,BIG=LAST+0.1,ENDT=BIG+0.4+0.2;
   const rnd2=(s)=>{const x=Math.sin(s*12.9898)*43758.5453;return x-Math.floor(x)},lowfx=MOBILE;
   const bell=tt<0.35?tt/0.35:tt<ENDT-0.2?1:Math.max(0,1-(tt-(ENDT-0.2))/0.5);
   if(bell>0.01){c.save();c.globalAlpha=0.3*bell;c.fillStyle='#050a18';c.fillRect(z.x-900,z.y-650,1800,1300);c.restore()}
@@ -3622,7 +3622,7 @@ function drawZone(z){
   for(let i=0;i<N;i++){const phi=i*TAU/N+TAU/(2*N);order.push({i,phi,gx:z.x+Math.cos(phi)*78,gy:gy0+Math.sin(phi)*26,big:0})}
   order.push({i:N,phi:-Math.PI/2,gx:z.x,gy:gy0-14,big:1});
   order.sort((a,b)=>a.gy-b.gy);
-  for(const o of order){const i=o.i,big=o.big,wave=Math.floor(i*6/N),tl=big?BIG:1.2+wave*0.32+(i%3)*0.035,fl=big?0.4:0.36,lat=big?0:((i%4)-1.5)*16,ri=big?0.2:0.05+i*0.06,rd=big?0.6:0.45,rk=clamp((tt-ri)/rd,0,1),re=1-Math.pow(1-rk,3),lean=big?0:Math.cos(o.phi)*0.32,standA=-Math.PI/2+lean,SZ=big?2:1,LL=L*SZ;
+  for(const o of order){const i=o.i,big=o.big,wave=Math.floor(i*6/N),tl=big?BIG:1.2+wave*0.32+(i%3)*0.035,fl=big?0.4:0.36,lat=big?0:((i%4)-1.5)*16,ri=big?0.2:0.05+i*0.06,rd=big?0.6:0.45,rk=clamp((tt-ri)/rd,0,1),re=1-Math.pow(1-rk,3),lean=big?0:Math.cos(o.phi)*0.32,standA=-Math.PI/2+lean,SZ=big?(CKok?1:1):1,LL=big&&CKok?CKI.naturalHeight*ks1:L*SZ;
    const bob=tt>ri+rd&&tt<tl?Math.sin(tt*6+i)*2.5:0;let cx_,cy_,ang,al=1,clip=false;
    if(tt<tl){const dx=Math.sin(lean),dy=-Math.cos(lean);cx_=o.gx+dx*LL/2;cy_=o.gy+dy*LL/2+(1-re)*LL*0.95+bob;ang=standA;clip=rk<1;al=Math.min(1,rk*4)}
    else{const k=Math.min(1,(tt-tl)/fl),e=k*k,dx=Math.sin(lean),dy=-Math.cos(lean),sx=o.gx+dx*LL/2,sy=o.gy+dy*LL/2,ex=z.x+ca*560-sa*lat,ey=z.y-20+sa*560+ca*lat;cx_=sx+(ex-sx)*e;cy_=sy+(ey-sy)*e;
@@ -3634,7 +3634,7 @@ function drawZone(z){
     for(let q=0;q<(lowfx?3:6);q++){const a=q*TAU/6+i*1.3,r1=(10+rnd2(i*7+q)*22)*(big?1.8:1);let x=o.gx,y=o.gy;c.moveTo(x,y);for(let s=1;s<=3;s++){x=o.gx+Math.cos(a)*r1*s/3*1.5+(rnd2(i*3+q*5+s)-0.5)*5;y=o.gy+Math.sin(a)*r1*s/3*0.55+(rnd2(i*11+q*2+s)-0.5)*2;c.lineTo(x,y)}}c.stroke();
     if(rk<1){c.globalAlpha=0.6*(1-rk);c.fillStyle='#ffe9b0';c.beginPath();c.ellipse(o.gx,o.gy,(16+22*rk)*(big?2:1),(5+8*rk)*(big?2:1),0,0,TAU);c.fill()}
     if(tt<tl&&Math.floor(tt*18+i)%2===0){c.globalAlpha=0.9*fa;c.fillStyle='#fff';for(let q=0;q<(lowfx?2:5);q++)c.fillRect(o.gx+(rnd2(Math.floor(tt*18)+i+q)-0.5)*(big?50:28),o.gy-rnd2(i+q*3+Math.floor(tt*18))*(big?40:20),1.8,1.8)}c.restore()}
-   if(al<=0.01)continue;c.save();if(clip){c.beginPath();c.rect(o.gx-160,o.gy-700,320,700+2);c.clip()}c.globalAlpha=al;c.translate(cx_,cy_);c.rotate(ang);c.scale(wk*SZ,wk*SZ);c.translate(-WPN[art][4]/2,0);
+   if(al<=0.01)continue;c.save();if(clip){c.beginPath();c.rect(o.gx-160,o.gy-700,320,700+2);c.clip()}c.globalAlpha=al;c.translate(cx_,cy_);if(big&&CKok){c.rotate(ang-Math.PI/2);c.scale(ks1,ks1);c.imageSmoothingEnabled=false;if(!lowfx){c.shadowColor='rgba(255,200,90,.95)';c.shadowBlur=22}c.drawImage(CKI,-CKI.naturalWidth/2,-CKI.naturalHeight/2);c.restore();continue}c.rotate(ang);c.scale(wk*SZ,wk*SZ);c.translate(-WPN[art][4]/2,0);
    if(!lowfx){c.shadowColor='rgba(255,200,90,.95)';c.shadowBlur=big?22:11}
    drawWeaponOutline(c,art,1.3/(wk*SZ));drawWeaponArt(c,art,0,0,1);c.restore()}}
  else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.3*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
