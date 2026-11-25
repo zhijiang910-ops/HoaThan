@@ -1899,7 +1899,7 @@ function chEnsure(h){if(!h||h._ld||!h.lazy)return;h._ld=1;const w=i=>{PENDING.ad
 function needMons(types){for(const t of types){const m=ESPR[t];if(m)chEnsure(CH[m[0]])}}
 function monPending(t){const m=ESPR[t];if(!m)return false;const h=CH[m[0]];if(!h)return false;if(!h.ok){chEnsure(h);return true}return false}
 function monsForFloor(f){const F=amFloor(f);if(!F)return[];const z=AM_ZONES.find(z=>f>=z.f[0]&&f<=z.f[1]),t=[...F.pool,'elite',...((z&&z.eliteT)||[])];if(F.boss)t.push(...F.boss.types);return t}
-function monsForRoute(){const M=MAPS[curMap()];return [...new Set(WAVE_TYPES.flat()),...((M&&M.xt)||[]),'boss','elite','tac','tacdao','tacxa','tacvuong','soi','langvuong']}
+function monsForRoute(mapId){const M=MAPS[mapId||curMap()];return [...new Set(WAVE_TYPES.flat()),...((M&&M.xt)||[]),'boss','elite','tac','tacdao','tacxa','tacvuong','soi','langvuong']}
 let HERO=CH.hero_nam;
 const useHero=(gender,weapon)=>{const ok_=outfitKey(),ho=ok_&&CH['hero_'+gender+'_'+ok_],qy=(weapon==='quyen'||(()=>{try{return !!(G&&G.training&&TR.wpn==='none')}catch(e){return false}})())&&CH['hero_'+gender+'_qy'],h=(chEnsure(CH['hero_'+gender]),chEnsure(qy),chEnsure(ho),qy&&qy.ok?qy:ho&&ho.ok?ho:CH['hero_'+gender]);if((weapon==='kiem'||weapon==='thuong'||weapon==='quyen'||weapon==='dao')&&h&&h.ok){HERO=h;if(!h._pf){h._pf=1;setTimeout(()=>{try{h.dark;h.flash}catch(e){}},400)}return true}/* 24/11: Đao dùng nhân vật pixel master + lớp đao (trước đó rơi về nhân vật vector cũ, lệch phong cách) */return false};
 function hqSheet(h,flash){const k=flash&&h.flash?'hqf':'hq';let Q=h[k];if(Q)return Q;const src=flash&&h.flash?h.flash:h.img,K=h.meta.hq,w=src.naturalWidth||src.width,hh=src.naturalHeight||src.height;if(!w||!hh)return null;Q=document.createElement('canvas');Q.width=w*K;Q.height=hh*K;const g=Q.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(src,0,0,Q.width,Q.height);h[k]=Q;return Q}
@@ -1946,8 +1946,16 @@ const preDecode=i=>{try{i.decode&&i.decode().catch(()=>{})}catch(e){}};
 /* 25/11 tối ưu tải: ảnh lớn chỉ tải khi dùng lần đầu (getter không liệt kê được nên Object.values/for-in không kéo cả đống về). Trước đây 420 file 37,6 MB tải ngay khi mở game. */
 const PENDING=new Set();
 const lazyImg=(obj,key,i,src,after)=>{let on=false;Object.defineProperty(obj,key,{configurable:true,enumerable:false,get(){if(!on){on=true;if(!i.complete||!i.naturalWidth){PENDING.add(i);const dn=()=>PENDING.delete(i);i.addEventListener('load',dn);i.addEventListener('error',dn)}i.src=src;after&&after(i)}return i}});return i};
-const VFX_CLASS={god:'wk_',dao:'dq_',truong:'pm_',quat:'hl_',cung:'th_',quyen:'qy_'},LAZY_VFX_RE=/^(pm_|th_|dq_|hl_|qy_|wk_|vk_e$|tx_in$|tx_loop$|tx_out$)/,_nvf=new Set();
-function needVfxFor(w){const pf=VFX_CLASS[w];if(!pf||_nvf.has(pf))return;_nvf.add(pf);for(const n in SPX)if(n.startsWith(pf))VFX[n]}/* chạm vào để bắt đầu tải hiệu ứng của phái đang chơi */
+/* ===== GÓI TÀI NGUYÊN (PACKS) — chủ game 25/11: "gom gói tài nguyên" =====
+   Mọi thứ nặng là một GÓI tải khi cần (getter lười `lazyImg`/`chEnsure`), tải sẵn lúc ở sảnh, và có cổng chờ khi vào trận (`loadGate`). Thêm nội dung mới chỉ cần KHAI BÁO MỘT CHỖ:
+   - MAP mới: khai báo trong `MAPS` (bg/ground/patch/border/houses/inner/floor/rim/layout) + ảnh vào `MM` => tự có gói map (`packMapNames`).
+   - QUÁI mới: `ESPR[type]=[idSheet,hệ số]` + `CHM[idSheet]` + thêm type vào `pool` của chặng (`AM_ZONES`) hoặc `xt` của map => tự có gói quái (`monsForFloor/monsForRoute`).
+   - VŨ KHÍ/PHÁI mới: thêm `PACKS.vfx[vũ_khí]='tiền tố tên SPX'` (vd dq_) => hiệu ứng tải khi chọn đúng phái.
+   - THẦN TƯỚNG mới: `GOD_SPR` + `PACKS.vfx.god` nếu có hiệu ứng riêng.
+   Kiểm dung lượng/ngân sách: `bash cong_cu/claude/pack_check.sh` (dùng `window.__packs()` ở cuối file). Nhớ chạy `python3 cong_cu/claude/png_palette.py` cho ảnh mới. */
+const PACKS={vfx:{god:'wk_',dao:'dq_',truong:'pm_',quat:'hl_',cung:'th_',quyen:'qy_'}};
+const LAZY_VFX_RE=new RegExp('^('+Object.values(PACKS.vfx).join('|')+'|vk_e$|tx_in$|tx_loop$|tx_out$)'),_nvf=new Set();
+function needVfxFor(w){const pf=PACKS.vfx[w];if(!pf||_nvf.has(pf))return;_nvf.add(pf);for(const n in SPX)if(n.startsWith(pf))VFX[n]}/* chạm vào để bắt đầu tải hiệu ứng của phái đang chơi */
 var pmT=0;
 /* hiệu ứng gói Wuxia */
 const VFX={};['arc_sheet','wanjian_sword','petal','rulai_crater','taiji','ink_slash','ink_impact','ink_trail','bagua_vang','bua_vang','bagua_do','bua_do','qy_an','rulai_hand','rulai_dust','rulai_rock','van_vang','qy_van','qy_hand','qy_crater','qy_dust','qy_rock'].forEach(n=>{const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i});
@@ -2760,7 +2768,7 @@ function warmGPU(){const c=ctx;c.save();c.globalAlpha=0.003;const L=[...Object.v
 function newRun(skip){
  G=null;
  for(const k of['lobby','create','menu','inv'])$('#'+k).hidden=true;
- if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();needVfxFor(sel.weapon);if(sel.god==='wukong')needVfxFor('god');try{const Gd0=GODS[sel.god];if(Gd0)chEnsure(CH[GOD_SPR[Gd0.look]])}catch(er){}if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
+ if(!ROUTE_MAPS.includes(sel.map))sel.map='amdia';sel.weapon=profWeapon();packWant({weapon:sel.weapon,god:sel.god});if(!godOwned(sel.god))sel.god=CM.start;{const P0=prof();if(P0)sel.gender=P0.gender}sel.star=Math.max(1,Math.min(sel.star||1,rprog().star));
  const W=WEAPONS[sel.weapon],Gd=GODS[sel.god];buildDecor(sel.map);warmGPU();{const mk=window.__monKind;window.__monKind=null;loadGate('Đang mở lối: '+((MAPS[sel.map]&&MAPS[sel.map].name)||'chiến trường')+'…',mk||'route')}
  G={cfg:{...sel},diff:STARS[sel.star],route:'tuyet',rmap:sel.map,star:sel.star,keo:!!sel.keo,keoN:0,keoDone:false,path:null,matRun:{duoc:0,hiem:0},wave:0,t:0,waveT:0,waveDur:0,enemies:[],corpses:[],decals:[],stage:sel.star,sw:1,chest:null,nextStage:false,eproj:[],pproj:[],zones:[],haz:[],fx:[],nums:[],orbs:[],allies:[],spawnQ:[],later:[],parts:[],
   kills:0,coins:0,dmgDealt:0,level:1,xp:0,picks:0,lvWave:0,reroll:3,shake:0,freeze:0,slow:0,paused:false,over:false,cam:{x:AW/2,y:AH/2},spawnAcc:0,packT:6,eliteT:[],clearing:0,qs:[],ev:null,evT:40,noHit:0,mk:[],mkRe:0,brk:[],brkT:4,wTarget:30,wK:0,wC:0,wD:0,wT:0,flash:0};
@@ -4760,7 +4768,7 @@ const LBT=[
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
  const it={id:'kiem0_'+Date.now().toString(36),slot:'vk',tier:0,st:1,name:'Thanh Phong Kiếm',base:{dmgW:6,dmgM:6},aff:[]};L.push(it);const E=eqMap();if(!E.vk)E.vk=it.id;persist()}
 let lbTimer=null,invFrom='menu';
-function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(profWeapon())}catch(e){}setTimeout(()=>{try{prefetchMap(sel.map);const A0=amSave(),F0=amFloor(A0.cp||1);if(F0)prefetchMap(F0.map);needMons(monsForRoute());needMons(monsForFloor(A0.cp||1));if(sel.god==='wukong')needVfxFor('god');const Gd1=GODS[sel.god];if(Gd1)chEnsure(CH[GOD_SPR[Gd1.look]])}catch(e){}},1500);/* tải sẵn map của trận kế trong lúc đứng ở sảnh */if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
+function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(profWeapon())}catch(e){}setTimeout(()=>{try{const A0=amSave(),F0=amFloor(A0.cp||1);packWant({map:sel.map,mons:monsForRoute(sel.map),weapon:profWeapon(),god:sel.god});if(F0)packWant({map:F0.map,mons:monsForFloor(A0.cp||1)})}catch(e){}},1500);/* tải sẵn map của trận kế trong lúc đứng ở sảnh */if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
  sel.gender=P0.gender;sel.weapon=P0.weapon||'kiem';
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.amdia;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
@@ -4911,7 +4919,7 @@ const amDiff=f=>({n:'Âm Giới',hp:1+0.14*(f-1),dmg:1+0.07*(f-1),spawn:1});
 function amEnterFloor(f){const F=amFloor(f),A=G.am;
  fade(()=>{cancelSkillAim();P.manualQueue=null;P.swordGuard=null;if(P.cutC)endCutC();if(P.form==='god')revert(true);
   A.floor=f;A.phase='clear';A.guardOut=false;A.chest=null;A.portal=null;A.leaving=false;A.prog='';A.pct=0;A.hint='';
-  G.cfg.map=F.map;buildDecor(F.map);loadGate('Đang xuống tầng '+f+': '+((MAPS[F.map]&&MAPS[F.map].name)||'Âm Giới')+'…','am');try{const F1=amFloor(f+1);if(F1){prefetchMap(F1.map);needMons(monsForFloor(f+1))}}catch(er){}G.diff=amDiff(f);G.stage=1+Math.floor((f-1)/3);G.wave=Math.min(9,2+f);G.sw=f;G.state='play';
+  G.cfg.map=F.map;buildDecor(F.map);loadGate('Đang xuống tầng '+f+': '+((MAPS[F.map]&&MAPS[F.map].name)||'Âm Giới')+'…','am');try{const F1=amFloor(f+1);if(F1)packWant({map:F1.map,mons:monsForFloor(f+1)})}catch(er){}G.diff=amDiff(f);G.stage=1+Math.floor((f-1)/3);G.wave=Math.min(9,2+f);G.sw=f;G.state='play';
   G.enemies=[];G.spawnQ=[];G.brk=[];G.orbs=[];G.eproj=[];G.pproj=[];G.haz=[];G.zones=[];G.corpses=[];G.decals=[];G.later=[];G.allies=[];G.ev=null;G.boss=null;G.chest=null;G.clearing=0;
   P.x=AW/2;P.y=AH/2;G.cam.x=P.x;G.cam.y=P.y;P.inv=1.5;P.hp=S.hp;P.mp=Math.max(P.mp,S.mp*0.6);
   const n=Math.min(64,14+3*f);A.total=n+F.elites;
@@ -5650,9 +5658,21 @@ function ldgDraw(){LDG.bar.classList.remove('ind');LDG.p+=(LDG.tgt-LDG.p)*0.22;i
 function ldgOpen(label){LDG.slow=0;clearTimeout(LDG.hideT);LDG.el.hidden=false;LDG.el.classList.remove('out');LDG.shown=true;LDG.p=0;LDG.tgt=0;LDG.sub.textContent=label||'Đang chuẩn bị…';LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tip.style.opacity=1;ldgDraw();clearInterval(LDG.anim);LDG.anim=setInterval(ldgDraw,60);clearInterval(LDG.tipT);LDG.tipT=setInterval(ldgTipNext,4200)}
 function ldgClose(){window.__ldgOut=Math.round(performance.now());LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
 const assetsBusy=()=>PENDING.size>0||!!(HERO&&!HERO.ok);
-function prefetchMap(id){try{const M=MAPS[id];if(!M)return;const t=n=>{if(n&&MM[n])MIMG[n]};
+function packMapNames(id){const out=new Set();try{const M=MAPS[id];if(!M)return[];const t=n=>{if(n&&MM[n])out.add(n)};
  for(const k of [M.bg,M.ground,M.patch])t(k);(M.bgq||[]).forEach(q=>t(q[0]));(M.border||[]).forEach(t);(M.houses||[]).forEach(t);(M.inner||[]).forEach(e=>t(e[0]));(M.floor||[]).forEach(f=>t(f.n));(M.rim||[]).forEach(f=>t(f.n));
- if(M.layout)M.layout(n=>t(n))}catch(e){}}
+ if(M.layout)M.layout(n=>t(n))}catch(e){}return[...out]}
+function prefetchMap(id){for(const n of packMapNames(id))MIMG[n]}
+/* một cửa duy nhất để yêu cầu tải: packWant({map,mons,weapon,god}) */
+function packWant(c){c=c||{};try{if(c.map)prefetchMap(c.map);if(c.mons)needMons(c.mons);if(c.weapon)needVfxFor(c.weapon);if(c.god){if(PACKS.vfx.god&&c.god==='wukong')needVfxFor('god');const Gd=GODS[c.god];if(Gd&&GOD_SPR[Gd.look])chEnsure(CH[GOD_SPR[Gd.look]])}}catch(e){}}
+/* liệt kê nguồn ảnh của từng gói (không kích hoạt tải) cho công cụ kiểm ngân sách */
+window.__packs=function(){const mm=n=>MM[n]&&MM[n].src,u=a=>[...new Set(a.filter(Boolean))],out={maps:{},vfx:{},mons:{floors:{},route:{}},sheets:{}};
+ for(const id in MAPS)out.maps[id]=u(packMapNames(id).map(mm));
+ for(const w in PACKS.vfx)out.vfx[w]=u(Object.keys(SPX).filter(n=>n.startsWith(PACKS.vfx[w])).map(n=>'assets/vfx/'+n+'.png'));
+ const ch=t=>{const m=ESPR[t];return m&&CH[m[0]]&&CH[m[0]]._src},srcsOf=ts=>u(ts.map(ch));
+ for(let f=1;f<=18;f++)out.mons.floors[f]=srcsOf(monsForFloor(f));
+ for(const k of ROUTE_MAPS)out.mons.route[k]=srcsOf(monsForRoute(k));
+ for(const id in CH){const h=CH[id];out.sheets[id]=u([h._src,h._hsrc])}
+ out.gods={};for(const g in GOD_SPR)out.gods[g]=u([CH[GOD_SPR[g]]&&CH[GOD_SPR[g]]._src]);return out}
 function loadGate(label,kind){/* gọi sau khi dựng map + chọn vũ khí: chờ mọi ảnh cần cho trận. kind: 'route' | 'am' | 'none' (quái cần tải) */
  try{useHero(sel.gender,sel.weapon)}catch(e){}
  try{if(kind==='route')needMons(monsForRoute());else if(kind==='am'&&G&&G.am)needMons(monsForFloor(G.am.floor))}catch(e){}
