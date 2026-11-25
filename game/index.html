@@ -1796,7 +1796,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <div class="invhead"><h2>Kho đồ</h2><button id="invBackTop" class="btn" type="button" aria-label="Quay lại từ Kho đồ">← Quay lại</button></div><p class="dim sm">Trang bị giữ lại qua mọi lượt chơi. Bấm vào món đồ để xem, mặc hoặc phân giải lấy Tiên ngọc.</p>
    <div class="invg"><div><h3>Đang mặc</h3><div class="slots" id="slots"></div><div id="eqsum" class="istat" style="margin-top:10px"></div><div id="pendBox"></div><div id="bookBox"></div></div>
    <div><h3>Túi đồ <span id="bagn" class="dim sm"></span></h3><div class="bag" id="bag"></div><div id="idet" class="panel"></div></div></div>
-   <div class="cbtns"><button id="invClose" class="btn gold">Đóng</button></div>
+   <div class="cbtns"><button id="invTest" class="btn" type="button">TEST: mặc bộ đồ tiếp theo</button><button id="invTestClr" class="btn" type="button">Dọn đồ TEST</button><button id="invClose" class="btn gold">Đóng</button></div>
   </div>
  </div>
 </section>
@@ -5412,6 +5412,12 @@ function renderInv(){const inv=invList(),eq=eqMap();
   $('#dsc').onclick=()=>{if(eqMap()[it.slot]===it.id)return;save.inv=inv.filter(x=>x.id!==it.id);save.ngoc=(save.ngoc||0)+TIERS[it.tier].v;invSel=null;persist();renderInv()}}
 }
 $('#inv').addEventListener('click',e=>{const d=e.target.closest('.item');if(d&&d.dataset.id&&!e.target.closest('#idet')){invSel=d.dataset.id;renderInv()}});
+/* TEST (25/11, chủ game muốn xem full đồ): mỗi lần bấm phát và MẶC cả bộ kế tiếp (7 bộ x 7 phẩm màu), bỏ qua yêu cầu cấp. Xóa khi duyệt xong. */
+window.__tg=window.__tg||{s:0,t:0};
+$('#invTest').addEventListener('click',()=>{const T=window.__tg,inv=invList(),eq=eqMap();for(let i=inv.length-1;i>=0;i--)if(inv[i].test)inv.splice(i,1);
+ const ids={};for(const nm in GNAME){if(GNAME[nm][0]!==T.s)continue;const ci=GNAME[nm][1],sk=GSLOT[ci][1],it=makeItem(2,0,60,{slot:sk,name:nm});it.tier=T.t;const f=TIERS[T.t].m,b={};for(const[k,v]of SLOTS[sk].base)b[k]=+(v*f*1.2).toFixed(1);it.base=b;it.aff=[];it.test=1;it.lv=Math.max(1,TIER_LV[T.t]);inv.push(it);if(nm!==GSETS[T.s][1]+' Ngọc Bội')ids[sk]=it.id}
+ for(const sk in ids)eq[sk]=ids[sk];notice('Đã mặc: Bộ '+GSETS[T.s][1]+' · '+TIERS[T.t].n);T.s++;if(T.s>=GSETS.length){T.s=0;T.t=(T.t+1)%5}persist();renderInv();if(G&&P)recalc()});
+$('#invTestClr').addEventListener('click',()=>{const inv=invList(),eq=eqMap(),ids=new Set(inv.filter(x=>x.test).map(x=>x.id));for(const k in eq)if(ids.has(eq[k]))delete eq[k];for(let i=inv.length-1;i>=0;i--)if(inv[i].test)inv.splice(i,1);persist();renderInv();if(G&&P)recalc()});
 $('#invClose').addEventListener('click',()=>{$('#inv').hidden=true;if(invFrom==='lobby'){showLobby();return}$('#menu').hidden=false;buildMenu();paintMap()}); $('#invBackTop').addEventListener('click',()=>$('#invClose').click());
 $('#invBtn').addEventListener('click',openInv);
 /* ---- bảo rương sau boss ---- */
