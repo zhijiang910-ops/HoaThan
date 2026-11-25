@@ -576,3 +576,6 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 ## BÁNH XE LỤC ĐẠO Ở TẦNG 18: ĐÃ THỬ, CHỦ GAME BỎ (25/11)
 - Đã thử thay đài tròn tím `Dp_daitron` ở tầng 18 bằng sàn bánh xe Lục Đạo vẽ bằng code (6 cõi màu khác nhau, tâm heo-gà-rắn). Chủ game xem và bảo **giữ lại đài tròn tím cũ** ("như game quay số trúng thưởng"). Đã hoàn nguyên bằng `git revert` (commit `3f63c1d`), sprite `Dp_banhxe.png` và script `banhxe6.py` không còn trong repo (xem lại bằng lịch sử git). **Đừng làm lại sàn chia sáu màu kiểu vòng quay**; nếu muốn khai thác ý Lục Đạo thì làm hướng khác (ví dụ chi tiết nhỏ, tối, kiểu thangka, hoặc cơ chế chọn đạo khi thông quan) và hỏi chủ game trước.
 
+
+## UI/HUD MA MỊ U TỐI (25/11, chủ game yêu cầu)
+- Khối `<style id="maMi">` (ngay sau `#hudPhone`, trước `</head>`) ghi đè token và màu: nền đen tím `#0a070d`, viền máu khô `#5a2f3c/#7a3448`, vàng bùa ám `#b8955a`, chữ xương `#d8d0c4`, MP/thể lực tím lửa ma, HP đỏ sẫm. Chỉ đổi màu, không đổi bố cục; màu phẩm `.t0–.t6` và các thanh HP/MP/XP giữ nghĩa. Muốn hoàn nguyên: xóa khối này. Ảnh trước/sau: `nguon/tham_chieu/ui_mami_*.png`. Chưa đổi: kho đồ, màn tạo nhân vật, bảng tu luyện (còn viền vàng nâu cũ).
