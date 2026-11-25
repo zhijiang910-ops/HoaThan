@@ -1589,6 +1589,27 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 /* 25/11 (zip avatar-nam-nu-16): tranh toàn thân 320x480 đứng trong cảnh; nhân vật game thu nhỏ thành ô "Trong game" ở góc phải dưới (bố cục theo mau-tao-nhan-vat.png) */
 #create .cxill #crFull{position:absolute;left:50%;bottom:max(14%,56px);height:68%;max-width:96%;width:auto;object-fit:contain;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));pointer-events:none}
 #create .cx-preview .cxst{position:relative;justify-self:end;align-self:end;width:26%;max-width:130px;height:28%;max-height:130px;margin:0 6px 6px 0;min-height:0;background:#0b1013d8;box-shadow:inset 0 0 0 1px #746047;border-radius:3px}
+/* 25/11 SKIN TẠO NHÂN VẬT THEO ẢNH MẪU (chủ game: "y chang này"): bảng xanh đêm viền vàng có góc, cảnh phủ kín khung giữa, hàng màu áo nổi trên cảnh (không còn thanh nền), Nam/Nữ xanh lục */
+#create{background:radial-gradient(ellipse at 50% 40%,#0d2a2c 0%,#071819 55%,#030a0b 100%)!important}
+#create .cxp{position:relative;background:linear-gradient(rgba(10,34,36,.9),rgba(5,20,22,.94));box-shadow:inset 0 0 0 1px #05100f,inset 0 0 0 2px #8f7240,0 8px 24px rgba(0,0,0,.55)}
+#create .cxp::after{content:"";position:absolute;inset:5px;pointer-events:none;z-index:4;background:
+ linear-gradient(#d2ac63,#d2ac63) 0 0/16px 2px no-repeat,linear-gradient(#d2ac63,#d2ac63) 0 0/2px 16px no-repeat,
+ linear-gradient(#d2ac63,#d2ac63) 100% 0/16px 2px no-repeat,linear-gradient(#d2ac63,#d2ac63) 100% 0/2px 16px no-repeat,
+ linear-gradient(#d2ac63,#d2ac63) 0 100%/16px 2px no-repeat,linear-gradient(#d2ac63,#d2ac63) 0 100%/2px 16px no-repeat,
+ linear-gradient(#d2ac63,#d2ac63) 100% 100%/16px 2px no-repeat,linear-gradient(#d2ac63,#d2ac63) 100% 100%/2px 16px no-repeat}
+#create .cxC{background:transparent;padding:0;box-shadow:inset 0 0 0 1px #05100f,inset 0 0 0 2px #8f7240,0 8px 24px rgba(0,0,0,.55)}
+#create .cxh{color:#f2d79a;border-bottom:1px solid #6b5a38}
+#create #crName{background:#071718;box-shadow:inset 0 0 0 1px #a98648;color:#fff0cc}
+#create .cxg button{background:#071718;box-shadow:inset 0 0 0 1px #6b5a38;color:#cdbf9a}
+#create .cxg button.on{background:linear-gradient(#245c49,#16392f);box-shadow:inset 0 0 0 2px #e0bb6c;color:#fff2c8}
+#create .cxwb{background:linear-gradient(#0f2a2b,#071516);box-shadow:inset 0 0 0 1px #6b5a38}
+#create .cxwb.on{box-shadow:inset 0 0 0 2px #ffd36a,0 0 12px rgba(255,200,90,.4)}
+#create .cxdeco{border:0;box-shadow:none;background:transparent;-webkit-mask-image:linear-gradient(transparent,#000 30%);mask-image:linear-gradient(transparent,#000 30%);opacity:.85}
+#create .cx-preview{grid-template-rows:minmax(0,1fr) auto}
+#create .cx-preview .cxhr{background:linear-gradient(transparent,rgba(3,10,11,.82));border-top:0;padding:14px 3px 7px}
+#create .cx-preview .cxhr b{font-size:10.5px;color:#e8dcb8;text-shadow:0 1px 3px #000}
+#create .cxc{width:30px;height:30px}
+#create .cxbar #crGo{background:linear-gradient(#a8282c,#6e1519);box-shadow:inset 0 0 0 2px #d9b46a,0 0 0 1px #3a0a0c,0 4px 14px rgba(120,10,16,.5);color:#fff0cc}
 #create .cx-preview .cxst .cxig{position:absolute;top:2px;left:0;right:0;text-align:center;font-size:10px;color:#e8d8b0;z-index:3;letter-spacing:.3px;text-shadow:0 1px 2px #000}
 #create .cx-preview #crPic{height:100%;width:100%;object-fit:contain;inset:0;padding-top:12px;box-sizing:border-box}
 #create .cx-preview .cxhr{padding:5px 3px 7px;background:#111a20e8;border-top:1px solid #746047;min-width:0}
