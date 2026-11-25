@@ -554,6 +554,8 @@ p{margin:0}.dim{color:var(--dim)}.sm{font-size:13px}
 .pzs div{background:rgba(0,0,0,.28);border:1px solid rgba(201,164,94,.22);border-radius:8px;padding:6px 9px;display:flex;flex-direction:column;gap:1px}
 .pzs span{font:600 11px "Be Vietnam Pro",sans-serif;color:#9fb8ae}.pzs b{font:700 16px "Noto Serif",serif;color:#f5e3bd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pzo{display:flex;flex-direction:column;gap:2px}
+.seg{display:inline-flex;border:1px solid #7a3448;border-radius:6px;overflow:hidden;flex:none}.seg button{appearance:none;border:0;background:rgba(14,9,12,.85);color:#c9b99a;font:700 12px "Be Vietnam Pro",sans-serif;padding:6px 11px;cursor:pointer}.seg button+button{border-left:1px solid #5a2f3c}.seg button.on{background:linear-gradient(#8a3a2c,#5a1f28);color:#ffe9b0}.seglb{font:600 12px "Be Vietnam Pro",sans-serif;color:#c9b99a;margin-right:-8px}
+@media (max-height:420px){.seg button{padding:4px 8px;font-size:11px}.seglb{font-size:11px}}
 .pzr{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 4px;border-bottom:1px solid rgba(201,164,94,.14)}
 .pzr span{flex:1;font:600 14px "Be Vietnam Pro",sans-serif}.pzr small{color:#9fb8ae;font-weight:400}
 .pzr input[type=range]{flex:1.2;accent-color:#e8c27a;min-width:0}.pzr em{width:38px;text-align:right;font:700 12px "Be Vietnam Pro";font-style:normal;color:#e8c27a}
@@ -1674,7 +1676,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
    <div class="lbgrid" id="lbGrid"></div>
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
-  <footer class="lbfoot"><span class="dim sm" id="lbRes"></span><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
+  <footer class="lbfoot"><span class="dim sm" id="lbRes"></span><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
  </div>
 </section>
 <section id="menu" class="screen" hidden>
@@ -1733,6 +1735,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
     <div class="pzr"><span>Âm lượng</span><input type="range" id="optVol" min="0" max="100" step="5"><em id="optVolV"></em></div>
     <div class="pzr"><span>Rung màn hình</span><label class="sw"><input type="checkbox" id="optShake"><i></i></label></div>
     <div class="pzr"><span>Hiện số sát thương</span><label class="sw"><input type="checkbox" id="optNums"><i></i></label></div>
+    <div class="pzr"><span>Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div></div>
     <div class="pzr"><span>Giảm hiệu ứng <small>(máy yếu)</small></span><label class="sw"><input type="checkbox" id="lowfx2"><i></i></label></div>
    </div>
   </div>
@@ -1928,7 +1931,7 @@ function drawESpr(e,c,F,t,wind){const m=ESPR[e.type];if(!m)return false;const h=
 const MOBILE=document.documentElement.classList.contains('touch-device');
 const portraitViewport=matchMedia('(orientation: portrait)');
 const rotationBlocked=()=>false;
-const SET=Object.assign({vol:80,shake:true,nums:true},(()=>{try{return JSON.parse(localStorage.getItem('tdst_set')||'{}')}catch(e){return{}}})());
+const SET=Object.assign({vol:80,shake:true,nums:true,view:'vua'},(()=>{try{return JSON.parse(localStorage.getItem('tdst_set')||'{}')}catch(e){return{}}})());
 function saveSet(){try{localStorage.setItem('tdst_set',JSON.stringify(SET))}catch(e){}}
 let MUTE=(()=>{try{return localStorage.getItem('tdst_mute')==='1'}catch(e){return false}})();
 const SNAMES=['sword_slash','sword_hit','sword_wave','wanjian_launch','rulai_impact','rulai_fall','taiji_open','suodi_cast','moying_impact','zanghua_scatter'];
@@ -3443,12 +3446,15 @@ function resize(){
  DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);/* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
  ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700)*(window.__zboost||1),0.5,1.5);/* 25/11: thử phóng cả game ×1,33 nhưng vùng nhìn hẹp khó né skill (chủ game) -> hoàn nguyên; nhân vật chính phóng riêng bằng HERO.SC (xem dưới); window.__zboost=1,33 để thử lại */
  /* 25/11: ép ZOOM×DPR về SỐ NGUYÊN (mỗi pixel art = cả số nguyên pixel màn hình) để nền/quái/nhân vật nét, không lởm chởm. Làm tròn lên nếu ≤+25%, không thì xuống nếu ≥-20%; tắt bằng window.__noSnap=1 */
- if(!window.__noSnap){const S0=ZOOM*DPR,cu=Math.ceil(S0-0.02),fl=Math.floor(S0+0.02);let n=0;if(cu>=1&&cu/S0<=1.25)n=cu;else if(fl>=1&&fl/S0>=0.8)n=fl;if(n){const z=n/DPR;if(z>=0.5&&z<=1.5)ZOOM=z}}
+ /* 25/11 chủ game: "zoom out xíu, nhìn gần quá không thấy quái và né đòn". Tầm nhìn (SET.view): 'gan' = như cũ (làm tròn LÊN thành số nguyên, có máy bị gần hơn thiết kế tới 20%); 'vua' (mặc định) = đúng thiết kế, làm tròn GẦN NHẤT (màn DPR>=2 cho nửa bậc (2,5 hoặc 1,5) nên pixel xen 2 và 3 điểm màn hình, ít thấy ở màn ~330-460 ppi; DPR<2 vẫn số nguyên; luôn lấy min với bậc của 'gan' để không bao giờ gần hơn cũ); 'xa' = thu thêm 20%. */
+ const VIEW=window.__noSnap?'gan':(SET.view||'vua');
+ if(VIEW!=='gan')ZOOM=clamp(ZOOM*(VIEW==='xa'?0.8:1),0.5,1.5);
+ if(!window.__noSnap){const S0=ZOOM*DPR,cu=Math.ceil(S0-0.02),fl=Math.floor(S0+0.02);let n=0;if(cu>=1&&cu/S0<=1.25)n=cu;else if(fl>=1&&fl/S0>=0.8)n=fl;if(VIEW!=='gan'){const q=DPR>=2?Math.round(S0*2)/2:Math.round(S0);n=n?Math.min(n,q):q;if(n<1)n=1}/* 'vua'/'xa' không bao giờ GẦN hơn 'gan' (min với bậc cũ) */if(n){const z=n/DPR;if(z>=0.5&&z<=1.5)ZOOM=z}}
  /* 25/11 chủ game: main bé -> chỉ phóng NHÂN VẬT CHÍNH (vùng nhìn giữ nguyên) theo SỐ NGUYÊN pixel màn hình mỗi pixel ảnh để vẫn nét: k=round(0,98×n×1,3), HERO.SC=k/n (n=ZOOM×DPR). n<2 (desktop DPR1) giữ nguyên. Tắt: window.__hboost=1 */
  {const n=ZOOM*DPR;let hs=1;if(n>=2&&(window.__hboost||1)>1){const k=Math.max(1,Math.round(0.98*n*window.__hboost));hs=k/(0.98*n)}/* 25/11 chủ game: quay lại góc nhìn và cỡ nhân vật cũ -> mặc định KHÔNG phóng nhân vật (đặt window.__hboost=1.3 để bật lại) */for(const id in CH)if(id.startsWith('hero_'))CH[id].SC=0.98*hs}
  vign=document.createElement('canvas');vign.width=VW;vign.height=VH;const v=vign.getContext('2d');const g=v.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*0.3,VW/2,VH/2,Math.max(VW,VH)*0.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(12,3,0,.78)');v.fillStyle=g;v.fillRect(0,0,VW,VH);
 }
-addEventListener('resize',resize);viewApply();resize();
+addEventListener('resize',resize);viewApply();resize();viewSync();window.__zm=()=>({Z:ZOOM,D:DPR,VW,VH});
 /* điện thoại xoay màn hình: trình duyệt trong app có khi không báo 'resize' hoặc báo kích thước cũ -> kiểm tra lại liên tục */
 addEventListener('orientationchange',()=>{for(const t of [60,250,600,1200])setTimeout(resize,t)});
 if(window.visualViewport)visualViewport.addEventListener('resize',()=>setTimeout(resize,30));
@@ -5600,6 +5606,9 @@ $('#godBtn').addEventListener('pointerdown',e=>{e.preventDefault();tryTransform(
 $('#pauseBtn').addEventListener('click',()=>togglePause());
 $('#tnBye').addEventListener('click',closeShop);$('#tnList').addEventListener('click',e=>{const b=e.target.closest('[data-tn]');if(b)buyShop(+b.dataset.tn)});
 $('#tlGo').addEventListener('click',()=>{if(G.am)amLootDone();else exitArena()});$('#tlList').addEventListener('click',e=>{const b=e.target.closest('[data-eq]');if(!b)return;equip(b.dataset.eq);b.textContent='Đã trang bị';b.disabled=true});
+function viewSync(){for(const b of document.querySelectorAll('.seg[data-seg="view"] button'))b.classList.toggle('on',b.dataset.v===(SET.view||'vua'))}
+function viewSet(v){SET.view=v;saveSet();resize();viewSync()}
+document.addEventListener('click',e=>{const b=e.target.closest('.seg[data-seg="view"] button');if(b)viewSet(b.dataset.v)});
 function togglePause(){if(!G||G.state!=='play')return;G.paused=!G.paused;$('#pause').hidden=!G.paused;$('#lowfx2').checked=LOWFX;if(G.paused){pauseStats();setSnd();$('#optShake').checked=SET.shake;$('#optNums').checked=SET.nums}joy.on=false;joyEl.hidden=true;tutRender()}
 $('#resumeBtn').addEventListener('click',togglePause);
 let quitArm=0;
