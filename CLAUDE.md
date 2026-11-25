@@ -13,7 +13,7 @@ Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây 
 4. **Kiểm từng frame 98–99% so với master** trước khi gửi: không dư kiếm, không mất tay chân, độ dài kiếm bằng master, trang phục giữ nguyên.
 5. Không co giãn (squash/stretch) frame nhân vật, không hitstop, không tự đổi màu nhân vật.
 6. Gửi video/ảnh kiểm tra khi xong mỗi phần. Báo đúng sự thật, kể cả lỗi.
-7. **PixelLab chỉ dùng khi thật sự cần thiết, không lạm dụng** (chủ game dặn 24/11). Làm trước bằng cách rẻ: phác thảo/xem trước, dùng lại asset đã có, chỉnh timing/vị trí/code, bản mẫu thử trong game. Chỉ gọi PixelLab khi bản đó không ổn. Không "thử cho biết": mỗi lần gọi nói rõ vì sao cần và số lượt dự kiến.
+7. **CẤM GỌI PIXELLAB (chủ game ra lệnh 25/11, hiệu lực cho đến khi chủ game tự gỡ lệnh): mọi thứ tự làm bằng code và tài nguyên có sẵn; không tự đề xuất hay gọi PixelLab.** (Luật cũ: chỉ dùng khi thật sự cần thiết, không lạm dụng, chủ game dặn 24/11.) Làm trước bằng cách rẻ: phác thảo/xem trước, dùng lại asset đã có, chỉnh timing/vị trí/code, bản mẫu thử trong game. Chỉ gọi PixelLab khi bản đó không ổn. Không "thử cho biết": mỗi lần gọi nói rõ vì sao cần và số lượt dự kiến.
 
 ## Hiện trạng game (23/11)
 - **Bộ Kiếm (nam và nữ chung):**
@@ -431,3 +431,5 @@ Chủ game gửi ảnh sảnh iPhone ngang (~664×307, trong trình duyệt nên
 - (24/11 đêm, SỬA: giữ cả bố cục) Bản Diêm Vương chỉ có vị vua bị chê vì tao tự bỏ 2 linh hồn quan, ngai (bàn đặt cuộn giấy) và lư lửa. Làm lại giữ nguyên cả cảnh: PixelLab `edit-images-v2` khung 384×256, 10 lượt (`gen_dv4.py`, `sy6/dvscene_*`). `diemvuong_am.png` nay 303×241 (cả cảnh là MỘT sprite, bóng ma/bàn/lư không động riêng). `ET.diemvuong.r=58` chưa chỉnh theo bề ngang mới. Còn khoảng 2.283 lượt. Bản chỉ vị vua: `sy6/diemvuong_s7_0.png`.
 - (24/11 đêm) `BOSS_REL.nguudau` 1,15→1,135: Ngưu Đầu (141 px) hiển thị cao bằng Mã Diện (160 px). Hệ số lẻ nên Ngưu Đầu vẽ bằng lọc mịn (hơi mềm nét hơn 6 trùm kia); muốn nét tuyệt đối thì vẽ lại Ngưu Đầu cao ~160 px bằng PixelLab.
 - (24/11 đêm) **Ngưu Đầu vẽ lại cao ~164 px** (PixelLab `edit-images-v2` 10 lượt, khung 192, đầu vào là ảnh Ngưu Đầu cũ phóng mượt, `nguon/pixellab/amgioi/gen_nd.py`, `sy7/`; bản cũ `sy7/nguudau_cu.png`): giữ thiết kế, thêm chi tiết. `nguudau_am.png` 165×164. `BOSS_REL` nay rỗng `{}`: cả 7 trùm vẽ ở tỉ lệ nguyên (nét tuyệt đối). Còn khoảng 2.273 lượt.
+
+- (25/11) **LỆNH CẤM PIXELLAB** của chủ game (tức giận vì tốn lượt: số dư thật 25/11 là ~1.783/4.600 lượt, các con số "còn ~2.2xx" ghi ở trên là ước lượng sai). Diêm Vương thu nhỏ bằng `BOSS_REL={diemvuong:0.82}` (code, không vẽ lại): cao hiển thị ~198 px, vẫn cao hơn Phán Quan 176. Soi ở iPhone DPR 3 và máy tính: chấp nhận được (hơi mềm hơn 6 trùm vẽ tỉ lệ nguyên). `ET.diemvuong.r=58` chưa chỉnh.
