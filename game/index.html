@@ -12,7 +12,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
 <script>
 /* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
 (function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
- var Q=[],ESS=/hero_(nam|nu)(_ns|_hand)?\.png|portraits\/avatar-(nam|nu)\.webp|assets\/ui\/|\/ava_/;
+ var Q=[],ESS=/hero_(nam|nu)(_ns|_hand)?\.png|portraits\/avatar-(nam|nu)\.webp|assets\/ui\/(?!creation\/(hoang|vong))|\/ava_/;
  window.__bootQ={hold:true};
  Object.defineProperty(HTMLImageElement.prototype,'src',{configurable:true,enumerable:true,get:function(){return d.get.call(this)},set:function(v){if(window.__bootQ.hold&&!ESS.test(String(v))){Q.push([this,v]);return}d.set.call(this,v)}});
  window.__bootRelease=function(){window.__bootQ.hold=false;var a=Q.splice(0);for(var i=0;i<a.length;i++)d.set.call(a[i][0],a[i][1])};

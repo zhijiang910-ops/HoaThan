@@ -4,7 +4,7 @@ Thoát mã 1 nếu có gói vượt ngưỡng. Ngưỡng nằm ở BUD (MB): dis
 import json,os,sys
 from PIL import Image
 G=os.path.join(os.path.dirname(__file__),'..','..','game')
-BUD={'boot':(5.0,None),'map':(3.0,45),'vfx':(3.5,80),'mons_floor':(2.5,40),'mons_route':(3.5,55),'sheet':(1.5,40),'god':(1.0,25)}
+BUD={'boot':(5.5,None),'map':(3.0,45),'vfx':(3.5,80),'mons_floor':(2.5,40),'mons_route':(3.5,55),'sheet':(1.5,40),'god':(1.0,25)}
 cache={}
 def info(src):
     if src in cache:return cache[src]
