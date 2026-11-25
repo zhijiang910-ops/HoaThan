@@ -3307,9 +3307,11 @@ setInterval(hudFit,300);addEventListener('resize',()=>setTimeout(hudFit,50));
 
 function resize(){
  DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);/* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
- ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700)*(window.__zboost||1.33),0.5,2);/* 25/11 chủ game: main bé quá -> phóng cả game ×1,33 (trước đó vùng nhìn rộng hơn 25%); tắt: window.__zboost=1 */
+ ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700)*(window.__zboost||1),0.5,1.5);/* 25/11: thử phóng cả game ×1,33 nhưng vùng nhìn hẹp khó né skill (chủ game) -> hoàn nguyên; nhân vật chính phóng riêng bằng HERO.SC (xem dưới); window.__zboost=1,33 để thử lại */
  /* 25/11: ép ZOOM×DPR về SỐ NGUYÊN (mỗi pixel art = cả số nguyên pixel màn hình) để nền/quái/nhân vật nét, không lởm chởm. Làm tròn lên nếu ≤+25%, không thì xuống nếu ≥-20%; tắt bằng window.__noSnap=1 */
- if(!window.__noSnap){const S0=ZOOM*DPR,cu=Math.ceil(S0-0.02),fl=Math.floor(S0+0.02);let n=0;if(cu>=1&&cu/S0<=1.3)n=cu;else if(fl>=1&&fl/S0>=0.8)n=fl;if(n){const z=n/DPR;if(z>=0.5&&z<=2)ZOOM=z}}
+ if(!window.__noSnap){const S0=ZOOM*DPR,cu=Math.ceil(S0-0.02),fl=Math.floor(S0+0.02);let n=0;if(cu>=1&&cu/S0<=1.25)n=cu;else if(fl>=1&&fl/S0>=0.8)n=fl;if(n){const z=n/DPR;if(z>=0.5&&z<=1.5)ZOOM=z}}
+ /* 25/11 chủ game: main bé -> chỉ phóng NHÂN VẬT CHÍNH (vùng nhìn giữ nguyên) theo SỐ NGUYÊN pixel màn hình mỗi pixel ảnh để vẫn nét: k=round(0,98×n×1,3), HERO.SC=k/n (n=ZOOM×DPR). n<2 (desktop DPR1) giữ nguyên. Tắt: window.__hboost=1 */
+ {const n=ZOOM*DPR;let hs=1;if(n>=2){const k=Math.max(1,Math.round(0.98*n*(window.__hboost||1.3)));hs=k/(0.98*n)}for(const id in CH)if(id.startsWith('hero_'))CH[id].SC=0.98*hs}
  vign=document.createElement('canvas');vign.width=VW;vign.height=VH;const v=vign.getContext('2d');const g=v.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*0.3,VW/2,VH/2,Math.max(VW,VH)*0.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(12,3,0,.78)');v.fillStyle=g;v.fillRect(0,0,VW,VH);
 }
 addEventListener('resize',resize);viewApply();resize();
