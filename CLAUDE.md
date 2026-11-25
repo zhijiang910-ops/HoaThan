@@ -96,6 +96,7 @@ Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây 
 - Làm trên nhánh `claude/jolly-ritchie-pitrnx` (phiên này), push lên nhánh đó. Nhánh `claude/relaxed-heisenberg-72j521` là của Codex/phiên khác, chỉ lấy file cần thiết.
 - Không tạo PR nếu chủ game không yêu cầu.
 - Không ghi tên model vào commit.
+- **Commit và push ngay sau mỗi phần việc đã xong và kiểm (chủ game cho phép 25/11: "tự làm rồi commit mỗi lần tao duyệt, đợi gì nữa")**, không chờ nhắc, không hỏi lại. Nhánh làm việc hiện tại: `claude/youthful-fermat-6hovsq`.
 
 ## Chốt 24/11 (sau góp ý): A-B-C là MỘT CHUỖI theo video Hovl
 Animation và VFX cũ (zs3/zs2, elip k5c_*) mày đã duyệt là đạt. Việc cần là đổi A, B, C thành một chuỗi liền như video: A = khuỵu → dựng → duỗi ngang (chạm) → kéo hông; B = quét từ sau lên → giơ cao; C = vung xuống (chạm, elip k5c_*) → thu. Làm bằng cách xếp lại 12 khung đã có trong `hero_*_ns.png` (hàng y=384/512), `NC`/`TA/TB/TC` trong `game/index.html`, không gọi thêm PixelLab. Các khung hc_* (VFX Hovl do PixelLab tạo) và bản C riêng trong `ANIMATION_A_B_C/*/C_hovl` chỉ để tham khảo, không dùng.
