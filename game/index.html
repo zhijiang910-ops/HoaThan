@@ -4747,7 +4747,7 @@ const LBT=[
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
  const it={id:'kiem0_'+Date.now().toString(36),slot:'vk',tier:0,st:1,name:'Thanh Phong Kiếm',base:{dmgW:6,dmgM:6},aff:[]};L.push(it);const E=eqMap();if(!E.vk)E.vk=it.id;persist()}
 let lbTimer=null,invFrom='menu';
-function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(profWeapon())}catch(e){}setTimeout(()=>{try{prefetchMap(sel.map);const A0=amSave(),F0=amFloor(A0.cp||1);if(F0)prefetchMap(F0.map)}catch(e){}},1500);/* tải sẵn map của trận kế trong lúc đứng ở sảnh */if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
+function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(profWeapon())}catch(e){}setTimeout(()=>{try{prefetchMap(sel.map);const A0=amSave(),F0=amFloor(A0.cp||1);if(F0)prefetchMap(F0.map);if(sel.god==='wukong')needVfxFor('god');const Gd1=GODS[sel.god];if(Gd1)chEnsure(CH[GOD_SPR[Gd1.look]])}catch(e){}},1500);/* tải sẵn map của trận kế trong lúc đứng ở sảnh */if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
  sel.gender=P0.gender;sel.weapon=P0.weapon||'kiem';
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.amdia;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
