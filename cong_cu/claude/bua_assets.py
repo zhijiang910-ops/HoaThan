@@ -93,3 +93,13 @@ Image.fromarray(new.astype(np.uint8),'RGBA').save(OUT+'bagua_do.png')
 bu=Image.open(OUT+'bua_vang.png')
 bud=remap(bu,[((232,200,96),(186,46,38)),((206,168,64),(158,36,30)),((120,84,24),(92,18,16)),((190,50,42),(250,214,110))])
 bud.save(OUT+'bua_do.png');print('do ok')
+
+# ---- sét nổ tỏa VÀNG cho C (đổi màu set_no_do.png: đỏ-đen -> vàng, viền tối giữ) ----
+src=Image.open(OUT+'set_no_do.png').convert('RGBA');a=np.array(src).astype(float)
+lum=(a[...,:3]*[.3,.59,.11]).sum(2)/255.0
+stops=[(0,(24,14,4)),(0.22,(150,92,20)),(0.5,(240,180,56)),(0.8,(255,232,140)),(1,(255,252,228))]
+col=np.zeros(lum.shape+(3,))
+for y in range(lum.shape[0]):
+    for x in range(lum.shape[1]):
+        if a[y,x,3]>0:col[y,x]=lut(lum[y,x])
+a[...,:3]=col;Image.fromarray(a.clip(0,255).astype(np.uint8),'RGBA').save(OUT+'set_no_vang.png');print('no vang ok')
