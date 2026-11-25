@@ -5217,13 +5217,12 @@ const SLOTS={vk:{n:'Vũ khí',base:[['dmgW',6],['dmgM',6]],names:['Thanh Phong K
  ao:{n:'Y phục',base:[['hp',16],['armor',2]],names:['Bố Y','Thanh Sam','Huyền Giáp','Vân Cẩm Bào','Kim Lũ Y','Bát Quái Bào']},
  phu:{n:'Hộ phù',base:[['cdr',3],['mpR',1]],names:['Bình An Phù','Trấn Tà Phù','Ngũ Lôi Phù','Thái Thượng Phù','Hộ Tâm Phù']},
  hai:{n:'Hài',base:[['speed',4],['dodge',1.5]],names:['Thảo Hài','Truy Phong Hài','Đạp Vân Hài','Lưu Tinh Ngoa','Thần Hành Hài']},
- boi:{n:'Ngọc bội',base:[['critD',12],['mpR',0.8]],names:['Thanh Ngọc Bội','Hàn Thiết Nhẫn','Huyết Ngọc','Long Văn Bội','Hàm Quang Ngọc','Thái Cực Bội']},
- nhan:{n:'Nhẫn',base:[['crit',2.5],['dmgM',3]],names:[]},
+ boi:{n:'Nhẫn / Ngọc bội',base:[['critD',12],['mpR',0.8]],names:['Thanh Ngọc Bội','Hàn Thiết Nhẫn','Huyết Ngọc','Long Văn Bội','Hàm Quang Ngọc','Thái Cực Bội']},
  non:{n:'Nón',base:[['hp',6],['armor',1.5]],names:[]},
  tay:{n:'Đai / Găng tay',base:[['hp',8],['armor',1]],names:['Hộ Tâm Đai','Huyền Thiết Đai','Truy Phong Thủ Sáo','Liệt Phong Thủ Sáo']}};
 /* 25/11 BỘ TRANG BỊ ÂM GIỚI (zip chủ game): 7 bộ theo cấp x 7 món; màu phẩm = 5 atlas `assets/gear/<màu>.png` (cột = ô, hàng = bộ). Phẩm 5 và 6 (Hồng, Hắc) tạm dùng màu Tử. Bộ từ Hắc Vũ (Lv90) trở đi chưa rơi vì LV_OPEN=70. Số liệu TẠM. */
 const GSETS=[['hanh-gia','Hành Giả',1],['huyet-sa','Huyết Sa',30],['han-thiet','Hàn Thiết',60],['hac-vu','Hắc Vũ',90],['vong-xuyen','Vong Xuyên',120],['bach-cot','Bạch Cốt',150],['diem-la','Diêm La',180]];
-const GSLOT=[['y-phuc','ao','Bào'],['hai','hai','Ngoa'],['dai-lung','tay','Yêu Đai'],['ho-phu','phu','Hộ Phù'],['nhan','nhan','Giới'],['ngoc-boi','boi','Ngọc Bội'],['non','non','Quan']];
+const GSLOT=[['y-phuc','ao','Bào'],['hai','hai','Ngoa'],['dai-lung','tay','Yêu Đai'],['ho-phu','phu','Hộ Phù'],['nhan','boi','Giới'],['ngoc-boi','boi','Ngọc Bội'],['non','non','Quan']];
 const GCOL=['bach','luc','lam','hoang','tu','tu','tu'],GNAME={};/* GNAME[tên món] = [chỉ số bộ, chỉ số ô] */
 ['ao','hai','phu','boi'].forEach(k=>{SLOTS[k].names=[]});/* tên cũ (Bố Y, Thảo Hài...) không còn rơi; đồ cũ trong túi vẫn dùng được */
 GSETS.forEach((g,si)=>GSLOT.forEach((sl,ci)=>{let nm=g[1]+' '+sl[2];if(sl[0]==='y-phuc'&&g[0]==='huyet-sa')nm='Huyền Giáp';if(sl[0]==='y-phuc'&&g[0]==='han-thiet')nm='Bát Quái Bào';GNAME[nm]=[si,ci];SLOTS[sl[1]].names.push(nm)}));
@@ -5238,15 +5237,15 @@ function rollTier(st,boss){const w=[60,28,9,2.5,.4,.08,.02].map((b,i)=>b*Math.po
 /* 25/11: tên món theo PHẨM: danh sách names xếp từ thấp lên cao, phẩm t (0..6) ứng vị trí t*(n-1)/6, chọn ngẫu nhiên trong khoảng ±1 vị trí quanh đó (Huyền Giáp rơi ở phẩm 2-3, Bát Quái Bào ở 5-6). */
 function nameForTier(names,t){const n=names.length,c=t*(n-1)/6,L=names.filter((_,i)=>Math.abs(i-c)<=1);return pick(L.length?L:[names[Math.round(c)]])}
 function makeItem(st,tier,lv,o){tier=Math.max(0,Math.min(tier,tierOfLv(heroLv()),TIER_OPEN-1));lv=lv||(G?itemLv():0);const sk=(o&&o.slot)||pick(Object.keys(SLOTS)),S0=SLOTS[sk],T=TIERS[tier],f=T.m*(lv?1+0.025*(lv-1):1+0.12*(st-1));
- let name=(o&&o.name),gset=null;if(!name&&GSLOT.some(g=>g[1]===sk)&&!(sk==='tay'&&Math.random()<0.25)){const si=gearSetOf(heroLv()),ci=GSLOT.findIndex(g=>g[1]===sk);for(const nm in GNAME)if(GNAME[nm][0]===si&&GNAME[nm][1]===ci)name=nm}
+ let name=(o&&o.name),gset=null;if(!name&&GSLOT.some(g=>g[1]===sk)&&!(sk==='tay'&&Math.random()<0.25)){const si=gearSetOf(heroLv()),cis=GSLOT.map((g,i)=>g[1]===sk?i:-1).filter(i=>i>=0),ci=pick(cis);for(const nm in GNAME)if(GNAME[nm][0]===si&&GNAME[nm][1]===ci)name=nm}
  if(!name)name=nameForTier(S0.names.filter(n=>!GNAME[n]).length?S0.names.filter(n=>!GNAME[n]):S0.names,tier);
- const stats=sk==='tay'&&name.endsWith('Thủ Sáo')?[['dmgW',4],['aspd',2]]:S0.base;
+ const stats=sk==='tay'&&name.endsWith('Thủ Sáo')?[['dmgW',4],['aspd',2]]:sk==='boi'&&name.endsWith(' Giới')?[['crit',2.5],['dmgM',3]]:S0.base;
  const base={};for(const[k,v]of stats)base[k]=+(v*f*rnd(.9,1.1)).toFixed(1);
  const aff=[];const keys=Object.keys(AFF).filter(k=>!(k in base));for(let i=0;i<T.a;i++){const k=keys.splice((Math.random()*keys.length)|0,1)[0];aff.push([k,+(AFF[k]*f*rnd(.8,1.2)).toFixed(1)])}
  const it={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),slot:sk,tier,st,name,base,aff};if(lv)it.lv=lv;
  if(tier>=2){it.sp=SPEC[Math.min(SPEC.length-1,tier-2)];it.spv=+(5*f).toFixed(1)}
  return it}
-function invList(){const L=save.inv||(save.inv=[]);if(!invList.mig){invList.mig=1;for(const it of L)if(it.plus&&!it.forge){it.forge=Math.min(9,it.plus);delete it.plus}}return L}
+function invList(){const L=save.inv||(save.inv=[]);if(!invList.mig){invList.mig=1;for(const it of L)if(it.slot==='nhan')it.slot='boi';if(save.eq&&save.eq.nhan){if(!save.eq.boi)save.eq.boi=save.eq.nhan;delete save.eq.nhan}for(const it of L)if(it.plus&&!it.forge){it.forge=Math.min(9,it.plus);delete it.plus}}return L}
 function eqMap(){return save.eq||(save.eq={})}
 // Outcome columns: success, unchanged, down one, damaged.
 const FORGE_ODDS=[[100,0,0,0],[100,0,0,0],[80,20,0,0],[80,20,0,0],
@@ -5265,7 +5264,6 @@ const FORGE_PERKS={
  hai:{stat:'dashCdr',values:[3,4.5,6]},
  phu:{stat:'mpR',values:[.25,.375,.5]},
  boi:{stat:'crit',values:[1,1.5,2]},
- nhan:{stat:'crit',values:[1,1.5,2]},
  non:{stat:'armor',values:[0.5,0.75,1]},
  tay:{stat:'hp',values:[3,4.5,6]},
  gantay:{stat:'bSpd',values:[2,3,4]}
