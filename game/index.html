@@ -5632,13 +5632,13 @@ const LDG={el:$('#ldg'),bar:$('#ldgB'),pct:$('#ldgP'),sub:$('#ldgS'),tip:$('#ldg
 function ldgTipNext(){const t=LDG.tip;t.style.opacity=0;setTimeout(()=>{t.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];t.style.opacity=1},220)}
 function ldgDraw(){LDG.bar.classList.remove('ind');LDG.p+=(LDG.tgt-LDG.p)*0.22;if(Math.abs(LDG.tgt-LDG.p)<0.002)LDG.p=LDG.tgt;const v=Math.round(LDG.p*100);LDG.bar.style.width=v+'%';LDG.pct.textContent=v+'%'}
 function ldgOpen(label){clearTimeout(LDG.hideT);LDG.el.hidden=false;LDG.el.classList.remove('out');LDG.shown=true;LDG.p=0;LDG.tgt=0;LDG.sub.textContent=label||'Đang chuẩn bị…';LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tip.style.opacity=1;ldgDraw();clearInterval(LDG.anim);LDG.anim=setInterval(ldgDraw,60);clearInterval(LDG.tipT);LDG.tipT=setInterval(ldgTipNext,4200)}
-function ldgClose(){LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
+function ldgClose(){window.__ldgOut=Math.round(performance.now());LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
 const assetsBusy=()=>PENDING.size>0||!!(HERO&&!HERO.ok);
 function loadGate(label){/* gọi sau khi dựng map + chọn vũ khí: chờ mọi ảnh cần cho trận */
  try{useHero(sel.gender,sel.weapon)}catch(e){}
  if(!assetsBusy())return;
  window.__LOADING=true;const t0=performance.now(),n0=Math.max(1,PENDING.size);let shown=false,poll=0;
- const finish=()=>{clearInterval(poll);window.__LOADING=false;if(shown)ldgClose()};
+ const finish=()=>{clearInterval(poll);window.__LOADING=false;window.__gate={ms:Math.round(performance.now()-t0),shown,n0};if(shown)ldgClose()};
  poll=setInterval(()=>{const el=performance.now()-t0;
   if(!shown&&el>250){shown=true;ldgOpen(label)}
   if(shown){const done=1-PENDING.size/Math.max(n0,PENDING.size);LDG.tgt=Math.min(0.98,Math.max(LDG.tgt,done*0.97+(HERO&&HERO.ok?0.03:0)))}
