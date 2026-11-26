@@ -1848,7 +1848,7 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 @keyframes lbidle{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.7deg)}}
 @keyframes lbswing{0%{transform:rotate(0)}14%{transform:rotate(10deg)}32%{transform:rotate(-8deg)}50%{transform:rotate(6deg)}68%{transform:rotate(-4deg)}84%{transform:rotate(2deg)}100%{transform:rotate(0)}}
 #lbStage.bring .lbbell-l{animation:lbswing 1.15s ease-out}#lbStage.bring .lbbell-c{animation:lbswing 1.3s ease-out .06s}#lbStage.bring .lbbell-r{animation:lbswing .95s ease-out .12s}
-#lbStage .lbdin{position:absolute;left:62.9%;top:27.5%;width:10.9%;height:21.9%;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 105%,#4a0c10 0,#12060a 38%,#030204 75%)}
+#lbStage .lbdin{position:absolute;left:62.9%;top:27.5%;width:10.9%;height:21.9%;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 100%,#2f6a3a 0,#10301c 36%,#030a06 78%)}
 #lbStage .lbleaf{position:absolute;inset:0;z-index:1;pointer-events:none;background:url(assets/ui/lobby/sanh.webp) 0 0/100% 100% no-repeat;transition:transform .55s cubic-bezier(.2,.85,.25,1)}
 #lbStage .lbleaf-l{clip-path:polygon(62.9% 27.5%,68.1% 27.5%,68.1% 49.4%,62.9% 49.4%);transform-origin:62.9% 38%}
 #lbStage .lbleaf-r{clip-path:polygon(68.1% 27.5%,73.8% 27.5%,73.8% 49.4%,68.1% 49.4%);transform-origin:73.8% 38%}
@@ -5128,16 +5128,20 @@ function lbFxSize(){const c=$('#lbFx'),st=$('#lbStage');if(!c||!st)return null;c
 function lbFxLoop(now){const z=lbFxSize();if(!z)return;const dt=Math.min(.05,(now-LBFX.t)/1000||.016);LBFX.t=now;const g=z.c.getContext('2d');g.clearRect(0,0,z.w,z.h);
  LBFX.p=LBFX.p.filter(p=>(p.a+=dt)<p.life);
  for(const p of LBFX.p){const u=p.a/p.life;
-  if(p.k==='smoke'){p.x+=p.vx*dt*z.k;p.y+=p.vy*dt*z.k;p.vx*=.992;p.vy*=.985;p.vy+=p.g*dt;const r=(p.r0+(p.r1-p.r0)*Math.min(1,u*1.2))*z.k,al=Math.sin(Math.min(1,u*1.6)*Math.PI*.5)*(1-u)*p.al;if(al<=.003)continue;const gr=g.createRadialGradient(p.x*z.k,p.y*z.k,0,p.x*z.k,p.y*z.k,r);gr.addColorStop(0,`rgba(${p.c},${al})`);gr.addColorStop(.55,`rgba(${p.c},${al*.6})`);gr.addColorStop(1,`rgba(${p.c},0)`);g.fillStyle=gr;g.beginPath();g.arc(p.x*z.k,p.y*z.k,r,0,TAU);g.fill()}
+  if(p.k==='smoke'){p.x+=p.vx*dt*z.k;p.y+=p.vy*dt*z.k;p.vx*=.992;p.vy*=.985;p.vy+=p.g*dt;p.ph=(p.ph||Math.random()*6.28)+dt*1.4;p.x+=Math.sin(p.ph)*14*dt;p.y+=Math.cos(p.ph*.8)*5*dt;const r=(p.r0+(p.r1-p.r0)*Math.min(1,u*1.2))*z.k,al=Math.sin(Math.min(1,u*1.6)*Math.PI*.5)*Math.pow(1-u,1.3)*p.al;if(al<=.003)continue;g.globalCompositeOperation=p.add?'lighter':'source-over';const gr=g.createRadialGradient(p.x*z.k,p.y*z.k,0,p.x*z.k,p.y*z.k,r);gr.addColorStop(0,`rgba(${p.c},${al})`);gr.addColorStop(.55,`rgba(${p.c},${al*.6})`);gr.addColorStop(1,`rgba(${p.c},0)`);g.fillStyle=gr;g.beginPath();g.arc(p.x*z.k,p.y*z.k,r,0,TAU);g.fill();g.globalCompositeOperation='source-over'}
   else if(p.k==='ring'){if(u<0)continue;const r=(6+p.R*Math.min(1,u))*z.k;g.strokeStyle=`rgba(255,216,120,${(1-u)*.8})`;g.lineWidth=Math.max(1,(2.4-1.4*u)*z.k);g.beginPath();g.arc(p.x*z.k,p.y*z.k,r,0,TAU);g.stroke()}
   else{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=60*dt;g.fillStyle=`rgba(255,${200+Math.random()*40|0},${110+Math.random()*50|0},${(1-u)*.9})`;g.fillRect(p.x*z.k-1,p.y*z.k-1,Math.max(1.5,2.2*z.k),Math.max(1.5,2.2*z.k))}}
  if(LBFX.p.length)requestAnimationFrame(lbFxLoop);else{LBFX.on=0;g.clearRect(0,0,z.w,z.h)}}
 function lbFxKick(){if(!LBFX.on){LBFX.on=1;LBFX.t=performance.now();requestAnimationFrame(lbFxLoop)}}
 function lbBellFx(){const lite=LOWFX||MOBILE,bs=[[178,455],[254,455],[310,475]];for(const [x,y] of bs){for(let i=0;i<2;i++)LBFX.p.push({k:'ring',x,y,R:i?46:30,a:-i*.16,life:.85});for(let i=0;i<(lite?5:10);i++)LBFX.p.push({k:'spark',x:x+(Math.random()-.5)*30,y:y+(Math.random()-.5)*20,vx:(Math.random()-.5)*50,vy:-20-Math.random()*40,a:0,life:.7+Math.random()*.6})}lbFxKick()}
-function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?60:120;
- /* khói đen lăn từ khe cửa ra bậc đá và sân (lan ngang là chính, bốc lên nhẹ), kèm vài dải khói tím nhạt cho có khối */
- for(let i=0;i<n;i++){const side=Math.random()<.5?-1:1,d=Math.random()*.45;LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*90,y:410+Math.random()*50,vx:side*(30+Math.random()*120),vy:-(6+Math.random()*26)+(Math.random()<.4?40:0),g:4,r0:24+Math.random()*16,r1:90+Math.random()*90,al:1,c:Math.random()<.3?'30,12,36':'3,2,5',a:-d,life:2.6+Math.random()*1.2})}
- for(let i=0;i<(lite?8:18);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*80,y:370+Math.random()*80,vx:(Math.random()-.5)*60,vy:-(26+Math.random()*34),g:-6,r0:16,r1:50+Math.random()*40,al:.7,c:'70,40,84',a:-(Math.random()*.8),life:1.8+Math.random()});lbFxKick()}
+function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?46:96;
+ /* 26/11 chủ game: giống KHÍ ĐỘC (xanh lục độc, bám sát đất, tràn ngang chậm, cuộn xoáy) chứ không phải khói đen của ma quỷ */
+ const pal=['40,84,56','58,104,60','74,112,58','30,66,56','62,92,44'];
+ for(let i=0;i<n;i++){const side=Math.random()<.5?-1:1,d=Math.random()*.6;LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*100,y:418+Math.random()*46,vx:side*(24+Math.random()*95),vy:-(3+Math.random()*12)+(Math.random()<.45?30:0),g:2,r0:30+Math.random()*20,r1:110+Math.random()*110,al:.34+Math.random()*.14,c:pal[Math.random()*pal.length|0],a:-d,life:3+Math.random()*1.5})}
+ /* lõi phát sáng độc (cộng sáng) */
+ for(let i=0;i<(lite?14:30);i++)LBFX.p.push({k:'smoke',add:1,x:1139+(Math.random()-.5)*120,y:410+Math.random()*50,vx:(Math.random()-.5)*130,vy:-(2+Math.random()*10),g:0,r0:24,r1:80+Math.random()*70,al:.06+Math.random()*.05,c:'120,200,110',a:-(Math.random()*.7),life:2.2+Math.random()*1.1});
+ /* luồng khí bốc lên từ khe cửa */
+ for(let i=0;i<(lite?8:16);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*50,y:380+Math.random()*60,vx:(Math.random()-.5)*34,vy:-(18+Math.random()*26),g:-3,r0:16,r1:46+Math.random()*36,al:.4,c:'70,140,70',a:-(Math.random()*.8),life:2+Math.random()});lbFxKick()}
 (function(){const hot=(el,on)=>el.classList.toggle('hot',on);let busy=0;const st=$('#lbStage');
  for(const id of ['lbBridge','lbDoor']){const el=$('#'+id);if(!el)continue;for(const t of el.querySelectorAll('.lbz,.lbtag')){t.addEventListener('pointerdown',()=>hot(el,true));t.addEventListener('pointerenter',()=>hot(el,true));for(const ev of ['pointerup','pointerleave','pointercancel'])t.addEventListener(ev,()=>hot(el,false))}}
  const go=()=>{if(busy)return;busy=1;st.classList.remove('bring');void st.offsetWidth;st.classList.add('bring');lbBellFx();setTimeout(()=>st.classList.remove('bring'),1500);setTimeout(()=>{busy=0;$('#lbGo').click()},720)};
