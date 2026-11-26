@@ -21,18 +21,19 @@ for k,(f,L,gr) in J.items():
     ang=math.degrees(math.atan2(ax[1],ax[0]))
     r=im.rotate(ang,resample=Image.BICUBIC,expand=True)   # PIL: dương = ngược chiều kim đồng hồ; trục ax (y xuống) -> ngang
     bb=r.getbbox(); r=r.crop(bb)
-    s=L/r.width; nw,nh=max(1,round(r.width*s)),max(1,round(r.height*s))
-    # BOX premultiplied
-    arr=np.array(r).astype(float); al=arr[:,:,3:4]/255; pm=np.concatenate([arr[:,:,:3]*al,arr[:,:,3:4]],2)
-    t=Image.fromarray(pm.astype(np.float32),'RGBA') if False else None
-    ch=[Image.fromarray(pm[:,:,i].astype(np.float32),'F').resize((nw,nh),Image.BOX) for i in range(4)]
-    o=np.stack([np.array(x) for x in ch],2); A=o[:,:,3]
-    rgb=np.where(A[:,:,None]>1e-3,o[:,:,:3]/np.maximum(A[:,:,None]/255,1e-3),0)
-    out=np.dstack([np.clip(rgb,0,255),np.where(A>110,255,0)]).astype(np.uint8)
-    img=Image.fromarray(out,'RGBA')
-    img2=img.convert('RGB').quantize(96,dither=Image.NONE).convert('RGB'); o2=np.array(img2); o2=np.dstack([o2,out[:,:,3]]); img=Image.fromarray(o2,'RGBA')
-    bb2=img.getbbox(); img=img.crop(bb2); img.save(OUT+k+'.png',optimize=True)
-    W,H=img.size; m=np.array(img)[:,:,3]>0
+    HR=3                                   # ảnh nét gấp 3 lần cỡ game; game tự thu về đúng pixel màn hình (wImgFor)
+    nw=round(L*HR); nh=max(1,round(r.height*nw/r.width))
+    # LANCZOS trên ảnh nhân alpha (không viền đen), giữ alpha mềm, KHÔNG giảm màu
+    arr=np.array(r).astype(np.float64); al=arr[:,:,3:4]/255.0
+    pm=np.concatenate([arr[:,:,:3]*al,arr[:,:,3:4]],2)
+    ch=[np.array(Image.fromarray(pm[:,:,i].astype(np.float32),'F').resize((nw,nh),Image.LANCZOS)) for i in range(4)]
+    o=np.stack(ch,2); A=np.clip(o[:,:,3],0,255)
+    rgb=np.where(A[:,:,None]>1.0,o[:,:,:3]/np.maximum(A[:,:,None]/255.0,1e-3),0)
+    out=np.dstack([np.clip(rgb,0,255),A]).astype(np.uint8)
+    out[:,:,3]=np.where(out[:,:,3]<12,0,out[:,:,3])
+    img=Image.fromarray(out,'RGBA'); img=img.crop(img.getbbox()); img.save(OUT+k+'.png',optimize=True)
+    W,H=img.size; m=np.array(img)[:,:,3]>128
     gx=round(W*gr); col=np.nonzero(m[:,gx])[0]; gy=round(col.mean()) if len(col) else H//2
-    res[k]=[W,H,gx,gy,round(W*0.8)]; print(k,round(ang,1),(W,H),'grip',gx,gy)
+    # WPN dùng ĐƠN VỊ GAME (ảnh/HR): [dài,cao,gripX,gripY,dài lưỡi]
+    res[k]=[round(W/HR,1),round(H/HR,1),round(gx/HR,1),round(gy/HR,1),round(W/HR*0.8)]; print(k,round(ang,1),(W,H),'grip',gx,gy)
 print(json.dumps(res))
