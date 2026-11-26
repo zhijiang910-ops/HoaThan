@@ -1674,6 +1674,19 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
  #create .cxR #crSkD{min-height:64px}
  #create .cxC .cx-preview .cxst{bottom:16%;height:20%}
 }
+/* 26/11 chủ game: cân đối khoảng cách cột trái (ô tên, Nam/Nữ, avatar) và cột phải (thẻ phái, võ học), bớt vùng trống phía dưới. Dùng clamp theo chiều cao màn để co giãn đều ở mọi cỡ */
+#create .cxL.cxL{gap:clamp(10px,3.7vh,26px)}
+#create .cxL #crName{height:clamp(30px,8.2vh,44px);box-sizing:border-box}
+#create .cxL .cxg{height:clamp(26px,6.8vh,38px)}
+#create .cxL .cxg>*{height:100%}
+#create .cxL .cxavatars{gap:clamp(5px,1.6vh,10px)}
+#create .cxR .cxRb.cxRb{gap:clamp(6px,1.8vh,13px)}
+#create .cxR .cxsect{gap:clamp(4px,1.1vh,8px)}
+#create .cxR .cxsect .cxwb{min-height:clamp(44px,10.2vh,62px);justify-content:center}
+#create .cxR .cxskr .cxs{width:clamp(28px,6vh,38px);height:clamp(28px,6vh,38px);font-size:clamp(16px,3.5vh,22px)}
+#create .cxR .cxsk{gap:clamp(4px,1.2vh,9px)}
+#create .cxR #crSkD{font-size:clamp(11px,2.6vh,13px);line-height:1.4;overflow-y:auto;-webkit-overflow-scrolling:touch}
+@media (max-height:400px){#create .cxR .cxsect .cxwb{min-height:0}#create .cxR .cxskr .cxs{width:26px;height:26px;font-size:15px}#create .cxR .cxRb.cxRb{gap:5px}#create .cxR .cxsk{gap:3px}#create .cxR #crSkD{font-size:11px;line-height:1.32}#create .cxL.cxL{gap:clamp(8px,3.2vh,14px)}}
 </style>
 </head>
 <body>
