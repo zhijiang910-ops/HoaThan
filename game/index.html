@@ -4870,7 +4870,7 @@ const LOCK_IMG='<img class="lkimg" src="assets/ui/khoa.png" alt="khóa" width="1
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
 /* 25/11 (chủ game): bỏ ô avatar 9-14 (chân dung phái); không nạp ảnh phai-*.webp nữa */
 const sectOfAvatar=n=>null;/* 26/11: lưới avatar nam 13 ô (5 cột), nữ 8 ô (4 cột) */
-const AVG={nam:{c:5,r:3,n:13},nu:{c:5,r:3,n:14}};
+const AVG={nam:{c:5,r:2,n:10},nu:{c:5,r:3,n:14}};
 /* 24/11: bỏ 8 avatar cũ (chủ game). Hồ sơ cũ có avatar 1-8 tự chuyển sang avatar Mao Sơn Phái (9). */
 function avatarIndex(value){return Number.isInteger(value)&&value>=1&&value<=14?value:0}
 function drawPlayerAvatar(g,gender,value,size){
