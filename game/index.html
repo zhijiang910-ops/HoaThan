@@ -1635,6 +1635,9 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxL,#create .cxR{margin-block:clamp(10px,6vh,42px);padding:clamp(6px,1.25vw,18px);background:linear-gradient(#06171be8,#0a2227);box-shadow:none}
 #create .cxL::after,#create .cxR::after,#create .cx-preview .cxst::after,#create #crGo::after{content:"";position:absolute;inset:0;border:1px solid #a68857;border-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M0 12h4V7h5V3h7V1h8v2h7v4h5v5h4M0 28h4v5h5v4h7v2h8v-2h7v-4h5v-5h4M1 12v16M39 12v16M5 12h4V9h5V5m21 7h-4V9h-5V5M5 28h4v3h5v4m21-7h-4v3h-5v4' fill='none' stroke='%23a68857'/%3E%3C/svg%3E") 16 stretch;pointer-events:none;z-index:4}
 #create .cxL::after,#create .cxR::after,#create .cx-preview .cxst::after,#create #crGo::after{border-width:10px}
+/* 26/11: viền góc chỉ do bản ChatGPT (border-image) vẽ; bỏ 4 góc chữ L của bản Claude để khỏi chồng viền */
+#create .cxL::after,#create .cxR::after,#create .cxC::after{background:none!important}
+#create .cxL,#create .cxR{box-shadow:none!important}
 #create .cxC{box-shadow:none}
 #create .cxill::after,#create .cxC::after,#create .cxC::before{display:none}
 #create .cxill #crBg{object-position:50% 50%}
