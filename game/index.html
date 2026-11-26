@@ -22,7 +22,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
 </script>
 <title>Khử Tà Diệt Ma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Noto+Serif:wght@600;800&family=Ma+Shan+Zheng&family=Silkscreen:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Noto+Serif:ital,wght@0,400;0,600;0,800&family=Ma+Shan+Zheng&family=Silkscreen:wght@700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: thần thoại, nặng lửa, như một trò chơi đã phát hành
    IDEA: một cuộn võ học sơn mài đen viền vàng đặt trên chiến địa Hỏa Diệm Sơn
@@ -848,27 +848,30 @@ html.needland #rot{display:flex}
 #ldg{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));background:#0a070d;color:#e6dcc8;opacity:1;transition:opacity .35s;font-family:"Be Vietnam Pro",sans-serif}
 #ldg[hidden]{display:none}#ldg.out{opacity:0;pointer-events:none}
 #ldg .lbg{position:absolute;inset:0;background:url(assets/ui/loading/cong.webp) center/cover no-repeat;background-color:#07090d}
-#ldg .lbg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(6,8,12,.5),rgba(6,8,12,0) 26%,rgba(6,8,12,0) 52%,rgba(6,8,12,.62) 74%,rgba(6,8,12,.9))}
-#ldg .lt{position:absolute;top:max(8px,calc(env(safe-area-inset-top) + 4px));left:50%;transform:translateX(-50%);height:clamp(46px,21vh,140px);width:auto;max-width:92vw;filter:drop-shadow(0 2px 6px #000);pointer-events:none}
-#ldg .lbx{position:relative;width:min(720px,88vw,calc(100vh*1.7));display:grid;gap:6px}
-#ldg .lrow{display:flex;justify-content:space-between;align-items:baseline;padding:0 2px}
-#ldg .ls{font:600 clamp(11.5px,3.4vh,14px) "Be Vietnam Pro",sans-serif;color:#d9ceb2;letter-spacing:.04em;text-shadow:0 1px 4px #000}
-#ldg .lp{font:700 clamp(11.5px,3.2vh,14px) "Be Vietnam Pro",sans-serif;color:#d9ceb2;text-shadow:0 1px 4px #000}
+#ldg .lbg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(5,7,12,.45),rgba(5,7,12,0) 24%,rgba(5,7,12,0) 46%,rgba(5,7,12,.7) 68%,rgba(5,7,12,.95) 86%)}
+#ldg{padding-bottom:max(10px,calc(env(safe-area-inset-bottom) + 3vh))!important}
+#ldg .lt{position:absolute;top:max(6px,calc(env(safe-area-inset-top) + 2.5vh));left:50%;transform:translateX(-50%);height:clamp(46px,17vh,150px);width:auto;max-width:92vw;filter:drop-shadow(0 2px 6px #000);pointer-events:none}
+#ldg .lbx{position:relative;width:min(1150px,70vw);display:grid;gap:clamp(3px,1.2vh,12px)}
+#ldg .ls{justify-self:center;font:500 clamp(13px,3.2vh,24px) "Noto Serif",Georgia,serif;color:#e4d9bf;letter-spacing:.03em;text-shadow:0 1px 6px #000;margin-bottom:clamp(0px,1.2vh,10px)}
+#ldg .lbw{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:clamp(10px,2.4vw,26px)}
+#ldg .lp{font:500 clamp(13px,3.2vh,24px) "Noto Serif",Georgia,serif;color:#e4d9bf;text-shadow:0 1px 6px #000;min-width:3.2em;text-align:left}
 /* thanh tải 3 ảnh (chủ game): rãnh đá cố định + vệt máu lộ dần bằng clip-path theo --progress + đầu vệt 2 giọt */
 @property --progress{syntax:'<percentage>';inherits:true;initial-value:0%}
 #ldg{--progress:0%}
-#ldg .lbar{position:relative;width:100%;aspect-ratio:1200/82;background:url(assets/ui/loading/ranh_da.webp) 0 0/100% 100% no-repeat;filter:drop-shadow(0 3px 5px rgba(0,0,0,.7))}
-#ldg .lbar .lin{position:absolute;left:5.9%;right:5.7%;top:34%;bottom:25.5%}
+#ldg .lbar{--bh:clamp(24px,4.6vh,44px);--cap:calc(var(--bh)*70/82);position:relative;width:100%;height:var(--bh);box-sizing:border-box;border-style:solid;border-width:0 var(--cap);border-image:url(assets/ui/loading/ranh_da.webp) 0 70 fill/0 var(--cap)/0 stretch;filter:drop-shadow(0 3px 5px rgba(0,0,0,.7))}
+#ldg .lbar .lin{position:absolute;left:0;right:0;top:34%;bottom:25.5%}
 #ldg .lbar .bl{position:absolute;inset:0;background:url(assets/ui/loading/vet_mau.webp) 0 0/100% 100% no-repeat;clip-path:inset(0 calc(100% - var(--progress)) 0 0)}
 #ldg .lbar .hd{position:absolute;left:min(var(--progress),95%);top:50%;height:250%;aspect-ratio:194/108;background:url(assets/ui/loading/dau_vet.webp) 0 0/100% 100% no-repeat;transform:translate(-26%,-26%);pointer-events:none}
 #ldg.z0 .lbar .hd{opacity:0}
 #ldg .lbar #ldgB{display:none}
 #ldg:has(#ldgB.ind){animation:ldgInd2 1.6s ease-in-out infinite alternate}@keyframes ldgInd2{from{--progress:6%}to{--progress:62%}}
-/* chỉ dẫn: nhẹ */
-#ldg .ltip{width:100%;border:0;border-top:1px solid rgba(190,160,110,.2);background:none;padding:6px 4px 0;box-sizing:border-box;text-align:center;min-height:42px}
-#ldg .ltip span{display:block;font:700 9.5px "Be Vietnam Pro",sans-serif;letter-spacing:.22em;color:#a8946a;text-transform:uppercase;margin-bottom:2px}
-#ldg .ltip p{margin:0;font:500 clamp(11.5px,3.3vh,13px)/1.4 "Be Vietnam Pro",sans-serif;color:#cfc6b0;text-shadow:0 1px 4px #000;transition:opacity .25s}
-@media (max-height:340px){#ldg .lbx{gap:3px}#ldg .ltip{padding-top:3px;min-height:30px}#ldg .ltip span{display:none}}
+/* chỉ dẫn: nhẹ, theo mẫu — "—— CHỈ DẪN ——" + dòng chữ serif */
+#ldg .ltip{width:100%;border:0;background:none;padding:clamp(2px,2.2vh,22px) 4px 0;box-sizing:border-box;text-align:center;min-height:0}
+#ldg .ltip span{display:flex;align-items:center;gap:clamp(10px,2vw,22px);max-width:min(380px,70%);margin:0 auto clamp(2px,1.4vh,12px);font:500 clamp(11.5px,2.9vh,21px) "Noto Serif",Georgia,serif;letter-spacing:.2em;color:#cdbb92;text-transform:uppercase}
+#ldg .ltip span:before,#ldg .ltip span:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(205,187,146,.55))}
+#ldg .ltip span:after{background:linear-gradient(90deg,rgba(205,187,146,.55),transparent)}
+#ldg .ltip p{margin:0;font:400 clamp(12px,3vh,22px)/1.45 "Noto Serif",Georgia,serif;color:#e4d9bf;text-shadow:0 1px 6px #000;transition:opacity .25s}
+@media (max-height:340px){#ldg .lbx{gap:2px}#ldg .ltip{padding-top:2px}#ldg .ltip span{display:none}#ldg .ls{margin-bottom:0}}
 #fade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:60;transition:opacity .4s}
 #fade.on{opacity:1}
 @media (max-height:520px){.tnl{max-height:calc(44*var(--vh));gap:3px;margin-top:4px}.tnr{padding:3px 6px}.tng,.tnr .item{width:28px;height:28px;font-size:17px}.tni b{font-size:12px}.tni small{font-size:10px}.tnr .btn{min-height:28px;min-width:66px;font-size:12px}
@@ -1756,7 +1759,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 <body>
 <canvas id="cv"></canvas>
 <div id="ldg" role="status" aria-live="polite"><div class="lbg"></div><img class="lt" src="assets/ui/loading/tieude.webp" alt="Khử Tà Diệt Ma">
- <div class="lbx"><div class="lrow"><span class="ls" id="ldgS">Đang mở Quỷ Môn…</span><b class="lp" id="ldgP">0%</b></div><div class="lbar"><div class="lin"><div class="bl"></div><i id="ldgB" class="ind"></i><div class="hd"></div></div></div>
+ <div class="lbx"><div class="ls" id="ldgS">Đang mở Quỷ Môn…</div><div class="lbw"><div class="lbar"><div class="lin"><div class="bl"></div><i id="ldgB" class="ind"></i><div class="hd"></div></div></div><b class="lp" id="ldgP">0%</b></div>
   <div class="ltip"><span>Chỉ dẫn</span><p id="ldgTip">Chạm giữ vòng điều khiển ở góc trái dưới để di chuyển; nhân vật tự đánh quái gần nhất.</p></div></div></div>
 
 <div id="hud" hidden>
