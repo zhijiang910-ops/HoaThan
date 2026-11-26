@@ -1675,7 +1675,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
  #create .cxC .cx-preview .cxst{bottom:16%;height:20%}
 }
 /* 26/11 chủ game: cân đối khoảng cách cột trái (ô tên, Nam/Nữ, avatar) và cột phải (thẻ phái, võ học), bớt vùng trống phía dưới. Dùng clamp theo chiều cao màn để co giãn đều ở mọi cỡ */
-#create .cxL.cxL{gap:clamp(10px,3.7vh,26px)}
+#create .cxL.cxL{gap:clamp(14px,5vh,34px)}
 #create .cxL #crName{height:clamp(30px,8.2vh,44px);box-sizing:border-box}
 #create .cxL .cxg{height:clamp(26px,6.8vh,38px)}
 #create .cxL .cxg>*{height:100%}
@@ -1685,8 +1685,8 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxR .cxsect .cxwb{min-height:clamp(44px,10.2vh,62px);justify-content:center}
 #create .cxR .cxskr .cxs{width:clamp(28px,6vh,38px);height:clamp(28px,6vh,38px);font-size:clamp(16px,3.5vh,22px)}
 #create .cxR .cxsk{gap:clamp(4px,1.2vh,9px)}
-#create .cxR #crSkD{font-size:clamp(11px,2.6vh,13px);line-height:1.4;overflow-y:auto;-webkit-overflow-scrolling:touch}
-@media (max-height:400px){#create .cxR .cxsect .cxwb{min-height:0}#create .cxR .cxskr .cxs{width:26px;height:26px;font-size:15px}#create .cxR .cxRb.cxRb{gap:5px}#create .cxR .cxsk{gap:3px}#create .cxR #crSkD{font-size:11px;line-height:1.32}#create .cxL.cxL{gap:clamp(8px,3.2vh,14px)}}
+#create .cxR #crSkD{font-size:clamp(11.5px,2.85vh,14px);line-height:1.42;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#8a6a35 transparent}
+@media (max-height:400px){#create .cxR .cxsect .cxwb{min-height:0}#create .cxR .cxskr .cxs{width:26px;height:26px;font-size:15px}#create .cxR .cxRb.cxRb{gap:5px}#create .cxR .cxsk{gap:3px}#create .cxR #crSkD{font-size:11.5px;line-height:1.38}#create .cxL.cxL{gap:clamp(12px,4.4vh,20px)}}
 </style>
 </head>
 <body>
@@ -3569,9 +3569,9 @@ function resize(){
  ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700)*(window.__zboost||1),0.5,1.5);/* 25/11: thử phóng cả game ×1,33 nhưng vùng nhìn hẹp khó né skill (chủ game) -> hoàn nguyên; nhân vật chính phóng riêng bằng HERO.SC (xem dưới); window.__zboost=1,33 để thử lại */
  /* 25/11: ép ZOOM×DPR về SỐ NGUYÊN (mỗi pixel art = cả số nguyên pixel màn hình) để nền/quái/nhân vật nét, không lởm chởm. Làm tròn lên nếu ≤+25%, không thì xuống nếu ≥-20%; tắt bằng window.__noSnap=1 */
  /* 25/11 chủ game: "zoom out xíu, nhìn gần quá không thấy quái và né đòn". Tầm nhìn (SET.view): 'gan' = như cũ (làm tròn LÊN thành số nguyên, có máy bị gần hơn thiết kế tới 20%); 'vua' (mặc định) = đúng thiết kế, làm tròn GẦN NHẤT (màn DPR>=2 cho nửa bậc (2,5 hoặc 1,5) nên pixel xen 2 và 3 điểm màn hình, ít thấy ở màn ~330-460 ppi; DPR<2 vẫn số nguyên; luôn lấy min với bậc của 'gan' để không bao giờ gần hơn cũ); 'xa' = thu thêm 20%. */
- const VIEW=window.__noSnap?'gan':(SET.view||'vua');
- if(VIEW!=='gan')ZOOM=clamp(ZOOM*(VIEW==='xa'?0.8:1),0.5,1.5);
- if(!window.__noSnap){const S0=ZOOM*DPR,cu=Math.ceil(S0-0.02),fl=Math.floor(S0+0.02);let n=0;if(cu>=1&&cu/S0<=1.25)n=cu;else if(fl>=1&&fl/S0>=0.8)n=fl;if(VIEW!=='gan'){const q=DPR>=2?Math.round(S0*2)/2:Math.round(S0);n=n?Math.min(n,q):q;if(n<1)n=1}/* 'vua'/'xa' không bao giờ GẦN hơn 'gan' (min với bậc cũ) */if(n){const z=n/DPR;if(z>=0.5&&z<=1.5)ZOOM=z}}
+  /* 26/11 chủ game: "zoom in thêm chút" và nút Tầm nhìn (Gần/Vừa/Xa) bấm không đổi gì. Nguyên nhân: các mức cũ làm tròn về cùng một bậc ở nhiều cỡ máy (vd cao ~440: Gần = Vừa; desktop DPR1: cả ba giống nhau). Nay mỗi mức là một HỆ SỐ riêng trên bậc thiết kế n0=ZOOM*DPR rồi làm tròn theo 1/4 pixel màn hình: Xa x0,8, Vừa x1,12 (mặc định, gần hơn bản cũ một chút), Gần x1,35. Luôn khác nhau, trừ khi chạm trần/sàn. Tắt hết: window.__noSnap=1 */
+  const VIEW=window.__noSnap?'gan':(SET.view||'vua');
+  if(!window.__noSnap){const n0=ZOOM*DPR,f=VIEW==='xa'?0.8:VIEW==='gan'?1.35:1.12;let n=Math.round(n0*f*4)/4;n=Math.max(DPR>=2?1:0.75,Math.min(n,1.5*DPR));ZOOM=clamp(n/DPR,0.33,1.5)}
  /* 25/11 chủ game: main bé -> chỉ phóng NHÂN VẬT CHÍNH (vùng nhìn giữ nguyên) theo SỐ NGUYÊN pixel màn hình mỗi pixel ảnh để vẫn nét: k=round(0,98×n×1,3), HERO.SC=k/n (n=ZOOM×DPR). n<2 (desktop DPR1) giữ nguyên. Tắt: window.__hboost=1 */
  {const n=ZOOM*DPR;let hs=1;if(n>=2&&(window.__hboost||1)>1){const k=Math.max(1,Math.round(0.98*n*window.__hboost));hs=k/(0.98*n)}/* 25/11 chủ game: quay lại góc nhìn và cỡ nhân vật cũ -> mặc định KHÔNG phóng nhân vật (đặt window.__hboost=1.3 để bật lại) */for(const id in CH)if(id.startsWith('hero_'))CH[id].SC=0.98*hs}
  vign=document.createElement('canvas');vign.width=VW;vign.height=VH;const v=vign.getContext('2d');const g=v.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*0.3,VW/2,VH/2,Math.max(VW,VH)*0.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(12,3,0,.78)');v.fillStyle=g;v.fillRect(0,0,VW,VH);
