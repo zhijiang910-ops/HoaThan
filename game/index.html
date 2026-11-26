@@ -1796,6 +1796,14 @@ html body #lobby .lbgear{position:absolute;top:max(2.6vh,env(safe-area-inset-top
 html body #lobby .lbgear:active{color:#fff}
 html body #lobby .lbfoot{display:none!important}
 html body #lobby .lbfoot.open{display:flex!important;position:absolute;top:calc(max(2.6vh,env(safe-area-inset-top)) + clamp(34px,5.4vh,52px) + 6px);right:max(2.2vw,env(safe-area-inset-right));left:auto;bottom:auto;height:auto;padding:8px 10px;gap:8px 10px;background:rgba(8,8,12,.92);border:1px solid #6b5a3c;border-radius:4px;z-index:5}
+html body #lobby .lbgrid.g7>[data-lb=amgioi]{display:none!important}
+html body #lobby .lbgrid.g7>*{flex-basis:33.2%!important;width:33.2%}
+html body #lobby .lbgrid.g7>[data-lb=inv]{order:1}html body #lobby .lbgrid.g7>[data-lb=luyenvk]{order:2}html body #lobby .lbgrid.g7>[data-lb=luyendan]{order:3}html body #lobby .lbgrid.g7>[data-lb=tangbao]{order:4}html body #lobby .lbgrid.g7>[data-lb=diemtam]{order:5}html body #lobby .lbgrid.g7>[data-lb=luyencong]{order:6}
+html body #lobby .lbgrid.g7>[data-lb=tangbao]:before,html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
+html body #lobby .lbmain .lbbig.gold{height:clamp(46px,14vh,100px)}
+html body #lobby .lbmain #lbAm.lbt{display:flex!important;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#5a0f1a,#2a060c)!important}
+html body #lobby .lbmain #lbAm b{font:600 clamp(20px,6.4vh,48px)/1.05 "Noto Serif",serif!important;color:#f0e2c2;letter-spacing:.04em}
+html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!important;font-size:clamp(9px,2.3vh,14px)!important}
 </style>
 </head>
 <body>
@@ -1889,7 +1897,7 @@ html body #lobby .lbfoot.open{display:flex!important;position:absolute;top:calc(
     <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
    <canvas id="lbHero" width="240" height="200" aria-hidden="true"></canvas>
-   <div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbBossChest" class="lbbig" hidden><b>Rương Boss chờ nhận</b><small id="lbBossChestS"></small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
+   <div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbAm" class="lbbig gold lbt" data-lb="amgioi"><b>Âm Giới</b><small id="lbAmS"></small></button><button id="lbBossChest" class="lbbig" hidden><b>Rương Boss chờ nhận</b><small id="lbBossChestS"></small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
   </div>
   <div class="lbr">
    <h1 class="lbtitle">Khử Tà Diệt Ma<small>驅邪滅魔</small></h1>
@@ -5034,7 +5042,7 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(p
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.amdia;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
  giveStarterSword();
- $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"><i>${t.g}</i><b>${t.n}</b><small>${t.st()}</small></button>`).join('');$('#lbGrid').classList.toggle('g7',LBT.filter(t=>!t.hide).length>6);$('#againBtn').hidden=false;
+ $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"><i>${t.g}</i><b>${t.n}</b><small>${t.st()}</small></button>`).join('');$('#lbGrid').classList.toggle('g7',LBT.filter(t=>!t.hide).length>6);{const am=$('#lbAmS');if(am)am.textContent=amStatus();}$('#againBtn').hidden=false;
  {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?RN(cp.rmap)+' '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss · bấm để kết toán':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
  $('#lbGoS').textContent=save.bossChest?'Có rương Boss chờ: nhận trước khi hạ Boss lần nữa':RN(sel.map)+' · đã mở '+stars(rprog().star);
  $('#lbRes').textContent=String(save.ngoc||0);$('#lbRes').title='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;
