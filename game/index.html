@@ -5881,6 +5881,15 @@ window.TDST={hit,tutHook,useDanNow,bossPhase2,huntList,forgeItem,weaponForge,sta
   const viewport = window.visualViewport;
   function fitCreateScreen() {
     const bounds = document.documentElement;
+    /* 26/11: khóa xoay dọc/khung nhỏ -> game tự xoay 90° (VIEW). Dùng cỡ khung ẢO (đã xoay), không dùng visualViewport thật, nếu không màn tạo nhân vật bị cắt mất nút Khởi hành */
+    const V = window.__VIEW;
+    if (V && V.on && V.W && V.H) {
+      screen.style.setProperty('--create-width', (V.rot ? V.H : V.W) + 'px');
+      screen.style.setProperty('--create-height', (V.rot ? V.W : V.H) + 'px');
+      screen.style.setProperty('--create-top', '0px');
+      screen.style.setProperty('--create-left', '0px');
+      return;
+    }
     const width = Math.min(bounds.clientWidth, viewport?.width || bounds.clientWidth);
     const height = Math.min(bounds.clientHeight, viewport?.height || bounds.clientHeight);
     if (!width || !height) return;
