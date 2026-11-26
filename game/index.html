@@ -4913,7 +4913,7 @@ function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gende
  setCreateSect(P0&&P0.sect&&SECTS[P0.sect]?P0.sect:P0&&sectOfAvatar(avatarIndex(P0.avatar))||'maoson');
  {const a0=P0?(avatarIndex(P0.avatar)||1):1;cr.avatars={nam:a0,nu:a0}}
  renderCreateAvatars();renderCreateScene();
- $('#crGo').textContent=P0?'Lưu và về sảnh':'Khởi hành';
+ $('#crGo').textContent='Khởi hành';
 cr.view='kiem';cr.sk=1;showOnly('create');renderCreate();
   clearInterval(window.__crh);let t=0;window.__crh=setInterval(()=>{if($('#create').hidden){clearInterval(window.__crh);return}crHero(t);t+=0.125},125)}
 function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);g.imageSmoothingEnabled=false;
