@@ -15,6 +15,7 @@ Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây 
 6. Gửi video/ảnh kiểm tra khi xong mỗi phần. Báo đúng sự thật, kể cả lỗi.
 7. **CẤM GỌI PIXELLAB (chủ game ra lệnh 25/11, hiệu lực cho đến khi chủ game tự gỡ lệnh): mọi thứ tự làm bằng code và tài nguyên có sẵn; không tự đề xuất hay gọi PixelLab.** (Luật cũ: chỉ dùng khi thật sự cần thiết, không lạm dụng, chủ game dặn 24/11.) Làm trước bằng cách rẻ: phác thảo/xem trước, dùng lại asset đã có, chỉnh timing/vị trí/code, bản mẫu thử trong game. Chỉ gọi PixelLab khi bản đó không ổn. Không "thử cho biết": mỗi lần gọi nói rõ vì sao cần và số lượt dự kiến.
 
+9. **CHỈ HỖ TRỢ MÀN HÌNH NGANG (chủ game nhắc nhiều lần, chốt 26/11):** điện thoại cầm dọc thì hiện màn "Chỉ hỗ trợ màn hình ngang", KHÔNG tự xoay giao diện, KHÔNG sửa bố cục cho màn dọc. Đừng làm lại cơ chế tự xoay (commit `aa7b2e5` 22/11 từng thêm, đã bỏ ở `0fa000e`).
 8. **CỠ QUÁI (chủ game 25/11, bắt buộc):** quái thường và Tinh Anh PHẢI NHỎ HƠN nhân vật chính (main cao ~104 px thế giới). Mini-boss, trùm, thủ lĩnh sự kiện thì to hơn. Trước khi đưa quái mới vào game: chạy `python3 cong_cu/claude/size_check.py` (mã thoát 1 nếu có quái thường/Tinh Anh >= main). Khi nhờ ChatGPT/PixelLab vẽ quái thường, đặt cao ≤ 100 px, đừng "ngang quái cũ" mà không so với main.
 
 ## Hiện trạng game (23/11)
