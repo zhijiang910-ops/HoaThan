@@ -9,7 +9,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
 }
 </script>
 <link rel="preload" as="image" href="assets/ui/creation/nen-a.webp">
-<link rel="preload" as="image" href="assets/ui/loading/cong.webp"><link rel="preload" as="image" href="assets/ui/loading/tieude.webp">
+<link rel="preload" as="image" href="assets/ui/loading/cong.webp"><link rel="preload" as="image" href="assets/ui/loading/tieude.webp"><link rel="preload" as="image" href="assets/ui/loading/ranh_da.webp">
 <script>
 /* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
 (function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
@@ -850,21 +850,20 @@ html.needland #rot{display:flex}
 #ldg .lbg{position:absolute;inset:0;background:url(assets/ui/loading/cong.webp) center/cover no-repeat;background-color:#07090d}
 #ldg .lbg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(6,8,12,.5),rgba(6,8,12,0) 26%,rgba(6,8,12,0) 52%,rgba(6,8,12,.62) 74%,rgba(6,8,12,.9))}
 #ldg .lt{position:absolute;top:max(8px,calc(env(safe-area-inset-top) + 4px));left:50%;transform:translateX(-50%);height:clamp(46px,21vh,140px);width:auto;max-width:92vw;filter:drop-shadow(0 2px 6px #000);pointer-events:none}
-#ldg .lbx{position:relative;width:min(620px,84vw);display:grid;gap:6px}
+#ldg .lbx{position:relative;width:min(720px,88vw,calc(100vh*1.7));display:grid;gap:6px}
 #ldg .lrow{display:flex;justify-content:space-between;align-items:baseline;padding:0 2px}
 #ldg .ls{font:600 clamp(11.5px,3.4vh,14px) "Be Vietnam Pro",sans-serif;color:#d9ceb2;letter-spacing:.04em;text-shadow:0 1px 4px #000}
 #ldg .lp{font:700 clamp(11.5px,3.2vh,14px) "Be Vietnam Pro",sans-serif;color:#d9ceb2;text-shadow:0 1px 4px #000}
-/* rãnh đá (đứng yên) */
-#ldg .lbar{position:relative;width:100%;height:clamp(11px,3.4vh,15px);box-sizing:border-box;padding:2px;border-radius:8px;border:1px solid #4a4f58;background:linear-gradient(#171a1f,#23272d 55%,#2c3037);box-shadow:0 0 0 1px #05070a,inset 0 2px 4px rgba(0,0,0,.85),inset 0 -1px 0 rgba(255,255,255,.07),0 2px 6px rgba(0,0,0,.6)}
-/* lớp máu đỏ sẫm: lộ dần theo tiến độ */
-#ldg .lbar i{display:block;position:relative;height:100%;width:0;border-radius:6px;background:linear-gradient(#a3232a,#6e1017 52%,#3f080d);box-shadow:inset 0 1px 0 rgba(255,150,140,.4),inset 0 -1px 2px rgba(0,0,0,.5);transition:width .12s linear}
-#ldg .lbar i.ind{width:34%!important;animation:ldgInd 1.1s ease-in-out infinite alternate}@keyframes ldgInd{from{margin-left:0}to{margin-left:66%}}
-/* đầu vệt + 2 giọt: bám điểm cuối của phần đã đầy */
-#ldg .lbar .hd{position:absolute;right:-7px;top:-3px;width:14px;height:calc(100% + 4px);border-radius:50%;background:radial-gradient(circle at 38% 32%,#d0343a,#7d1118 62%,#4a0a0f);box-shadow:0 0 5px rgba(150,20,28,.7)}
-#ldg .lbar .hd:before,#ldg .lbar .hd:after{content:"";position:absolute;background:radial-gradient(circle at 35% 30%,#c42a30,#6e1017 70%);border-radius:0 50% 50% 50%;transform:rotate(45deg)}
-#ldg .lbar .hd:before{left:1px;top:calc(100% - 3px);width:8px;height:8px}
-#ldg .lbar .hd:after{left:8px;top:calc(100% + 5px);width:5px;height:5px}
-#ldg.z0 .lbar .hd{right:auto;left:-1px}
+/* thanh tải 3 ảnh (chủ game): rãnh đá cố định + vệt máu lộ dần bằng clip-path theo --progress + đầu vệt 2 giọt */
+@property --progress{syntax:'<percentage>';inherits:true;initial-value:0%}
+#ldg{--progress:0%}
+#ldg .lbar{position:relative;width:100%;aspect-ratio:1200/82;background:url(assets/ui/loading/ranh_da.webp) 0 0/100% 100% no-repeat;filter:drop-shadow(0 3px 5px rgba(0,0,0,.7))}
+#ldg .lbar .lin{position:absolute;left:5.9%;right:5.7%;top:34%;bottom:25.5%}
+#ldg .lbar .bl{position:absolute;inset:0;background:url(assets/ui/loading/vet_mau.webp) 0 0/100% 100% no-repeat;clip-path:inset(0 calc(100% - var(--progress)) 0 0)}
+#ldg .lbar .hd{position:absolute;left:min(var(--progress),95%);top:50%;height:250%;aspect-ratio:194/108;background:url(assets/ui/loading/dau_vet.webp) 0 0/100% 100% no-repeat;transform:translate(-26%,-26%);pointer-events:none}
+#ldg.z0 .lbar .hd{opacity:0}
+#ldg .lbar #ldgB{display:none}
+#ldg:has(#ldgB.ind){animation:ldgInd2 1.6s ease-in-out infinite alternate}@keyframes ldgInd2{from{--progress:6%}to{--progress:62%}}
 /* chỉ dẫn: nhẹ */
 #ldg .ltip{width:100%;border:0;border-top:1px solid rgba(190,160,110,.2);background:none;padding:6px 4px 0;box-sizing:border-box;text-align:center;min-height:42px}
 #ldg .ltip span{display:block;font:700 9.5px "Be Vietnam Pro",sans-serif;letter-spacing:.22em;color:#a8946a;text-transform:uppercase;margin-bottom:2px}
@@ -1757,7 +1756,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 <body>
 <canvas id="cv"></canvas>
 <div id="ldg" role="status" aria-live="polite"><div class="lbg"></div><img class="lt" src="assets/ui/loading/tieude.webp" alt="Khử Tà Diệt Ma">
- <div class="lbx"><div class="lrow"><span class="ls" id="ldgS">Đang mở Quỷ Môn…</span><b class="lp" id="ldgP">0%</b></div><div class="lbar"><i id="ldgB" class="ind"><u class="hd"></u></i></div>
+ <div class="lbx"><div class="lrow"><span class="ls" id="ldgS">Đang mở Quỷ Môn…</span><b class="lp" id="ldgP">0%</b></div><div class="lbar"><div class="lin"><div class="bl"></div><i id="ldgB" class="ind"></i><div class="hd"></div></div></div>
   <div class="ltip"><span>Chỉ dẫn</span><p id="ldgTip">Chạm giữ vòng điều khiển ở góc trái dưới để di chuyển; nhân vật tự đánh quái gần nhất.</p></div></div></div>
 
 <div id="hud" hidden>
@@ -5891,9 +5890,9 @@ const LDG_TIPS=['Chạm giữ vòng điều khiển ở góc trái dưới để
  'Thần Giáng: bấm ô thần tướng để hóa thân, mỗi thần tướng có kỹ năng riêng.'];
 const LDG={slow:0,el:$('#ldg'),bar:$('#ldgB'),pct:$('#ldgP'),sub:$('#ldgS'),tip:$('#ldgTip'),shown:false,p:0,tgt:0,tipI:Math.floor(Math.random()*LDG_TIPS.length),tipT:0,anim:0,hideT:0};
 function ldgTipNext(){const t=LDG.tip;t.style.opacity=0;setTimeout(()=>{t.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];t.style.opacity=1},220)}
-function ldgDraw(){LDG.bar.classList.remove('ind');LDG.p+=(LDG.tgt-LDG.p)*0.22;if(Math.abs(LDG.tgt-LDG.p)<0.002)LDG.p=LDG.tgt;const v=Math.round(LDG.p*100);LDG.bar.style.width=v+'%';LDG.pct.textContent=v+'%';LDG.el.classList.toggle('z0',v<1)}
+function ldgDraw(){LDG.bar.classList.remove('ind');LDG.p+=(LDG.tgt-LDG.p)*0.22;if(Math.abs(LDG.tgt-LDG.p)<0.002)LDG.p=LDG.tgt;const v=Math.round(LDG.p*100);LDG.bar.style.width=v+'%';LDG.el.style.setProperty('--progress',v+'%');LDG.pct.textContent=v+'%';LDG.el.classList.toggle('z0',v<1)}
 function ldgOpen(label){LDG.slow=0;clearTimeout(LDG.hideT);LDG.el.hidden=false;LDG.el.classList.remove('out');LDG.shown=true;LDG.p=0;LDG.tgt=0;LDG.sub.textContent=label||'Đang mở Quỷ Môn…';LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tip.style.opacity=1;ldgDraw();clearInterval(LDG.anim);LDG.anim=setInterval(ldgDraw,60);clearInterval(LDG.tipT);LDG.tipT=setInterval(ldgTipNext,4200)}
-function ldgClose(){window.__ldgOut=Math.round(performance.now());LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
+function ldgClose(){window.__ldgOut=Math.round(performance.now());LDG.tgt=1;ldgDraw();clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.bar.style.width='100%';LDG.el.style.setProperty('--progress','100%');LDG.el.classList.remove('z0');LDG.pct.textContent='100%';LDG.el.classList.add('out');LDG.shown=false;LDG.hideT=setTimeout(()=>{if(!LDG.shown)LDG.el.hidden=true},380)}
 const assetsBusy=()=>PENDING.size>0||!!(HERO&&!HERO.ok);
 function packMapNames(id){const out=new Set();try{const M=MAPS[id];if(!M)return[];const t=n=>{if(n&&MM[n])out.add(n)};
  for(const k of [M.bg,M.ground,M.patch])t(k);(M.bgq||[]).forEach(q=>t(q[0]));(M.border||[]).forEach(t);(M.houses||[]).forEach(t);(M.inner||[]).forEach(e=>t(e[0]));(M.floor||[]).forEach(f=>t(f.n));(M.rim||[]).forEach(f=>t(f.n));
