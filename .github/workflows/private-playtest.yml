@@ -1,0 +1,22 @@
+name: Private game playtest
+on:
+  push:
+    branches: [claude/youthful-fermat-6hovsq]
+    paths: [.github/workflows/private-playtest.yml, 'game/**']
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: game
+          persist-credentials: false
+      - run: test -f game/index.html && test -d game/assets
+      - uses: actions/upload-artifact@v4
+        with:
+          name: khu-ta-diet-ma-playtest
+          path: game/
+          if-no-files-found: error
+          retention-days: 7
