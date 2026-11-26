@@ -9,6 +9,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
 }
 </script>
 <link rel="preload" as="image" href="assets/ui/creation/nen-a.webp">
+<script>/* 26/11: ảnh màn chờ ngẫu nhiên mỗi lần tải (7 ảnh assets/ui/loading/ld1..7.webp) */(function(){try{var n=1+Math.floor(Math.random()*7),u="assets/ui/loading/ld"+n+".webp";window.__ldN=n;document.documentElement.style.setProperty("--ldgbg","url("+u+")");var l=document.createElement("link");l.rel="preload";l.as="image";l.href=u;document.head.appendChild(l)}catch(e){}})()</script>
 <script>
 /* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
 (function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
@@ -846,7 +847,7 @@ html.needland #rot{display:flex}
 /* ===== màn chờ + thanh tải (25/11) ===== */
 #ldg{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));background:#0a070d;color:#e6dcc8;opacity:1;transition:opacity .35s;font-family:"Be Vietnam Pro",sans-serif}
 #ldg[hidden]{display:none}#ldg.out{opacity:0;pointer-events:none}
-#ldg .lbg{position:absolute;inset:0;background:url(assets/ui/nen_tao_nhan_vat.jpg) center 35%/cover no-repeat;filter:saturate(.9) brightness(.8)}
+#ldg .lbg{position:absolute;inset:0;background:var(--ldgbg,url(assets/ui/nen_tao_nhan_vat.jpg)) center 40%/cover no-repeat;background-color:#07090d;filter:saturate(.95) brightness(.95)}
 #ldg .lbg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(8,5,10,.55),rgba(8,5,10,.12) 34%,rgba(8,5,10,.78) 72%,rgba(8,5,10,.96))}
 #ldg .lt{position:absolute;top:max(12px,env(safe-area-inset-top));left:0;right:0;text-align:center;font:700 clamp(20px,5.6vh,34px) "Noto Serif","Ma Shan Zheng",serif;color:#e8c878;letter-spacing:.06em;text-shadow:0 2px 10px #000,0 0 18px rgba(200,120,40,.35)}
 #ldg .lt small{display:block;font-size:.5em;letter-spacing:.5em;color:#c9a45e;margin-top:2px}
