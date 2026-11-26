@@ -21,6 +21,6 @@ for _ in range(60):
 # nhòe mép, mép mềm theo độ dày
 m=np.array(Image.fromarray((m*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3)))/255.0
 core=np.array(Image.fromarray((m*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(26)))/255.0
-a=np.clip(m*0.86+core*0.25,0,0.92)
+a=np.clip(m*1.0+core*0.4,0,1.0)
 rgba=np.zeros((H,W,4),np.uint8);rgba[...,:3]=(5,6,10);rgba[...,3]=(a*255).astype(np.uint8)
 Image.fromarray(rgba,'RGBA').save(sys.argv[1],quality=85,method=6);print('ok')
