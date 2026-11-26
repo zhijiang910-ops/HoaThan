@@ -6,6 +6,15 @@ Repo này để **riêng tư** và có chứa asset mua có giấy phép (`game/
 
 Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây Du cũ (`BAT_DAU_CLAUDE.md`, `HANDOFF_CHATGPT.md`, `tai_lieu/`, `QA_*`, `demo/`) đã xóa 24/11, xem lại bằng lịch sử git. Khi mâu thuẫn, file này và code game là bản đúng.
 
+## DÀNH CHO CHATGPT / CODEX: CÁCH CHẠY VÀ KIỂM GAME (đọc trước khi sửa)
+- **Nhánh:** làm việc trên `main`, kéo bản mới nhất trước khi sửa (Claude cũng đẩy lên `main`, dễ ghi đè nhau). Commit nhỏ, không force-push, không tạo PR nếu chủ game không bảo.
+- **Cài một lần:** `npm i playwright && npx playwright install chromium` (cần mạng; nếu môi trường chặn mạng thì báo chủ game, đừng bịa kết quả).
+- **Chụp màn tạo nhân vật ở 7 cỡ bắt buộc:** `node cong_cu/claude/chup_tao_nv.js anh_kiem nam` (hoặc `nu`). Script in vị trí nút Khởi hành từng cỡ và thoát mã 1 nếu nút lọt khỏi khung hoặc trang có lỗi. Phải MỞ ẢNH ra xem: hở viền, đè nhau, chữ cắt, đường nối giữa các lớp.
+- **Chạy game tay:** `cd game && python3 -m http.server 8123` rồi mở `http://localhost:8123/`. Mở bằng `file://` sẽ hỏng nhuộm màu áo (canvas bị chặn).
+- **Thư viện kiểm khác:** `cong_cu/claude/rec_lib.js` (đồng hồ ảo `__step`, `L.open(thư_mục_game,{gender,w,h,seed:false})`), mẫu: `cong_cu/claude/test25/quyen_create.js`. Một số script cũ trong `test24/`, `test25/` còn đường dẫn `/home/user/HoaThan`, phải đổi trước khi chạy.
+- **Luật phải theo:** các mục 1–10 ở "Luật làm việc của chủ game" (tiếng Việt, báo thật cả lỗi, tự soi UI ở 7 cỡ trước khi báo, chỉ hỗ trợ màn ngang, CẤM gọi PixelLab, không tự chỉnh số cân bằng). Không đưa repo hay link game ra công khai.
+- **Không làm được thì nói thẳng** (không có Chromium, không có mạng, không chạy được): đừng báo "đã kiểm" khi chưa chụp ảnh thật.
+
 ## Luật làm việc của chủ game (bắt buộc)
 1. **Cái gì muốn sửa phải báo trước.** Đề xuất, chờ duyệt rồi mới làm. Ngoại lệ: chủ game ra lệnh trực tiếp.
 2. **Tạo bằng công cụ có sẵn, không chắp vá.** Hình nhân vật, VFX tạo bằng PixelLab (skeleton animation, VFX creator) hoặc lấy từ gói asset đã mua. Không vẽ VFX bằng code; không ghép, vá frame.
