@@ -1842,6 +1842,18 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before,html body #lobby .lbgrid.g7>[da
 html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 @media (max-height:430px) and (min-width:640px){html body #lobby .lbgrid.lbgrid.g7 .lbt{flex-direction:row!important;gap:8px!important}html body #lobby .lbgrid.g7 .lbt i{font-size:clamp(16px,6vh,26px)!important}html body #lobby .lbgrid.g7 .lbt b{font-size:clamp(9px,3.4vh,13px)!important}}
 @media (max-width:639px){html body #lobby .lbgrid.g7 .lbt i{font-size:16px!important}html body #lobby .lbgrid.g7 .lbt b{font-size:9px!important}}
+/* hiệu ứng cảnh: chuông rung (Xuất Trận), cửa bung + khói đen (Quỷ Môn Quan) */
+#lbStage .lbbell{position:absolute;background:center/100% 100% no-repeat;pointer-events:none;z-index:1;animation:lbidle 4.4s ease-in-out infinite}
+#lbStage .lbbell-c{animation-delay:-1.3s}#lbStage .lbbell-r{animation-delay:-2.6s}
+@keyframes lbidle{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.7deg)}}
+@keyframes lbswing{0%{transform:rotate(0)}14%{transform:rotate(10deg)}32%{transform:rotate(-8deg)}50%{transform:rotate(6deg)}68%{transform:rotate(-4deg)}84%{transform:rotate(2deg)}100%{transform:rotate(0)}}
+#lbStage.bring .lbbell-l{animation:lbswing 1.15s ease-out}#lbStage.bring .lbbell-c{animation:lbswing 1.3s ease-out .06s}#lbStage.bring .lbbell-r{animation:lbswing .95s ease-out .12s}
+#lbStage .lbdin{position:absolute;left:62.9%;top:27.5%;width:10.9%;height:21.9%;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 105%,#4a0c10 0,#12060a 38%,#030204 75%)}
+#lbStage .lbleaf{position:absolute;inset:0;z-index:1;pointer-events:none;background:url(assets/ui/lobby/sanh.webp) 0 0/100% 100% no-repeat;transition:transform .55s cubic-bezier(.2,.85,.25,1)}
+#lbStage .lbleaf-l{clip-path:polygon(62.9% 27.5%,68.1% 27.5%,68.1% 49.4%,62.9% 49.4%);transform-origin:62.9% 38%}
+#lbStage .lbleaf-r{clip-path:polygon(68.1% 27.5%,73.8% 27.5%,73.8% 49.4%,68.1% 49.4%);transform-origin:73.8% 38%}
+#lbStage.dopen .lbleaf-l{transform:scaleX(.7) skewY(-3deg)}#lbStage.dopen .lbleaf-r{transform:scaleX(.7) skewY(3deg)}
+#lbStage #lbFx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 </style>
 </head>
 <body>
@@ -1929,9 +1941,9 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 <section id="lobby" class="screen" hidden>
  <div id="lbStage" aria-label="Sảnh Khử Tà Diệt Ma">
   <img id="lbArt" src="assets/ui/lobby/sanh.webp" alt="" draggable="false">
-  <canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas>
+  <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
   <div class="lbsp lbsp-b" id="lbBridge"><button type="button" class="lbz" aria-label="Xuất Trận" title="Xuất Trận: chọn ải"></button><button type="button" class="lbtag">Xuất Trận</button></div>
-  <div class="lbsp lbsp-d" id="lbDoor"><i class="lbtal" aria-hidden="true"></i><button type="button" class="lbz lbt" data-lb="amgioi" aria-label="Quỷ Môn Quan" title="Quỷ Môn Quan: Âm Giới"></button><button type="button" class="lbtag lbt" data-lb="amgioi">Quỷ Môn Quan</button></div>
+  <div class="lbsp lbsp-d" id="lbDoor"><i class="lbtal" aria-hidden="true"></i><button type="button" class="lbz" aria-label="Quỷ Môn Quan" title="Quỷ Môn Quan: Âm Giới"></button><button type="button" class="lbtag">Quỷ Môn Quan</button></div>
  </div>
  <canvas id="lbBg" width="640" height="400"></canvas>
  <div class="lb">
@@ -5110,10 +5122,28 @@ function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden)
  const target=vh-barH-Math.max(12,vh*0.08);let off=H*0.72-target;off=Math.max(0,Math.min(off,H-vh));
  st.style.width=W+'px';st.style.height=H+'px';st.style.left=((vw-W)/2)+'px';st.style.top=(-off)+'px';st.style.setProperty('--sh',H+'px')}
 if(window.ResizeObserver)new ResizeObserver(lbStageFit).observe($('#lobby'));addEventListener('resize',lbStageFit);setInterval(lbStageFit,1000);
-(function(){const hot=(el,on)=>el.classList.toggle('hot',on);
+/* hiệu ứng canvas #lbFx: sóng chuông + tia vàng (cầu), khói đen tràn từ cửa (cổng) */
+const LBFX={p:[],on:0,t:0};
+function lbFxSize(){const c=$('#lbFx'),st=$('#lbStage');if(!c||!st)return null;const w=Math.min(1600,Math.max(320,st.clientWidth)),h=Math.round(w/LB_AR);if(c.width!==w||c.height!==h){c.width=w;c.height=h}return {c,w,h,k:w/1672}}
+function lbFxLoop(now){const z=lbFxSize();if(!z)return;const dt=Math.min(.05,(now-LBFX.t)/1000||.016);LBFX.t=now;const g=z.c.getContext('2d');g.clearRect(0,0,z.w,z.h);
+ LBFX.p=LBFX.p.filter(p=>(p.a+=dt)<p.life);
+ for(const p of LBFX.p){const u=p.a/p.life;
+  if(p.k==='smoke'){p.x+=p.vx*dt*z.k;p.y+=p.vy*dt*z.k;p.vx*=.992;p.vy*=.985;p.vy+=p.g*dt;const r=(p.r0+(p.r1-p.r0)*Math.min(1,u*1.2))*z.k,al=Math.sin(Math.min(1,u*1.6)*Math.PI*.5)*(1-u)*p.al;if(al<=.003)continue;const gr=g.createRadialGradient(p.x*z.k,p.y*z.k,0,p.x*z.k,p.y*z.k,r);gr.addColorStop(0,`rgba(${p.c},${al})`);gr.addColorStop(.55,`rgba(${p.c},${al*.6})`);gr.addColorStop(1,`rgba(${p.c},0)`);g.fillStyle=gr;g.beginPath();g.arc(p.x*z.k,p.y*z.k,r,0,TAU);g.fill()}
+  else if(p.k==='ring'){if(u<0)continue;const r=(6+p.R*Math.min(1,u))*z.k;g.strokeStyle=`rgba(255,216,120,${(1-u)*.8})`;g.lineWidth=Math.max(1,(2.4-1.4*u)*z.k);g.beginPath();g.arc(p.x*z.k,p.y*z.k,r,0,TAU);g.stroke()}
+  else{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=60*dt;g.fillStyle=`rgba(255,${200+Math.random()*40|0},${110+Math.random()*50|0},${(1-u)*.9})`;g.fillRect(p.x*z.k-1,p.y*z.k-1,Math.max(1.5,2.2*z.k),Math.max(1.5,2.2*z.k))}}
+ if(LBFX.p.length)requestAnimationFrame(lbFxLoop);else{LBFX.on=0;g.clearRect(0,0,z.w,z.h)}}
+function lbFxKick(){if(!LBFX.on){LBFX.on=1;LBFX.t=performance.now();requestAnimationFrame(lbFxLoop)}}
+function lbBellFx(){const lite=LOWFX||MOBILE,bs=[[178,455],[254,455],[310,475]];for(const [x,y] of bs){for(let i=0;i<2;i++)LBFX.p.push({k:'ring',x,y,R:i?46:30,a:-i*.16,life:.85});for(let i=0;i<(lite?5:10);i++)LBFX.p.push({k:'spark',x:x+(Math.random()-.5)*30,y:y+(Math.random()-.5)*20,vx:(Math.random()-.5)*50,vy:-20-Math.random()*40,a:0,life:.7+Math.random()*.6})}lbFxKick()}
+function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?60:120;
+ /* khói đen lăn từ khe cửa ra bậc đá và sân (lan ngang là chính, bốc lên nhẹ), kèm vài dải khói tím nhạt cho có khối */
+ for(let i=0;i<n;i++){const side=Math.random()<.5?-1:1,d=Math.random()*.45;LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*90,y:410+Math.random()*50,vx:side*(30+Math.random()*120),vy:-(6+Math.random()*26)+(Math.random()<.4?40:0),g:4,r0:24+Math.random()*16,r1:90+Math.random()*90,al:1,c:Math.random()<.3?'30,12,36':'3,2,5',a:-d,life:2.6+Math.random()*1.2})}
+ for(let i=0;i<(lite?8:18);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*80,y:370+Math.random()*80,vx:(Math.random()-.5)*60,vy:-(26+Math.random()*34),g:-6,r0:16,r1:50+Math.random()*40,al:.7,c:'70,40,84',a:-(Math.random()*.8),life:1.8+Math.random()});lbFxKick()}
+(function(){const hot=(el,on)=>el.classList.toggle('hot',on);let busy=0;const st=$('#lbStage');
  for(const id of ['lbBridge','lbDoor']){const el=$('#'+id);if(!el)continue;for(const t of el.querySelectorAll('.lbz,.lbtag')){t.addEventListener('pointerdown',()=>hot(el,true));t.addEventListener('pointerenter',()=>hot(el,true));for(const ev of ['pointerup','pointerleave','pointercancel'])t.addEventListener(ev,()=>hot(el,false))}}
- const go=()=>{hot($('#lbBridge'),true);setTimeout(()=>hot($('#lbBridge'),false),350);$('#lbGo').click()};
- for(const t of $('#lbBridge').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',go)})();
+ const go=()=>{if(busy)return;busy=1;st.classList.remove('bring');void st.offsetWidth;st.classList.add('bring');lbBellFx();setTimeout(()=>st.classList.remove('bring'),1500);setTimeout(()=>{busy=0;$('#lbGo').click()},720)};
+ const door=()=>{if(busy)return;busy=1;st.classList.add('dopen');lbDoorFx();setTimeout(()=>st.classList.remove('dopen'),2600);setTimeout(()=>{busy=0;const t=document.querySelector('#lbGrid [data-lb="amgioi"]');if(t)t.click()},1250)};
+ for(const t of $('#lbBridge').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',go);
+ for(const t of $('#lbDoor').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',door)})();
 $('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').classList.toggle('open')});
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
