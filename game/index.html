@@ -1664,7 +1664,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 </style>
 <style>
 /* Keep the artwork full bleed while controls respect the device safe area. */
-#create{box-sizing:border-box;width:100%;height:100%;height:100dvh;padding:0;overflow:hidden}
+#create{box-sizing:border-box;inset:var(--create-top,0px) auto auto var(--create-left,0px);width:var(--create-width,100%);height:var(--create-height,100%);padding:0;overflow:hidden}
 #create .cx{grid-template-rows:minmax(0,1fr);padding:max(6px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));gap:clamp(4px,0.7vw,10px)}
 #create .cxill #crBg{display:block;object-fit:cover;object-position:center;image-rendering:auto}
 #create .cxill #crFull{left:39%;bottom:16%;height:74%;width:74%;max-width:none;object-fit:contain;object-position:center bottom;image-rendering:auto}
@@ -5874,6 +5874,27 @@ if(document.fonts)document.fonts.ready.then(()=>{paintMap()});
 requestAnimationFrame(frame);
 window.TDST={hit,tutHook,useDanNow,bossPhase2,huntList,forgeItem,weaponForge,startSwordCut,claimChest,routeChest,addItems,dtInfo,openLbm,eatBite,chestRoll,gods,danBag,secOn,eqWeapon,saveCP,resumeCP,finishRoute,rprog,mats,needFork,openChest,dropChest,endRun,showLobby,openCreate,renderCreate,profGain,staTick,chestTier,addStatus,brkTier,openInv,makeItem,enterArena,exitArena,openShop,useDan,gainBook,brkTrap,BOOKS,openMarket,openEv,evTick,qHook,hudSkills,hitBrk,drinkPot,gotPot,pots,openBreak,gotGear,get G(){return G},get P(){return P},get S(){return S},keys,newRun,tryTransform,endWave,sel,startWave,kill,openInv,makeItem};
 }
+</script>
+<script>
+(() => {
+  const screen = document.getElementById('create');
+  const viewport = window.visualViewport;
+  function fitCreateScreen() {
+    const bounds = document.documentElement;
+    const width = Math.min(bounds.clientWidth, viewport?.width || bounds.clientWidth);
+    const height = Math.min(bounds.clientHeight, viewport?.height || bounds.clientHeight);
+    if (!width || !height) return;
+    screen.style.setProperty('--create-width', Math.floor(width) + 'px');
+    screen.style.setProperty('--create-height', Math.floor(height) + 'px');
+    screen.style.setProperty('--create-top', (viewport?.offsetTop || 0) + 'px');
+    screen.style.setProperty('--create-left', (viewport?.offsetLeft || 0) + 'px');
+  }
+  window.addEventListener('resize', fitCreateScreen);
+  window.addEventListener('pageshow', fitCreateScreen);
+  viewport?.addEventListener('resize', fitCreateScreen);
+  viewport?.addEventListener('scroll', fitCreateScreen);
+  fitCreateScreen();
+})();
 </script>
 </body>
 </html>
