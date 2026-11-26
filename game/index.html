@@ -1848,7 +1848,7 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 @keyframes lbidle{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.7deg)}}
 @keyframes lbswing{0%{transform:rotate(0)}14%{transform:rotate(10deg)}32%{transform:rotate(-8deg)}50%{transform:rotate(6deg)}68%{transform:rotate(-4deg)}84%{transform:rotate(2deg)}100%{transform:rotate(0)}}
 #lbStage.bring .lbbell-l{animation:lbswing 1.15s ease-out}#lbStage.bring .lbbell-c{animation:lbswing 1.3s ease-out .06s}#lbStage.bring .lbbell-r{animation:lbswing .95s ease-out .12s}
-#lbStage .lbdin{position:absolute;left:62.9%;top:27.5%;width:10.9%;height:21.9%;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 100%,#2f6a3a 0,#10301c 36%,#030a06 78%)}
+#lbStage .lbdin{position:absolute;left:62.9%;top:27.5%;width:10.9%;height:21.9%;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 100%,#241c24 0,#0b080c 40%,#020203 80%)}
 #lbStage .lbleaf{position:absolute;inset:0;z-index:1;pointer-events:none;background:url(assets/ui/lobby/sanh.webp) 0 0/100% 100% no-repeat;transition:transform .55s cubic-bezier(.2,.85,.25,1)}
 #lbStage .lbleaf-l{clip-path:polygon(62.9% 27.5%,68.1% 27.5%,68.1% 49.4%,62.9% 49.4%);transform-origin:62.9% 38%}
 #lbStage .lbleaf-r{clip-path:polygon(68.1% 27.5%,73.8% 27.5%,73.8% 49.4%,68.1% 49.4%);transform-origin:73.8% 38%}
@@ -5134,14 +5134,14 @@ function lbFxLoop(now){const z=lbFxSize();if(!z)return;const dt=Math.min(.05,(no
  if(LBFX.p.length)requestAnimationFrame(lbFxLoop);else{LBFX.on=0;g.clearRect(0,0,z.w,z.h)}}
 function lbFxKick(){if(!LBFX.on){LBFX.on=1;LBFX.t=performance.now();requestAnimationFrame(lbFxLoop)}}
 function lbBellFx(){const lite=LOWFX||MOBILE,bs=[[178,455],[254,455],[310,475]];for(const [x,y] of bs){for(let i=0;i<2;i++)LBFX.p.push({k:'ring',x,y,R:i?46:30,a:-i*.16,life:.85});for(let i=0;i<(lite?5:10);i++)LBFX.p.push({k:'spark',x:x+(Math.random()-.5)*30,y:y+(Math.random()-.5)*20,vx:(Math.random()-.5)*50,vy:-20-Math.random()*40,a:0,life:.7+Math.random()*.6})}lbFxKick()}
-function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?46:96;
- /* 26/11 chủ game: giống KHÍ ĐỘC (xanh lục độc, bám sát đất, tràn ngang chậm, cuộn xoáy) chứ không phải khói đen của ma quỷ */
- const pal=['40,84,56','58,104,60','74,112,58','30,66,56','62,92,44'];
- for(let i=0;i<n;i++){const side=Math.random()<.5?-1:1,d=Math.random()*.6;LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*100,y:418+Math.random()*46,vx:side*(24+Math.random()*95),vy:-(3+Math.random()*12)+(Math.random()<.45?30:0),g:2,r0:30+Math.random()*20,r1:110+Math.random()*110,al:.34+Math.random()*.14,c:pal[Math.random()*pal.length|0],a:-d,life:3+Math.random()*1.5})}
- /* lõi phát sáng độc (cộng sáng) */
- for(let i=0;i<(lite?14:30);i++)LBFX.p.push({k:'smoke',add:1,x:1139+(Math.random()-.5)*120,y:410+Math.random()*50,vx:(Math.random()-.5)*130,vy:-(2+Math.random()*10),g:0,r0:24,r1:80+Math.random()*70,al:.06+Math.random()*.05,c:'120,200,110',a:-(Math.random()*.7),life:2.2+Math.random()*1.1});
- /* luồng khí bốc lên từ khe cửa */
- for(let i=0;i<(lite?8:16);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*50,y:380+Math.random()*60,vx:(Math.random()-.5)*34,vy:-(18+Math.random()*26),g:-3,r0:16,r1:46+Math.random()*36,al:.4,c:'70,140,70',a:-(Math.random()*.8),life:2+Math.random()});lbFxKick()}
+function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?90:190;
+ /* 26/11 chủ game: muốn KHÓI ĐEN nhưng cuộn tràn như khí độc: nhiều cụm nhỏ chồng nhau (nhìn có khối, có thớ), đen than + viền xám lạnh, bám đất, tràn ngang, xoáy */
+ const pal=['5,5,8','10,9,13','16,15,20','3,3,5','22,20,26'];
+ for(let i=0;i<n;i++){const side=Math.random()<.5?-1:1,d=Math.random()*.7;LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*110,y:416+Math.random()*50,vx:side*(40+Math.random()*130),vy:-(3+Math.random()*14)+(Math.random()<.45?30:0),g:2,r0:20+Math.random()*16,r1:80+Math.random()*90,al:.8+Math.random()*.2,c:pal[Math.random()*pal.length|0],a:-d,life:3+Math.random()*1.6})}
+ /* viền xám lạnh mờ để khói có độ dày, không bẹt */
+ for(let i=0;i<(lite?20:44);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*150,y:420+Math.random()*54,vx:(Math.random()-.5)*120,vy:-(2+Math.random()*10),g:0,r0:30,r1:110+Math.random()*90,al:.3+Math.random()*.12,c:'88,90,104',a:-(Math.random()*.8),life:2.4+Math.random()});
+ /* luồng đen bốc lên từ khe cửa */
+ for(let i=0;i<(lite?10:22);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*50,y:378+Math.random()*60,vx:(Math.random()-.5)*34,vy:-(20+Math.random()*28),g:-3,r0:12,r1:38+Math.random()*34,al:.6,c:'6,5,9',a:-(Math.random()*.8),life:2+Math.random()});lbFxKick()}
 (function(){const hot=(el,on)=>el.classList.toggle('hot',on);let busy=0;const st=$('#lbStage');
  for(const id of ['lbBridge','lbDoor']){const el=$('#'+id);if(!el)continue;for(const t of el.querySelectorAll('.lbz,.lbtag')){t.addEventListener('pointerdown',()=>hot(el,true));t.addEventListener('pointerenter',()=>hot(el,true));for(const ev of ['pointerup','pointerleave','pointercancel'])t.addEventListener(ev,()=>hot(el,false))}}
  const go=()=>{if(busy)return;busy=1;st.classList.remove('bring');void st.offsetWidth;st.classList.add('bring');lbBellFx();setTimeout(()=>st.classList.remove('bring'),1500);setTimeout(()=>{busy=0;$('#lbGo').click()},720)};
