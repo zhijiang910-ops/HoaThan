@@ -1811,6 +1811,37 @@ html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!impor
 #create .cxh.cxh1{font-size:14.5px!important;letter-spacing:.025em}
 @media (max-height:440px){#create .cxh.cxh1{font-size:12.5px!important}}
 @media (max-height:360px){#create .cxh.cxh1,#create .cxL > .cxh1:first-of-type{font-size:11.5px!important}}
+/* ===== SẢNH SÂN KHẤU 26/11 (chủ game): ảnh cầu gỗ + cổng bát quái là nền; Vượt Ải = cầu "Xuất Trận", Âm Giới = cổng "Quỷ Môn Quan" ===== */
+#lobby{--barH:clamp(40px,14vh,86px)}
+html body #lobby:not([hidden]){background:#04060a!important}
+html body #lobby::after{background:linear-gradient(180deg,rgba(4,6,10,.5),rgba(4,6,10,0) 22%)!important}
+#lbStage{position:absolute;left:0;top:0;width:100%;aspect-ratio:1672/941;z-index:1;pointer-events:none;overflow:hidden}
+#lbStage #lbArt{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+html body #lobby #lbStage #lbHero{position:absolute!important;left:47%!important;top:72%!important;bottom:auto!important;height:24.5%!important;width:auto!important;aspect-ratio:6/5;max-width:none!important;max-height:none!important;min-height:0!important;transform:translate(-50%,-93%)!important;z-index:2;pointer-events:none;flex:none!important}
+#lbStage .lbsp{position:absolute;inset:0;pointer-events:none;z-index:3}
+html body #lobby #lbStage .lbz{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:0}
+#lbBridge .lbz{clip-path:polygon(8% 62%,17% 60%,27% 69%,31% 78%,21% 82%,10% 78%,6% 70%)}
+#lbDoor .lbz{clip-path:polygon(63% 48.5%,63% 30%,65% 26.5%,68.5% 25%,72% 26.5%,74% 30%,74% 48.5%)}
+html body #lobby #lbStage .lbtag{position:absolute!important;transform:translate(-50%,-50%);width:auto!important;height:auto!important;min-height:0!important;padding:.22em .8em!important;font:600 clamp(9px,calc(var(--sh,700px)*.021),21px)/1.2 "Noto Serif",Georgia,serif!important;letter-spacing:.05em;color:#e9dcc0!important;background:rgba(8,10,14,.72)!important;border:1px solid rgba(201,164,94,.75)!important;border-radius:3px!important;box-shadow:0 2px 8px rgba(0,0,0,.6)!important;white-space:nowrap;pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .15s,box-shadow .15s,background .15s,border-color .15s;display:block!important}
+#lbBridge .lbtag{left:23%;top:61%}
+#lbDoor .lbtag{left:68%;top:56.5%}
+#lbBridge.hot .lbtag{color:#ffe08a!important;border-color:#ffd36a!important;background:rgba(44,30,6,.82)!important;box-shadow:0 0 12px rgba(255,205,90,.6),inset 0 0 8px rgba(255,205,90,.25)!important}
+#lbDoor .lbtal{position:absolute;left:68%;top:36%;width:2.6%;height:17%;transform:translate(-50%,-50%);border-radius:40%;background:radial-gradient(ellipse,rgba(255,70,45,.95),rgba(255,40,20,.4) 55%,transparent 75%);mix-blend-mode:screen;opacity:0;filter:blur(2px);pointer-events:none}
+#lbDoor.hot .lbtal{animation:lbflash .55s ease-in-out 2}
+@keyframes lbflash{0%,100%{opacity:.2}50%{opacity:1}}
+/* HUD là lớp riêng phía trên; chỉ phần tử tương tác nhận chạm để vùng bấm của cảnh vẫn chạm được */
+html body #lobby .lb{pointer-events:none}
+html body #lobby .lbprof,html body #lobby .lbgrid,html body #lobby .lbmain,html body #lobby .lbres,html body #lobby .lbgear,html body #lobby .lbfoot,html body #lobby .lbm{pointer-events:auto}
+html body #lobby #lbGo,html body #lobby #lbAm,html body #lobby .lbmain #lbAm.lbt,html body #lobby #lbCont:disabled{display:none!important}
+html body #lobby .lbmain{left:auto!important;right:max(2.2vw,env(safe-area-inset-right))!important;bottom:calc(var(--barH) + 8px)!important;width:clamp(150px,24vw,280px)!important}
+/* thanh chức năng: 6 nút một hàng sát đáy, mép trên thấp hơn đầu cầu */
+html body #lobby .lbgrid.lbgrid{left:0!important;right:0!important;bottom:0!important;width:auto!important;height:var(--barH)!important;padding:0 max(6px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(6px,env(safe-area-inset-left))!important;flex-wrap:nowrap!important;border:0!important;border-top:1px solid #6b5a3c!important;border-radius:0!important;box-shadow:0 -6px 20px rgba(0,0,0,.55)!important;background:linear-gradient(rgba(8,10,14,.9),rgba(3,5,8,.97))!important;align-content:stretch}
+html body #lobby .lbgrid.lbgrid.g7>*{flex:1 1 0!important;width:auto!important;height:100%!important}
+html body #lobby .lbgrid.lbgrid.g7>[data-lb=amgioi]{display:none!important}
+html body #lobby .lbgrid.g7>[data-lb=inv]:before,html body #lobby .lbgrid.g7>[data-lb=tangbao]:before{display:block}
+html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
+@media (max-height:430px) and (min-width:640px){html body #lobby .lbgrid.lbgrid.g7 .lbt{flex-direction:row!important;gap:8px!important}html body #lobby .lbgrid.g7 .lbt i{font-size:clamp(16px,6vh,26px)!important}html body #lobby .lbgrid.g7 .lbt b{font-size:clamp(9px,3.4vh,13px)!important}}
+@media (max-width:639px){html body #lobby .lbgrid.g7 .lbt i{font-size:16px!important}html body #lobby .lbgrid.g7 .lbt b{font-size:9px!important}}
 </style>
 </head>
 <body>
@@ -1896,6 +1927,12 @@ html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!impor
  </div>
 </section>
 <section id="lobby" class="screen" hidden>
+ <div id="lbStage" aria-label="Sảnh Khử Tà Diệt Ma">
+  <img id="lbArt" src="assets/ui/lobby/sanh.webp" alt="" draggable="false">
+  <canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas>
+  <div class="lbsp lbsp-b" id="lbBridge"><button type="button" class="lbz" aria-label="Xuất Trận" title="Xuất Trận: chọn ải"></button><button type="button" class="lbtag">Xuất Trận</button></div>
+  <div class="lbsp lbsp-d" id="lbDoor"><i class="lbtal" aria-hidden="true"></i><button type="button" class="lbz lbt" data-lb="amgioi" aria-label="Quỷ Môn Quan" title="Quỷ Môn Quan: Âm Giới"></button><button type="button" class="lbtag lbt" data-lb="amgioi">Quỷ Môn Quan</button></div>
+ </div>
  <canvas id="lbBg" width="640" height="400"></canvas>
  <div class="lb">
   <div class="lbl">
@@ -1903,7 +1940,6 @@ html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!impor
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
     <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
-   <canvas id="lbHero" width="240" height="200" aria-hidden="true"></canvas>
    <div class="lbmain"><button id="lbGo" class="lbbig gold"><b>Vượt Ải</b><small id="lbGoS">Chọn ải và độ khó</small></button><button id="lbAm" class="lbbig gold lbt" data-lb="amgioi"><b>Âm Giới</b><small id="lbAmS"></small></button><button id="lbBossChest" class="lbbig" hidden><b>Rương Boss chờ nhận</b><small id="lbBossChestS"></small></button><button id="lbCont" class="lbbig" disabled><b>Tiếp tục ải đang dở</b><small id="lbContS">Chưa có ải đang dở</small></button></div>
   </div>
   <div class="lbr">
@@ -2105,7 +2141,7 @@ const WART={'Thanh Phong Kiếm':'thanhphong','Hàn Thiết Kiếm':'hanthiet','
 /* Thương: cây thương (cầm ở 40% cán); Song Quyền: tay không */
 const MELEE_ANIM=new Set(['kiem','dao','truong','quat','quyen']);/* lớp dùng khung đánh của Kiếm (chưa có khung riêng) */
 const WCLASS_ART={thuong:'thuong1',quyen:null,dao:'daoquy',truong:'tichtruong',quat:'quatban',cung:'cungluc'};
-function heroWeaponArt(g){let n='thanhphong';if(G&&G.training&&TR.wpn)n=TR.wpn;else{const wc=G&&G.cfg&&G.cfg.weapon;if(wc&&wc in WCLASS_ART)return WCLASS_ART[wc]}if(n==='none')return null;if(n!=='thanhphong'&&WPN[n])return n;if(n==='thanhphong'&&!(G&&G.training&&TR.wpn))try{const it=invList().find(x=>x.id===eqMap().vk);if(it&&!it.damaged&&WART[it.name])n=WART[it.name]}catch(e){}return n==='thanhphong'?'thanhphong_nu':n}/* nam và nữ dùng chung một thanh kiếm (bản nữ, chủ game chọn 24/11) */
+function heroWeaponArt(g){let n='thanhphong';if(G&&G.training&&TR.wpn)n=TR.wpn;else{const wc=(G&&G.cfg&&G.cfg.weapon)||window.__lbW;if(wc&&wc in WCLASS_ART)return WCLASS_ART[wc]}if(n==='none')return null;if(n!=='thanhphong'&&WPN[n])return n;if(n==='thanhphong'&&!(G&&G.training&&TR.wpn))try{const it=invList().find(x=>x.id===eqMap().vk);if(it&&!it.damaged&&WART[it.name])n=WART[it.name]}catch(e){}return n==='thanhphong'?'thanhphong_nu':n}/* nam và nữ dùng chung một thanh kiếm (bản nữ, chủ game chọn 24/11) */
 function auraLv(){const f=weaponForge();return f>=12?12:f>=9?9:f>=6?6:f>=3?3:0}
 /* Viền tối quanh kiếm bay (Hồi Phong): ảnh kiếm xám mỏng chìm vào nền tuyết sáng nên trông như mất kiếm. Bóng lấy từ chính ảnh kiếm, lưu sẵn */
 const CKI=new Image();CKI.src='assets/wpn/cukiem.png';/* cự kiếm Vạn Kiếm: PixelLab pixflux 96x256, mũi hướng xuống, vẽ x1,3 (x2 cao 484px, x1,5 363px, tràn khỏi màn hình điện thoại) */
@@ -5057,7 +5093,8 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(p
 function dimCanvas(cn){const g=cn.getContext('2d'),a={lbBg:.58}[cn.id]||0;if(!a)return;g.save();g.setTransform(1,0,0,1,0,0);g.fillStyle='rgba(6,4,3,'+a+')';g.fillRect(0,0,cn.width,cn.height);g.restore()}
 function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!P0||$('#lobby').hidden)return;paintLobbyAvatar(P0);try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MAPS.amdia,1);dimCanvas(cn)}catch(e){}}
 let lbHeroT=0;function lobbyHero(){const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
- const prev=HERO;if(useHero(P0.gender,'kiem')){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);HERO=prev}lbHeroT+=0.125}
+ /* 26/11 sảnh mới: nhân vật theo hồ sơ (lớp vũ khí của phái, vũ khí + trang phục đang mặc), canvas 480x400, chân tại (240,372) */
+ const prev=HERO;window.__lbW=profWeapon();try{if(useHero(P0.gender,profWeapon())){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.save();g.scale(2,2);g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore();HERO=prev}}finally{window.__lbW=null}lbHeroT+=0.125}
 function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="diemtam"] small');if(t)t.textContent=dtStatus()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
  $('#lbLv').textContent=P0.lv;{const c=$('#lbCp');if(c)c.textContent=lobbyPower().toLocaleString('vi-VN')}$('#lbXp').style.width=Math.min(100,P0.exp/need*100)+'%';$('#lbXpT').textContent=P0.exp+'/'+need;
  $('#lbSta').style.width=Math.min(100,s0.v/STA.max*100)+'%';$('#lbStaT').textContent=s0.v+'/'+STA.max;
@@ -5065,6 +5102,18 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
  $('#lbBossChest').hidden=!chest;
  if(chest)$('#lbBossChestS').textContent=RN(chest.map)+' '+stars(chest.star)+' · '+(s0.v>=CHEST_STA?'Có thể nhận':'Cần '+CHEST_STA+' thể lực');
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
+/* ===== SẢNH SÂN KHẤU (26/11): ảnh nền, nhân vật, 2 vùng bấm CÙNG hệ tọa độ ảnh 1672x941, co giãn/dịch chuyển cùng nhau ===== */
+const LB_AR=1672/941;
+function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden)return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;
+ const W=Math.max(vw,vh*LB_AR),H=W/LB_AR,bar=$('#lbGrid'),barH=bar?bar.offsetHeight:0;
+ /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
+ const target=vh-barH-Math.max(12,vh*0.08);let off=H*0.72-target;off=Math.max(0,Math.min(off,H-vh));
+ st.style.width=W+'px';st.style.height=H+'px';st.style.left=((vw-W)/2)+'px';st.style.top=(-off)+'px';st.style.setProperty('--sh',H+'px')}
+if(window.ResizeObserver)new ResizeObserver(lbStageFit).observe($('#lobby'));addEventListener('resize',lbStageFit);setInterval(lbStageFit,1000);
+(function(){const hot=(el,on)=>el.classList.toggle('hot',on);
+ for(const id of ['lbBridge','lbDoor']){const el=$('#'+id);if(!el)continue;for(const t of el.querySelectorAll('.lbz,.lbtag')){t.addEventListener('pointerdown',()=>hot(el,true));t.addEventListener('pointerenter',()=>hot(el,true));for(const ev of ['pointerup','pointerleave','pointercancel'])t.addEventListener(ev,()=>hot(el,false))}}
+ const go=()=>{hot($('#lbBridge'),true);setTimeout(()=>hot($('#lbBridge'),false),350);$('#lbGo').click()};
+ for(const t of $('#lbBridge').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',go)})();
 $('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').classList.toggle('open')});
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
