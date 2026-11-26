@@ -1650,7 +1650,10 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxC .cx-preview .cxhr{position:absolute;bottom:8%;left:0;right:0;background:none;border:0;padding:0}
 #create .cxC .cx-preview .cxst{position:absolute;right:4%;bottom:15%;width:26%;height:17%;min-height:0;margin:0;max-width:none;max-height:none}
 #create .cxR .cxh{font-family:Georgia,serif}
-#create #crGo{position:relative;font:700 clamp(15px,3.1vw,42px)/1.1 Georgia,serif}
+#create #crGo{position:relative;font:700 clamp(14px,1.9vw,30px)/1.1 Georgia,serif;padding:8px 6px;min-height:0}
+/* 26/11: mô tả võ học giãn đủ dòng, nút Khởi hành thấp lại; phần thừa của cột phải tự cuộn */
+#create .cxR #crSkD{min-height:104px}
+@media (max-height:520px){#create .cxR #crSkD{min-height:92px;font-size:11.5px;line-height:1.3}#create .cxR #crSkD small{font-size:10.5px}#create .cxR .cxwb{padding:3px 2px 2px}#create .cxR #crInfo,#create .cxR #crWInfo{display:none}#create .cxR .cxh{margin-top:2px}#create .cxR .cxRb{gap:4px}}
 </style>
 </head>
 <body>
