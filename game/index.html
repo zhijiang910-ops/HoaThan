@@ -1709,6 +1709,10 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxR #crSkD{-webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);font-size:clamp(11.5px,2.85vh,14px);line-height:1.42;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#8a6a35 transparent}
 
 /* ảnh chính giữa bỏ; nhân vật pixel trong game đứng giữa cảnh */
+/* cột trái như ảnh mẫu: khoảng cách chặt, tranh phong cảnh giãn lấp hết chỗ dưới avatar */
+#create .cxL.cxL.cxL{gap:clamp(7px,2.3vh,16px)}
+#create .cxL.cxL > .cxdeco{flex:1 1 0;min-height:88px}
+#create .cxL > .cxdeco > img{-webkit-mask-image:linear-gradient(transparent,#000 10%);mask-image:linear-gradient(transparent,#000 10%)}
 #create .cxill #crFull{display:none!important}
 #create .cxC .cx-preview .cxst.cxst{left:50%;right:auto;transform:translateX(-50%);bottom:max(16%,60px);width:46%;height:62%;background:transparent;box-shadow:none;border-radius:0}
 #create .cxC .cx-preview .cxst.cxst::after,#create .cxC .cx-preview .cxst .cxig{display:none}
