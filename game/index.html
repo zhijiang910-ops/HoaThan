@@ -1648,10 +1648,10 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxC .cx-preview .cxhr{position:absolute;bottom:8%;left:0;right:0;background:none;border:0;padding:0}
 #create .cxC .cx-preview .cxst{position:absolute;right:4%;bottom:15%;width:26%;height:17%;min-height:0;margin:0;max-width:none;max-height:none}
 /* 26/11 (chủ game: tranh minh hoạ phải phủ HẾT màn hình, hai bảng bên hông cũng đều): cảnh Cổ Miếu thành nền TOÀN MÀN HÌNH của màn tạo nhân vật; khung giữa trong suốt, hai bảng cao gần hết màn */
-#create:not([hidden]){background:#06191c url(assets/ui/creation/co-mieu.webp) 50% 16%/cover no-repeat!important}
+#create:not([hidden]){background:url(assets/ui/creation/co-mieu.webp) 50% 50%/auto 100% no-repeat,linear-gradient(rgba(2,10,12,.62),rgba(2,10,12,.62)),#06191c url(assets/ui/creation/co-mieu.webp) 50% 30%/cover no-repeat!important}
 #create::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,10,12,.5),rgba(2,10,12,.08) 28%,rgba(2,10,12,.08) 72%,rgba(2,10,12,.5))}
 #create .cx{z-index:1;padding:max(6px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));gap:clamp(6px,1vw,14px);max-width:none}
-#create .cxL,#create .cxR{margin-block:0}
+#create .cxL,#create .cxR{margin-block:clamp(8px,6vh,34px)}
 #create .cxill{background:transparent}
 #create .cxill #crBg{display:none}
 #create .cxR .cxh{font-family:Georgia,serif}
