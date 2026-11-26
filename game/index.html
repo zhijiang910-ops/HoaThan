@@ -9,7 +9,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
 }
 </script>
 <link rel="preload" as="image" href="assets/ui/creation/nen-a.webp">
-<link rel="preload" as="image" href="assets/ui/loading/cong.webp"><link rel="preload" as="image" href="assets/ui/loading/tieude.png">
+<link rel="preload" as="image" href="assets/ui/loading/cong.webp"><link rel="preload" as="image" href="assets/ui/loading/tieude.webp">
 <script>
 /* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
 (function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
@@ -849,7 +849,7 @@ html.needland #rot{display:flex}
 #ldg[hidden]{display:none}#ldg.out{opacity:0;pointer-events:none}
 #ldg .lbg{position:absolute;inset:0;background:url(assets/ui/loading/cong.webp) center/cover no-repeat;background-color:#07090d}
 #ldg .lbg:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(6,8,12,.5),rgba(6,8,12,0) 26%,rgba(6,8,12,0) 52%,rgba(6,8,12,.62) 74%,rgba(6,8,12,.9))}
-#ldg .lt{position:absolute;top:max(8px,calc(env(safe-area-inset-top) + 4px));left:50%;transform:translateX(-50%);height:clamp(34px,13vh,86px);width:auto;max-width:92vw;filter:drop-shadow(0 2px 6px #000) drop-shadow(0 0 14px rgba(120,160,150,.25));pointer-events:none}
+#ldg .lt{position:absolute;top:max(8px,calc(env(safe-area-inset-top) + 4px));left:50%;transform:translateX(-50%);height:clamp(46px,21vh,140px);width:auto;max-width:92vw;filter:drop-shadow(0 2px 6px #000);pointer-events:none}
 #ldg .lbx{position:relative;width:min(620px,84vw);display:grid;gap:6px}
 #ldg .lrow{display:flex;justify-content:space-between;align-items:baseline;padding:0 2px}
 #ldg .ls{font:600 clamp(11.5px,3.4vh,14px) "Be Vietnam Pro",sans-serif;color:#d9ceb2;letter-spacing:.04em;text-shadow:0 1px 4px #000}
@@ -1756,7 +1756,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 </head>
 <body>
 <canvas id="cv"></canvas>
-<div id="ldg" role="status" aria-live="polite"><div class="lbg"></div><img class="lt" src="assets/ui/loading/tieude.png" alt="Khử Tà Diệt Ma">
+<div id="ldg" role="status" aria-live="polite"><div class="lbg"></div><img class="lt" src="assets/ui/loading/tieude.webp" alt="Khử Tà Diệt Ma">
  <div class="lbx"><div class="lrow"><span class="ls" id="ldgS">Đang mở Quỷ Môn…</span><b class="lp" id="ldgP">0%</b></div><div class="lbar"><i id="ldgB" class="ind"><u class="hd"></u></i></div>
   <div class="ltip"><span>Chỉ dẫn</span><p id="ldgTip">Chạm giữ vòng điều khiển ở góc trái dưới để di chuyển; nhân vật tự đánh quái gần nhất.</p></div></div></div>
 
