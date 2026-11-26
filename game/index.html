@@ -1785,11 +1785,17 @@ html body #lobby .lbmain .lbbig.gold small{color:#e6c8b0!important;font-size:cla
 html body #lobby .lbmain .lbbig:not(.gold){grid-column:auto!important}
 html body #lobby .lbmain .lbbig:not(.gold) b{font-size:clamp(11px,3vh,17px)!important}
 html body #lobby .lbprof .lbcp small,html body #lobby .lbprof .lbcp b{white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}
-@media (max-width:700px){html body #lobby .lbprof{width:280px}html body #lobby .lbtitle{left:auto;right:max(3vw,env(safe-area-inset-right));transform:none;width:30vw}html body #lobby .lbprof .lbcp small{font-size:10px!important}html body #lobby .lbprof .lbcp b{font-size:15px!important}}
+@media (max-width:700px){html body #lobby .lbprof{width:280px}html body #lobby .lbtitle{left:296px;right:auto;transform:none;width:calc(100vw - 296px - 170px);min-width:90px}html body #lobby .lbres{min-width:84px}html body #lobby .lbprof .lbcp small{display:none!important}html body #lobby .lbprof .lbcp b{font-size:15px!important}}
 html body #lobby .lbfoot{position:absolute;left:0;right:0;bottom:0;height:22px;z-index:3;padding:0 max(2.2vw,env(safe-area-inset-left));gap:6px 12px;font-size:10px;align-items:center;flex-wrap:nowrap;overflow:hidden;white-space:nowrap;background:linear-gradient(transparent,rgba(0,0,0,.6));justify-content:flex-start}
 html body #lobby .lbfoot .credit,html body #lobby .lbfoot .seglb{display:none}
 html body #lobby .lbfoot .seg button{padding:1px 8px;font-size:10px}html body #lobby .lbfoot .toggle{font-size:10px}
 @media (max-height:340px){html body #lobby .lbprof{width:clamp(200px,26vw,300px)}html body #lobby #lbHero{bottom:clamp(82px,32vh,130px)}}
+html body #lobby .lbres{position:absolute;top:max(2.6vh,env(safe-area-inset-top));right:calc(max(2.2vw,env(safe-area-inset-right)) + clamp(34px,5.4vh,52px) + 10px);min-width:clamp(96px,13vw,170px);height:clamp(26px,6.6vh,42px);display:flex;align-items:center;gap:8px;padding:0 14px 0 10px;box-sizing:border-box;font:600 clamp(12px,3.2vh,19px) "Noto Serif",serif;color:#e6dcc6;background:linear-gradient(rgba(14,12,18,.85),rgba(6,6,10,.9));border:1px solid #6b5a3c;border-radius:4px;box-shadow:inset 0 0 0 1px #0a0806;z-index:4;white-space:nowrap}
+html body #lobby .lbres:before{content:"";width:clamp(14px,3.6vh,22px);height:clamp(14px,3.6vh,22px);border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#bfe9d0,#3f9a78 55%,#1c4a3a);box-shadow:0 0 0 1px #0a0806,0 0 0 2px #9bd0b4 inset}
+html body #lobby .lbgear{position:absolute;top:max(2.6vh,env(safe-area-inset-top));right:max(2.2vw,env(safe-area-inset-right));width:clamp(34px,5.4vh,52px);height:clamp(34px,5.4vh,52px);display:flex;align-items:center;justify-content:center;font-size:clamp(22px,4.6vh,40px);line-height:1;color:#d9cdb0;background:none;border:0;padding:0;cursor:pointer;text-shadow:0 2px 6px #000;z-index:4}
+html body #lobby .lbgear:active{color:#fff}
+html body #lobby .lbfoot{display:none!important}
+html body #lobby .lbfoot.open{display:flex!important;position:absolute;top:calc(max(2.6vh,env(safe-area-inset-top)) + clamp(34px,5.4vh,52px) + 6px);right:max(2.2vw,env(safe-area-inset-right));left:auto;bottom:auto;height:auto;padding:8px 10px;gap:8px 10px;background:rgba(8,8,12,.92);border:1px solid #6b5a3c;border-radius:4px;z-index:5}
 </style>
 </head>
 <body>
@@ -1890,7 +1896,8 @@ html body #lobby .lbfoot .seg button{padding:1px 8px;font-size:10px}html body #l
    <div class="lbgrid" id="lbGrid"></div>
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
-  <footer class="lbfoot"><span class="dim sm" id="lbRes"></span><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
+  <span id="lbRes" class="lbres"></span><button id="lbGear" class="lbgear" type="button" aria-label="Cài đặt" title="Cài đặt">⚙</button>
+  <footer class="lbfoot"><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
  </div>
 </section>
 <section id="menu" class="screen" hidden>
@@ -5030,7 +5037,7 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(p
  $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"><i>${t.g}</i><b>${t.n}</b><small>${t.st()}</small></button>`).join('');$('#lbGrid').classList.toggle('g7',LBT.filter(t=>!t.hide).length>6);$('#againBtn').hidden=false;
  {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?RN(cp.rmap)+' '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss · bấm để kết toán':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
  $('#lbGoS').textContent=save.bossChest?'Có rương Boss chờ: nhận trước khi hạ Boss lần nữa':RN(sel.map)+' · đã mở '+stars(rprog().star);
- $('#lbRes').textContent='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;
+ $('#lbRes').textContent=String(save.ngoc||0);$('#lbRes').title='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;
  lobbyTick();setTimeout(lobbyPics,350);setTimeout(lobbyPics,1500);clearInterval(window.__lbh);window.__lbh=setInterval(()=>{if($('#lobby').hidden){clearInterval(window.__lbh);return}lobbyHero()},125);clearInterval(lbTimer);lbTimer=setInterval(()=>{if($('#lobby').hidden){clearInterval(lbTimer);return}lobbyTick()},1000)}
 function dimCanvas(cn){const g=cn.getContext('2d'),a={lbBg:.58}[cn.id]||0;if(!a)return;g.save();g.setTransform(1,0,0,1,0,0);g.fillStyle='rgba(6,4,3,'+a+')';g.fillRect(0,0,cn.width,cn.height);g.restore()}
 function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!P0||$('#lobby').hidden)return;paintLobbyAvatar(P0);try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MAPS.amdia,1);dimCanvas(cn)}catch(e){}}
@@ -5043,6 +5050,7 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
  $('#lbBossChest').hidden=!chest;
  if(chest)$('#lbBossChestS').textContent=RN(chest.map)+' '+stars(chest.star)+' · '+(s0.v>=CHEST_STA?'Có thể nhận':'Cần '+CHEST_STA+' thể lực');
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
+$('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').classList.toggle('open')});
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
  if(k==='inv'){invFrom='lobby';$('#lobby').hidden=true;$('#inv').hidden=false;renderInv();return}
