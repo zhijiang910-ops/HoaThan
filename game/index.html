@@ -1685,6 +1685,17 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxR .cxsect .cxwb{min-height:clamp(44px,10.2vh,62px);justify-content:center}
 #create .cxR .cxskr .cxs{width:clamp(28px,6vh,38px);height:clamp(28px,6vh,38px);font-size:clamp(16px,3.5vh,22px)}
 #create .cxR .cxsk{gap:clamp(4px,1.2vh,9px)}
+/* 26/11 chủ game: nền giữa phải phủ HẾT, không hở viền. Ảnh khung giữa (crBg) là hình chữ nhật riêng lệch tỉ lệ với nền toàn màn nên lộ khung (hở trên/dưới/hai bên). Bỏ lớp đó, chỉ còn MỘT nền liền mạch của #create */
+#create .cxill #crBg{display:none!important}
+#create .cxill,#create .cxC{background:transparent!important}
+#create #crName{font-size:clamp(11px,3.3vh,19px);text-overflow:ellipsis}
+@media (max-height:320px){
+ #create .cxR .cxsect .cxwb{padding:2px 1px}#create .cxR .cxsect .cxwb b{font-size:7.5px;line-height:1.05}#create .cxR .cxsect .cxwb img,#create .cxR .cxsect .cxwb .gi{max-width:15px;max-height:15px}
+ #create .cxR .cxskr{gap:3px}#create .cxR .cxskr>span{width:34px;font-size:8px;line-height:1.1}#create .cxR .cxskr>div{flex-wrap:nowrap;gap:3px}#create .cxR .cxskr .cxs{width:22px;height:22px;font-size:13px}
+ #create .cxR .cxRb.cxRb{gap:3px}#create .cxR #crSkD{font-size:10px;line-height:1.3;min-height:0;padding:5px 6px}#create .cxR .cxh{font-size:11px}
+ #create .cxC .cx-preview .cxst{bottom:26%;width:24%;height:21%}#create .cxst .cxig{font-size:8px;line-height:1.1}
+ #create .cxL.cxL{gap:9px}
+}
 #create .cxR #crSkD{font-size:clamp(11.5px,2.85vh,14px);line-height:1.42;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#8a6a35 transparent}
 @media (max-height:400px){#create .cxR .cxsect .cxwb{min-height:0}#create .cxR .cxskr .cxs{width:26px;height:26px;font-size:15px}#create .cxR .cxRb.cxRb{gap:5px}#create .cxR .cxsk{gap:3px}#create .cxR #crSkD{font-size:11.5px;line-height:1.38}#create .cxL.cxL{gap:clamp(12px,4.4vh,20px)}}
 </style>
