@@ -1762,7 +1762,10 @@ html body #lobby::after{content:"";position:absolute;inset:0;pointer-events:none
 html body #lobby .lb{display:block!important;max-width:none!important;padding:0!important;z-index:2}
 html body #lobby .lbl,html body #lobby .lbr{display:contents!important}
 html body #lobby .lbprof{position:absolute;left:max(2.2vw,env(safe-area-inset-left));top:max(2.4vh,env(safe-area-inset-top));width:clamp(250px,30vw,380px);margin:0;z-index:3}
-html body #lobby .lbtitle{position:absolute;left:50%;top:max(1.4vh,env(safe-area-inset-top));transform:translateX(-50%);margin:0;width:clamp(200px,32vw,430px);height:clamp(34px,11vh,110px);font-size:0!important;background:url(assets/ui/loading/tieude.webp) center/contain no-repeat;filter:drop-shadow(0 2px 6px #000);z-index:3}
+html body #lobby .lbtitle{position:absolute;left:50%;top:max(1.4vh,env(safe-area-inset-top));transform:translateX(-50%);margin:0;width:clamp(200px,32vw,430px);height:clamp(34px,11vh,110px);font-size:0!important;background:none;z-index:3}
+html body #lobby .lbtitle:before,html body #lobby .lbtitle:after{content:"";position:absolute;pointer-events:none}
+html body #lobby .lbtitle:before{left:-24%;right:-24%;top:-26%;bottom:-34%;background:url(assets/ui/loading/vet_den.webp) center/100% 100% no-repeat;opacity:.6}
+html body #lobby .lbtitle:after{inset:0;background:url(assets/ui/loading/tieude.webp) center/contain no-repeat;filter:drop-shadow(0 2px 6px #000)}
 html body #lobby .lbtitle small{display:none!important}
 html body #lobby #lbHero{position:absolute;left:50%;transform:translateX(-50%);bottom:clamp(88px,29vh,300px);height:clamp(90px,38vh,380px)!important;aspect-ratio:6/5;width:auto!important;max-width:40vw;z-index:2}
 html body #lobby .lbgrid.lbgrid{position:absolute!important;left:max(2.2vw,env(safe-area-inset-left));bottom:max(26px,env(safe-area-inset-bottom));width:clamp(300px,54vw,760px);height:clamp(84px,27vh,190px);margin:0!important;display:flex!important;flex-wrap:wrap;grid-template-columns:none!important;align-content:stretch;gap:0!important;padding:clamp(3px,1vh,8px) 0;box-sizing:border-box;background:linear-gradient(rgba(10,10,14,.82),rgba(6,6,10,.9));border:1px solid #6b5a3c;box-shadow:inset 0 0 0 2px #0a0806,inset 0 0 0 3px rgba(184,149,90,.45),0 8px 24px rgba(0,0,0,.6);z-index:3}
@@ -1804,10 +1807,10 @@ html body #lobby .lbmain .lbbig.gold{height:clamp(46px,14vh,100px)}
 html body #lobby .lbmain #lbAm.lbt{display:flex!important;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#5a0f1a,#2a060c)!important}
 html body #lobby .lbmain #lbAm b{font:600 clamp(20px,6.4vh,48px)/1.05 "Noto Serif",serif!important;color:#f0e2c2;letter-spacing:.04em}
 html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!important;font-size:clamp(9px,2.3vh,14px)!important}
-/* 26/11 chủ game: tiêu đề TÊN NHÂN VẬT, MÔN PHÁI viết hoa, to hơn 1 cỡ, đổi kiểu chữ (Be Vietnam Pro đậm, giãn chữ) */
-#create .cxh.cxh1{font-family:"Be Vietnam Pro",system-ui,sans-serif!important;font-weight:800;font-size:15px!important;text-transform:uppercase;letter-spacing:.12em}
-@media (max-height:440px){#create .cxh.cxh1{font-size:13px!important;letter-spacing:.1em}}
-@media (max-height:360px){#create .cxh.cxh1,#create .cxL > .cxh1:first-of-type{font-size:12px!important;letter-spacing:.08em}}
+/* 26/11 chủ game: tên nhân vật + môn phái trả lại kiểu cũ (Noto Serif, không viết hoa), chỉ tăng 0,5 px */
+#create .cxh.cxh1{font-size:14.5px!important;letter-spacing:.025em}
+@media (max-height:440px){#create .cxh.cxh1{font-size:12.5px!important}}
+@media (max-height:360px){#create .cxh.cxh1,#create .cxL > .cxh1:first-of-type{font-size:11.5px!important}}
 </style>
 </head>
 <body>
@@ -5177,7 +5180,7 @@ const AM_TEST=!window.__amLimit;/* 25/11 (chủ game, nhánh bên kia): đang th
 const amLeft=()=>AM_TEST?99:Math.max(0,AM_RULES.dailyRuns-amSave().used);
 const amIsBoss=f=>{const e=AM_ENC[f];return !!e&&e.tier==='boss'};
 const amGuardName=f=>{const e=AM_ENC[f];return e?(e.pair?'Ngưu Đầu và Mã Diện':AM_BOSSES[e.types[0]][0]):'Quỷ Sai Gác Tầng'};
-function amStatus(){const a=amSave();return 'Mốc tầng '+a.cp+(AM_TEST?' · thử nghiệm, không giới hạn lượt':' · còn '+amLeft()+'/'+AM_RULES.dailyRuns+' lượt')}
+function amStatus(){const a=amSave();return 'Mốc tầng '+a.cp+(AM_TEST?' · không giới hạn lượt':' · còn '+amLeft()+'/'+AM_RULES.dailyRuns+' lượt')}
 function renderAM(){const a=amSave(),left=amLeft();$('#lbmT').textContent='Âm Giới · 幽冥';
  const rows=Array.from({length:AM_RULES.floors},(_,i)=>{const n=i+1,F=amFloor(n),open=n<=AM_OPEN,e=AM_ENC[n];return `<div class="amr${open?'':' off'}${n===a.cp?' cur':''}"><b>${n}</b><span>${MAPS[F.map].name}</span><em>${e?(e.tier==='boss'?'Trùm ':'Mini-boss ')+amGuardName(n):'Canh tầng: '+amGuardName(n)}</em>${open?'':LOCK_IMG}</div>`}).join('');
  $('#lbmB').innerHTML=`<div class="amh"><p>Xuống 18 tầng địa ngục. Diệt âm binh, hạ kẻ canh tầng để rương báu rơi, mở rương rồi bước vào cổng lên tầng kế. Qua mỗi trùm được lưu mốc. <b>Gục ngã là mất lượt</b>, không nhận thưởng thông quan.</p>
