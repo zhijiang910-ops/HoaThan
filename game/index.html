@@ -1804,6 +1804,10 @@ html body #lobby .lbmain .lbbig.gold{height:clamp(46px,14vh,100px)}
 html body #lobby .lbmain #lbAm.lbt{display:flex!important;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#5a0f1a,#2a060c)!important}
 html body #lobby .lbmain #lbAm b{font:600 clamp(20px,6.4vh,48px)/1.05 "Noto Serif",serif!important;color:#f0e2c2;letter-spacing:.04em}
 html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!important;font-size:clamp(9px,2.3vh,14px)!important}
+/* 26/11 chủ game: tiêu đề TÊN NHÂN VẬT, MÔN PHÁI viết hoa, to hơn 1 cỡ, đổi kiểu chữ (Be Vietnam Pro đậm, giãn chữ) */
+#create .cxh.cxh1{font-family:"Be Vietnam Pro",system-ui,sans-serif!important;font-weight:800;font-size:15px!important;text-transform:uppercase;letter-spacing:.12em}
+@media (max-height:440px){#create .cxh.cxh1{font-size:13px!important;letter-spacing:.1em}}
+@media (max-height:360px){#create .cxh.cxh1,#create .cxL > .cxh1:first-of-type{font-size:12px!important;letter-spacing:.08em}}
 </style>
 </head>
 <body>
@@ -1859,7 +1863,7 @@ html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!impor
 <section id="create" class="screen" hidden>
  <div class="cx">
   <div class="cxp cxL">
-   <label for="crName" class="cxh">Tên nhân vật</label>
+   <label for="crName" class="cxh cxh1">Tên nhân vật</label>
    <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
@@ -1880,7 +1884,7 @@ html body #lobby .lbmain #lbAm small{display:block!important;color:#e6c8b0!impor
   </div>
   <div class="cxp cxR">
   <div class="cxRb">
-   <h3 class="cxh">Môn phái</h3><div id="crSect" class="cxw cxsect" role="group" aria-label="Chọn môn phái"></div>
+   <h3 class="cxh cxh1">Môn phái</h3><div id="crSect" class="cxw cxsect" role="group" aria-label="Chọn môn phái"></div>
    <div id="crInfo" class="cxinfo"></div><div id="crWInfo" class="cxwi"></div>
    <h3 class="cxh" id="crSkH">Võ học tiêu biểu</h3><div id="crSk" class="cxsk"></div><div id="crSkD" class="cxskd" tabindex="0" role="region" aria-label="Mô tả võ học"></div>
   </div>
