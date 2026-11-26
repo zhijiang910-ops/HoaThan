@@ -792,3 +792,4 @@ Quyết định (chủ game không chọn riêng nên lấy đề xuất): hình
 - (26/11) **Khung trái màn tạo nhân vật khóa cuộn** (chủ game: chạm vào bị kéo theo): `#create .cxL{overflow:hidden;touch-action:none;overscroll-behavior:none}`. Nội dung vừa khung ở 550/667/956 (lệch ≤7px).
 - (26/11) Tối ưu màn tạo nhân vật: nhân vật nâng lên (bottom 21%, cao 69%) khỏi hàng màu; mô tả võ học mờ dần ở đáy thay vì cắt cụt (mask 14px).
 - (26/11) **Bỏ ảnh toàn thân giữa màn tạo nhân vật** (chủ game: 'Xoá ảnh chính giữa'): `#crFull{display:none}`, nhân vật pixel trong game (`.cxst`) dời ra giữa cảnh, bỏ khung/nhãn 'Trong game'. Khôi phục: xóa khối CSS 'ảnh chính giữa bỏ'.
+- (26/11) **Sau mỗi commit đã kiểm: đẩy cả nhánh làm việc VÀ `main`** (chủ game: 'đẩy main', để ChatGPT đọc `main` thấy bản mới; `git push origin HEAD:main`, chỉ fast-forward, không force).
