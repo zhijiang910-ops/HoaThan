@@ -8,7 +8,7 @@ if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.te
  document.documentElement.classList.add('touch-device');
 }
 </script>
-<link rel="preload" as="image" href="assets/ui/creation/maoson.webp">
+<link rel="preload" as="image" href="assets/ui/creation/co-mieu.webp">
 <script>
 /* 25/11: lúc mở game chỉ tải ngay nhân vật + giao diện sảnh; mọi ảnh khác chờ ở hàng đợi tới khi nhân vật sẵn sàng (màn chờ gọi __bootRelease). Tránh 190+ yêu cầu tranh băng thông với nhân vật. */
 (function(){var d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');if(!d||!d.set)return;
@@ -1648,7 +1648,7 @@ html body #wbar .wl,html body #wbar .wr{color:#e8dcc8!important}
 #create .cxC .cx-preview .cxhr{position:absolute;bottom:8%;left:0;right:0;background:none;border:0;padding:0}
 #create .cxC .cx-preview .cxst{position:absolute;right:4%;bottom:15%;width:26%;height:17%;min-height:0;margin:0;max-width:none;max-height:none}
 /* 26/11 (chủ game: tranh minh hoạ phải phủ HẾT màn hình, hai bảng bên hông cũng đều): cảnh Cổ Miếu thành nền TOÀN MÀN HÌNH của màn tạo nhân vật; khung giữa trong suốt, hai bảng cao gần hết màn */
-#create:not([hidden]){background:#06191c url(assets/ui/creation/maoson.webp) 50% 30%/cover no-repeat!important}
+#create:not([hidden]){background:#06191c url(assets/ui/creation/co-mieu.webp) 50% 16%/cover no-repeat!important}
 #create::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,10,12,.5),rgba(2,10,12,.08) 28%,rgba(2,10,12,.08) 72%,rgba(2,10,12,.5))}
 #create .cx{z-index:1;padding:max(6px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));gap:clamp(6px,1vw,14px);max-width:none}
 #create .cxL,#create .cxR{margin-block:0}
@@ -4852,7 +4852,7 @@ const cr={name:'',gender:'nam',weapon:'kiem',view:'kiem',hair:'duoi',hairI:0,hai
 /* 25/11 (chủ game: "chọn avatar hình nào thì hình minh họa hình đó"): ảnh giữa theo avatar đang chọn. 1-8 = tranh cảnh scene-<giới>-<n>.webp, 9-14 = chân dung lớn của phái. Gọi từ renderCreateAvatars (mọi lần chọn avatar hay đổi giới). */
 /* 25/11: cảnh nền RIÊNG theo môn phái (ưu tiên hơn cảnh theo avatar); hiện có Mao Sơn = cổng quán bát quái + phướn bùa */
 const SECT_SCENE={maoson:'maoson'};
-const CREATE_SCENE_BY_AVATAR=['co-mieu','hoang-thon','co-mieu','hoang-thon','vong-xuyen','hoang-thon','co-mieu','vong-xuyen'];
+const CREATE_SCENE_BY_AVATAR=['co-mieu','co-mieu','co-mieu','co-mieu','co-mieu','co-mieu','co-mieu','co-mieu'];/* 26/11 chủ game: chỉ giữ MỘT nền (Cổ Miếu, ảnh độ phân giải cao); 2 nền Hoang Thôn và Vong Xuyên tạm dẹp, lưu ở nguon/vfx_goc/creation_nen_tam_dep/ */
 /* 25/11: tranh toàn thân RIÊNG theo (môn phái, giới); chưa có thì dùng tranh toàn thân của avatar đang chọn. Thêm tranh mới: chép file vào assets/ui/creation và khai báo ở đây. */
 /* 26/11: tranh toàn thân theo (phái, giới) rồi theo avatar đang chọn (bản ChatGPT bdce8cb gắn cứng Mao Sơn nam cho mọi người) */
 const SECT_ART={'maoson-nam':document.getElementById('crFull').getAttribute('src')};
