@@ -1893,30 +1893,53 @@ html body #create .cxbar #crGo{height:var(--nd)!important;min-height:0!important
 html body #create #crGo::after,html body #create #crGo::before{display:none!important}
 html body #create .cxbar #crGo:disabled{filter:grayscale(.6) brightness(.8)}
 /* 27/11 POPUP THEO TRANH (chủ game gửi 2 nền): khung giữ đúng tỉ lệ ảnh, mọi thành phần đặt theo % ảnh, chữ theo --u = 1 px ảnh (container query) nên co giãn cùng nền */
-#inv:not([hidden]){display:flex!important;align-items:center;justify-content:center;padding:0!important;overflow:hidden!important;background:#05040a}
+#inv:not([hidden]){z-index:60;display:flex!important;align-items:center;justify-content:center;padding:0!important;overflow:hidden!important;background:rgba(3,2,6,.72)!important}
 #inv .ipf{position:relative;width:min(100vw,calc(100vh*1558/1009));width:min(100vw,calc(100dvh*1558/1009));aspect-ratio:1558/1009;background:url(assets/ui/popup/hanhnang.webp) 0 0/100% 100% no-repeat;container-type:size;flex:none}
 #inv .ipf>*{--u:calc(100cqw/1558);position:absolute;box-sizing:border-box;margin:0}
 .ipT,.dtT{display:flex;align-items:center;justify-content:center;color:#f1e2bf;font:700 calc(var(--u)*64)/1 Georgia,"Noto Serif",serif;letter-spacing:.06em;text-shadow:0 2px 0 #2a0406,0 0 8px #3a0508;white-space:nowrap}
-#inv .ipT{left:21.2%;top:4.5%;width:33.4%;height:14.4%;padding-right:2%}
+#inv .ipT{left:22%;top:6%;width:31%;height:11%}
 #inv .ipP{display:flex;align-items:center;justify-content:center;top:22.6%;height:5.45%;color:#e8d3a6;font:700 max(8px,calc(var(--u)*30))/1 Georgia,"Noto Serif",serif;text-shadow:0 1px 0 #000;white-space:nowrap;gap:.3em}
 #inv .ipP1{left:10.3%;width:16.4%}#inv .ipP2{left:45.9%;width:14.8%}
 #inv .ipP2 #bagn{font:600 max(7px,calc(var(--u)*22)) "Be Vietnam Pro",sans-serif;color:#b9a27a}
 .ipX,.dtX{display:flex;align-items:center;justify-content:center;padding:0;border:0;min-height:0!important;min-width:0!important;background:transparent;color:#f1e2bf;font:700 max(7px,calc(var(--u)*24))/1 Georgia,"Noto Serif",serif;text-shadow:0 1px 0 #000,0 0 3px #000;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .ipX::before,.dtX::before{content:"";position:absolute;inset:-10px -8px}
-#inv .ipX{left:88.8%;top:12.3%;width:7.6%;height:3.1%;letter-spacing:-.02em;font-size:max(6.5px,calc(var(--u)*21))}
+#inv .ipX{left:88%;top:11%;width:9%;height:5%;letter-spacing:-.02em;font-size:max(6.5px,calc(var(--u)*21))}
 @container (max-width:760px){.ipX .ar,.dtX .ar{display:none}}
 #inv .ipL,#inv .ipM,#inv .ipR{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#6a5434 transparent}
-#inv .ipL{left:2.6%;top:29.7%;width:30.5%;height:56.5%;padding:calc(var(--u)*10)}
-#inv .ipM{left:36.9%;top:29.7%;width:32.1%;height:56.5%;padding:calc(var(--u)*12)}
-#inv .ipR{left:73.5%;top:24.3%;width:22.5%;height:50%;padding:calc(var(--u)*14) calc(var(--u)*12)}
-#inv .ipAct{left:74.8%;top:76.5%;width:20.2%;height:7.5%;display:flex;align-items:center;justify-content:center}
-#inv .slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--u)*10)}
-#inv .slot{min-height:0;padding:calc(var(--u)*6);gap:calc(var(--u)*8);border-color:#3c3226;font-size:max(7px,calc(var(--u)*22))}
-#inv .slotmeta .slotname{font-size:max(7px,calc(var(--u)*22));line-height:1.15}#inv .slotmeta .tname{font-size:max(7px,calc(var(--u)*21));line-height:1.15;margin-top:1px}
-html body #inv .item{width:calc(var(--u)*96)!important;height:calc(var(--u)*96)!important;min-width:0!important;flex:none;border-width:max(1px,calc(var(--u)*3))}
-html body #inv .item canvas{width:82%!important;height:82%!important}
-#inv .item .ilv,#inv .item .forge-tag,#inv .item .eqd{font-size:max(6px,calc(var(--u)*18))!important;line-height:1.1;padding:0 2px}
-#inv .bag{gap:calc(var(--u)*12);min-height:0}
+#inv .ipL{left:3%;top:30%;width:30%;height:55%;padding:calc(var(--u)*8)}
+#inv .ipM{left:37%;top:30%;width:32%;height:55%;padding:calc(var(--u)*10)}
+#inv .ipR{left:74%;top:25%;width:21%;height:49%;padding:calc(var(--u)*14) calc(var(--u)*12)}
+#inv .ipAct{left:75%;top:77%;width:19%;height:8%;display:flex;align-items:center;justify-content:center}
+/* ô trang bị và túi đồ: sprite khung (cắt từ tấm 6 khung) nằm dưới, icon/nhãn nằm trên; đổi trạng thái chỉ đổi ảnh, giữ kích thước */
+#inv .slots{display:flex!important;flex-direction:column;gap:calc(var(--u)*12)}
+#inv .gsrow{display:grid;gap:calc(var(--u)*12)}#inv .gsrow-t{grid-template-columns:repeat(3,1fr)}#inv .gsrow-s{grid-template-columns:repeat(4,1fr)}
+#inv .gs{position:relative;background:url(assets/ui/popup/o_cao.webp) 0 0/100% 100% no-repeat;aspect-ratio:168/300;display:flex;align-items:center;justify-content:center}
+#inv .gs.gs-tall.sel{background-image:url(assets/ui/popup/o_cao_chon.webp)}
+#inv .gs.gs-small{background-image:url(assets/ui/popup/o_nho.webp);aspect-ratio:173/200}
+#inv .gs.gs-small.sel{filter:drop-shadow(0 0 calc(var(--u)*5) #e0302a)}
+#inv .gsn{position:absolute;left:4%;right:4%;bottom:7%;text-align:center;color:#e9d6ae;font:700 max(7px,calc(var(--u)*20))/1.05 "Be Vietnam Pro",sans-serif;text-shadow:0 1px 0 #000,0 0 3px #000,0 0 3px #000;pointer-events:none}
+#inv .gs-small .gsn{bottom:6%;font-size:max(6.5px,calc(var(--u)*17))}
+#inv .bag{display:grid!important;grid-template-columns:repeat(5,1fr);gap:calc(var(--u)*8);min-height:0}
+#inv .gb{position:relative;aspect-ratio:1;background:url(assets/ui/popup/o_tui_trong.webp) 0 0/100% 100% no-repeat}
+#inv .gb.has{background-image:url(assets/ui/popup/o_tui_do.webp)}#inv .gb.sel{background-image:url(assets/ui/popup/o_tui_chon.webp)}
+#inv .gq{position:absolute;right:9%;bottom:7%;padding:0 3px;border-radius:2px;background:rgba(0,0,0,.75);color:#f3e2bc;font:700 max(6.5px,calc(var(--u)*16))/1.2 "Be Vietnam Pro",sans-serif;pointer-events:none}
+/* icon thật đặt giữa khung, bỏ nền/viền phẩm cũ của .item */
+html body #inv .gs .item,html body #inv .gb .item{position:absolute!important;left:12%!important;top:12%!important;width:76%!important;height:auto!important;aspect-ratio:1;border:0!important;background:none!important;box-shadow:none!important;border-radius:0!important;min-width:0!important;margin:0!important;cursor:pointer}
+html body #inv .gs.gs-tall .item{top:26%!important}html body #inv .gs.gs-small .item{left:18%!important;width:64%!important;top:10%!important}
+html body #inv .gs .item canvas,html body #inv .gb .item canvas,html body #inv .gdi .item canvas{width:100%!important;height:100%!important}
+#inv .item .ilv,#inv .item .forge-tag,#inv .item .eqd{font-size:max(6px,calc(var(--u)*15))!important;line-height:1.1;padding:0 2px}
+#inv .item .eqd{position:absolute;left:auto;right:-6%;top:-6%}
+#inv .gdn{text-align:center;font:700 max(9px,calc(var(--u)*32))/1.15 Georgia,"Noto Serif",serif!important;filter:brightness(.55) saturate(1.4);text-shadow:none!important}
+#inv .gdi{position:relative;width:46%;aspect-ratio:1;margin:calc(var(--u)*8) auto;background:url(assets/ui/popup/o_tui_do.webp) 0 0/100% 100% no-repeat}
+html body #inv .gdi .item{position:absolute!important;left:12%!important;top:12%!important;width:76%!important;height:76%!important;border:0!important;background:none!important;box-shadow:none!important}
+#inv .gdd{text-align:center;font-size:max(7px,calc(var(--u)*20));line-height:1.3;filter:brightness(.5) saturate(1.3)}
+#inv .gdp{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;color:#5a3e24;font:700 max(8px,calc(var(--u)*26))/1.3 Georgia,"Noto Serif",serif;padding:0 8%}
+
+
+
+
+
+
 #inv .istat{font-size:max(8px,calc(var(--u)*24));line-height:1.4}
 #inv #eqsum{margin-top:calc(var(--u)*12)}
 #inv #bookBox h3,#inv #pendBox h3{font-size:max(8px,calc(var(--u)*24))}
@@ -1936,25 +1959,25 @@ html body #inv .item canvas{width:82%!important;height:82%!important}
 #inv #idet [style*="ff7a6a"]{color:#a3220f!important}
 #inv .ipAct .cbtns{gap:2px}#inv .ipAct .btn{font-size:max(7px,calc(var(--u)*22))!important;padding-left:1px!important;padding-right:1px!important;text-overflow:clip}
 /* Thụ Lộc */
-#lbm.dtbg{background:#05040a!important;padding:0!important;display:flex;align-items:center;justify-content:center}
+#lbm.dtbg{background:rgba(3,2,6,.72)!important;padding:0!important;display:flex;align-items:center;justify-content:center}
 #lbm.dtbg .lbmp{position:relative;width:min(100vw,calc(100vh*1504/1046))!important;width:min(100vw,calc(100dvh*1504/1046))!important;max-width:none!important;max-height:none!important;aspect-ratio:1504/1046;background:url(assets/ui/popup/thuloc.webp) 0 0/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;padding:0!important;container-type:size;flex:none}
 #lbm.dtbg .lbmh{display:none!important}
 #lbm.dtbg #lbmB{position:absolute;inset:0;padding:0!important;overflow:visible!important;max-height:none!important}
 #lbm.dtbg #lbmB>*{--u:calc(100cqw/1504);position:absolute;box-sizing:border-box;margin:0}
-#lbm.dtbg .dtT{left:17.3%;top:12.9%;width:39.2%;height:9.5%}
-#lbm.dtbg .dtX{left:83.1%;top:1.4%;width:14.6%;height:5.6%;font-size:max(7px,calc(var(--u)*27))}
-#lbm.dtbg #dtBun{left:27.6%;top:50.8%;width:13.3%;height:auto;aspect-ratio:128/116;padding:0;border:0;background:url(assets/ui/lobby/ic_diemtam.webp) center bottom/contain no-repeat;cursor:pointer;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 calc(var(--u)*4) calc(var(--u)*3) rgba(0,0,0,.7))}
+#lbm.dtbg .dtT{left:18%;top:12%;width:36%;height:10%}
+#lbm.dtbg .dtX{left:83%;top:1%;width:15%;height:6%;font-size:max(7px,calc(var(--u)*27))}
+#lbm.dtbg #dtBun{left:21%;top:36.3%;width:26%;height:auto;aspect-ratio:480/436;padding:0;border:0;min-height:0!important;background:url(assets/ui/popup/banhu.webp) 0 0/100% 100% no-repeat;cursor:pointer;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 calc(var(--u)*4) calc(var(--u)*3) rgba(0,0,0,.7))}
 #lbm.dtbg #dtBun:not(.can){cursor:default;filter:drop-shadow(0 calc(var(--u)*4) calc(var(--u)*3) rgba(0,0,0,.7)) grayscale(.35) brightness(.8)}
 #lbm.dtbg #dtBun.chew{animation:dtChew .16s ease-out}
 @keyframes dtChew{50%{transform:translateY(calc(var(--u)*4))}}
-#lbm.dtbg .dtbites{left:19.6%;top:86.2%;width:33.9%;height:3.6%;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*34);margin:0}
+#lbm.dtbg .dtbites{left:19%;top:87%;width:35%;height:3%;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*34);margin:0}
 #lbm.dtbg .dtbites i{width:calc(var(--u)*24);height:calc(var(--u)*24);border-radius:50%;transform:none;border:0;background:radial-gradient(circle at 35% 30%,#4a5a52,#1a2420 70%);box-shadow:inset 0 0 0 1px #0a100e}
 #lbm.dtbg .dtbites i.on{background:radial-gradient(circle at 35% 30%,#d8fff0,#4fe0b0 45%,#11735a 80%);box-shadow:0 0 calc(var(--u)*10) #3fe0b0}
-#lbm.dtbg .dtr{left:66.8%;top:22.9%;width:28.3%;height:47.8%;overflow-y:auto;color:#2a1a0c;font:600 max(8px,calc(var(--u)*26))/1.38 "Be Vietnam Pro",sans-serif;padding:calc(var(--u)*6) calc(var(--u)*8)}
-#lbm.dtbg .dtr p{margin:0 0 calc(var(--u)*12)}#lbm.dtbg .dtr b{color:#7a1810}#lbm.dtbg .dtr .warn{color:#8a2a10}
+#lbm.dtbg .dtr{left:68%;top:24%;width:26%;height:46%;overflow-y:auto;color:#2a1a0c;font:600 max(8px,calc(var(--u)*26))/1.38 "Be Vietnam Pro",sans-serif;padding:calc(var(--u)*6) calc(var(--u)*8)}
+#lbm.dtbg .dtr p{margin:0 0 calc(var(--u)*12)}#lbm.dtbg .dtr p.dl{margin:0 0 calc(var(--u)*9);padding-bottom:calc(var(--u)*7);border-bottom:1px solid rgba(90,50,20,.25)}#lbm.dtbg .dtr small{font-size:.82em;color:#5a3e24}#lbm.dtbg .dtr b{color:#7a1810}#lbm.dtbg .dtr .warn{color:#8a2a10}
 #lbm.dtbg .dtr .dth{font:700 max(9px,calc(var(--u)*32))/1.1 Georgia,"Noto Serif",serif;color:#4a1a0c;margin-bottom:calc(var(--u)*10)}
 #lbm.dtbg #dtMsg{left:19.6%;top:78.6%;width:33.9%;height:6%;display:flex;align-items:center;justify-content:center;text-align:center;color:#efdcb4;font:700 max(8px,calc(var(--u)*24))/1.15 "Be Vietnam Pro",sans-serif;text-shadow:0 1px 0 #000,0 0 4px #000}
-#lbm.dtbg #dtGo{left:68.2%;top:73.1%;width:25.9%;height:8.6%;padding:0;border:0;background:transparent;color:#f6e4bc;font:700 max(10px,calc(var(--u)*40))/1 Georgia,"Noto Serif",serif;letter-spacing:.06em;text-shadow:0 2px 0 #2a0406,0 0 6px #3a0508;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#lbm.dtbg #dtGo{left:68%;top:73%;width:26%;height:9%;min-height:0!important;padding:0;border:0;background:transparent;color:#f6e4bc;font:700 max(10px,calc(var(--u)*40))/1 Georgia,"Noto Serif",serif;letter-spacing:.06em;text-shadow:0 2px 0 #2a0406,0 0 6px #3a0508;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #lbm.dtbg #dtGo:disabled{color:#a88a78;cursor:default}
 /* nút xúc xắc đặt tên ngẫu nhiên */
 #create .crnw{position:relative;display:flex}
@@ -4922,17 +4945,23 @@ $('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-tbc]');i
 function openLbm(k){lbmK=k;$('#lbm').hidden=false;$('#lbm').classList.toggle('dtbg',k==='diemtam');dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM,tangbao:renderTBC,amgioi:renderAM})[k]()}
 $('#lbmX').addEventListener('click',()=>{$('#lbm').hidden=true;showLobby()});
 function renderDT(tickOnly){const i=dtInfo(),s0=staTick();$('#lbmT').textContent='Thụ Lộc';
- if(tickOnly&&$('#dtLeft')){$('#dtLeft').textContent=i.open?'Khung còn '+mmss(i.left):'';return}
+ if(tickOnly&&$('#dtLeft')){$('#dtLeft').textContent=mmss(i.left);return}
  const canEat=i.open&&i.rem>0&&s0.v<STA.cap,hh=h=>String(h).padStart(2,'0')+':00';
- /* 27/11 popup theo tranh: tiêu đề trên vải đỏ, đôi bánh ú trên bàn lễ, 5 ngọc tiến độ trong rãnh, giấy bên phải ghi giờ mở/thể lực/thời gian còn, nút "Nhận lộc" = ăn một miếng (cùng thao tác chạm bánh) */
+ /* 27/11 tiến độ miếng bánh lưu trong save.dtb theo khung giờ, đóng mở lại popup vẫn đúng */
+ if(!dtBusy){const sb=save.dtb;dtBites=sb&&sb.key===i.key?Math.min(DT.bites,sb.n|0):0}
+ const lit=i.open&&i.rem<=0?DT.bites:i.open?dtBites:0;
+ const stt=i.open?(i.rem>0?`Khung ${hh(i.h)} đang mở`:`Khung ${hh(i.h)} đã nhận đủ`):'Chưa tới giờ mở lộc';
+ const left=i.open?`Khung còn <span id="dtLeft">${mmss(i.left)}</span>`:`Mở lúc <b>${hh(i.next.h)}</b>, còn ${mmss(i.next.inMs)}`;
  $('#lbmB').innerHTML=`<div class="dtT">Thụ Lộc</div><button class="dtX" id="dtX" type="button" aria-label="Trở lại sảnh"><span class="ar">← </span>Trở lại</button>
- <button id="dtBun" type="button" aria-label="Đôi bánh ú, chạm để ăn từng miếng"></button>
- <div class="dtbites">${Array.from({length:DT.bites},(_,k)=>`<i class="${k<dtBites?'on':''}"></i>`).join('')}</div>
- <div id="dtMsg" class="dtmsg">${canEat?'Chạm bánh ú để ăn · '+dtBites+'/'+DT.bites:i.open&&i.rem<=0?'Đã nhận lộc khung giờ này':''}</div>
- <div class="dtr"><div class="dth">Giờ mở lộc</div><p><b>07:00 · 14:00 · 21:00</b> (giờ Việt Nam), mỗi khung mở ${DT.win} giờ, nhận một lần <b>+${DT.amt} thể lực</b>, vượt trần tới <b>${STA.cap}</b>.</p>
- <p>Thể lực: <b>${s0.v}/${STA.max}</b>${s0.v>STA.max?' (vượt trần)':''}</p>
- <p>${i.open?(i.rem>0?`Khung ${hh(i.h)} đang mở, còn nhận <b>+${i.rem}</b>.`:`Khung ${hh(i.h)} đã nhận đủ.`)+` <span id="dtLeft">Khung còn ${mmss(i.left)}</span>`:`Chưa tới giờ. Khung tiếp theo <b>${hh(i.next.h)}</b>, còn ${mmss(i.next.inMs)}.`}</p>
- ${i.open&&i.rem>0&&s0.v>=STA.cap?'<p class="warn">Thể lực đã đạt '+STA.cap+'. Tiêu bớt rồi quay lại trong khung này để nhận phần còn lại.</p>':''}</div>
+ <button id="dtBun" type="button" aria-label="Đôi bánh ú, chạm để nhận một miếng" ${canEat?'':'disabled'}></button>
+ <div class="dtbites" aria-label="Tiến độ ${lit}/${DT.bites}">${Array.from({length:DT.bites},(_,k)=>`<i class="${k<lit?'on':''}"></i>`).join('')}</div>
+ <div id="dtMsg" class="dtmsg">${canEat?'Chạm bánh ú hoặc Nhận lộc · '+dtBites+'/'+DT.bites:i.open&&i.rem<=0?'Đã nhận lộc khung giờ này':i.open?'Thể lực đã đầy':''}</div>
+ <div class="dtr"><div class="dth">Lịch mở lộc</div>
+ <p class="dl">07:00 · 14:00 · 21:00 <small>(giờ Việt Nam, mỗi khung ${DT.win} giờ)</small></p>
+ <p class="dl">${stt}</p><p class="dl">${left}</p>
+ <p class="dl">Thể lực: <b>${s0.v}/${STA.max}</b>${s0.v>STA.max?' <small>(vượt trần)</small>':''}</p>
+ <p class="dl">Còn nhận được: <b>+${i.open?Math.max(0,Math.min(i.rem,STA.cap-s0.v)):0}</b> <small>(trần ${STA.cap})</small></p>
+ ${i.open&&i.rem>0&&s0.v>=STA.cap?'<p class="warn">Thể lực đã đạt '+STA.cap+'. Tiêu bớt rồi quay lại trong khung này.</p>':''}</div>
  <button id="dtGo" type="button" ${canEat?'':'disabled'}>Nhận lộc</button>`;
  const cn=$('#dtBun');cn.classList.toggle('can',canEat);cn.onclick=()=>eatBite();$('#dtGo').onclick=()=>eatBite();$('#dtX').onclick=()=>$('#lbmX').click()}
 function paintBun(b){
@@ -4985,7 +5014,7 @@ function eatBite(){
  const i=dtInfo(),s0=staTick();
  if(dtBusy||!i.open||i.rem<=0||s0.v>=STA.cap)return;
  const t=performance.now();if(t-dtLast<150)return;dtLast=t;
- dtBites++;
+ dtBites++;save.dtb={key:i.key,n:dtBites};persist();
  const cn=$('#dtBun');cn.classList.remove('chew');void cn.offsetWidth;cn.classList.add('chew');
  paintBun(dtBites);popBunCrumbs();
  // Dùng âm lượng nhỏ, không thay đổi công thức +15 thể lực sau đủ 5 miếng.
@@ -5326,7 +5355,7 @@ $('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').class
 $('#perf3').addEventListener('change',e=>perfSet(e.target.checked));
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
- if(k==='inv'){invFrom='lobby';$('#lobby').hidden=true;$('#inv').hidden=false;renderInv();return}
+ if(k==='inv'){invFrom='lobby';invSel=null;$('#inv').hidden=false;renderInv();return}
  if(['diemtam','luyendan','luyenvk','chieumo','tangbao','amgioi'].includes(k)){openLbm(k);return}
  const T=LBT.find(x=>x.k===k);lobbyToast(T.n+(T.off?': cần máy chủ trực tuyến, sẽ mở khi có máy chủ.':': đang xây dựng, sẽ mở ở bản sau.'))});
 let lbToastT=0;function lobbyToast(t){let d=$('#lbToast');if(!d){d=document.createElement('div');d.id='lbToast';$('#lobby').appendChild(d)}d.textContent=t;d.classList.add('on');clearTimeout(lbToastT);lbToastT=setTimeout(()=>d.classList.remove('on'),2200)}
@@ -5880,17 +5909,19 @@ function unequip(sl){delete eqMap()[sl];persist();if(G&&P)recalc()}
 let invSel=null;
 function openInv(){invFrom='menu';$('#menu').hidden=true;$('#inv').hidden=false;renderInv()}
 function renderInv(){const inv=invList(),eq=eqMap();
- $('#slots').innerHTML=Object.entries(SLOTS).map(([k,S0])=>{const it=inv.find(x=>x.id===eq[k]);return `<div class="slot">${it?itemEl(it,0):'<div class="item" style="--tc:#4a3824;opacity:.5"></div>'}<span class="slotmeta"><span class="slotname">${S0.n}</span>${it?`<span class="tname t${it.tier}">${it.name}</span>`:''} </span></div>`}).join('');
+ /* 27/11 popup theo tranh: hàng trên 3 ô cao (Vũ khí, Hộ phù, Y phục), còn lại ô nhỏ; khung là sprite, icon và nhãn nằm trên */
+ const SLOT_TALL=['vk','phu','ao'],slotCell=(k,tall)=>{const S0=SLOTS[k],it=inv.find(x=>x.id===eq[k]);return `<div class="gs ${tall?'gs-tall':'gs-small'}${it&&invSel===it.id?' sel':''}">${it?itemEl(it,0):''}<span class="gsn">${S0.n}</span></div>`};
+ $('#slots').innerHTML=`<div class="gsrow gsrow-t">${SLOT_TALL.map(k=>slotCell(k,1)).join('')}</div><div class="gsrow gsrow-s">${Object.keys(SLOTS).filter(k=>!SLOT_TALL.includes(k)).map(k=>slotCell(k,0)).join('')}</div>`;
  const b=equipBonus();$('#eqsum').innerHTML=Object.keys(b).length?'<b>Tổng cộng thêm:</b>'+Object.entries(b).map(([k,v])=>`<div>${sn(k)[0]} <b>${fmtv(k,v)}</b></div>`).join(''):'<span class="dim">Chưa mặc trang bị nào.</span>';
  const sorted=[...inv].sort((a,b)=>b.tier-a.tier||a.slot.localeCompare(b.slot));
  renderBooks();renderPend();
  $('#bagn').textContent='('+inv.length+'/'+INV_MAX+')';
- $('#bag').innerHTML=sorted.map(it=>itemEl(it,eq[it.slot]===it.id)).join('')||'<span class="dim">Túi trống. Đập bình, thùng hoặc hạ trùm để nhận trang bị.</span>';
+ {const cells=sorted.map(it=>`<div class="gb${invSel===it.id?' sel':' has'}">${itemEl(it,eq[it.slot]===it.id)}${it.qty>1?'<span class="gq">'+it.qty+'</span>':''}</div>`),n=Math.max(25,Math.ceil(cells.length/5)*5);while(cells.length<n)cells.push('<div class="gb empty"></div>');$('#bag').innerHTML=cells.join('')}
  paintIcons($('#inv'));
  const it=inv.find(x=>x.id===invSel);
  $('#idet').classList.toggle('is-empty',!it);
- $('#idet').innerHTML=it?`<div class="lh" style="display:flex;gap:10px;align-items:center">${itemEl(it,0)}<div><div class="tname t${it.tier}">${it.name}</div><small class="t${it.tier}" style="color:var(--tt,var(--tc))">${TIERS[it.tier].n} · ${TIERS[it.tier].k} · ${SLOTS[it.slot].n} · ${it.lv?'Cấp '+it.lv:'Màn '+it.st}</small></div></div><div class="istat">${itemStats(it)}</div>${forgeMarkup(it)}
-  <div class="cbtns" style="justify-content:flex-start">${eq[it.slot]===it.id?'<button class="btn" id="ueq">Tháo ra</button>':it.damaged?'':'<button class="btn gold" id="deq">Trang bị</button>'}<button class="btn" id="dsc" ${eq[it.slot]===it.id?'disabled title="Đang mặc, tháo ra trước"':'title="Phân giải lấy '+TIERS[it.tier].v+' Tiên ngọc"'}>Phân giải${eq[it.slot]===it.id?'':' +'+TIERS[it.tier].v}</button></div>`:'<span class="dim">Chạm một món đồ để xem chi tiết.</span>';
+ $('#idet').innerHTML=it?`<div class="gdn tname t${it.tier}">${it.name}</div><div class="gdi">${itemEl(it,0)}</div><div class="gdd" style="color:var(--tt,var(--tc))">${TIERS[it.tier].n} · ${TIERS[it.tier].k} · ${SLOTS[it.slot].n} · ${it.lv?'Cấp '+it.lv:'Màn '+it.st}${eq[it.slot]===it.id?' · <b>Đang mặc</b>':''}</div><div class="istat">${itemStats(it)}</div>${forgeMarkup(it)}
+  <div class="cbtns" style="justify-content:flex-start">${eq[it.slot]===it.id?'<button class="btn" id="ueq">Tháo ra</button>':it.damaged?'':'<button class="btn gold" id="deq">Mặc</button>'}<button class="btn" id="dsc" ${eq[it.slot]===it.id?'disabled title="Đang mặc, tháo ra trước"':'title="Phân giải lấy '+TIERS[it.tier].v+' Tiên ngọc"'}>Phân giải${eq[it.slot]===it.id?'':' +'+TIERS[it.tier].v}</button></div>`:'<div class="gdp">Chọn một món để xem chi tiết</div>';
  {const act=$('#ipAct'),cb=$('#idet .cbtns');if(act)act.replaceChildren(...(cb?[cb]:[]))}
  if(it){paintIcons($('#idet'));const q=$('#deq'),u=$('#ueq');if(q)q.onclick=()=>{equip(it.id);renderInv()};if(u)u.onclick=()=>{unequip(it.slot);renderInv()};
   const forge=$('#forgeDo');
