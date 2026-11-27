@@ -35,11 +35,7 @@ def outline(im):
     A[edge]=(20,14,14,255); return Image.fromarray(A,'RGBA')
 
 # Mỗi cỡ hiển thị có một ảnh riêng thu thẳng từ ảnh gốc (không phóng ảnh nhỏ lên): game chọn ảnh vừa khoang và vẽ 1:1 CSS px.
-SIZES=(32,40,48,56,64,72)
-da=crop(Image.open(f'{SRC}/o_da_goc.png')); go=crop(Image.open(f'{SRC}/khung_go_goc.png'))
-for n in SIZES:
-    shrink(da,round(n*da.width/da.height),n).save(f'{OUT}/o_da_{n}.png')
-    shrink(go,round(n*go.width/go.height),n).save(f'{OUT}/khung_go_{n}.png')
+# Ô đá và khung gỗ đã bỏ (chủ game 27/11), chỉ còn nút đỏ.
 nd=crop(Image.open(f'{SRC}/nut_do_goc.png'))
 for n in (34,40,48):
     shrink(nd,round(n*nd.width/nd.height),n,48).save(f"{OUT}/nut_do_raw_{n}.png")
