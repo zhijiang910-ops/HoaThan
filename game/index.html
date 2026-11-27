@@ -1892,10 +1892,70 @@ html body #create .cxbar #crGo{height:var(--nd)!important;min-height:0!important
 #create #crGo{--ndn:48}@media (max-height:600px){#create #crGo{--ndn:40}}@media (max-height:300px){#create #crGo{--ndn:34}}
 html body #create #crGo::after,html body #create #crGo::before{display:none!important}
 html body #create .cxbar #crGo:disabled{filter:grayscale(.6) brightness(.8)}
-/* 27/11 ma trơi xanh ngọc ở popup Hành Nang và Thụ Lộc: lớp ảnh pixel 1:1 (mtTick đặt vị trí), nằm trên nền khung, dưới chữ/vật phẩm/nút (z-index -1 trong khung có isolation), chạm xuyên */
-#inv .panel,#lbm .lbmp{position:relative;isolation:isolate}
-.mtroi{position:absolute;z-index:-1;pointer-events:none;image-rendering:pixelated;transform-origin:43% 96%;animation:mtF var(--d,2.2s) ease-in-out var(--dl,0s) infinite;will-change:transform,filter}
-@keyframes mtF{0%,100%{transform:rotate(0) scaleY(1);filter:brightness(1)}25%{transform:rotate(-3deg) scaleY(1.04);filter:brightness(1.2)}50%{transform:rotate(0) scaleY(.96);filter:brightness(.92)}75%{transform:rotate(3deg) scaleY(1.02);filter:brightness(1.1)}}
+/* 27/11 POPUP THEO TRANH (chủ game gửi 2 nền): khung giữ đúng tỉ lệ ảnh, mọi thành phần đặt theo % ảnh, chữ theo --u = 1 px ảnh (container query) nên co giãn cùng nền */
+#inv:not([hidden]){display:flex!important;align-items:center;justify-content:center;padding:0!important;overflow:hidden!important;background:#05040a}
+#inv .ipf{position:relative;width:min(100vw,calc(100vh*1558/1009));width:min(100vw,calc(100dvh*1558/1009));aspect-ratio:1558/1009;background:url(assets/ui/popup/hanhnang.webp) 0 0/100% 100% no-repeat;container-type:size;flex:none}
+#inv .ipf>*{--u:calc(100cqw/1558);position:absolute;box-sizing:border-box;margin:0}
+.ipT,.dtT{display:flex;align-items:center;justify-content:center;color:#f1e2bf;font:700 calc(var(--u)*64)/1 Georgia,"Noto Serif",serif;letter-spacing:.06em;text-shadow:0 2px 0 #2a0406,0 0 8px #3a0508;white-space:nowrap}
+#inv .ipT{left:21.2%;top:4.5%;width:33.4%;height:14.4%;padding-right:2%}
+#inv .ipP{display:flex;align-items:center;justify-content:center;top:22.6%;height:5.45%;color:#e8d3a6;font:700 max(8px,calc(var(--u)*30))/1 Georgia,"Noto Serif",serif;text-shadow:0 1px 0 #000;white-space:nowrap;gap:.3em}
+#inv .ipP1{left:10.3%;width:16.4%}#inv .ipP2{left:45.9%;width:14.8%}
+#inv .ipP2 #bagn{font:600 max(7px,calc(var(--u)*22)) "Be Vietnam Pro",sans-serif;color:#b9a27a}
+.ipX,.dtX{display:flex;align-items:center;justify-content:center;padding:0;border:0;min-height:0!important;min-width:0!important;background:transparent;color:#f1e2bf;font:700 max(7px,calc(var(--u)*24))/1 Georgia,"Noto Serif",serif;text-shadow:0 1px 0 #000,0 0 3px #000;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ipX::before,.dtX::before{content:"";position:absolute;inset:-10px -8px}
+#inv .ipX{left:88.8%;top:12.3%;width:7.6%;height:3.1%;letter-spacing:-.02em;font-size:max(6.5px,calc(var(--u)*21))}
+@container (max-width:760px){.ipX .ar,.dtX .ar{display:none}}
+#inv .ipL,#inv .ipM,#inv .ipR{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#6a5434 transparent}
+#inv .ipL{left:2.6%;top:29.7%;width:30.5%;height:56.5%;padding:calc(var(--u)*10)}
+#inv .ipM{left:36.9%;top:29.7%;width:32.1%;height:56.5%;padding:calc(var(--u)*12)}
+#inv .ipR{left:73.5%;top:24.3%;width:22.5%;height:50%;padding:calc(var(--u)*14) calc(var(--u)*12)}
+#inv .ipAct{left:74.8%;top:76.5%;width:20.2%;height:7.5%;display:flex;align-items:center;justify-content:center}
+#inv .slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--u)*10)}
+#inv .slot{min-height:0;padding:calc(var(--u)*6);gap:calc(var(--u)*8);border-color:#3c3226;font-size:max(7px,calc(var(--u)*22))}
+#inv .slotmeta .slotname{font-size:max(7px,calc(var(--u)*22));line-height:1.15}#inv .slotmeta .tname{font-size:max(7px,calc(var(--u)*21));line-height:1.15;margin-top:1px}
+html body #inv .item{width:calc(var(--u)*96)!important;height:calc(var(--u)*96)!important;min-width:0!important;flex:none;border-width:max(1px,calc(var(--u)*3))}
+html body #inv .item canvas{width:82%!important;height:82%!important}
+#inv .item .ilv,#inv .item .forge-tag,#inv .item .eqd{font-size:max(6px,calc(var(--u)*18))!important;line-height:1.1;padding:0 2px}
+#inv .bag{gap:calc(var(--u)*12);min-height:0}
+#inv .istat{font-size:max(8px,calc(var(--u)*24));line-height:1.4}
+#inv #eqsum{margin-top:calc(var(--u)*12)}
+#inv #bookBox h3,#inv #pendBox h3{font-size:max(8px,calc(var(--u)*24))}
+#inv .iptest{flex-wrap:wrap;gap:4px;margin-top:calc(var(--u)*14)}#inv .iptest .btn{font-size:max(7px,calc(var(--u)*18));padding:2px 5px;min-height:0}#inv #invClose{display:none}
+#inv #idet{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;color:#2a1a0c;font:600 max(8px,calc(var(--u)*24))/1.4 "Be Vietnam Pro",sans-serif}
+#inv #idet .lh{gap:calc(var(--u)*12)!important;align-items:flex-start!important}
+#inv #idet .tname{font:700 max(9px,calc(var(--u)*30))/1.15 Georgia,"Noto Serif",serif;text-shadow:none;filter:brightness(.55) saturate(1.4)}
+#inv #idet small{display:block;font-size:max(7px,calc(var(--u)*20));line-height:1.3;color:#5b4024!important;margin-top:2px}
+#inv #idet .istat{color:#2a1a0c;font-size:max(8px,calc(var(--u)*24));margin-top:calc(var(--u)*10)}
+#inv #idet .istat .aff{color:#24603a}#inv #idet .istat .sp{color:#8a4a06}#inv #idet .dim,#inv #idet .sm,#inv #idet .dim *{color:#5a3e24!important}
+#inv #idet .btn,#inv #idet button{font-size:max(7px,calc(var(--u)*20));padding:2px 6px;min-height:0}
+#inv #idet p,#inv #idet div{max-width:100%}
+#inv .ipAct .cbtns{display:flex;flex-wrap:nowrap;gap:calc(var(--u)*10);margin:0!important;justify-content:center!important;width:100%}
+#inv .ipAct .btn{flex:1 1 0;min-width:0;min-height:0;padding:calc(var(--u)*6) 2px;background:linear-gradient(#7a1418,#4a0a0c)!important;border:1px solid #c79a52!important;box-shadow:none!important;border-radius:2px;color:#f6e6c2!important;font:700 max(8px,calc(var(--u)*22))/1.1 Georgia,"Noto Serif",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 #000}
+#inv .ipAct .btn:disabled{opacity:.55}
+#inv #idet .istat *,#inv #idet .forge *,#inv #idet .forgery,#inv #idet .forgery *,#inv #idet p{font-size:inherit!important;line-height:1.35!important}
+#inv #idet [style*="ff7a6a"]{color:#a3220f!important}
+#inv .ipAct .cbtns{gap:2px}#inv .ipAct .btn{font-size:max(7px,calc(var(--u)*22))!important;padding-left:1px!important;padding-right:1px!important;text-overflow:clip}
+/* Thụ Lộc */
+#lbm.dtbg{background:#05040a!important;padding:0!important;display:flex;align-items:center;justify-content:center}
+#lbm.dtbg .lbmp{position:relative;width:min(100vw,calc(100vh*1504/1046))!important;width:min(100vw,calc(100dvh*1504/1046))!important;max-width:none!important;max-height:none!important;aspect-ratio:1504/1046;background:url(assets/ui/popup/thuloc.webp) 0 0/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;padding:0!important;container-type:size;flex:none}
+#lbm.dtbg .lbmh{display:none!important}
+#lbm.dtbg #lbmB{position:absolute;inset:0;padding:0!important;overflow:visible!important;max-height:none!important}
+#lbm.dtbg #lbmB>*{--u:calc(100cqw/1504);position:absolute;box-sizing:border-box;margin:0}
+#lbm.dtbg .dtT{left:17.3%;top:12.9%;width:39.2%;height:9.5%}
+#lbm.dtbg .dtX{left:83.1%;top:1.4%;width:14.6%;height:5.6%;font-size:max(7px,calc(var(--u)*27))}
+#lbm.dtbg #dtBun{left:27.6%;top:50.8%;width:13.3%;height:auto;aspect-ratio:128/116;padding:0;border:0;background:url(assets/ui/lobby/ic_diemtam.webp) center bottom/contain no-repeat;cursor:pointer;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 calc(var(--u)*4) calc(var(--u)*3) rgba(0,0,0,.7))}
+#lbm.dtbg #dtBun:not(.can){cursor:default;filter:drop-shadow(0 calc(var(--u)*4) calc(var(--u)*3) rgba(0,0,0,.7)) grayscale(.35) brightness(.8)}
+#lbm.dtbg #dtBun.chew{animation:dtChew .16s ease-out}
+@keyframes dtChew{50%{transform:translateY(calc(var(--u)*4))}}
+#lbm.dtbg .dtbites{left:19.6%;top:86.2%;width:33.9%;height:3.6%;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*34);margin:0}
+#lbm.dtbg .dtbites i{width:calc(var(--u)*24);height:calc(var(--u)*24);border-radius:50%;transform:none;border:0;background:radial-gradient(circle at 35% 30%,#4a5a52,#1a2420 70%);box-shadow:inset 0 0 0 1px #0a100e}
+#lbm.dtbg .dtbites i.on{background:radial-gradient(circle at 35% 30%,#d8fff0,#4fe0b0 45%,#11735a 80%);box-shadow:0 0 calc(var(--u)*10) #3fe0b0}
+#lbm.dtbg .dtr{left:66.8%;top:22.9%;width:28.3%;height:47.8%;overflow-y:auto;color:#2a1a0c;font:600 max(8px,calc(var(--u)*26))/1.38 "Be Vietnam Pro",sans-serif;padding:calc(var(--u)*6) calc(var(--u)*8)}
+#lbm.dtbg .dtr p{margin:0 0 calc(var(--u)*12)}#lbm.dtbg .dtr b{color:#7a1810}#lbm.dtbg .dtr .warn{color:#8a2a10}
+#lbm.dtbg .dtr .dth{font:700 max(9px,calc(var(--u)*32))/1.1 Georgia,"Noto Serif",serif;color:#4a1a0c;margin-bottom:calc(var(--u)*10)}
+#lbm.dtbg #dtMsg{left:19.6%;top:78.6%;width:33.9%;height:6%;display:flex;align-items:center;justify-content:center;text-align:center;color:#efdcb4;font:700 max(8px,calc(var(--u)*24))/1.15 "Be Vietnam Pro",sans-serif;text-shadow:0 1px 0 #000,0 0 4px #000}
+#lbm.dtbg #dtGo{left:68.2%;top:73.1%;width:25.9%;height:8.6%;padding:0;border:0;background:transparent;color:#f6e4bc;font:700 max(10px,calc(var(--u)*40))/1 Georgia,"Noto Serif",serif;letter-spacing:.06em;text-shadow:0 2px 0 #2a0406,0 0 6px #3a0508;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#lbm.dtbg #dtGo:disabled{color:#a88a78;cursor:default}
 /* nút xúc xắc đặt tên ngẫu nhiên */
 #create .crnw{position:relative;display:flex}
 #create .crnw #crName{flex:1;padding-right:clamp(34px,9vh,48px)!important}
@@ -2127,13 +2187,14 @@ html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{wh
  </div>
 </section>
 <section id="inv" class="screen" hidden>
- <div class="wrap">
-  <div class="panel">
-   <div class="invhead"><h2>Kho đồ</h2><button id="invBackTop" class="btn" type="button" aria-label="Quay lại từ Kho đồ">← Quay lại</button></div><p class="dim sm">Trang bị giữ lại qua mọi lượt chơi. Bấm vào món đồ để xem, mặc hoặc phân giải lấy Tiên ngọc.</p>
-   <div class="invg"><div><h3>Đang mặc</h3><div class="slots" id="slots"></div><div id="eqsum" class="istat" style="margin-top:10px"></div><div id="pendBox"></div><div id="bookBox"></div></div>
-   <div><h3>Túi đồ <span id="bagn" class="dim sm"></span></h3><div class="bag" id="bag"></div><div id="idet" class="panel"></div></div></div>
-   <div class="cbtns"><button id="invTest" class="btn" type="button">TEST: mặc bộ đồ tiếp theo</button><button id="invTestAll" class="btn" type="button">TEST: phát TẤT CẢ đồ</button><button id="invTestClr" class="btn" type="button">Dọn đồ TEST</button><button id="invClose" class="btn gold">Đóng</button></div>
-  </div>
+ <div class="ipf" role="dialog" aria-label="Hành Nang">
+  <h2 class="ipT">Hành Nang</h2>
+  <b class="ipP ipP1">Đang mặc</b><b class="ipP ipP2">Túi đồ <span id="bagn"></span></b>
+  <button id="invBackTop" class="ipX" type="button" aria-label="Trở lại sảnh"><span class="ar">← </span>Trở lại</button>
+  <div class="ipL"><div class="slots" id="slots"></div><div id="eqsum" class="istat"></div><div id="pendBox"></div><div id="bookBox"></div><div class="cbtns iptest"><button id="invTest" class="btn" type="button">TEST: mặc bộ đồ tiếp theo</button><button id="invTestAll" class="btn" type="button">TEST: phát TẤT CẢ đồ</button><button id="invTestClr" class="btn" type="button">Dọn đồ TEST</button><button id="invClose" class="btn gold">Đóng</button></div></div>
+  <div class="ipM"><div class="bag" id="bag"></div></div>
+  <div class="ipR"><div id="idet" class="panel"></div></div>
+  <div class="ipAct" id="ipAct"></div>
  </div>
 </section>
 <section id="end" class="screen" hidden>
@@ -4858,19 +4919,24 @@ function renderTBC(){$('#lbmT').textContent='Tàng Bảo Các';const D=tbcData()
  <h3 class="tbcs">Nhật ký bổ sung</h3><div class="tbcl">${TBC_LOG.map(([d,t])=>`<div><b>${d}</b> ${t}</div>`).join('')}</div>`;
  $('#lbmB').querySelectorAll('canvas[data-s]').forEach(cn=>{try{drawItemIcon(cn,{id:'tbc',slot:cn.dataset.s,tier:+cn.dataset.t,st:1,name:cn.dataset.n,base:{},aff:[]})}catch(e){}})}
 $('#lbmB').addEventListener('click',e=>{const b=e.target.closest('[data-tbc]');if(!b||lbmK!=='tangbao')return;tbcTab=b.dataset.tbc;renderTBC()});
-function openLbm(k){lbmK=k;$('#lbm').hidden=false;dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM,tangbao:renderTBC,amgioi:renderAM})[k]()}
+function openLbm(k){lbmK=k;$('#lbm').hidden=false;$('#lbm').classList.toggle('dtbg',k==='diemtam');dtBites=0;dtBusy=false;({diemtam:()=>renderDT(),luyendan:renderLD,luyenvk:renderLVK,chieumo:renderCM,tangbao:renderTBC,amgioi:renderAM})[k]()}
 $('#lbmX').addEventListener('click',()=>{$('#lbm').hidden=true;showLobby()});
-function renderDT(tickOnly){const i=dtInfo(),s0=staTick();$('#lbmT').textContent='Điểm Tâm';
+function renderDT(tickOnly){const i=dtInfo(),s0=staTick();$('#lbmT').textContent='Thụ Lộc';
  if(tickOnly&&$('#dtLeft')){$('#dtLeft').textContent=i.open?'Khung còn '+mmss(i.left):'';return}
- const canEat=i.open&&i.rem>0&&s0.v<STA.cap;
- $('#lbmB').innerHTML=`<div class="dt"><div class="dtl"><canvas id="dtBun" width="96" height="80"></canvas><div class="dtbites">${Array.from({length:DT.bites},(_,k)=>`<i class="${k<dtBites?'on':''}"></i>`).join('')}</div><div id="dtMsg" class="dtmsg">${canEat?'Chạm bánh bao để ăn từng miếng · '+dtBites+'/'+DT.bites:i.open&&i.rem<=0?'Đã ăn hết bánh bao trong khung giờ này':''}</div></div>
- <div class="dtr"><p>Ăn điểm tâm theo giờ Việt Nam: <b>07:00, 14:00, 21:00</b>, mỗi khung mở ${DT.win} giờ, mỗi khung nhận một lần <b>+${DT.amt} thể lực</b>. Được vượt trần tới <b>${STA.cap}</b>.</p>
+ const canEat=i.open&&i.rem>0&&s0.v<STA.cap,hh=h=>String(h).padStart(2,'0')+':00';
+ /* 27/11 popup theo tranh: tiêu đề trên vải đỏ, đôi bánh ú trên bàn lễ, 5 ngọc tiến độ trong rãnh, giấy bên phải ghi giờ mở/thể lực/thời gian còn, nút "Nhận lộc" = ăn một miếng (cùng thao tác chạm bánh) */
+ $('#lbmB').innerHTML=`<div class="dtT">Thụ Lộc</div><button class="dtX" id="dtX" type="button" aria-label="Trở lại sảnh"><span class="ar">← </span>Trở lại</button>
+ <button id="dtBun" type="button" aria-label="Đôi bánh ú, chạm để ăn từng miếng"></button>
+ <div class="dtbites">${Array.from({length:DT.bites},(_,k)=>`<i class="${k<dtBites?'on':''}"></i>`).join('')}</div>
+ <div id="dtMsg" class="dtmsg">${canEat?'Chạm bánh ú để ăn · '+dtBites+'/'+DT.bites:i.open&&i.rem<=0?'Đã nhận lộc khung giờ này':''}</div>
+ <div class="dtr"><div class="dth">Giờ mở lộc</div><p><b>07:00 · 14:00 · 21:00</b> (giờ Việt Nam), mỗi khung mở ${DT.win} giờ, nhận một lần <b>+${DT.amt} thể lực</b>, vượt trần tới <b>${STA.cap}</b>.</p>
  <p>Thể lực: <b>${s0.v}/${STA.max}</b>${s0.v>STA.max?' (vượt trần)':''}</p>
- <p>${i.open?(i.rem>0?`Khung ${String(i.h).padStart(2,'0')}:00 đang mở. Còn nhận được <b>+${i.rem}</b>.`:`Khung ${String(i.h).padStart(2,'0')}:00 đã nhận đủ.`)+` <span id="dtLeft">Khung còn ${mmss(i.left)}</span>`:`Chưa tới giờ. Khung tiếp theo lúc <b>${String(i.next.h).padStart(2,'0')}:00</b> (sau ${mmss(i.next.inMs)}).`}</p>
- ${i.open&&i.rem>0&&s0.v>=STA.cap?'<p class="warn">Thể lực đã đạt '+STA.cap+'. Tiêu bớt rồi quay lại trong khung này để nhận phần còn lại.</p>':''}</div></div>`;
- paintBun(dtBites);const cn=$('#dtBun');cn.classList.toggle('can',canEat);cn.onclick=()=>eatBite()}
+ <p>${i.open?(i.rem>0?`Khung ${hh(i.h)} đang mở, còn nhận <b>+${i.rem}</b>.`:`Khung ${hh(i.h)} đã nhận đủ.`)+` <span id="dtLeft">Khung còn ${mmss(i.left)}</span>`:`Chưa tới giờ. Khung tiếp theo <b>${hh(i.next.h)}</b>, còn ${mmss(i.next.inMs)}.`}</p>
+ ${i.open&&i.rem>0&&s0.v>=STA.cap?'<p class="warn">Thể lực đã đạt '+STA.cap+'. Tiêu bớt rồi quay lại trong khung này để nhận phần còn lại.</p>':''}</div>
+ <button id="dtGo" type="button" ${canEat?'':'disabled'}>Nhận lộc</button>`;
+ const cn=$('#dtBun');cn.classList.toggle('can',canEat);cn.onclick=()=>eatBite();$('#dtGo').onclick=()=>eatBite();$('#dtX').onclick=()=>$('#lbmX').click()}
 function paintBun(b){
- const cn=$('#dtBun');if(!cn)return;
+ const cn=$('#dtBun');if(!cn||!cn.getContext)return;
  const g=cn.getContext('2d');g.imageSmoothingEnabled=false;g.clearRect(0,0,96,80);
  // Đĩa và bóng là lớp cố định; cắn bánh không xóa mất đĩa.
  g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(48,70,34,7,0,0,TAU);g.fill();
@@ -5208,19 +5274,6 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
 /* ===== SẢNH SÂN KHẤU (26/11): ảnh nền, nhân vật, 2 vùng bấm CÙNG hệ tọa độ ảnh 1672x941, co giãn/dịch chuyển cùng nhau ===== */
 const LB_AR=1672/941;
-/* 27/11 ma trơi popup: chân lửa (43% ngang, cách đáy pad px) là điểm neo; vị trí tính lại mỗi khung theo khung popup đang thấy */
-const MT_W={48:31,64:42,80:52,96:63},MT_P={48:2,64:3,80:3,96:4};let mtRun=0;
-function mtH(dt){const h=innerHeight;return dt?(h<450?48:h<650?64:80):(h<330?48:h<450?64:h<650?80:96)}
-function mtEls(host,key){let a=host.querySelectorAll('.mtroi.'+key);if(a.length)return a;
- [['1.9s','-0.4s'],['2.6s','-1.5s']].forEach(([d,dl],i)=>{const m=document.createElement('img');m.className='mtroi '+key;m.alt='';m.setAttribute('aria-hidden','true');m.style.setProperty('--d',key==='mtd'?(i?'2.3s':'2.05s'):d);m.style.setProperty('--dl',key==='mtd'?(i?'-0.9s':'-1.9s'):dl);host.prepend(m)});return host.querySelectorAll('.mtroi.'+key)}
-function mtPut(m,x,y,H){const w=MT_W[H],src='assets/ui/matroi/mt_ngoc_'+H+'.png';if(m.dataset.s!==src){m.dataset.s=src;m.src=src;m.width=w;m.height=H}m.style.left=Math.round(x-w*.43)+'px';m.style.top=Math.round(y-(H-MT_P[H]))+'px';m.style.display='';m.style.animation=LOWFX?'none':''}
-function mtTick(){let H=mtH(),w=MT_W[H];let on=0;
- const inv=$('#inv'),ip=inv&&!inv.hidden&&$('#inv .panel');
- if(ip){on=1;const R=ip.getBoundingClientRect(),yb=Math.min(R.bottom,innerHeight)-R.top-6,[a,b]=mtEls(ip,'mti');mtPut(a,Math.max(w*.05,w*.43+2-R.left),yb,H);mtPut(b,Math.min(R.width-w*.05,innerWidth-R.left-w*.57-2),yb,H)}
- const lm=$('#lbm'),bun=lm&&!lm.hidden&&$('#dtBun'),lp=$('#lbm .lbmp');
- if(lp){const ms=lp.querySelectorAll('.mtroi.mtd');if(bun){on=1;H=mtH(1);w=MT_W[H];const P=lp.getBoundingClientRect(),B=bun.getBoundingClientRect(),[a,b]=mtEls(lp,'mtd'),y=B.bottom-P.top-B.height*.1;const tx=bun.parentElement&&bun.parentElement.nextElementSibling,TL=tx?tx.getBoundingClientRect().left-P.left:1e9;mtPut(a,B.left-P.left-w*.1,y,H);mtPut(b,Math.min(B.right-P.left-w*.05,TL-w*.57-2),y,H)}else ms.forEach(m=>m.style.display='none')}
- if(on)requestAnimationFrame(mtTick);else mtRun=0}
-setInterval(()=>{if(!mtRun&&((!$('#inv').hidden)||(!$('#lbm').hidden&&$('#dtBun')))){mtRun=1;mtTick()}},200);
 function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden)return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;
  const W=Math.max(vw,vh*LB_AR),H=W/LB_AR,bar=$('#lbGrid'),barH=bar?bar.offsetHeight:0;
  /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
@@ -5837,7 +5890,8 @@ function renderInv(){const inv=invList(),eq=eqMap();
  const it=inv.find(x=>x.id===invSel);
  $('#idet').classList.toggle('is-empty',!it);
  $('#idet').innerHTML=it?`<div class="lh" style="display:flex;gap:10px;align-items:center">${itemEl(it,0)}<div><div class="tname t${it.tier}">${it.name}</div><small class="t${it.tier}" style="color:var(--tt,var(--tc))">${TIERS[it.tier].n} · ${TIERS[it.tier].k} · ${SLOTS[it.slot].n} · ${it.lv?'Cấp '+it.lv:'Màn '+it.st}</small></div></div><div class="istat">${itemStats(it)}</div>${forgeMarkup(it)}
-  <div class="cbtns" style="justify-content:flex-start">${eq[it.slot]===it.id?'<button class="btn" id="ueq">Tháo ra</button>':it.damaged?'':'<button class="btn gold" id="deq">Trang bị</button>'}<button class="btn" id="dsc" ${eq[it.slot]===it.id?'disabled title="Đang mặc, tháo ra trước"':''}>${eq[it.slot]===it.id?'Đang mặc · không phân giải':'Phân giải (+'+TIERS[it.tier].v+' Tiên ngọc)'}</button></div>`:'<span class="dim">Chọn một món đồ để xem chi tiết.</span>';
+  <div class="cbtns" style="justify-content:flex-start">${eq[it.slot]===it.id?'<button class="btn" id="ueq">Tháo ra</button>':it.damaged?'':'<button class="btn gold" id="deq">Trang bị</button>'}<button class="btn" id="dsc" ${eq[it.slot]===it.id?'disabled title="Đang mặc, tháo ra trước"':'title="Phân giải lấy '+TIERS[it.tier].v+' Tiên ngọc"'}>Phân giải${eq[it.slot]===it.id?'':' +'+TIERS[it.tier].v}</button></div>`:'<span class="dim">Chạm một món đồ để xem chi tiết.</span>';
+ {const act=$('#ipAct'),cb=$('#idet .cbtns');if(act)act.replaceChildren(...(cb?[cb]:[]))}
  if(it){paintIcons($('#idet'));const q=$('#deq'),u=$('#ueq');if(q)q.onclick=()=>{equip(it.id);renderInv()};if(u)u.onclick=()=>{unequip(it.slot);renderInv()};
   const forge=$('#forgeDo');
   if(forge)forge.onclick=()=>{
