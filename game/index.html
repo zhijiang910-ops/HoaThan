@@ -982,7 +982,7 @@ html.needland #rot{display:flex}
 .lbinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .lbinfo b{font:800 20px "Noto Serif",serif;color:#ffe9b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lblv{font:700 13px "Be Vietnam Pro",sans-serif;color:#c9a45e}.lblv i{font-style:normal;color:#ffe08a}
-.lbcp{display:inline-flex;align-items:center;gap:7px;margin:5px 0 6px;padding:3px 56px 3px 3px;-webkit-mask-image:linear-gradient(90deg,#000 62%,transparent);mask-image:linear-gradient(90deg,#000 62%,transparent);background:linear-gradient(90deg,rgba(92,46,10,.95),rgba(40,22,8,.85) 70%,rgba(40,22,8,0));border:1px solid #d8a84a;border-right:0;border-radius:16px 3px 3px 16px;box-shadow:0 0 10px rgba(255,180,60,.28),inset 0 1px 0 rgba(255,230,160,.25)}
+.lbcp{display:inline-flex;align-items:center;gap:7px;margin:5px 0 6px;padding:3px 56px 3px 3px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);background:linear-gradient(90deg,rgba(92,46,10,.95),rgba(40,22,8,.85) 70%,rgba(40,22,8,0));border:1px solid #d8a84a;border-right:0;border-radius:16px 3px 3px 16px;box-shadow:0 0 10px rgba(255,180,60,.28),inset 0 1px 0 rgba(255,230,160,.25)}
 .lbcp .cpi,.acp .cpi{display:block;width:30px;height:30px;background:url(assets/ui/cp_icon.png) center/contain no-repeat;image-rendering:pixelated;filter:drop-shadow(0 0 4px rgba(255,180,60,.75))}
 .lbcp small,.acp small{font:700 11px 'Noto Serif',serif;color:#e8d0a0;letter-spacing:.3px;text-shadow:0 1px 2px #000}
 .lbcp b,.acp b{font:900 22px 'Noto Serif',serif;letter-spacing:.5px;background:linear-gradient(#fff6c8,#ffd24a 45%,#e88a1a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 #4a2200) drop-shadow(0 0 6px rgba(255,170,40,.55))}
@@ -1441,7 +1441,7 @@ html,body,#cv{touch-action:none!important;-webkit-touch-callout:none;-webkit-use
  .lbprof{padding:4px 8px!important}
  .lbinfo #lbStaN{display:none}
  .lbbar.sta{height:12px!important}
- .lbcp{padding:2px 8px!important}
+ .lbcp{padding:2px 44px 2px 4px!important}
  #lbHero{flex:1 1 60px!important;min-height:56px!important;height:auto!important}
  .lbprof{flex:none!important}
  .lbmain{display:grid!important;grid-template-columns:1fr 1fr;gap:5px!important;margin-top:0!important;flex:none!important}
@@ -1889,6 +1889,11 @@ html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;c
 #create .crdice:hover img{filter:drop-shadow(0 0 6px rgba(220,40,40,.8))}
 #create .crdice.roll img{animation:crroll .5s ease-out}
 @keyframes crroll{0%{transform:rotate(0) scale(1)}35%{transform:rotate(200deg) scale(1.25)}100%{transform:rotate(360deg) scale(1)}}
+#lobby .lbprof .lbcp{gap:6px!important;padding-right:44px!important}
+#lobby .lbprof .lbcp>*{flex:0 0 auto!important}
+@media (max-height:300px){html body #lobby .lbprof .lbcp small{display:none!important}}
+/* 27/11: màn hẹp (≤720 px) thanh 'Ải x/5' giữa màn đè lên % kinh nghiệm cạnh chân dung -> dời sang phải khối chân dung */
+@media (max-width:720px){html body #hud #top{left:204px!important;right:auto!important;transform:none!important;width:min(360px,calc(100vw - 280px))!important}}
 </style>
 </head>
 <body>
@@ -4768,6 +4773,8 @@ function nowMs(){return window.__TDST_NOW||Date.now()}
 function dtInfo(){const vn=nowMs()+7*3600e3,day0=Math.floor(vn/864e5)*864e5,d=new Date(day0).toISOString().slice(0,10);
  for(const h of DT.slots){const a=day0+h*3600e3,b=a+DT.win*3600e3;if(vn>=a&&vn<b){const k=d+'_'+h,st=save.dt&&save.dt.key===k?save.dt:{key:k,got:0};return{open:true,key:k,h,left:b-vn,got:st.got,rem:DT.amt-st.got}}}
  let nx=null;for(const h of DT.slots){const a=day0+h*3600e3;if(a>vn){nx={h,inMs:a-vn};break}}if(!nx)nx={h:DT.slots[0],inMs:day0+864e5+DT.slots[0]*3600e3-vn};return{open:false,next:nx}}
+/* Bản ngắn cho ô Thụ Lộc ở thanh dưới sảnh (ô hẹp, bản đầy đủ bị cắt chữ, 27/11) */
+function dtShort(){const i=dtInfo();if(!i.open)return 'Mở lúc '+String(i.next.h).padStart(2,'0')+':00';if(!(i.rem>0))return 'Đã ăn';const t=Math.ceil(i.left/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),x=t%60;return 'Còn '+(h?h+':'+String(m).padStart(2,'0'):m+':'+String(x).padStart(2,'0'))}
 function dtStatus(){const i=dtInfo();if(!i.open)return 'Mở lúc '+String(i.next.h).padStart(2,'0')+':00';return i.rem>0?'Đang mở · còn '+mmss(i.left):'Đã ăn · khung '+String(i.h).padStart(2,'0')+':00'}
 let lbmK='',dtBites=0,dtLast=0,dtBusy=false;
 
@@ -5120,7 +5127,7 @@ $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replac
 /* --- sảnh --- */
 const LBT=[
  {k:'inv',lbn:'Hành Nang',g:'庫',n:'Kho Đồ',st:()=>invList().length+' món · '+Object.keys(books()).length+' bí tịch'},
- {k:'diemtam',lbn:'Thụ Lộc',g:'點',n:'Điểm Tâm',st:()=>dtStatus()},
+ {k:'diemtam',lbn:'Thụ Lộc',g:'點',n:'Điểm Tâm',st:()=>dtShort()},
  {k:'luyendan',lbn:'Luyện Đan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
  {k:'luyenvk',lbn:'Rèn Binh Khí',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
  {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Thần Giáng '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
@@ -5147,7 +5154,7 @@ function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!
 let lbHeroT=0;function lobbyHero(){const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
  /* 26/11 sảnh mới: nhân vật theo hồ sơ (lớp vũ khí của phái, vũ khí + trang phục đang mặc), canvas 480x400, chân tại (240,372) */
  const prev=HERO;window.__lbW=profWeapon();try{if(useHero(P0.gender,profWeapon())){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.save();g.scale(2,2);g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore();HERO=prev}}finally{window.__lbW=null}lbHeroT+=0.125}
-function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="diemtam"] small');if(t)t.textContent=dtStatus()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
+function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="diemtam"] small');if(t)t.textContent=dtShort()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
  $('#lbLv').textContent=P0.lv;{const c=$('#lbCp');if(c)c.textContent=lobbyPower().toLocaleString('vi-VN')}$('#lbXp').style.width=Math.min(100,P0.exp/need*100)+'%';$('#lbXpT').textContent=P0.exp+'/'+need;
  $('#lbSta').style.width=Math.min(100,s0.v/STA.max*100)+'%';$('#lbStaT').textContent=s0.v+'/'+STA.max;
  const chest=save.bossChest;
