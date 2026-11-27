@@ -1832,6 +1832,15 @@ html body #lobby #lbStage .lbtag{position:absolute!important;transform:translate
 /* HUD là lớp riêng phía trên; chỉ phần tử tương tác nhận chạm để vùng bấm của cảnh vẫn chạm được */
 html body #lobby .lb{pointer-events:none}
 html body #lobby .lbprof,html body #lobby .lbgrid,html body #lobby .lbmain,html body #lobby .lbres,html body #lobby .lbgear,html body #lobby .lbfoot,html body #lobby .lbm{pointer-events:auto}
+html body #lobby .lbprof{width:clamp(176px,20vw,250px)!important;padding:5px 7px!important;gap:6px!important}
+html body #lobby #lbAva{width:clamp(34px,6.2vh,50px)!important;height:clamp(34px,6.2vh,50px)!important}
+html body #lobby .lbprof .lbinfo b{font-size:clamp(11px,2.6vh,14px)!important}
+html body #lobby .lbprof .lbcp{height:clamp(16px,4vh,22px)!important;min-height:0!important}
+html body #lobby .lbprof .lbcp b{font-size:clamp(11px,2.8vh,15px)!important}
+html body #lobby .lbprof .lbcp small{font-size:9px!important}
+html body #lobby .lbprof .lblv{font-size:10px!important}
+html body #lobby .lbfoot .lbswap{margin:0;flex:none;padding:5px 10px;font-size:12px}
+@media (max-width:700px){html body #lobby .lbprof{width:clamp(176px,24vw,200px)!important}html body #lobby .lbtitle{left:calc(clamp(176px,24vw,200px) + 16px)!important;width:calc(100vw - clamp(176px,24vw,200px) - 16px - 170px)!important}}
 html body #lobby #lbGo,html body #lobby #lbAm,html body #lobby .lbmain #lbAm.lbt,html body #lobby #lbCont:disabled{display:none!important}
 html body #lobby .lbmain{left:auto!important;right:max(2.2vw,env(safe-area-inset-right))!important;bottom:calc(var(--barH) + 8px)!important;width:clamp(150px,24vw,280px)!important}
 /* thanh chức năng: 6 nút một hàng sát đáy, mép trên thấp hơn đầu cầu */
@@ -2233,7 +2242,7 @@ html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{wh
  <canvas id="lbBg" width="640" height="400"></canvas>
  <div class="lb">
   <div class="lbl">
-   <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i><button id="lbSwap" class="lbswap" type="button" title="Đổi giới tính, tên, kiểu tóc">⇄ Đổi nhân vật</button></span>
+   <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i></span>
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
     <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
@@ -2245,7 +2254,7 @@ html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{wh
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
   <span id="lbRes" class="lbres"></span><button id="lbGear" class="lbgear" type="button" aria-label="Cài đặt" title="Cài đặt">⚙</button>
-  <footer class="lbfoot"><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><span class="seglb lbrow">Độ nét</span><div class="seg" data-seg="res"><button data-v="cao">Cao</button><button data-v="vua">Vừa</button><button data-v="thap">Thấp</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><label class="toggle"><input type="checkbox" id="perf3"> Đo hiệu năng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
+  <footer class="lbfoot"><button id="lbSwap" class="lbswap" type="button" title="Đổi giới tính, tên, kiểu tóc">⇄ Đổi nhân vật</button><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><span class="seglb lbrow">Độ nét</span><div class="seg" data-seg="res"><button data-v="cao">Cao</button><button data-v="vua">Vừa</button><button data-v="thap">Thấp</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><label class="toggle"><input type="checkbox" id="perf3"> Đo hiệu năng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
  </div>
 </section>
 <section id="menu" class="screen" hidden>
