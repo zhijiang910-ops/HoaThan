@@ -12,7 +12,7 @@ PRESET = {
  'nghiepkinh': dict(box=(200, 450, 1400, 950), clods=1700, stones=120, grass=0, bones=25, ash=300, blood=4, cracks=22, shards=70, acc=[(205, 230, 225), (140, 175, 180), (70, 90, 100)]),
  'uongtu':     dict(box=(200, 450, 1400, 1000), clods=1800, stones=90, grass=0, bones=40, ash=900, blood=8, cracks=20, char=14, embers=130, acc=[(250, 170, 70), (215, 80, 30), (120, 30, 20)]),
  'vongxuyen':  dict(box=(200, 700, 1400, 1100), clods=2000, stones=80, grass=25, bones=25, ash=200, blood=3, cracks=8, puddles=18, acc=[(95, 140, 140), (40, 72, 78), (20, 38, 44)]),
- 'diemla':     dict(box=(200, 500, 1400, 1000), clods=500, stones=0, grass=0, bones=18, ash=220, blood=16, cracks=26, slabs=1),
+ 'diemla':     dict(box=(200, 500, 1400, 1000), clods=300, stones=10, grass=0, bones=18, ash=260, blood=14, cracks=30, flag=70),
 }
 def build(key, seed=7):
     C = PRESET[key]; rng = np.random.default_rng(seed)
@@ -38,6 +38,31 @@ def build(key, seed=7):
     moist = pnoise(10)
     def put(y, x, v): idx[y % N, x % N] = v
     def get(y, x): return idx[y % N, x % N]
+    if C.get('flag'):  # đá phiến cổ (Diêm La): tảng không đều lặp liền, kẽ đất tối lởm chởm, mép trên sáng, mép dưới bóng, góc mòn
+        ns = C['flag']; pts = []
+        while len(pts) < ns:
+            q = rng.random(2) * N
+            ok = all(min(abs(q[0]-a0), N-abs(q[0]-a0))**2 + min(abs(q[1]-a1), N-abs(q[1]-a1))**2 > 44**2 for a0, a1 in pts)
+            if ok or rng.random() < .002: pts.append(q)
+        yy, xx = np.mgrid[0:N, 0:N]
+        d1 = np.full((N, N), 1e9); d2 = np.full((N, N), 1e9); lab = np.zeros((N, N), int)
+        wob = (pnoise(32) - .5) * 7 + (pnoise(96) - .5) * 3
+        for k, (py, px) in enumerate(pts):
+            dy = np.abs(yy - py); dy = np.minimum(dy, N - dy); dx = np.abs(xx - px); dx = np.minimum(dx, N - dx)
+            d = np.sqrt(dx * dx + dy * dy * 1.3)
+            m = d < d1; d2 = np.where(m, d1, np.minimum(d2, d)); lab = np.where(m, k, lab); d1 = np.where(m, d, d1)
+        gap = d2 - d1 + wob * .35
+        tone_c = rng.choice([2, 3, 3, 4, 4], len(pts))
+        tex = pnoise(48) + .5 * pnoise(128)
+        idx[:] = np.clip(tone_c[lab] + (tex > np.quantile(tex, .8)) - (tex < np.quantile(tex, .18)), 2, 4)
+        J = gap < 2.6 + (pnoise(64) > .6) * 1.2  # kẽ, chỗ dày chỗ mảnh
+        idx[J] = 1; idx[J & (gap < 1.4)] = 0
+        up = np.roll(J, 1, 0) | np.roll(J, 2, 0); dn = np.roll(J, -1, 0)
+        idx[~J & up & ~np.roll(J, 1, 1)] = 5   # mép trên tảng sáng
+        idx[~J & dn] = 1                      # mép dưới tảng bóng
+        for _ in range(1400):  # đất, tro lấp kẽ và góc sứt
+            y, x = rng.integers(0, N, 2)
+            if gap[y, x] < 4.5: put(y, x, int(rng.choice([1, 15, 2, 0])))
     if C.get('slabs'):  # đá lát điện Diêm La: hàng so le 32x24, mạch vữa tối, mép trên sáng
         SW, SH = 48, 40
         for r in range(N // SH + 1):
