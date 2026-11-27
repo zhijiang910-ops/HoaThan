@@ -1893,6 +1893,12 @@ html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;c
 #lobby .lbprof .lbcp>*{flex:0 0 auto!important}
 @media (max-height:300px){html body #lobby .lbprof .lbcp small{display:none!important}}
 /* 27/11: màn hẹp (≤720 px) thanh 'Ải x/5' giữa màn đè lên % kinh nghiệm cạnh chân dung -> dời sang phải khối chân dung */
+/* 27/11: menu Tạm dừng thêm Độ nét + Đo hiệu năng -> màn thấp tràn; cột cài đặt tự cuộn, nút Tiếp tục/Bỏ trận luôn thấy. Tên bản đồ dài cắt '…' thay vì đè sang cột phải */
+html body #pause .pz{max-height:calc(100dvh - 30px);margin:auto!important;display:flex;flex-direction:column;box-sizing:border-box}
+html body #pause .pzb{min-height:0;flex:1 1 auto}
+html body #pause .pzo{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-height:330px){html body #pause .pzr small{display:none}html body #pause .pz{padding:6px 12px!important}html body #pause .pzh{margin-bottom:2px!important}html body #pause .pzh h2{font-size:15px!important}html body #pause .pzr{min-height:25px!important}html body #pause .pzc{margin-top:4px!important}html body #pause .pzc .btn{padding-top:4px!important;padding-bottom:4px!important}}
 @media (max-width:720px){html body #hud #top{left:204px!important;right:auto!important;transform:none!important;width:min(360px,calc(100vw - 280px))!important}}
 </style>
 </head>
@@ -2061,6 +2067,8 @@ html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;c
     <div class="pzr"><span>Hiện số sát thương</span><label class="sw"><input type="checkbox" id="optNums"><i></i></label></div>
     <div class="pzr"><span>Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div></div>
     <div class="pzr"><span>Giảm hiệu ứng <small>(máy yếu)</small></span><label class="sw"><input type="checkbox" id="lowfx2"><i></i></label></div>
+    <div class="pzr"><span>Độ nét <small>(thấp = nhẹ máy)</small></span><div class="seg" data-seg="res"><button data-v="cao">Cao</button><button data-v="vua">Vừa</button><button data-v="thap">Thấp</button></div></div>
+    <div class="pzr"><span>Đo hiệu năng</span><label class="sw"><input type="checkbox" id="optPerf"><i></i></label></div>
    </div>
   </div>
   <div class="pzc"><button id="resumeBtn" class="btn gold">Tiếp tục</button><button id="quitBtn" class="btn">Bỏ trận</button></div>
@@ -3785,7 +3793,7 @@ function hudFit(){const hud=$('#hud');if(!hud||hud.hidden)return;const vb=$('#vb
 setInterval(hudFit,300);addEventListener('resize',()=>setTimeout(hudFit,50));
 
 function resize(){
- DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);/* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
+ DPR=Math.min(devicePixelRatio||1,LOWFX?1.5:MOBILE?3:2);{const rc=window.__resAuto||(SET.res==='thap'?1:SET.res==='vua'?1.5:0);if(rc)DPR=Math.min(DPR,rc)}/* 27/11 Độ nét: Cao = như cũ, Vừa ≤1,5, Thấp = 1; __resAuto = tự hạ khi máy chậm *//* 24/11: trước đây điện thoại bị chặn ở 1,5 nên khung vẽ bị trình duyệt phóng lên (iPhone DPR 3 = phóng gấp 2) và game bị mờ; nay dùng độ phân giải thật (tối đa 3). Bật "Giảm hiệu ứng" thì hạ về 1,5 cho máy yếu. */VW=cv.offsetWidth||innerWidth;VH=cv.offsetHeight||innerHeight;cv.width=Math.round(VW*DPR);cv.height=Math.round(VH*DPR);
  ZOOM=clamp(Math.min(VW,VH)/(Math.min(VW,VH)<520?470:700)*(window.__zboost||1),0.5,1.5);/* 25/11: thử phóng cả game ×1,33 nhưng vùng nhìn hẹp khó né skill (chủ game) -> hoàn nguyên; nhân vật chính phóng riêng bằng HERO.SC (xem dưới); window.__zboost=1,33 để thử lại */
  /* 25/11: ép ZOOM×DPR về SỐ NGUYÊN (mỗi pixel art = cả số nguyên pixel màn hình) để nền/quái/nhân vật nét, không lởm chởm. Làm tròn lên nếu ≤+25%, không thì xuống nếu ≥-20%; tắt bằng window.__noSnap=1 */
  /* 25/11 chủ game: "zoom out xíu, nhìn gần quá không thấy quái và né đòn". Tầm nhìn (SET.view): 'gan' = như cũ (làm tròn LÊN thành số nguyên, có máy bị gần hơn thiết kế tới 20%); 'vua' (mặc định) = đúng thiết kế, làm tròn GẦN NHẤT (màn DPR>=2 cho nửa bậc (2,5 hoặc 1,5) nên pixel xen 2 và 3 điểm màn hình, ít thấy ở màn ~330-460 ppi; DPR<2 vẫn số nguyên; luôn lấy min với bậc của 'gan' để không bao giờ gần hơn cũ); 'xa' = thu thêm 20%. */
@@ -4322,7 +4330,7 @@ function render(){
  const sh=G&&SET.shake&&!P.skillAim?G.shake:0,cx0=G?G.cam.x:AW/2+Math.sin(performance.now()/6000)*300,cy0=G?G.cam.y:AH/2+Math.cos(performance.now()/7000)*200,Sc=ZOOM*DPR,cx=Math.round(cx0*Sc)/Sc,cy=Math.round(cy0*Sc)/Sc;/* làm tròn camera theo pixel màn hình để nền không rung/mờ khi di chuyển */
  c.save();c.translate(VW/2+rnd(-sh,sh),VH/2+rnd(-sh,sh));c.scale(ZOOM,ZOOM);c.translate(-cx,-cy);
  if(G)G.cam.dx=cx,G.cam.dy=cy;
- drawWorld();
+ pm0();drawWorld();pm('nền map');
  if(G){
   for(const s of G.spawnQ){const k=1-s.t/(s.big?1.6:0.7);c.strokeStyle=`rgba(255,60,30,${0.4+k*0.5})`;c.lineWidth=2;const r=s.big?40:14;c.beginPath();c.arc(s.x,s.y,r,0,TAU);c.stroke();c.beginPath();c.moveTo(s.x-r*.6,s.y-r*.6);c.lineTo(s.x+r*.6,s.y+r*.6);c.moveTo(s.x+r*.6,s.y-r*.6);c.lineTo(s.x-r*.6,s.y+r*.6);c.stroke()}
   for(const h of G.haz)drawHaz(h);
@@ -4330,14 +4338,14 @@ function render(){
   drawHeal(c);drawPhase2(c);drawChest(c);drawAmPortal(c);drawSkillAim(c);
   for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,espScale(m),false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,espScale(m),false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
   for(const o of G.orbs)drawOrb(o);
- }
+ }pm('vùng/rương/xác');
  if(G){for(const f of G.fx)if(f.gr)drawFx(f)}
- drawDecorTall();
+ drawDecorTall();pm('fx nền + cột');
  if(G){
   const ents=[];for(const e of G.enemies)if(!e.dead&&Math.abs(e.x-cx)<VW/ZOOM&&Math.abs(e.y-cy)<VH/ZOOM)ents.push(e);
   if(G.ev&&!G.ev.on)ents.push({isNpc:1,y:G.ev.y});ents.push(P);for(const a of G.allies)ents.push(a);if(G.brk)for(const b of G.brk)if(Math.abs(b.x-cx)<VW/ZOOM&&Math.abs(b.y-cy)<VH/ZOOM)ents.push(b);if(MAPS[G.cfg.map].ground)for(const d of decor)if(!d.flat&&Math.abs(d.x-cx)<VW/ZOOM/2+300&&d.y-cy<VH/ZOOM/2+460&&cy-d.y<VH/ZOOM/2+60)ents.push(d);ents.sort((a,b)=>a.y-b.y);
   for(const e of ents){if(e.isNpc){drawNpc();continue}if(e.k==='p'){drawProp(e);continue}if(e.isBrk){drawBrk(e);continue}if(e===P){if(P.form==='god'&&!godSprite())pixWrap(P.x,P.y,170,190,drawPlayer);else drawPlayer()}else if(e.k==='khi'){drawMonkey(e)}else if(e.T){if(!drawCloneSprite(e))pixWrap(e.x,e.y,150,170,()=>{drawChar(e.x,e.y,LOOK.wukong,{f:e.f,t:G.t+e.T,mv:e.mv,w:'bong',atk:e.atk>0?1-e.atk/0.22:-1,aa:e.aAng,sw:1,al:0.6+0.2*Math.sin(G.t*8)})})}else if(e.type==='hoa')pixWrap(e.x,e.y,90,90,()=>drawEnemy(e));else drawEnemy(e)}
-  for(const e of G.enemies)if(e.swordMarkUntil>G.t&&!e.dead)drawSwordMarkTop(e);/* lá ấn bùa lớp trên cùng */
+  pm('nhân vật + quái');  for(const e of G.enemies)if(e.swordMarkUntil>G.t&&!e.dead)drawSwordMarkTop(e);/* lá ấn bùa lớp trên cùng */
   if(G.ev&&G.ev.on&&G.ev.target&&!G.ev.target.dead&&G.ev.target.bounty){const t=G.ev.target,y=t.y-t.r*3.6-10+Math.sin(G.t*6)*2;c.fillStyle='#b3261e';c.beginPath();c.moveTo(t.x,y+10);c.lineTo(t.x-7,y);c.lineTo(t.x+7,y);c.fill();c.font='700 11px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText('Truy nã',t.x,y-4);c.fillStyle='#ff8a70';c.fillText('Truy nã',t.x,y-4)}
   if(G.lowTag&&G.state==='play'){const y=P.y-122+Math.sin(G.t*6)*2;c.font='800 13px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=4;c.strokeStyle='rgba(0,0,0,.85)';c.strokeText('Máu thấp',P.x,y);c.fillStyle='#ff6a5a';c.fillText('Máu thấp',P.x,y)}
   for(const t of G.enemies)if(t.nm&&!t.dead){const y=t.y-t.r*3.4-8;c.font='700 12px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText(t.nm,t.x,y);c.fillStyle='#ff8a70';c.fillText(t.nm,t.x,y);const w=60;c.fillStyle='#1a0806';c.fillRect(t.x-w/2-1,y+4,w+2,6);c.fillStyle='#d8382a';c.fillRect(t.x-w/2,y+5,w*Math.max(0,t.hp/t.mhp),4)}
@@ -4345,8 +4353,8 @@ function render(){
   for(const z of G.zones)if(z.kind==='whirl'||z.kind==='blades'||z.kind==='staff'||z.kind==='staffx'||z.kind==='vkx'||z.kind==='vkbig'||z.kind==='txk'||z.kind==='qypalm')drawZone(z);
   for(const p of G.pproj)drawProj(p);
   for(const p of G.eproj){if(p.pt&&vok('petal')){c.save();c.translate(p.x,p.y);c.rotate(G.t*9+p.x*0.01);c.drawImage(VFX.petal,-14,-14,28,28);c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,140,180,.25)';circle(0,0,12);c.restore();continue}c.save();c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,90,20,.45)';circle(p.x,p.y,p.r+5);c.fillStyle='#ffd07a';circle(p.x,p.y,p.r*0.6);c.restore()}
-  for(const f of G.fx)if(!f.gr)drawFx(f);
-  drawLights(c,performance.now()/1000);
+  pm('nhãn/đạn/zone');for(const f of G.fx)if(!f.gr)drawFx(f);pm('hiệu ứng (fx)');
+  drawLights(c,performance.now()/1000);pm('ánh sáng map');
   c.save();for(const p of G.parts){c.globalCompositeOperation=p.add?'lighter':'source-over';c.globalAlpha=1-p.t/p.T;c.fillStyle=p.c;c.fillRect(p.x-p.s/2,p.y-p.s/2,p.s,p.s)}c.restore();
   c.textAlign='center';c.lineJoin='round';
   for(const n of G.nums){const k=n.t/0.85,crit=n.k==='c';const pop=crit?1+Math.max(0,0.35-n.t)*2.2:1+Math.max(0,0.12-n.t)*3;const zs=1/ZOOM;
@@ -4358,16 +4366,17 @@ function render(){
    c.fillStyle=fill;c.fillText(n.v,x,y);
    if(crit&&n.t<0.6){c.font=`700 ${11*zs}px "Be Vietnam Pro",sans-serif`;c.lineWidth=3*zs;c.strokeText('BẠO KÍCH',x,y-base*0.95);c.fillStyle='#ffe08a';c.fillText('BẠO KÍCH',x,y-base*0.95)}}
   c.globalAlpha=1;
- }
+ }pm('hạt + số sát thương');
  c.restore();
  const tt=performance.now()/1000;c.save();c.globalCompositeOperation='lighter';
  for(const e of embers){if(LOWFX&&e.s<1.8)continue;const y=((e.y*VH-tt*e.v)%VH+VH)%VH,x=(e.x*VW+Math.sin(tt+e.ph)*20+VW)%VW;c.fillStyle=`rgba(255,${120+e.s*40|0},40,${0.35+0.3*Math.sin(tt*3+e.ph)})`;c.fillRect(x,y,e.s,e.s)}c.restore();
- if(vign)c.drawImage(vign,0,0,VW,VH);
- if(G){const Mg=MAPS[curMap()];if(Mg&&Mg.am){drawAmbient(c,tt);if(Mg.grade){c.fillStyle=Mg.grade;c.fillRect(0,0,VW,VH)}}}
+ if(vign)c.drawImage(vign,0,0,VW,VH);pm('than bay + viền tối');
+ if(G){const Mg=MAPS[curMap()];if(Mg&&Mg.am){drawAmbient(c,tt);pm('sương/khói map');if(Mg.grade){c.fillStyle=Mg.grade;c.fillRect(0,0,VW,VH)}}}
  if(G&&G.flash>0){c.fillStyle=`rgba(255,240,200,${G.flash*0.8})`;c.fillRect(0,0,VW,VH)}
  if(G&&MAPS[curMap()]&&MAPS[curMap()].dark){c.fillStyle='rgba(6,3,10,'+MAPS[curMap()].dark+')';c.fillRect(0,0,VW,VH)}
  if(G&&G.state==='play')drawNpcArrow(c);
  if(G&&P.hp<S.hp*0.3&&G.state==='play'){c.fillStyle=`rgba(160,0,0,${0.12+0.08*Math.sin(tt*6)})`;c.fillRect(0,0,VW,VH)}
+ pm('lớp phủ màn');
 }
 
 /* ================= HUD ================= */
@@ -6056,10 +6065,20 @@ $('#godBtn').addEventListener('pointerdown',e=>{e.preventDefault();tryTransform(
 $('#pauseBtn').addEventListener('click',()=>togglePause());
 $('#tnBye').addEventListener('click',closeShop);$('#tnList').addEventListener('click',e=>{const b=e.target.closest('[data-tn]');if(b)buyShop(+b.dataset.tn)});
 $('#tlGo').addEventListener('click',()=>{if(G.am)amLootDone();else exitArena()});$('#tlList').addEventListener('click',e=>{const b=e.target.closest('[data-eq]');if(!b)return;equip(b.dataset.eq);b.textContent='Đã trang bị';b.disabled=true});
+function resSync(){for(const b of document.querySelectorAll('.seg[data-seg="res"] button'))b.classList.toggle('on',b.dataset.v===(SET.res||'cao'))}
+document.addEventListener('click',e=>{const b=e.target.closest('.seg[data-seg="res"] button');if(!b)return;SET.res=b.dataset.v;window.__resAuto=0;saveSet();resize();resSync()});
+/* 27/11 BẢNG ĐO HIỆU NĂNG (chủ game báo lag ~0,25x trên Chrome máy tính): bật ở menu Tạm dừng hoặc thêm ?perf=1 vào link. Đo thời gian thật từng hàm vẽ (gộp cả hàm con), trung bình 1 giây */
+const PERF={on:false,w:false,acc:{},n:0,t0:0,fr:0,el:null,names:[]};
+let PT0=0;function pm0(){if(PERF.on)PT0=performance.now()}function pm(n){if(!PERF.on)return;const t=performance.now();PERF.acc[n]=(PERF.acc[n]||0)+t-PT0;PT0=t}
+function perfSet(on){PERF.on=on;if(on){if(!PERF.el){PERF.el=document.createElement('pre');PERF.el.id='perfHud';PERF.el.style.cssText='position:fixed;left:50%;top:46px;transform:translateX(-50%);z-index:9999;margin:0;padding:6px 9px;background:rgba(0,0,0,.78);color:#9fe8b8;font:11px/1.35 monospace;pointer-events:none;border:1px solid #3a5;border-radius:4px;white-space:pre';document.body.appendChild(PERF.el)}PERF.el.hidden=false;PERF.t0=performance.now();PERF.fr=0;PERF.acc={}}else if(PERF.el)PERF.el.hidden=true}
+function perfTick(){if(!PERF.on)return;PERF.fr++;const t=performance.now(),el=t-PERF.t0;if(el<1000)return;const fps=PERF.fr*1000/el,L=[];
+ for(const n in PERF.acc)L.push([n,PERF.acc[n]/PERF.fr]);L.sort((a,b)=>b[1]-a[1]);
+ const cv=document.getElementById('cv');const js=L.reduce((a,q)=>a+q[1],0),fm=el/PERF.fr;PERF.el.textContent='FPS '+fps.toFixed(1)+'  khung '+fm.toFixed(1)+' ms  tốc độ game x'+Math.min(1,fps/20).toFixed(2)+'\nJS của game '+js.toFixed(1)+' ms, phần còn lại '+Math.max(0,fm-js).toFixed(1)+' ms là trình duyệt tự vẽ + chờ khung\nDPR '+DPR+'  ZOOM '+ZOOM.toFixed(2)+'  canvas '+(cv?cv.width+'x'+cv.height:'?')+'  map '+(G?curMap():'-')+(window.__mapLite?'  [đã tắt trang trí]':'')+(window.__resAuto?'  [tự hạ nét]':'')+'\n'+L.slice(0,12).map(([n,v])=>n.padEnd(18)+v.toFixed(2)+' ms').join('\n');PERF.t0=t;PERF.fr=0;PERF.acc={}}
+window.__PERF=PERF;if(/[?&]perf=1/.test(location.search))setTimeout(()=>perfSet(true),0);
 function viewSync(){for(const b of document.querySelectorAll('.seg[data-seg="view"] button'))b.classList.toggle('on',b.dataset.v===(SET.view||'vua'))}
 function viewSet(v){SET.view=v;saveSet();resize();viewSync()}
 document.addEventListener('click',e=>{const b=e.target.closest('.seg[data-seg="view"] button');if(b)viewSet(b.dataset.v)});
-function togglePause(){if(!G||G.state!=='play')return;G.paused=!G.paused;$('#pause').hidden=!G.paused;$('#lowfx2').checked=LOWFX;if(G.paused){pauseStats();setSnd();$('#optShake').checked=SET.shake;$('#optNums').checked=SET.nums}joy.on=false;joyEl.hidden=true;tutRender()}
+function togglePause(){if(!G||G.state!=='play')return;G.paused=!G.paused;$('#pause').hidden=!G.paused;$('#lowfx2').checked=LOWFX;if(G.paused){pauseStats();setSnd();$('#optShake').checked=SET.shake;$('#optNums').checked=SET.nums;resSync();{const p=$('#optPerf');if(p)p.checked=PERF.on}}joy.on=false;joyEl.hidden=true;tutRender()}
 $('#resumeBtn').addEventListener('click',togglePause);
 let quitArm=0;
 $('#quitBtn').addEventListener('click',()=>{if(!quitArm){quitArm=1;$('#quitBtn').textContent='Bấm lần nữa để bỏ';$('#quitBtn').classList.add('warn');setTimeout(()=>{quitArm=0;$('#quitBtn').textContent='Bỏ trận';$('#quitBtn').classList.remove('warn')},2500);return}quitArm=0;$('#quitBtn').textContent='Bỏ trận';$('#quitBtn').classList.remove('warn');G.paused=false;$('#pause').hidden=true;P.hp=0;endRun(false)});
@@ -6072,6 +6091,7 @@ $('#optNums').addEventListener('change',e=>{SET.nums=e.target.checked;saveSet()}
 function pauseStats(){const t=Math.floor(G.t),mm=String(Math.floor(t/60)).padStart(2,'0'),ss=String(t%60).padStart(2,'0');
  const row=(k,v)=>`<div><span>${k}</span><b>${v}</b></div>`;
  $('#pzStats').innerHTML=row('Màn',G.stage)+row('Đợt',G.wave>=10?'Trùm':G.sw+'/5')+row('Thời gian',mm+':'+ss)+row('Hạ gục',G.kills)+row('Cấp',G.level)+row('Tiền',G.coins)+row('Sát thương',G.dmgDealt>=1e6?(G.dmgDealt/1e6).toFixed(1)+'M':G.dmgDealt>=1e4?Math.round(G.dmgDealt/1e3)+'K':Math.round(G.dmgDealt))+row('Bản đồ',MAPS[G.cfg.map].name)}
+{const p=document.getElementById('optPerf');if(p)p.addEventListener('change',e=>perfSet(e.target.checked))}
 for(const id of['#lowfx1','#lowfx2'])$(id).addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&!rotationBlocked()&&G&&G.state==='play'&&!G.paused&&!G.inspect)togglePause()});
 $('#startBtn').addEventListener('click',newRun);
@@ -6131,17 +6151,19 @@ function loadGate(label,kind){/* gọi sau khi dựng map + chọn vũ khí: ch�
  LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tipT=setInterval(ldgTipNext,4200);LDG.anim=setInterval(()=>{const el=performance.now()-t0;LDG.tgt=Math.max(LDG.tgt,Math.min(0.92,1-Math.exp(-el/1600)));ldgDraw()},60);
  const poll=setInterval(()=>{const el=performance.now()-t0;if((ready()&&el>=700)||el>20000){clearInterval(poll);if(window.__bootRelease)window.__bootRelease();window.__bootDone=Math.round(el);LDG.tgt=1;setTimeout(()=>{clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.shown=false;ldgClose()},150)}},100)})();
 function frame(now){
- const raw=(now-lastT)/1000,dt=Math.min(0.05,raw);lastT=now;
+ const raw=(now-lastT)/1000,dt=Math.min(0.05,raw);lastT=now;perfTick();
  /* 26/11 lag Âm Giới (chủ game: như chỉnh tốc độ 0,25): đo khung hình, nếu trung bình > 34 ms trong ~2 s thì tự TẮT lớp trang trí map (ánh sáng, hạt, sương, bóng, vết nền); bật lại không tự động */
- if(G&&G.am&&raw>0&&raw<1){window.__ft=(window.__ft||0.016)*0.94+raw*0.06;window.__ftN=(window.__ftN||0)+1;if(!window.__mapLite&&window.__ftN>150&&window.__ft>0.034){window.__mapLite=1;try{lobbyToast&&0}catch(e){}}}
+ /* 27/11: đo theo THỜI GIAN (trước đếm 150 khung: máy 5 khung/giây phải chờ 30 giây). Mọi trận (Âm Giới + vượt ải): khung trung bình > 34 ms trong 2 s -> tắt trang trí map; vẫn chậm thêm 2 s -> tự hạ độ nét (DPR) xuống 1 (chỉ khi Độ nét = Cao) */
+ if(G&&G.state==='play'&&!G.paused&&raw>0&&raw<1){window.__ft=(window.__ft||0.016)*0.9+raw*0.1;window.__ftT=(window.__ftT||0)+raw;if(window.__ft<=0.034)window.__ftT=0;
+  else if(window.__ftT>2){window.__ftT=0;if(!window.__mapLite)window.__mapLite=1;else if(!window.__resAuto&&(SET.res||'cao')==='cao'&&DPR>1){window.__resAuto=1;resize();try{notice('Máy đang chậm','Đã tự hạ độ nét để chơi mượt hơn (chỉnh ở menu Tạm dừng)')}catch(e){}}}}
  if(rotationBlocked()){lastTutControl=null;requestAnimationFrame(frame);return}
  try{
   const tutorial=tutControl(), waiting=tutorial||G?.inspect;
   if(tutorial&&$('#tutShade').hidden||G?.tut&&G.tut.step!==2)tutRender();
-  if(G&&G.state==='play'&&!G.paused&&!waiting&&!window.__LOADING){update(dt*(G.trScale||1));if(G&&G.training)trainingTick(dt)}
+  if(G&&G.state==='play'&&!G.paused&&!waiting&&!window.__LOADING){pm0();update(dt*(G.trScale||1));if(G&&G.training)trainingTick(dt);pm('cập nhật logic')}
   if((!waiting||waiting!==lastTutControl)&&(G||!coverOn()))render();
   lastTutControl=waiting;
-  hud(waiting?0:dt);
+  pm0();hud(waiting?0:dt);pm('HUD (giao diện)');
  }catch(err){console.error(err)}
  requestAnimationFrame(frame);
 }

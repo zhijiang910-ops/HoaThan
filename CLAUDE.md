@@ -864,3 +864,12 @@ Quyết định (chủ game không chọn riêng nên lấy đề xuất): hình
 - **Lực chiến ở sảnh:** ở 811×260 số đè lên chữ "Lực chiến", ở 852×393 số bị mờ cắt. Nguyên nhân: lớp mờ đuôi tính theo % và các con co lại. Sửa: mờ đuôi theo px (`calc(100% - 40px)`), đệm phải 44 px, các con `flex:0 0 auto`, màn cao ≤300 px ẩn chữ "Lực chiến" (chỉ còn icon + số).
 - **HUD trong trận:** màn rộng ≤720 px (550×278, 667×375) thanh "Ải x/5" đè lên % kinh nghiệm cạnh chân dung → dời `#top` sang phải khối chân dung (`left:204px`, rộng `min(360px,100vw-280px)`). Các icon "i" ở 956×440 thực ra nằm đúng góc ô kỹ năng của chính nó, không chồng nhau (đã soi ảnh).
 - Đã chụp và soi đủ 8 cỡ (sảnh + trong trận), 0 lỗi JS. Ảnh: `nguon/tham_chieu/sanh_thanh_duoi_thu_loc_27-11.png`, `hud_550_khong_de_27-11.png`.
+
+## LAG 0,25x: ĐO HIỆU NĂNG + ĐỘ NÉT (27/11, chủ game: Chrome máy tính, vào Quỷ Môn Quan như tốc độ 0,25)
+- Giải thích cho chủ game: game giới hạn bước thời gian 50 ms/khung, máy vẽ chậm (~5 khung/giây) thì cả game chạy chậm theo. Tải trước tài nguyên/màn loading chỉ chữa khựng lúc mới vào, KHÔNG chữa chậm suốt trận.
+- **Bảng đo:** menu Tạm dừng → "Đo hiệu năng" (hoặc link thêm `?perf=1`). Hiện FPS, ms/khung, "tốc độ game xN", JS của game bao nhiêu ms và phần còn lại (trình duyệt tự vẽ/GPU), DPR, cỡ canvas, map, và ms từng lớp (`pm0()/pm('tên')` đặt trong `render()`/`frame()`; `PERF`, `window.__PERF`).
+- **Độ nét** (menu Tạm dừng, `SET.res`): Cao = như cũ, Vừa = DPR ≤1,5, Thấp = DPR 1. Áp trong `resize()`.
+- **Tự giảm tải** (mọi trận, đo theo THỜI GIAN thay vì đếm 150 khung): khung trung bình >34 ms trong 2 s → `__mapLite` tắt trang trí map; vẫn chậm thêm 2 s và Độ nét đang Cao → `__resAuto=1` hạ DPR về 1 + thông báo.
+- Đo trong Chromium headless (không GPU, nên số tuyệt đối không giống máy thật): 1280×720 DPR2 chỉ ~25 FPS dù JS game ~3 ms → nặng nằm ở chỗ trình duyệt vẽ canvas lớn (2560×1440), hạ DPR về 1 lên 60 FPS. 1920×1080 ZOOM2: lớp "sương/khói map" (`drawAmbient`, Hoàng Tuyền 'ash') tốn ~11 ms/khung — ứng viên cần tối ưu tiếp.
+- Menu Tạm dừng có thêm 2 dòng nên màn thấp (550×278, 811×260) cột cài đặt tự cuộn, nút Tiếp tục/Bỏ trận luôn thấy; tên bản đồ dài cắt "…". Đã chụp 8 cỡ.
+- Chờ chủ game: bật "Đo hiệu năng" ở Quỷ Môn Quan trên máy thật, chụp gửi để biết lớp nào ngốn. Nền nét 1:1 + loading tầng làm sau.
