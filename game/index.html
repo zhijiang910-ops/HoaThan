@@ -1892,6 +1892,10 @@ html body #create .cxbar #crGo{height:var(--nd)!important;min-height:0!important
 #create #crGo{--ndn:48}@media (max-height:600px){#create #crGo{--ndn:40}}@media (max-height:300px){#create #crGo{--ndn:34}}
 html body #create #crGo::after,html body #create #crGo::before{display:none!important}
 html body #create .cxbar #crGo:disabled{filter:grayscale(.6) brightness(.8)}
+/* 27/11 ma trơi xanh ngọc ở popup Hành Nang và Thụ Lộc: lớp ảnh pixel 1:1 (mtTick đặt vị trí), nằm trên nền khung, dưới chữ/vật phẩm/nút (z-index -1 trong khung có isolation), chạm xuyên */
+#inv .panel,#lbm .lbmp{position:relative;isolation:isolate}
+.mtroi{position:absolute;z-index:-1;pointer-events:none;image-rendering:pixelated;transform-origin:43% 96%;animation:mtF var(--d,2.2s) ease-in-out var(--dl,0s) infinite;will-change:transform,filter}
+@keyframes mtF{0%,100%{transform:rotate(0) scaleY(1);filter:brightness(1)}25%{transform:rotate(-3deg) scaleY(1.04);filter:brightness(1.2)}50%{transform:rotate(0) scaleY(.96);filter:brightness(.92)}75%{transform:rotate(3deg) scaleY(1.02);filter:brightness(1.1)}}
 /* nút xúc xắc đặt tên ngẫu nhiên */
 #create .crnw{position:relative;display:flex}
 #create .crnw #crName{flex:1;padding-right:clamp(34px,9vh,48px)!important}
@@ -5204,6 +5208,19 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
 /* ===== SẢNH SÂN KHẤU (26/11): ảnh nền, nhân vật, 2 vùng bấm CÙNG hệ tọa độ ảnh 1672x941, co giãn/dịch chuyển cùng nhau ===== */
 const LB_AR=1672/941;
+/* 27/11 ma trơi popup: chân lửa (43% ngang, cách đáy pad px) là điểm neo; vị trí tính lại mỗi khung theo khung popup đang thấy */
+const MT_W={48:31,64:42,80:52,96:63},MT_P={48:2,64:3,80:3,96:4};let mtRun=0;
+function mtH(dt){const h=innerHeight;return dt?(h<450?48:h<650?64:80):(h<330?48:h<450?64:h<650?80:96)}
+function mtEls(host,key){let a=host.querySelectorAll('.mtroi.'+key);if(a.length)return a;
+ [['1.9s','-0.4s'],['2.6s','-1.5s']].forEach(([d,dl],i)=>{const m=document.createElement('img');m.className='mtroi '+key;m.alt='';m.setAttribute('aria-hidden','true');m.style.setProperty('--d',key==='mtd'?(i?'2.3s':'2.05s'):d);m.style.setProperty('--dl',key==='mtd'?(i?'-0.9s':'-1.9s'):dl);host.prepend(m)});return host.querySelectorAll('.mtroi.'+key)}
+function mtPut(m,x,y,H){const w=MT_W[H],src='assets/ui/matroi/mt_ngoc_'+H+'.png';if(m.dataset.s!==src){m.dataset.s=src;m.src=src;m.width=w;m.height=H}m.style.left=Math.round(x-w*.43)+'px';m.style.top=Math.round(y-(H-MT_P[H]))+'px';m.style.display='';m.style.animation=LOWFX?'none':''}
+function mtTick(){let H=mtH(),w=MT_W[H];let on=0;
+ const inv=$('#inv'),ip=inv&&!inv.hidden&&$('#inv .panel');
+ if(ip){on=1;const R=ip.getBoundingClientRect(),yb=Math.min(R.bottom,innerHeight)-R.top-6,[a,b]=mtEls(ip,'mti');mtPut(a,Math.max(w*.05,w*.43+2-R.left),yb,H);mtPut(b,Math.min(R.width-w*.05,innerWidth-R.left-w*.57-2),yb,H)}
+ const lm=$('#lbm'),bun=lm&&!lm.hidden&&$('#dtBun'),lp=$('#lbm .lbmp');
+ if(lp){const ms=lp.querySelectorAll('.mtroi.mtd');if(bun){on=1;H=mtH(1);w=MT_W[H];const P=lp.getBoundingClientRect(),B=bun.getBoundingClientRect(),[a,b]=mtEls(lp,'mtd'),y=B.bottom-P.top-B.height*.1;const tx=bun.parentElement&&bun.parentElement.nextElementSibling,TL=tx?tx.getBoundingClientRect().left-P.left:1e9;mtPut(a,B.left-P.left-w*.1,y,H);mtPut(b,Math.min(B.right-P.left-w*.05,TL-w*.57-2),y,H)}else ms.forEach(m=>m.style.display='none')}
+ if(on)requestAnimationFrame(mtTick);else mtRun=0}
+setInterval(()=>{if(!mtRun&&((!$('#inv').hidden)||(!$('#lbm').hidden&&$('#dtBun')))){mtRun=1;mtTick()}},200);
 function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden)return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;
  const W=Math.max(vw,vh*LB_AR),H=W/LB_AR,bar=$('#lbGrid'),barH=bar?bar.offsetHeight:0;
  /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
