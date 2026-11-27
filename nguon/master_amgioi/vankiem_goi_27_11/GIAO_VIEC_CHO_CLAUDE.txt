@@ -1,0 +1,14 @@
+VIỆC CẦN LÀM TRÊN REPO zhijiang910-ops/hoathan
+
+Đọc CLAUDE.md trước. Kiểm tra nhánh đang làm và phiên bản Vạn Kiếm Tru Ma mới nhất trước khi sửa để tránh ghi đè việc có sẵn. Tìm skill X (id k6) và luồng vẽ VFX của nó trong game/index.html. Tên zone hoặc cấu trúc có thể khác giữa các nhánh, nên kiểm tra code hiện tại. Dùng các file trong gói để làm bản thử ngay trong Luyện Công.
+
+Mục tiêu
+Sau đợt phi kiếm cuối, Mao Sơn ghìm tay khoảng 0,25–0,35 giây rồi chỉ theo hướng ngắm. Cự kiếm bay ngang đúng nhịp tay chỉ. Mũi kiếm đi qua đâu thì các vết chém nổ vàng–chu sa bật lần lượt ở đó. Cú nổ lớn nhất nằm ở cuối làn. Thay chuỗi vòng vàng cũ ở riêng đoạn kết bằng sprite nổ mới. Giữ cấu trúc ngắm và sát thương, hồi chiêu, tầm, số đợt kiếm đang có.
+
+Tài nguyên
+- vankiem-sprite-mao-son-nam.png là PNG RGBA 640×128, 4 khung 160×128 trong một hàng, đọc từ trái sang phải. Các tư thế là đứng → ghìm → chỉ tay → thu tay. Hướng gốc sang phải. Điểm neo chân (75, 116), tính từ góc trên trái mỗi ô. Đây là sprite nháp của Mao Sơn nam, cần kiểm độ khớp với master trong game trước khi dùng chính thức. Dùng animation hiện có cho nhân vật nữ và cho trang phục chưa có sprite tương ứng.
+- vankiem-vfx-chem-no.png là PNG RGBA 960×320, 8 khung 240×160 trong lưới 4×2. Đọc từng hàng từ trái sang phải, hàng trên trước. Điểm neo tiếp đất (74, 117), tính từ góc trên trái mỗi ô. Hướng gốc sang phải. Dùng các API sprite/VFX có sẵn để hướng hiệu ứng theo làn trong game.
+- vankiem-ban-dung-sprite-vfx.mp4 là clip tham chiếu để canh nhịp nghệ thuật. Nửa đầu chạy tốc độ thường, nửa sau chậm 0,5×.
+
+Kiểm trong game
+Quay lại bằng Luyện Công ở tốc độ thường và ×0,25. Thử nhắm phải, trái và chéo, có cọc hoặc quái trong làn, kiểm sát mép màn hình. So khung chỉ tay với lúc kiếm bắt đầu bay, rồi kiểm vết nổ mở đúng nơi mũi kiếm vừa đi qua. Báo sai lệch với master nếu có. Gửi clip quay từ game và thông tin nhánh hoặc commit. Tuân thủ CLAUDE.md, gồm lệnh cấm gọi PixelLab.
