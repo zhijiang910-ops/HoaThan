@@ -1798,7 +1798,7 @@ html body #lobby .lbres:before{content:"";width:clamp(14px,3.6vh,22px);height:cl
 html body #lobby .lbgear{position:absolute;top:max(2.6vh,env(safe-area-inset-top));right:max(2.2vw,env(safe-area-inset-right));width:clamp(34px,5.4vh,52px);height:clamp(34px,5.4vh,52px);display:flex;align-items:center;justify-content:center;font-size:clamp(22px,4.6vh,40px);line-height:1;color:#d9cdb0;background:none;border:0;padding:0;cursor:pointer;text-shadow:0 2px 6px #000;z-index:4}
 html body #lobby .lbgear:active{color:#fff}
 html body #lobby .lbfoot{display:none!important}
-html body #lobby .lbfoot.open{display:flex!important;position:absolute;top:calc(max(2.6vh,env(safe-area-inset-top)) + clamp(34px,5.4vh,52px) + 6px);right:max(2.2vw,env(safe-area-inset-right));left:auto;bottom:auto;height:auto;padding:8px 10px;gap:8px 10px;background:rgba(8,8,12,.92);border:1px solid #6b5a3c;border-radius:4px;z-index:5}
+html body #lobby .lbfoot.open .seglb{display:inline!important;margin:0!important}html body #lobby .lbfoot.open{display:grid!important;grid-template-columns:auto auto;justify-items:start;white-space:nowrap;position:absolute;top:calc(max(2.6vh,env(safe-area-inset-top)) + clamp(34px,5.4vh,52px) + 6px);right:max(2.2vw,env(safe-area-inset-right));left:auto;bottom:auto;height:auto;padding:8px 10px;gap:8px 10px;background:rgba(8,8,12,.92);border:1px solid #6b5a3c;border-radius:4px;z-index:5}
 html body #lobby .lbgrid.lbgrid.g7>.lbt[data-lb=amgioi]{display:none!important}
 html body #lobby .lbgrid.g7>*{flex-basis:33.2%!important;width:33.2%}
 html body #lobby .lbgrid.g7>[data-lb=inv]{order:1}html body #lobby .lbgrid.g7>[data-lb=luyenvk]{order:2}html body #lobby .lbgrid.g7>[data-lb=luyendan]{order:3}html body #lobby .lbgrid.g7>[data-lb=tangbao]{order:4}html body #lobby .lbgrid.g7>[data-lb=diemtam]{order:5}html body #lobby .lbgrid.g7>[data-lb=luyencong]{order:6}
@@ -2006,7 +2006,7 @@ html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{wh
   </div>
   <div id="lbm" class="lbm" hidden><div class="lbmp"><div class="lbmh"><b id="lbmT"></b><button id="lbmX" class="btn">Đóng</button></div><div id="lbmB" class="lbmb"></div></div></div>
   <span id="lbRes" class="lbres"></span><button id="lbGear" class="lbgear" type="button" aria-label="Cài đặt" title="Cài đặt">⚙</button>
-  <footer class="lbfoot"><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
+  <footer class="lbfoot"><span class="seglb">Tầm nhìn</span><div class="seg" data-seg="view"><button data-v="gan">Gần</button><button data-v="vua">Vừa</button><button data-v="xa">Xa</button></div><span class="seglb lbrow">Độ nét</span><div class="seg" data-seg="res"><button data-v="cao">Cao</button><button data-v="vua">Vừa</button><button data-v="thap">Thấp</button></div><label class="toggle"><input type="checkbox" id="lowfx3"> Giảm hiệu ứng</label><label class="toggle"><input type="checkbox" id="perf3"> Đo hiệu năng</label><small class="credit">Nhân vật NPC: HOANTDZ · Đồ họa, âm thanh: Wuxia Pixel Assets (DQYYY) · VFX: KanaWorks_AI (@KanaWorks_AI)</small></footer>
  </div>
 </section>
 <section id="menu" class="screen" hidden>
@@ -5218,7 +5218,8 @@ function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?60:120;
  const door=()=>{if(busy)return;busy=1;st.classList.add('dopen');lbDoorFx();setTimeout(()=>st.classList.remove('dopen'),2800);setTimeout(()=>{busy=0;const t=document.querySelector('#lbGrid [data-lb="amgioi"]');if(t)t.click()},1500)};
  for(const t of $('#lbBridge').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',go);
  for(const t of $('#lbDoor').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',door)})();
-$('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').classList.toggle('open')});
+$('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').classList.toggle('open');resSync();$('#perf3').checked=!!PERF.on});
+$('#perf3').addEventListener('change',e=>perfSet(e.target.checked));
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
  if(k==='luyencong'){startTraining();return}
  if(k==='inv'){invFrom='lobby';$('#lobby').hidden=true;$('#inv').hidden=false;renderInv();return}
@@ -6070,11 +6071,11 @@ document.addEventListener('click',e=>{const b=e.target.closest('.seg[data-seg="r
 /* 27/11 BẢNG ĐO HIỆU NĂNG (chủ game báo lag ~0,25x trên Chrome máy tính): bật ở menu Tạm dừng hoặc thêm ?perf=1 vào link. Đo thời gian thật từng hàm vẽ (gộp cả hàm con), trung bình 1 giây */
 const PERF={on:false,w:false,acc:{},n:0,t0:0,fr:0,el:null,names:[]};
 let PT0=0;function pm0(){if(PERF.on)PT0=performance.now()}function pm(n){if(!PERF.on)return;const t=performance.now();PERF.acc[n]=(PERF.acc[n]||0)+t-PT0;PT0=t}
-function perfSet(on){PERF.on=on;if(on){if(!PERF.el){PERF.el=document.createElement('pre');PERF.el.id='perfHud';PERF.el.style.cssText='position:fixed;left:50%;top:46px;transform:translateX(-50%);z-index:9999;margin:0;padding:6px 9px;background:rgba(0,0,0,.78);color:#9fe8b8;font:11px/1.35 monospace;pointer-events:none;border:1px solid #3a5;border-radius:4px;white-space:pre';document.body.appendChild(PERF.el)}PERF.el.hidden=false;PERF.t0=performance.now();PERF.fr=0;PERF.acc={}}else if(PERF.el)PERF.el.hidden=true}
+function perfSet(on){PERF.on=on;try{localStorage.setItem('tdst_perf',on?'1':'0')}catch(e){}{const c=document.getElementById('perf3');if(c)c.checked=on;const d=document.getElementById('optPerf');if(d)d.checked=on}if(on){if(!PERF.el){PERF.el=document.createElement('pre');PERF.el.id='perfHud';PERF.el.style.cssText='position:fixed;left:50%;top:46px;transform:translateX(-50%);z-index:9999;margin:0;padding:6px 9px;background:rgba(0,0,0,.78);color:#9fe8b8;font:11px/1.35 monospace;pointer-events:none;border:1px solid #3a5;border-radius:4px;white-space:pre';document.body.appendChild(PERF.el)}PERF.el.hidden=false;PERF.t0=performance.now();PERF.fr=0;PERF.acc={}}else if(PERF.el)PERF.el.hidden=true}
 function perfTick(){if(!PERF.on)return;PERF.fr++;const t=performance.now(),el=t-PERF.t0;if(el<1000)return;const fps=PERF.fr*1000/el,L=[];
  for(const n in PERF.acc)L.push([n,PERF.acc[n]/PERF.fr]);L.sort((a,b)=>b[1]-a[1]);
  const cv=document.getElementById('cv');const js=L.reduce((a,q)=>a+q[1],0),fm=el/PERF.fr;PERF.el.textContent='FPS '+fps.toFixed(1)+'  khung '+fm.toFixed(1)+' ms  tốc độ game x'+Math.min(1,fps/20).toFixed(2)+'\nJS của game '+js.toFixed(1)+' ms, phần còn lại '+Math.max(0,fm-js).toFixed(1)+' ms là trình duyệt tự vẽ + chờ khung\nDPR '+DPR+'  ZOOM '+ZOOM.toFixed(2)+'  canvas '+(cv?cv.width+'x'+cv.height:'?')+'  map '+(G?curMap():'-')+(window.__mapLite?'  [đã tắt trang trí]':'')+(window.__resAuto?'  [tự hạ nét]':'')+'\n'+L.slice(0,12).map(([n,v])=>n.padEnd(18)+v.toFixed(2)+' ms').join('\n');PERF.t0=t;PERF.fr=0;PERF.acc={}}
-window.__PERF=PERF;if(/[?&]perf=1/.test(location.search))setTimeout(()=>perfSet(true),0);
+window.__PERF=PERF;{let k=0;try{k=localStorage.getItem('tdst_perf')==='1'}catch(e){}if(k||/[?&]perf=1/.test(location.search))setTimeout(()=>perfSet(true),0)}
 function viewSync(){for(const b of document.querySelectorAll('.seg[data-seg="view"] button'))b.classList.toggle('on',b.dataset.v===(SET.view||'vua'))}
 function viewSet(v){SET.view=v;saveSet();resize();viewSync()}
 document.addEventListener('click',e=>{const b=e.target.closest('.seg[data-seg="view"] button');if(b)viewSet(b.dataset.v)});
