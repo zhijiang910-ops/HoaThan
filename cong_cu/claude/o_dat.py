@@ -15,8 +15,9 @@ def tone(f, warm=0.0):
     return np.clip(c, 0, 255)
 # bảng: 0 viền tối, 1 bóng sâu, 2 đất tối, 3 đất, 4 đất sáng, 5 cục sáng, 6 đỉnh sáng, 7 cỏ khô tối, 8 cỏ khô sáng, 9 đá tối, 10 đá, 11 đá sáng
 P = np.array([tone(.42), tone(.64), tone(.87), tone(.94), tone(1.01), tone(1.16, 6), tone(1.32, 10),
-              tone(.98, 6) * [1, 1, .9], tone(1.2, 10) * [1, 1, .85],
-              tone(.6) * .55 + np.array([1,1,1]) * base.mean() * .6 * .45, tone(.9) * .55 + np.array([1,1,1]) * base.mean() * .9 * .45, tone(1.2) * .55 + np.array([1,1,1]) * base.mean() * 1.2 * .45])
+              tone(.78) * .6 + base.mean() * .78 * .4, tone(.98) * .6 + base.mean() * .98 * .4,
+              tone(.6) * .55 + np.array([1,1,1]) * base.mean() * .6 * .45, tone(.9) * .55 + np.array([1,1,1]) * base.mean() * .9 * .45, tone(1.2) * .55 + np.array([1,1,1]) * base.mean() * 1.2 * .45,
+              np.array([172, 162, 138]), np.array([124, 114, 96]), np.array([88, 30, 24]), np.array([112, 106, 100])])  # 12 xương sáng, 13 xương tối, 14 máu khô, 15 tro
 def pnoise(cells):
     g = rng.random((cells, cells)); x = np.arange(N) * cells / N
     i0 = np.floor(x).astype(int); f = x - i0; f = f * f * (3 - 2 * f); i1 = (i0 + 1) % cells
@@ -55,14 +56,30 @@ for _ in range(95):
     for dx in range(-int(r), int(r) + 3): 
         if (int(ry) + 2, dx) not in S and get(cy + int(ry) + 2, cx + dx) < 9: put(cy + int(ry) + 2, cx + dx, 1)
 # cỏ khô: cụm 2-5 lá chữ V, chỗ đất ẩm (moist cao)
-for _ in range(130):
+for _ in range(60):
     cy, cx = rng.integers(0, N, 2)
     if moist[cy, cx] < .45 and rng.random() < .7: continue
     for _ in range(int(rng.integers(2, 6))):
-        x = cx + int(rng.integers(-3, 4)); L = int(rng.integers(2, 6)); lean = rng.choice([-1, 0, 0, 1])
+        x = cx + int(rng.integers(-3, 4)); L = int(rng.integers(2, 4)); lean = rng.choice([-2, -1, 1, 2])
         for t in range(L):
-            put(cy - t, x + (lean * t) // 2, 8 if t >= L - 2 else 7)
+            put(cy - t, x + (lean * t) // 2, 7 if t < L - 1 else 8)
         put(cy + 1, x, 1)
+# xương vụn: đoạn ngắn 3-7 px sáng, mép dưới tối, đôi khi đầu khớp
+for _ in range(int(sys.argv[5]) if len(sys.argv) > 5 else 45):
+    cy, cx = rng.integers(0, N, 2); L = int(rng.integers(3, 8)); d = rng.choice([(0, 1), (1, 1), (1, -1), (0, 1)])
+    for t in range(L):
+        y, x = cy + d[0] * t, cx + d[1] * t
+        put(y, x, 12); put(y + 1, x, 13 if t not in (0, L - 1) else 1)
+    for e in (0, L - 1):
+        y, x = cy + d[0] * e, cx + d[1] * e; put(y - 1, x, 12); put(y, x + 1 if d[1] >= 0 else x - 1, 13)
+# đốm tro xám và vết máu khô
+for _ in range(500):
+    y, x = rng.integers(0, N, 2); put(y, x, 15)
+for _ in range(10):
+    cy, cx = rng.integers(0, N, 2); r = rng.uniform(1.5, 3.5)
+    for dy in range(-3, 4):
+        for dx in range(-4, 5):
+            if (dx / r) ** 2 + (dy / (r * .6)) ** 2 <= 1 and rng.random() < .8 and get(cy + dy, cx + dx) < 7: put(cy + dy, cx + dx, 14)
 # nứt ngắn gấp khúc
 for _ in range(14):
     y, x = rng.integers(0, N, 2); ang = rng.random() * 6.28
