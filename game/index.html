@@ -1937,7 +1937,7 @@ html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;c
  <div class="cx">
   <div class="cxp cxL">
    <label for="crName" class="cxh cxh1">Tên nhân vật</label>
-   <input id="crName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Nhập tên (2–14 ký tự)">
+   <input id="crName" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Nhập tên (4–12 ký tự)">
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
    <div class="cxdeco"><img id="crDeco" src="assets/ui/creation/deco-dao.webp" alt="" decoding="async"></div>
@@ -5100,7 +5100,7 @@ $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click(
 $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim();
  if(!sectOpen(cr.sect)){$('#crErr').textContent='Phái này chưa mở khóa, chưa chơi được';return}
  if(!HAIR[cr.gender][cr.hairI].on){$('#crErr').textContent='Kiểu tóc này chưa mở';return}
- if(n.length<2){$('#crErr').textContent='Tên cần ít nhất 2 ký tự';$('#crName').focus();return}if(n.length>14){$('#crErr').textContent='Tên tối đa 14 ký tự';return}
+ if([...n].length<4){$('#crErr').textContent='Tên cần ít nhất 4 ký tự';$('#crName').focus();return}if([...n].length>12){$('#crErr').textContent='Tên tối đa 12 ký tự';return}
  if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.sect=cr.sect;P0.weapon=SECT_WEAPON[cr.sect]||'kiem';sel.weapon=P0.weapon;P0.hair=cr.hair;P0.hairC=cr.hairC;P0.outC=cr.outC;sel.gender=cr.gender;save.gender=cr.gender;persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
  save.prof={name:n,gender:cr.gender,avatar:cr.avatars[cr.gender],sect:cr.sect,weapon:SECT_WEAPON[cr.sect]||'kiem',hair:cr.hair,hairC:cr.hairC,outC:cr.outC,lv:1,exp:0,created:Date.now()};
  sel.gender=cr.gender;sel.weapon=SECT_WEAPON[cr.sect]||'kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
