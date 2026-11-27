@@ -1,0 +1,859 @@
+{
+ "frames": [
+  {
+   "filename": "wisp 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 1.png",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 2.png",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 3.png",
+   "frame": {
+    "x": 144,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 4.png",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 5.png",
+   "frame": {
+    "x": 240,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 6.png",
+   "frame": {
+    "x": 0,
+    "y": 80,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 7.png",
+   "frame": {
+    "x": 48,
+    "y": 80,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 8.png",
+   "frame": {
+    "x": 96,
+    "y": 80,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 9.png",
+   "frame": {
+    "x": 144,
+    "y": 80,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 10.png",
+   "frame": {
+    "x": 192,
+    "y": 80,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 11.png",
+   "frame": {
+    "x": 240,
+    "y": 80,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 12.png",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 13.png",
+   "frame": {
+    "x": 48,
+    "y": 160,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 14.png",
+   "frame": {
+    "x": 96,
+    "y": 160,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 15.png",
+   "frame": {
+    "x": 144,
+    "y": 160,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 16.png",
+   "frame": {
+    "x": 192,
+    "y": 160,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 17.png",
+   "frame": {
+    "x": 240,
+    "y": 160,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 18.png",
+   "frame": {
+    "x": 0,
+    "y": 240,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 19.png",
+   "frame": {
+    "x": 48,
+    "y": 240,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 20.png",
+   "frame": {
+    "x": 96,
+    "y": 240,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 21.png",
+   "frame": {
+    "x": 144,
+    "y": 240,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 22.png",
+   "frame": {
+    "x": 192,
+    "y": 240,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 23.png",
+   "frame": {
+    "x": 240,
+    "y": 240,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 24.png",
+   "frame": {
+    "x": 0,
+    "y": 320,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 25.png",
+   "frame": {
+    "x": 48,
+    "y": 320,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 26.png",
+   "frame": {
+    "x": 96,
+    "y": 320,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 27.png",
+   "frame": {
+    "x": 144,
+    "y": 320,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 28.png",
+   "frame": {
+    "x": 192,
+    "y": 320,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 29.png",
+   "frame": {
+    "x": 240,
+    "y": 320,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 30.png",
+   "frame": {
+    "x": 0,
+    "y": 400,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  },
+  {
+   "filename": "wisp 31.png",
+   "frame": {
+    "x": 48,
+    "y": 400,
+    "w": 48,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.8125
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "wisp.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 288,
+   "h": 480
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 24,
+   "y": 65
+  },
+  "frameTags": [
+   {
+    "name": "wisp",
+    "from": 0,
+    "to": 31,
+    "direction": "forward"
+   }
+  ]
+ }
+}
