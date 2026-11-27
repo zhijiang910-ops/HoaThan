@@ -3019,12 +3019,12 @@ const WEAPONS={
   {id:'k7',hotkey:'C',power:52,name:'Thái Thượng Trảm Ma',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Triệu một cự kiếm từ trời giáng xuống chỗ đông quái nhất, cắm xuống gây sát thương diện rộng, choáng quái trong vùng; năm lá ngũ lôi phù rơi theo thế ngũ giác, kiếm chạm đất thì năm tia sấm vàng giáng xuống bùa và sét vàng lan quanh trong bát quái.',up:'+25% sát thương, +10 bán kính',
    /* skill RIÊNG (24/11, chủ game): cự kiếm `cukiem.png` rơi 0,55 s, nổ sét đen đỏ `set_no_do`, trước là đòn kết của Vạn Kiếm */
    cast(tg,l){const t0=densest(P.x,P.y,this.range)||tg,tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw(),R=150+10*(l-1);sfx('wanjian_launch',0.55,0.12);
-    addZone({kind:'vkbig',T:1.7,src:'h',x:tx,y:ty,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
+    const FALL=1.35;addZone({kind:'vkbig',T:FALL+1.2,fall:FALL,src:'h',x:tx,y:ty,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
     /* 25/11 bùa chú NGŨ LÔI PHÙ: bát quái vàng trải dưới điểm giáng, 5 lá bùa vàng rơi từ trời xuống 5 đỉnh ngũ giác quanh cự kiếm; kiếm chạm thì 5 tia sấm vàng giáng xuống đúng 5 bùa */
     const FIVE=[0,1,2,3,4].map(i=>{const an=-Math.PI/2+i*TAU/5;return{x:tx+Math.cos(an)*R*0.72,y:ty+Math.sin(an)*R*0.72*0.55}});
-    if(vok('bagua_vang'))fx({k:'img',n:'bagua_vang',x:tx,y:ty+4,s0:0.5,s1:R*2.3/220,sy:0.55,spin:0.9,T:1.5,al:0.9,gr:1});
-    if(vok('bua_vang'))FIVE.forEach((q,i)=>fx({k:'bua',n:'bua_vang',x0:q.x+rnd(-20,20),y0:q.y-300,x1:q.x,y1:q.y-18,fl:0.3+i*0.05,rt:(i%2?0.2:-0.2),T:1.3}));
-    later(0.55,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ffd45a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#4a3006',T:0.5});burst(tx,ty,'#ffd45a',14);burst(tx,ty,'#3a2606',10);const NO=vok('set_no_vang')?'set_no_vang':'set_no_do';if(vok(NO)){fx({k:'sp',s:NO,x:tx,y:ty+4,sc:1.7,T:0.75,al:0.78});later(0.14,()=>{fx({k:'sp',s:NO,x:tx,y:ty+4,sc:1.1,T:0.6,al:0.65})},null)}if(vok('set_bolt_vang'))FIVE.forEach((q,i)=>{later(i*0.05,()=>{fx({k:'sp',s:'set_bolt_vang',x:q.x,y:q.y,sc:1.4,T:0.6,al:1});fx({k:'ring',x:q.x,y:q.y,r0:4,r1:34,c:'#fff0a0',T:0.3});fx({k:'ring',x:q.x,y:q.y,r0:2,r1:16,c:'#ffffff',T:0.16});if(vok(NO))fx({k:'sp',s:NO,x:q.x,y:q.y+2,sc:0.5,T:0.5,al:0.9});burst(q.x,q.y,'#ffe08a',9);G.shake=Math.max(G.shake||0,2)},null)});sfx('sword_hit',0.7,0.1)},null);
+    if(vok('bagua_vang'))fx({k:'img',n:'bagua_vang',x:tx,y:ty+4,s0:0.5,s1:R*2.3/220,sy:0.55,spin:0.9,T:FALL+1.1,al:0.9,gr:1});
+    if(vok('bua_vang'))FIVE.forEach((q,i)=>fx({k:'bua',n:'bua_vang',x0:q.x+rnd(-20,20),y0:q.y-300,x1:q.x,y1:q.y-18,fl:0.5+i*0.08,rt:(i%2?0.2:-0.2),T:FALL+0.9}));
+    later(FALL+0.06,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ffd45a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#4a3006',T:0.5});burst(tx,ty,'#ffd45a',14);burst(tx,ty,'#3a2606',10);const NO=vok('set_no_vang')?'set_no_vang':'set_no_do';if(vok(NO)){fx({k:'sp',s:NO,x:tx,y:ty+4,sc:1.7,T:1.0,al:0.78});later(0.22,()=>{fx({k:'sp',s:NO,x:tx,y:ty+4,sc:1.1,T:0.8,al:0.65})},null)}if(vok('set_bolt_vang'))FIVE.forEach((q,i)=>{later(0.12+i*0.1,()=>{fx({k:'sp',s:'set_bolt_vang',x:q.x,y:q.y,sc:1.4,T:0.8,al:1});fx({k:'ring',x:q.x,y:q.y,r0:4,r1:34,c:'#fff0a0',T:0.3});fx({k:'ring',x:q.x,y:q.y,r0:2,r1:16,c:'#ffffff',T:0.16});if(vok(NO))fx({k:'sp',s:NO,x:q.x,y:q.y+2,sc:0.5,T:0.5,al:0.9});burst(q.x,q.y,'#ffe08a',9);G.shake=Math.max(G.shake||0,2)},null)});sfx('sword_hit',0.7,0.1)},null);
     notice('Thái Thượng Trảm Ma')}},
  ]},
  quyen:{name:'Quyền',g:'拳',role:'Cận chiến, liên kích, cương khí',tr:'Liên quyền, quyền khí xuyên, chấn địa, liên hoàn cương quyền',kit:[
@@ -4254,7 +4254,7 @@ function drawZone(z){
     if(tt<g.tl){const k=clamp((tt-g.ri)/0.4,0,1);x=sx0;y=sy0+(1-k)*50;ang=-Math.PI/2;al=0.62*k}
     else if(tt<g.tl+0.36){const u=(tt-g.tl)/0.36,e=u*u;x=sx0+(g.ex-sx0)*e;y=sy0+(tY-sy0)*e;let da=la0+Math.PI/2;da=Math.atan2(Math.sin(da),Math.cos(da));ang=-Math.PI/2+da*clamp(u*3,0,1);al=0.9}
     else if(tt<CONV){x=g.ex;y=tY+Math.min(10,(tt-g.tl-0.36)*30);ang=Math.PI/2;al=0.8}
-    else if(tt<CONV+0.45){const u=(tt-CONV)/0.45,e=u*u,cx2=z.x,cy2=gy0-24;x=g.ex+(cx2-g.ex)*e;y=tY+(cy2-tY)*e;ang=Math.atan2(cy2-tY,cx2-g.ex);al=0.9*(1-Math.max(0,(u-0.7)/0.3))}
+    else if(tt<CONV+0.45){/* 27/11 chủ game: kiếm khí KHÔNG bay về hóa Thiên Kiếm (vô lý), tan tại chỗ cắm */const u=(tt-CONV)/0.45;x=g.ex;y=tY+10-u*14;ang=Math.PI/2;al=0.8*(1-u)}
     else continue;
     const fi=(Math.floor(tt*20)+g.j)%24;c.save();c.globalAlpha=al;c.translate(Math.round(x),Math.round(y));c.rotate(ang);c.scale(ks1,ks1);c.imageSmoothingEnabled=false;c.drawImage(VFX.vk_qi,(fi%GQ.c)*GQ.w,Math.floor(fi/GQ.c)*GQ.h,GQ.w,GQ.h,-GQ.px,-GQ.py,GQ.w,GQ.h);c.restore()}}
   for(let i=0;i<N;i++){const phi=i*TAU/N+TAU/(2*N);order.push({i,phi,gx:z.x+Math.cos(phi)*78,gy:gy0+Math.sin(phi)*26,big:0})}
@@ -4280,14 +4280,13 @@ function drawZone(z){
    if(al<=0.01)continue;c.save();if(clip){c.beginPath();c.rect(o.gx-160,o.gy-700,320,700+2);c.clip()}c.globalAlpha=al;c.translate(cx_,cy_);if(big&&CKok){c.rotate(ang-Math.PI/2);c.scale(ks1,ks1);c.imageSmoothingEnabled=false;if(!lowfx){c.shadowColor='rgba(255,200,90,.95)';c.shadowBlur=22}c.drawImage(CKI,-CKI.naturalWidth/2,-CKI.naturalHeight/2);c.restore();continue}c.rotate(ang);c.scale(wk*SZ,wk*SZ);c.translate(-WPN[art][4]/2,0);
    if(!lowfx){c.shadowColor='rgba(255,200,90,.95)';c.shadowBlur=big?22:11}
    drawWeaponOutline(c,art,1.3/(wk*SZ));drawWeaponArt(c,art,0,0,1);c.restore()}}
- else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.3*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
+ else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.48*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
   /* 25/11 bùa chú: bát quái vàng xoay dưới đất (bagua_vang.png, tự vẽ bằng code: cong_cu/claude/bua_assets.py) hiện dần khi kiếm rơi, tan cùng trận */
-  if(vok('bagua_vang')){const k0=clamp(tt/0.7,0,1),pul=1+Math.sin(G.t*4)*0.015;c.save();c.translate(z.x,z.y);c.scale(1,z.ry/z.rx);c.rotate(G.t*0.35);c.globalAlpha=0.92*ringA*k0;c.imageSmoothingEnabled=false;const D=z.rx*2.38*(0.55+0.45*k0)*pul;c.drawImage(VFX.bagua_vang,-D/2,-D/2,D,D);c.restore()}
-  c.save();c.globalAlpha=0.55*ringA;c.strokeStyle='#e8c25a';c.lineWidth=1.5;c.beginPath();c.ellipse(z.x,z.y,z.rx,z.ry,0,0,TAU);c.stroke();c.restore();
+  /* 27/11: bát quái + elip chuyển xuống lớp NỀN (txkGround, vẽ trước nhân vật/quái) để nằm dưới đất, không còn như bay lơ lửng */
   for(let i=0;i<N;i++){const ph=i*TAU/N-0.6+(tt>z.land?(tt-z.land)*TAU/4.2:0),px=z.x+Math.cos(ph)*z.rx,py=z.y+Math.sin(ph)*z.ry,ti=0.1+i*0.14,k=clamp((tt-ti)/0.4,0,1);items.push({px,py,yo:-(1-k*k)*z.h-outk*outk*90,al:Math.min(1,k*3)*(1-outk),k})}
-  items.sort((a,b)=>a.py-b.py);for(const it of items){if(it.al<=0.01)continue;c.save();c.globalAlpha=0.3*it.al*Math.min(1,it.k*2);c.fillStyle='#0b1226';c.beginPath();c.ellipse(it.px,it.py,9,4,0,0,TAU);c.fill();c.restore();c.save();c.globalAlpha=it.al;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.translate(it.px,it.py+it.yo);c.scale(s,s);c.drawImage(CKI,-W/2,-Hh);c.restore();if(vok('bua_vang')&&it.k>0.9){const sw=Math.sin(G.t*3+it.px*0.05)*0.18;c.save();c.globalAlpha=it.al;c.imageSmoothingEnabled=false;c.translate(Math.round(it.px),Math.round(it.py+it.yo-Hh*s*0.78));c.rotate(sw);c.scale(0.9,0.9);c.drawImage(VFX.bua_vang,-8,0);c.restore()}}}
- else if(z.kind==='vkbig'){const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,w=WPN[art],FALL=0.55,sc=3.4;
-  const k=Math.min(1,z.t/FALL),e=k*k,top=z.y-(CKI.complete&&CKI.naturalWidth?420:460),ty=top+(z.y-top)*e,al=z.t<FALL?1:Math.max(0,1-(z.t-FALL-0.7)/0.45);
+  items.sort((a,b)=>a.py-b.py);for(const it of items){if(it.al<=0.01)continue;c.save();c.globalAlpha=0.3*it.al*Math.min(1,it.k*2);c.fillStyle='#0b1226';c.beginPath();c.ellipse(it.px,it.py,14,6,0,0,TAU);c.fill();c.restore();c.save();c.globalAlpha=it.al;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.translate(it.px,it.py+it.yo);c.scale(s,s);c.drawImage(CKI,-W/2,-Hh);c.restore();if(vok('bua_vang')&&it.k>0.9){const sw=Math.sin(G.t*3+it.px*0.05)*0.18;c.save();c.globalAlpha=it.al;c.imageSmoothingEnabled=false;c.translate(Math.round(it.px),Math.round(it.py+it.yo-Hh*s*0.78));c.rotate(sw);c.scale(0.9,0.9);c.drawImage(VFX.bua_vang,-8,0);c.restore()}}}
+ else if(z.kind==='vkbig'){const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,w=WPN[art],FALL=z.fall||0.55,sc=3.4;
+  const k=Math.min(1,z.t/FALL),e=z.fall?0.25*k+0.75*k*k*k:k*k,top=z.y-(CKI.complete&&CKI.naturalWidth?420:460),ty=top+(z.y-top)*e,al=z.t<FALL?1:Math.max(0,1-(z.t-FALL-0.7)/0.45);
   c.save();c.translate(z.x,z.y);c.scale(1,0.4);c.globalAlpha=0.35*Math.min(1,k*1.4)*(z.t<FALL?1:al);c.fillStyle='#0b1226';c.beginPath();c.arc(0,0,22+60*k,0,TAU);c.fill();c.restore();
   if(al>0.01&&CKI.complete&&CKI.naturalWidth){c.save();c.globalAlpha=al;c.imageSmoothingEnabled=false;const nz=Math.max(1,ZOOM*DPR),ks=Math.max(1,Math.round(nz))/nz;c.translate(Math.round(z.x),Math.round(ty));c.scale(ks,ks);c.drawImage(CKI,-CKI.naturalWidth/2,-CKI.naturalHeight);c.restore()}
   else if(al>0.01){c.save();c.globalAlpha=al;c.translate(z.x,ty);c.scale(sc,sc);c.rotate(Math.PI/2);c.translate(-(w[0]-w[2]),0);drawWeaponOutline(c,art,1.2/sc);drawWeaponArt(c,art,0,0,1);c.restore()}}
@@ -4607,6 +4606,9 @@ const AURA=new Image();AURA.src='assets/vfx/qi_aura.png';
 function drawAura(x,y){if(!AURA.complete||!AURA.naturalWidth){X.save();X.globalCompositeOperation='lighter';X.fillStyle='rgba(255,200,80,.18)';ell(x,y-24,34,44);X.restore();return}
  const fi=Math.floor(G.t*20)%32,w=90,h=132,sc=1.15;X.save();X.globalCompositeOperation=MAPS[G.cfg.map].ground==='g_snow'?'source-over':'lighter';X.globalAlpha=0.9;
  X.drawImage(AURA,(fi%8)*w,((fi/8)|0)*h,w,h,x-w*sc/2,y-120*sc,w*sc,h*sc);X.restore()}
+function txkGround(c,z){const tt=z.t,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk);if(ringA<=0.01)return;
+ if(vok('bagua_vang')){const k0=clamp(tt/0.7,0,1);c.save();c.translate(z.x,z.y);c.scale(1,z.ry/z.rx);c.rotate(G.t*0.35);c.globalAlpha=0.85*ringA*k0;c.imageSmoothingEnabled=false;const D=z.rx*2.38*(0.55+0.45*k0);c.drawImage(VFX.bagua_vang,-D/2,-D/2,D,D);c.restore()}
+ c.save();c.globalAlpha=0.55*ringA;c.strokeStyle='#e8c25a';c.lineWidth=1.5;c.beginPath();c.ellipse(z.x,z.y,z.rx,z.ry,0,0,TAU);c.stroke();c.restore()}
 function render(){
  const c=ctx;X=ctx;
  c.setTransform(DPR,0,0,DPR,0,0);c.clearRect(0,0,VW,VH);
@@ -4618,7 +4620,7 @@ function render(){
  if(G){
   for(const s of G.spawnQ){const k=1-s.t/(s.big?1.6:0.7);c.strokeStyle=`rgba(255,60,30,${0.4+k*0.5})`;c.lineWidth=2;const r=s.big?40:14;c.beginPath();c.arc(s.x,s.y,r,0,TAU);c.stroke();c.beginPath();c.moveTo(s.x-r*.6,s.y-r*.6);c.lineTo(s.x+r*.6,s.y+r*.6);c.moveTo(s.x+r*.6,s.y-r*.6);c.lineTo(s.x-r*.6,s.y+r*.6);c.stroke()}
   for(const h of G.haz)drawHaz(h);
-  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);
+  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones)if(z.kind==='txk')txkGround(ctx,z);
   drawHeal(c);drawPhase2(c);drawChest(c);drawAmPortal(c);drawSkillAim(c);
   for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,espScale(m),false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,espScale(m),false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
   for(const o of G.orbs)drawOrb(o);
