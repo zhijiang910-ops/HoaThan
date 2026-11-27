@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Khử Tà Diệt Ma"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/ui/icon_180.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <script>
 if(matchMedia('(any-pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
@@ -2163,7 +2164,7 @@ html body #create .cxL,html body #create .cxR{position:relative;background:linea
 html body #create .cxL::after,html body #create .cxR::after{content:"";position:absolute;inset:0;background:none!important;pointer-events:none;z-index:6;
  border-style:solid!important;border-color:transparent!important;border-width:clamp(35px,10.7vh,70px) clamp(40px,12.3vh,81px) clamp(41px,12.5vh,82px) clamp(38px,11.6vh,76px)!important;
  border-image:url(assets/ui/khung/khung_doc.webp) 88 101 102 95 stretch!important}
-html body #create .cxR::after{transform:scaleX(-1)}
+html body #create .cxR::after{border-image-source:url(assets/ui/khung/khung_doc_r.webp)!important;border-image-slice:88 95 102 101!important;border-width:clamp(35px,10.7vh,70px) clamp(38px,11.6vh,76px) clamp(41px,12.5vh,82px) clamp(40px,12.3vh,81px)!important}/* 28/11: Safari iPhone không vẽ khung khi lật ::after bằng transform -> dùng ảnh lật sẵn */
 html body #create .cxbar{padding:4px 0 clamp(2px,1vh,6px)!important;display:flex!important;flex-direction:column;align-items:center;gap:2px}
 html body #create .cxbar #crGo{position:relative;width:92%!important;max-width:none!important;min-width:0!important;height:auto!important;aspect-ratio:900/229;margin:0 auto!important;padding:0!important;
  background:url(assets/ui/khung/nut_vai_do.webp) center/100% 100% no-repeat!important;border:0!important;border-image:none!important;border-radius:0!important;box-shadow:none!important;
