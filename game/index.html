@@ -2164,7 +2164,8 @@ html body #create .cxL,html body #create .cxR{position:relative;background:linea
 html body #create .cxL::after,html body #create .cxR::after{content:"";position:absolute;inset:0;background:none!important;pointer-events:none;z-index:6;
  border-style:solid!important;border-color:transparent!important;border-width:clamp(35px,10.7vh,70px) clamp(40px,12.3vh,81px) clamp(41px,12.5vh,82px) clamp(38px,11.6vh,76px)!important;
  border-image:url(assets/ui/khung/khung_doc.webp) 88 101 102 95 stretch!important}
-html body #create .cxR::after{border-image-source:url(assets/ui/khung/khung_doc_r.webp)!important;border-image-slice:88 95 102 101!important;border-width:clamp(35px,10.7vh,70px) clamp(38px,11.6vh,76px) clamp(41px,12.5vh,82px) clamp(40px,12.3vh,81px)!important}/* 28/11: Safari iPhone không vẽ khung khi lật ::after bằng transform -> dùng ảnh lật sẵn */
+html body #create .cxL::after,html body #create .cxR::after{display:none!important}/* 28/11: khung vẽ bằng canvas .cxfrm (Safari iPhone mất border-image trên ::after khi lật hoặc khi gõ tên/lắc xí ngầu) */
+html body #create .cxfrm{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;image-rendering:auto}
 html body #create .cxbar{padding:4px 0 clamp(2px,1vh,6px)!important;display:flex!important;flex-direction:column;align-items:center;gap:2px}
 html body #create .cxbar #crGo{position:relative;width:92%!important;max-width:none!important;min-width:0!important;height:auto!important;aspect-ratio:900/229;margin:0 auto!important;padding:0!important;
  background:url(assets/ui/khung/nut_vai_do.webp) center/100% 100% no-repeat!important;border:0!important;border-image:none!important;border-radius:0!important;box-shadow:none!important;
@@ -5468,6 +5469,23 @@ function wIconHTML(k){const w=WICON[k]||{};if(w.src)return `<img src="${w.src}" 
 (function(){const K='tdst_cbg',N={a:'assets/ui/creation/nen-a.webp',b:'assets/ui/creation/nen-b.webp'};function g(){try{const v=localStorage.getItem(K);return N[v]?v:'a'}catch(e){return'a'}}
 function ap(k){const c=$('#create');if(!c)return;c.style.setProperty('--cbg','url('+N[k]+')');document.querySelectorAll('#crBgPick button').forEach(b=>b.classList.toggle('on',b.dataset.bg===k));try{localStorage.setItem(K,k)}catch(e){}}
 ap(g());const p=$('#crBgPick');if(p)p.addEventListener('click',e=>{const b=e.target.closest('button[data-bg]');if(b)ap(b.dataset.bg)})})();
+
+/* 28/11: khung xích-bùa 2 bảng màn tạo nhân vật vẽ bằng canvas 9 mảnh (thay border-image ::after vì Safari iPhone làm mất khung) */
+(function(){const IM={L:new Image(),R:new Image()};IM.L.src='assets/ui/khung/khung_doc.webp';IM.R.src='assets/ui/khung/khung_doc_r.webp';
+ const SL={L:[88,101,102,95],R:[88,95,102,101]};/* trên, phải, dưới, trái (px ảnh 362×834) */
+ const cl=(a,b,c)=>Math.max(a,Math.min(c,b));
+ function draw(){const scr=document.getElementById('create');if(!scr||scr.hidden)return;const vh=innerHeight/100;
+  for(const k of ['L','R']){const pn=scr.querySelector('.cx'+k);if(!pn)continue;let cv=pn.querySelector(':scope>canvas.cxfrm');if(!cv){cv=document.createElement('canvas');cv.className='cxfrm';cv.setAttribute('aria-hidden','true');pn.appendChild(cv)}
+   const im=IM[k];if(!im.complete||!im.naturalWidth){im.onload=draw;continue}
+   const w=pn.clientWidth,h=pn.clientHeight;if(!w||!h)continue;const d=Math.min(3,devicePixelRatio||1);cv.width=Math.round(w*d);cv.height=Math.round(h*d);
+   const c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);c.clearRect(0,0,w,h);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
+   const [st,sr,sb,sl]=SL[k],iw=im.naturalWidth,ih=im.naturalHeight;
+   const bt=cl(35,10.7*vh,70),bb=cl(41,12.5*vh,82),bl=k==='L'?cl(38,11.6*vh,76):cl(40,12.3*vh,81),br=k==='L'?cl(40,12.3*vh,81):cl(38,11.6*vh,76);
+   const sx=[0,sl,iw-sr,iw],sy=[0,st,ih-sb,ih],dx=[0,bl,w-br,w],dy=[0,bt,h-bb,h];
+   for(let r=0;r<3;r++)for(let q=0;q<3;q++){if(r===1&&q===1)continue;const sw=sx[q+1]-sx[q],sh=sy[r+1]-sy[r],dw=dx[q+1]-dx[q],dh=dy[r+1]-dy[r];if(sw>0&&sh>0&&dw>0&&dh>0)c.drawImage(im,sx[q],sy[r],sw,sh,dx[q],dy[r],dw,dh)}}}
+ window.crFrameDraw=draw;addEventListener('resize',()=>setTimeout(draw,60));if(window.visualViewport)visualViewport.addEventListener('resize',()=>setTimeout(draw,60));
+ if(window.ResizeObserver){const ro=new ResizeObserver(()=>draw());const t=setInterval(()=>{const a=document.querySelector('#create .cxL'),b=document.querySelector('#create .cxR');if(a&&b){ro.observe(a);ro.observe(b);clearInterval(t)}},300)}
+})();
 function openCreate(){const P0=prof();if(P0){$('#crName').value=P0.name}cr.gender=P0?P0.gender:save.gender==='nu'?'nu':'nam';cr.hairI=Math.max(0,P0?HAIR[cr.gender].findIndex(h=>h.k===P0.hair):0);cr.hair=HAIR[cr.gender][cr.hairI].k;cr.hairC=(P0&&P0.hairC)||'den';cr.outC=(P0&&OUTC.some(o=>o.k===P0.outC&&(!o.g||o.g===P0.gender))&&P0.outC)||'goc';
  setCreateSect(P0&&P0.sect&&SECTS[P0.sect]?P0.sect:P0&&sectOfAvatar(avatarIndex(P0.avatar))||'maoson');
  {const a0=P0?(avatarIndex(P0.avatar)||1):1;cr.avatars={nam:a0,nu:a0}}
