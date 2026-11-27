@@ -7,3 +7,4 @@ demo/**/*.jpg
 # file tạm
 __pycache__/
 *.pyc
+nguon/pack_wuxia/
