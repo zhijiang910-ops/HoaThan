@@ -914,3 +914,4 @@ Quyết định (chủ game không chọn riêng nên lấy đề xuất): hình
 
 - (27/11) **Sảnh: 7 đốm lửa ma lập lòe** (`.lbwisp` trong `#lbStage`, ảnh `ui/lobby/lua_{tim,do,lam,luc}.webp` cắt từ ảnh 4 ngọn lửa chủ game gửi; CSS `@keyframes lbWisp`: chớp sáng, mờ dần, sáng lại, trôi lên; `mix-blend-mode:screen`, delay/độ dài khác nhau). Vị trí theo % sân khấu, quanh cầu và sân giữa. Soi 1280×720 (2 thời điểm); 7 cỡ còn lại chỉ chạy không lỗi. Chỉnh số lượng/vị trí: sửa dãy `<i class="lbwisp">` trước `#lbHero`.
 - (27/11, sửa theo chủ game: "lập lòe nhức mắt, chỉ 2–3 chỗ") **Đốm lửa ma còn 3 cái** (lục cạnh trụ chuông, lam cạnh nhân vật, lam gần cổng), to ~5,6% sân khấu, màu đậm (`filter:saturate contrast`), chớp CHẬM 7–9 s/vòng, độ đục chỉ dao động 0,55–1. Bản 7 đốm nhấp nháy nhanh đã bỏ.
+- (27/11) **ĐÃ XÓA đốm lửa ma ở sảnh theo chủ game ("làm xấu"):** bỏ `.lbwisp`, `lbWisp`, ảnh `lua_*.webp`. Lấy lại từ lịch sử git (commit `5ee7fa3`) nếu cần.
