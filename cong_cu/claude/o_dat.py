@@ -1,93 +1,154 @@
-"""Dựng ô đất lặp 512x512 pixel art 1:1 cho map Âm Giới (tự làm bằng code, 27/11, ChatGPT hết lượt). Bản 2: cục đất có sáng-tối, đá nhiều cỡ có viền, cỏ khô, nứt ngắn.
-Dùng: python3 o_dat.py <map> <x0,y0,x1,y1 vùng sân trong bg 1600x1140> <ra.png> [seed]"""
+"""Dựng ô đất lặp 512x512 pixel art 1:1 cho map Âm Giới (tự làm bằng code, 27/11; ChatGPT hết lượt, CẤM PixelLab).
+Luật 11: giữ phong cách game + bối cảnh âm phủ. Mỗi map một mẫu (PRESET) có chi tiết riêng.
+Dùng: python3 cong_cu/claude/o_dat.py <map|all> [seed]   -> game/assets/map/Dt_<map>.png"""
 import sys, numpy as np
 from PIL import Image
-key, box, out = sys.argv[1], [int(v) for v in sys.argv[2].split(',')], sys.argv[3]
-seed = int(sys.argv[4]) if len(sys.argv) > 4 else 7
-rng = np.random.default_rng(seed)
 N = 512
-a = np.asarray(Image.open(f'game/assets/map/bg_{key}.png').convert('RGB').crop(box)).reshape(-1, 3).astype(float)
-lum = a @ [0.3, 0.59, 0.11]
-lo_, hi_ = np.quantile(lum, [0.12, 0.97]); k = (lum > lo_) & (lum < hi_); a, lum = a[k], lum[k]
-base = a.mean(0)
-def tone(f, warm=0.0):
-    c = base * f; c = c + np.array([1, 0.6, -0.4]) * warm
-    return np.clip(c, 0, 255)
-# bảng: 0 viền tối, 1 bóng sâu, 2 đất tối, 3 đất, 4 đất sáng, 5 cục sáng, 6 đỉnh sáng, 7 cỏ khô tối, 8 cỏ khô sáng, 9 đá tối, 10 đá, 11 đá sáng
-P = np.array([tone(.42), tone(.64), tone(.87), tone(.94), tone(1.01), tone(1.16, 6), tone(1.32, 10),
-              tone(.78) * .6 + base.mean() * .78 * .4, tone(.98) * .6 + base.mean() * .98 * .4,
-              tone(.6) * .55 + np.array([1,1,1]) * base.mean() * .6 * .45, tone(.9) * .55 + np.array([1,1,1]) * base.mean() * .9 * .45, tone(1.2) * .55 + np.array([1,1,1]) * base.mean() * 1.2 * .45,
-              np.array([172, 162, 138]), np.array([124, 114, 96]), np.array([88, 30, 24]), np.array([112, 106, 100])])  # 12 xương sáng, 13 xương tối, 14 máu khô, 15 tro
-def pnoise(cells):
-    g = rng.random((cells, cells)); x = np.arange(N) * cells / N
-    i0 = np.floor(x).astype(int); f = x - i0; f = f * f * (3 - 2 * f); i1 = (i0 + 1) % cells
-    r0 = g[i0][:, i0] * (1 - f)[None, :] + g[i0][:, i1] * f[None, :]
-    r1 = g[i1][:, i0] * (1 - f)[None, :] + g[i1][:, i1] * f[None, :]
-    return r0 * (1 - f)[:, None] + r1 * f[:, None]
-h = 0.42 * pnoise(6) + 0.24 * pnoise(16) + 0.2 * pnoise(48) + 0.14 * pnoise(160)
-idx = (2 + np.searchsorted(np.quantile(h, [0.28, 0.74]), h)).astype(int)  # 2,3,4: mảng đất lớn mềm
-moist = pnoise(10)
-def put(y, x, v): idx[y % N, x % N] = v
-def get(y, x): return idx[y % N, x % N]
-# cục đất nhỏ: thân = tông nền +1, mép trên 1px sáng, mép dưới 1px tối
-for _ in range(2300):
-    cy, cx = rng.integers(0, N, 2); w = int(rng.choice([1, 2, 2, 3, 3, 4])); hh = int(rng.choice([1, 1, 2]))
-    b = get(cy, cx)
-    for dx in range(w):
-        put(cy - 1, cx + dx, min(6, b + 2) if (0 < dx < w - 1 or w < 3) else b)
-        for dy in range(hh): put(cy + dy, cx + dx, min(5, b + 1))
-        put(cy + hh, cx + dx, max(1, b - 1))
-# đá nhiều cỡ: hình bất quy tắc, 3 tông + viền tối 1px phía dưới-phải
-for _ in range(95):
-    cy, cx = rng.integers(0, N, 2); r = float(rng.choice([1.5, 2, 2, 2.5, 3, 3.5, 4.5, 6], p=[.2, .2, .15, .15, .12, .08, .06, .04]))
-    ry = r * rng.uniform(.55, .8); ph = rng.random(6) * 6.28
-    cells = []
-    for dy in range(-int(ry) - 1, int(ry) + 2):
-        for dx in range(-int(r) - 1, int(r) + 2):
-            ang = np.arctan2(dy / max(ry, .5), dx / r); wob = 1 + .18 * np.sin(3 * ang + ph[0]) + .1 * np.sin(5 * ang + ph[1])
-            if (dx / r) ** 2 + (dy / max(ry, .5)) ** 2 <= wob * wob: cells.append((dy, dx))
-    S = set(cells)
-    for dy, dx in cells:
-        s = -dx / r - 1.6 * dy / max(ry, .5)
-        put(cy + dy, cx + dx, 11 if s > .55 else 10 if s > -.5 else 9)
-    for dy, dx in cells:
-        for ey, ex in ((1, 0), (0, 1), (1, 1)):
-            if (dy + ey, dx + ex) not in S: put(cy + dy + ey, cx + dx + ex, 0 if ey else 1)
-    for dx in range(-int(r), int(r) + 3): 
-        if (int(ry) + 2, dx) not in S and get(cy + int(ry) + 2, cx + dx) < 9: put(cy + int(ry) + 2, cx + dx, 1)
-# cỏ khô: cụm 2-5 lá chữ V, chỗ đất ẩm (moist cao)
-for _ in range(60):
-    cy, cx = rng.integers(0, N, 2)
-    if moist[cy, cx] < .45 and rng.random() < .7: continue
-    for _ in range(int(rng.integers(2, 6))):
-        x = cx + int(rng.integers(-3, 4)); L = int(rng.integers(2, 4)); lean = rng.choice([-2, -1, 1, 2])
+PRESET = {
+ # box = vùng sân đất trong bg_<map>.png (1600x1140) để lấy màu
+ 'hoangtuyen': dict(box=(100, 250, 1500, 1000), clods=2300, stones=95, grass=60, bones=45, ash=500, blood=10, cracks=14),
+ 'quanmon':    dict(box=(200, 440, 1400, 1000), clods=2000, stones=130, grass=30, bones=35, ash=350, blood=6, cracks=18, chain=9),
+ 'biangan':    dict(box=(200, 400, 1400, 1000), clods=1900, stones=70, grass=20, bones=25, ash=250, blood=8, cracks=12, petals=170, acc=[(170, 32, 40), (120, 18, 30), (70, 10, 20)]),
+ 'nghiepkinh': dict(box=(200, 450, 1400, 950), clods=1700, stones=120, grass=0, bones=25, ash=300, blood=4, cracks=22, shards=70, acc=[(205, 230, 225), (140, 175, 180), (70, 90, 100)]),
+ 'uongtu':     dict(box=(200, 450, 1400, 1000), clods=1800, stones=90, grass=0, bones=40, ash=900, blood=8, cracks=20, char=14, embers=130, acc=[(250, 170, 70), (215, 80, 30), (120, 30, 20)]),
+ 'vongxuyen':  dict(box=(200, 700, 1400, 1100), clods=2000, stones=80, grass=25, bones=25, ash=200, blood=3, cracks=8, puddles=18, acc=[(95, 140, 140), (40, 72, 78), (20, 38, 44)]),
+ 'diemla':     dict(box=(200, 500, 1400, 1000), clods=500, stones=0, grass=0, bones=18, ash=220, blood=16, cracks=26, slabs=1),
+}
+def build(key, seed=7):
+    C = PRESET[key]; rng = np.random.default_rng(seed)
+    a = np.asarray(Image.open(f'game/assets/map/bg_{key}.png').convert('RGB').crop(C['box'])).reshape(-1, 3).astype(float)
+    lum = a @ [0.3, 0.59, 0.11]; lo_, hi_ = np.quantile(lum, [0.12, 0.97]); k = (lum > lo_) & (lum < hi_); a = a[k]
+    base = a.mean(0); g = base.mean()
+    def tone(f, warm=0.0): return np.clip(base * f + np.array([1, .6, -.4]) * warm, 0, 255)
+    acc = np.array(C.get('acc', [(150, 140, 120)] * 3), float)
+    P = np.array([tone(.42), tone(.64), tone(.87), tone(.94), tone(1.01), tone(1.16, 6), tone(1.32, 10),
+                  tone(.78) * .6 + g * .78 * .4, tone(.98) * .6 + g * .98 * .4,
+                  tone(.6) * .55 + g * .6 * .45, tone(.9) * .55 + g * .9 * .45, tone(1.2) * .55 + g * 1.2 * .45,
+                  (172, 162, 138), (124, 114, 96), (88, 30, 24), np.clip(tone(.8) * .4 + g * .9 * .6, 0, 255),
+                  acc[0], acc[1], acc[2], (38, 36, 40), (96, 94, 100)])
+    # 0 viền | 1 bóng | 2-4 đất | 5-6 sáng | 7-8 cỏ chết | 9-11 đá | 12-13 xương | 14 máu khô | 15 tro | 16-18 nhấn | 19-20 sắt
+    def pnoise(cells):
+        G = rng.random((cells, cells)); x = np.arange(N) * cells / N
+        i0 = np.floor(x).astype(int); f = x - i0; f = f * f * (3 - 2 * f); i1 = (i0 + 1) % cells
+        r0 = G[i0][:, i0] * (1 - f)[None, :] + G[i0][:, i1] * f[None, :]
+        r1 = G[i1][:, i0] * (1 - f)[None, :] + G[i1][:, i1] * f[None, :]
+        return r0 * (1 - f)[:, None] + r1 * f[:, None]
+    h = 0.42 * pnoise(6) + 0.24 * pnoise(16) + 0.2 * pnoise(48) + 0.14 * pnoise(160)
+    idx = (2 + np.searchsorted(np.quantile(h, [0.28, 0.74]), h)).astype(int)
+    moist = pnoise(10)
+    def put(y, x, v): idx[y % N, x % N] = v
+    def get(y, x): return idx[y % N, x % N]
+    if C.get('slabs'):  # đá lát điện Diêm La: hàng so le 32x24, mạch vữa tối, mép trên sáng
+        SW, SH = 48, 40
+        for r in range(N // SH + 1):
+            off = (r % 2) * SW // 2
+            for c in range(-1, N // SW + 1):
+                x0, y0 = c * SW + off, r * SH; t = int(rng.choice([2, 3, 3, 4]))
+                for yy in range(y0, y0 + SH):
+                    for xx in range(x0, x0 + SW):
+                        e = (yy == y0 or xx == x0)
+                        v = 1 if e else (5 if (yy == y0 + 1 and rng.random() < .6) else t)
+                        if not e and rng.random() < .05: v = max(2, t - 1)
+                        put(yy, xx, v)
+    if C.get('char'):  # mảng đất cháy đen (Uổng Tử)
+        ch = pnoise(8) + 0.35 * pnoise(96); thr = np.quantile(ch, .8)
+        m = ch > thr; idx[m] = 2; idx[m & (ch > np.quantile(ch, .9))] = 1
+        edge = (ch > thr - .04) & ~m; idx[edge & (rng.random((N, N)) < .5)] = 15
+    # cục đất nhỏ
+    for _ in range(C['clods']):
+        cy, cx = rng.integers(0, N, 2); w = int(rng.choice([1, 2, 2, 3, 3, 4])); hh = int(rng.choice([1, 1, 2])); b = get(cy, cx)
+        if b < 2 or b > 4: continue
+        for dx in range(w):
+            put(cy - 1, cx + dx, min(6, b + 2) if (0 < dx < w - 1 or w < 3) else b)
+            for dy in range(hh): put(cy + dy, cx + dx, min(5, b + 1))
+            put(cy + hh, cx + dx, max(1, b - 1))
+    # đá
+    for _ in range(C['stones']):
+        cy, cx = rng.integers(0, N, 2); r = float(rng.choice([1.5, 2, 2, 2.5, 3, 3.5, 4.5, 6], p=[.2, .2, .15, .15, .12, .08, .06, .04]))
+        ry = r * rng.uniform(.55, .8); ph = rng.random(2) * 6.28; cells = []
+        for dy in range(-int(ry) - 1, int(ry) + 2):
+            for dx in range(-int(r) - 1, int(r) + 2):
+                ang = np.arctan2(dy / max(ry, .5), dx / r); wob = 1 + .18 * np.sin(3 * ang + ph[0]) + .1 * np.sin(5 * ang + ph[1])
+                if (dx / r) ** 2 + (dy / max(ry, .5)) ** 2 <= wob * wob: cells.append((dy, dx))
+        S = set(cells)
+        for dy, dx in cells:
+            s = -dx / r - 1.6 * dy / max(ry, .5); put(cy + dy, cx + dx, 11 if s > .55 else 10 if s > -.5 else 9)
+        for dy, dx in cells:
+            for ey, ex in ((1, 0), (0, 1), (1, 1)):
+                if (dy + ey, dx + ex) not in S: put(cy + dy + ey, cx + dx + ex, 0 if ey else 1)
+    # cỏ chết xám, rủ
+    for _ in range(C['grass']):
+        cy, cx = rng.integers(0, N, 2)
+        if moist[cy, cx] < .45 and rng.random() < .7: continue
+        for _ in range(int(rng.integers(2, 5))):
+            x = cx + int(rng.integers(-3, 4)); L = int(rng.integers(2, 4)); lean = rng.choice([-2, -1, 1, 2])
+            for t in range(L): put(cy - t, x + (lean * t) // 2, 7 if t < L - 1 else 8)
+            put(cy + 1, x, 1)
+    # vũng nước tù (Vong Xuyên): elip tối, viền trên sáng, 1 đốm phản chiếu
+    for _ in range(C.get('puddles', 0)):
+        cy, cx = rng.integers(0, N, 2); rx = rng.uniform(6, 16); ry = rx * rng.uniform(.35, .5)
+        for dy in range(-int(ry) - 1, int(ry) + 2):
+            for dx in range(-int(rx) - 1, int(rx) + 2):
+                d = (dx / rx) ** 2 + (dy / ry) ** 2 + .12 * np.sin(dx * .7 + dy)
+                if d <= 1: put(cy + dy, cx + dx, 18 if d < .55 else 17)
+                elif d <= 1.25 and dy > 0: put(cy + dy, cx + dx, 1)
+        put(cy - int(ry * .3), cx - int(rx * .3), 16); put(cy - int(ry * .3), cx - int(rx * .3) + 1, 16)
+    # xương vụn
+    for _ in range(C['bones']):
+        cy, cx = rng.integers(0, N, 2); L = int(rng.integers(3, 8)); d = [(0, 1), (1, 1), (1, -1), (0, 1)][int(rng.integers(4))]
         for t in range(L):
-            put(cy - t, x + (lean * t) // 2, 7 if t < L - 1 else 8)
-        put(cy + 1, x, 1)
-# xương vụn: đoạn ngắn 3-7 px sáng, mép dưới tối, đôi khi đầu khớp
-for _ in range(int(sys.argv[5]) if len(sys.argv) > 5 else 45):
-    cy, cx = rng.integers(0, N, 2); L = int(rng.integers(3, 8)); d = rng.choice([(0, 1), (1, 1), (1, -1), (0, 1)])
-    for t in range(L):
-        y, x = cy + d[0] * t, cx + d[1] * t
-        put(y, x, 12); put(y + 1, x, 13 if t not in (0, L - 1) else 1)
-    for e in (0, L - 1):
-        y, x = cy + d[0] * e, cx + d[1] * e; put(y - 1, x, 12); put(y, x + 1 if d[1] >= 0 else x - 1, 13)
-# đốm tro xám và vết máu khô
-for _ in range(500):
-    y, x = rng.integers(0, N, 2); put(y, x, 15)
-for _ in range(10):
-    cy, cx = rng.integers(0, N, 2); r = rng.uniform(1.5, 3.5)
-    for dy in range(-3, 4):
-        for dx in range(-4, 5):
-            if (dx / r) ** 2 + (dy / (r * .6)) ** 2 <= 1 and rng.random() < .8 and get(cy + dy, cx + dx) < 7: put(cy + dy, cx + dx, 14)
-# nứt ngắn gấp khúc
-for _ in range(14):
-    y, x = rng.integers(0, N, 2); ang = rng.random() * 6.28
-    for s in range(int(rng.integers(10, 28))):
-        if rng.random() < .25: ang += rng.choice([-.9, .9])
-        y += int(round(np.sin(ang))); x += int(round(np.cos(ang)))
-        if get(y, x) < 9: put(y, x, 0); 
-        if get(y + 1, x) < 7: put(y + 1, x, 5)
-img = Image.fromarray(P[idx].clip(0, 255).astype(np.uint8))
-img.save(out, optimize=True)
-print(out, img.size, len(img.getcolors(4096)), 'màu')
+            y, x = cy + d[0] * t, cx + d[1] * t; put(y, x, 12); put(y + 1, x, 13 if t not in (0, L - 1) else 1)
+        for e in (0, L - 1):
+            y, x = cy + d[0] * e, cx + d[1] * e; put(y - 1, x, 12); put(y, x + (1 if d[1] >= 0 else -1), 13)
+    # xích sắt gãy (Quỷ Môn Quan): mắt xích 3x2 nối nhau theo đường cong
+    for _ in range(C.get('chain', 0)):
+        y, x = rng.integers(0, N, 2); ang = rng.random() * 6.28
+        for i in range(int(rng.integers(5, 11))):
+            ang += rng.normal(0, .3); y += int(round(np.sin(ang) * 3)); x += int(round(np.cos(ang) * 3))
+            if i % 2 == 0:
+                for dx in range(3): put(y - 1, x + dx, 20); put(y + 1, x + dx, 19)
+                put(y, x, 19); put(y, x + 2, 19); put(y + 2, x + 1, 0)
+            else:
+                put(y - 1, x + 1, 20); put(y, x + 1, 19); put(y + 1, x + 1, 19); put(y + 2, x + 1, 0)
+    # cánh hoa bỉ ngạn rụng: mảnh 2-4 px cong, 3 tông đỏ
+    for _ in range(C.get('petals', 0) // 5):
+        ccy, ccx = rng.integers(0, N, 2)
+        for _ in range(int(rng.integers(2, 9))):
+            cy, cx = ccy + int(rng.integers(-14, 15)), ccx + int(rng.integers(-10, 11)); L = int(rng.integers(3, 7)); dx0 = int(rng.choice([-1, 1]))
+            for t in range(L):
+                y, x = cy + (t * t) // 4, cx + dx0 * t; put(y, x, 16 if t < 2 else 17); put(y + 1, x, 18 if t < L - 1 else 1)
+    # mảnh gương vỡ (Nghiệt Kính): tam giác nhỏ lạnh, 1 điểm loé
+    for _ in range(C.get('shards', 0)):
+        cy, cx = rng.integers(0, N, 2); s = int(rng.integers(2, 5)); fl = int(rng.choice([-1, 1]))
+        for yy in range(s):
+            for xx in range(s - yy): put(cy + yy, cx + fl * xx, 17 if xx + yy < s - 1 else 18)
+        put(cy, cx, 16); put(cy + s, cx, 1)
+    # tro + máu khô
+    for _ in range(C['ash']):
+        y, x = rng.integers(0, N, 2)
+        if get(y, x) < 9: put(y, x, 15)
+    for _ in range(C['blood']):
+        cy, cx = rng.integers(0, N, 2); r = rng.uniform(1.5, 4)
+        for dy in range(-3, 4):
+            for dx in range(-5, 6):
+                if (dx / r) ** 2 + (dy / (r * .6)) ** 2 <= 1 and rng.random() < .8 and get(cy + dy, cx + dx) < 7: put(cy + dy, cx + dx, 14)
+    # than hồng (Uổng Tử): lõi cam, viền đỏ sẫm, nằm trên đất cháy
+    for _ in range(C.get('embers', 0)):
+        cy, cx = rng.integers(0, N, 2); big = rng.random() < .3
+        put(cy, cx, 16 if big else 17)
+        for ey, ex in ((0, 1), (1, 0), (0, -1), (-1, 0)) if big else ((0, 1),):
+            if get(cy + ey, cx + ex) < 7: put(cy + ey, cx + ex, 18)
+    # nứt
+    for _ in range(C['cracks']):
+        y, x = rng.integers(0, N, 2); ang = rng.random() * 6.28
+        for s in range(int(rng.integers(10, 28))):
+            if rng.random() < .25: ang += rng.choice([-.9, .9])
+            y += int(round(np.sin(ang))); x += int(round(np.cos(ang)))
+            if get(y, x) < 9: put(y, x, 0)
+            if get(y + 1, x) < 7: put(y + 1, x, 5)
+    img = Image.fromarray(P[idx].clip(0, 255).astype(np.uint8))
+    out = f'game/assets/map/Dt_{key}.png'; img.save(out, optimize=True)
+    print(out, len(img.getcolors(4096)), 'màu')
+if __name__ == '__main__':
+    ks = list(PRESET) if sys.argv[1] == 'all' else [sys.argv[1]]
+    for k in ks: build(k, int(sys.argv[2]) if len(sys.argv) > 2 else 7)
