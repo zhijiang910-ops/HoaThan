@@ -1,0 +1,5 @@
+.lobby-wisps { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.lobby-wisps img { position:absolute; pointer-events:none; animation: lobby-wisp-pulse 2s ease-in-out infinite alternate; }
+@keyframes lobby-wisp-pulse { from {opacity:.91} to {opacity:1} }
+.lobby-wisps[data-reduced-motion="true"] img { animation:none }
+@media (prefers-reduced-motion: reduce) { .lobby-wisps img {animation:none} }

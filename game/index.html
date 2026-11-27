@@ -1862,6 +1862,7 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 #lbStage .lbleaf-l{clip-path:polygon(62.9% 27.5%,68.1% 27.5%,68.1% 49.4%,62.9% 49.4%);transform-origin:62.9% 38%}
 #lbStage .lbleaf-r{clip-path:polygon(68.1% 27.5%,73.8% 27.5%,73.8% 49.4%,68.1% 49.4%);transform-origin:73.8% 38%}
 #lbStage.dopen .lbleaf-l{transform:scaleX(.7) skewY(-3deg)}#lbStage.dopen .lbleaf-r{transform:scaleX(.7) skewY(3deg)}
+#lbStage .lobby-wisps{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}#lbStage .lobby-wisps img{position:absolute;pointer-events:none;user-select:none;animation:lobby-wisp-pulse 2s ease-in-out infinite alternate}@keyframes lobby-wisp-pulse{from{opacity:.91}to{opacity:1}}#lbStage .lobby-wisps[data-reduced-motion="true"] img{animation:none}@media (prefers-reduced-motion:reduce){#lbStage .lobby-wisps img{animation:none}}/* ma trơi sảnh 27/11: bộ ma-troi-trien-khai, toạ độ theo % tranh sảnh */
 #lbStage #lbFx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 /* ===== THANH SÁU Ô "TỦ GIAM HỒN" (chủ game 26/11): ảnh có sẵn khung, chỉ vẽ nhãn một lần; 6 vùng bấm theo % ảnh ===== */
 #lobby{--dw:min(calc(100vw - 12px),calc(100vh*2.75));--barH:calc(var(--dw)*0.1160)}
@@ -2241,6 +2242,7 @@ html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{wh
 <section id="lobby" class="screen" hidden>
  <div id="lbStage" aria-label="Sảnh Khử Tà Diệt Ma">
   <img id="lbArt" src="assets/ui/lobby/sanh.webp" alt="" draggable="false">
+  <div class="lobby-wisps" id="lbWisps" aria-hidden="true" data-reduced-motion="false"><img src="assets/ui/lobby/wisp_luc.png" alt="" draggable="false" style="left:15.719%;top:47.337%;width:10.254%;height:13.433%;animation-duration:2s;animation-delay:-0.700s"><img src="assets/ui/lobby/wisp_lam.png" alt="" draggable="false" style="left:38.099%;top:54.253%;width:9.356%;height:17.024%;animation-duration:1.33s;animation-delay:-1.697s"><img src="assets/ui/lobby/wisp_tim.png" alt="" draggable="false" style="left:88.997%;top:57.046%;width:1.647%;height:4.123%;animation-duration:2s;animation-delay:-3.963s"><img src="assets/ui/lobby/wisp_do.png" alt="" draggable="false" style="left:94.237%;top:62.366%;width:1.497%;height:3.591%;animation-duration:1.33s;animation-delay:-4.197s"></div>
   <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
   <div class="lbsp lbsp-b" id="lbBridge"><button type="button" class="lbz" aria-label="Xuất Trận" title="Xuất Trận: chọn ải"></button><button type="button" class="lbtag">Xuất Trận</button></div>
   <div class="lbsp lbsp-d" id="lbDoor"><i class="lbtal" aria-hidden="true"></i><button type="button" class="lbz" aria-label="Quỷ Môn Quan" title="Quỷ Môn Quan: Âm Giới"></button><button type="button" class="lbtag">Quỷ Môn Quan</button></div>
@@ -5448,7 +5450,7 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(p
  $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}" aria-label="${t.lbn||t.n}" title="${t.lbn||t.n}"><i aria-hidden="true">${t.g}</i><b>${t.lbn||t.n}</b><small>${t.st()}</small></button>`).join('');$('#lbGrid').classList.toggle('g7',LBT.filter(t=>!t.hide).length>6);{const am=$('#lbAmS');if(am)am.textContent=amStatus();}$('#againBtn').hidden=false;
  {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?RN(cp.rmap)+' '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss · bấm để kết toán':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
  $('#lbGoS').textContent=save.bossChest?'Có rương Boss chờ: nhận trước khi hạ Boss lần nữa':RN(sel.map)+' · đã mở '+stars(rprog().star);
- $('#lbRes').textContent=String(save.ngoc||0);$('#lbRes').title='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;
+ $('#lbRes').textContent=String(save.ngoc||0);$('#lbRes').title='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;wispSync();
  lobbyTick();setTimeout(lobbyPics,350);setTimeout(lobbyPics,1500);clearInterval(window.__lbh);window.__lbh=setInterval(()=>{if($('#lobby').hidden){clearInterval(window.__lbh);return}lobbyHero()},125);clearInterval(lbTimer);lbTimer=setInterval(()=>{if($('#lobby').hidden){clearInterval(lbTimer);return}lobbyTick()},1000)}
 function dimCanvas(cn){const g=cn.getContext('2d'),a={lbBg:.58}[cn.id]||0;if(!a)return;g.save();g.setTransform(1,0,0,1,0,0);g.fillStyle='rgba(6,4,3,'+a+')';g.fillRect(0,0,cn.width,cn.height);g.restore()}
 function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!P0||$('#lobby').hidden)return;paintLobbyAvatar(P0);try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MAPS.amdia,1);dimCanvas(cn)}catch(e){}}
@@ -5532,7 +5534,8 @@ $('#lbBossChest').addEventListener('click',()=>{
 $('#lbCont').addEventListener('click',()=>{if(save.cp)resumeCP()});
 $('#backLobby').addEventListener('click',showLobby); $('#backLobbyTop').addEventListener('click',()=>$('#backLobby').click());
 $('#routeBox').addEventListener('change',e=>{if(e.target.id==='keoChk'){sel.keo=e.target.checked;save.keo=sel.keo;persist()}});
-$('#lowfx3').addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist()});
+$('#lowfx3').addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist();wispSync()});
+function wispSync(){const w=$('#lbWisps');if(w)w.dataset.reducedMotion=String(!!LOWFX)}wispSync();
 /* ================= CẤP TRANG BỊ · BÍ TỊCH · ĐAN DƯỢC ================= */
 function itemLv(){return Math.max(1,(G&&G.level)||1)}
 function ilv(it){return it&&it.lv?'Cấp '+it.lv+' · ':''}
@@ -6419,7 +6422,7 @@ function pauseStats(){const t=Math.floor(G.t),mm=String(Math.floor(t/60)).padSta
  const row=(k,v)=>`<div><span>${k}</span><b>${v}</b></div>`;
  $('#pzStats').innerHTML=row('Màn',G.stage)+row('Đợt',G.wave>=10?'Trùm':G.sw+'/5')+row('Thời gian',mm+':'+ss)+row('Hạ gục',G.kills)+row('Cấp',G.level)+row('Tiền',G.coins)+row('Sát thương',G.dmgDealt>=1e6?(G.dmgDealt/1e6).toFixed(1)+'M':G.dmgDealt>=1e4?Math.round(G.dmgDealt/1e3)+'K':Math.round(G.dmgDealt))+row('Bản đồ',MAPS[G.cfg.map].name)}
 {const p=document.getElementById('optPerf');if(p)p.addEventListener('change',e=>perfSet(e.target.checked))}
-for(const id of['#lowfx1','#lowfx2'])$(id).addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist()});
+for(const id of['#lowfx1','#lowfx2'])$(id).addEventListener('change',e=>{LOWFX=e.target.checked;save.lowfx=LOWFX;persist();wispSync()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&!rotationBlocked()&&G&&G.state==='play'&&!G.paused&&!G.inspect)togglePause()});
 $('#startBtn').addEventListener('click',newRun);
 $('#againBtn').addEventListener('click',()=>{if(save.cp){$('#end').hidden=true;resumeCP()}else newRun()});
