@@ -2120,6 +2120,12 @@ html body #inv .gs .item.gset canvas,html body #inv .gb .item.gset canvas,html b
 #lbm.dt3 .dtr b{color:#7a1810}#lbm.dt3 .dtr small{font-size:.8em;color:#5a3e24}#lbm.dt3 .dtr .warn{color:#8a2a10;font-size:.9em}
 #lbm.dt3 #dtGo{padding:0;border:0;background:transparent;min-height:0!important;color:#f6e4bc;font:700 max(12px,calc(var(--u)*60))/1 Charmonman,"Noto Serif",serif;text-shadow:0 2px 0 #2a0406,0 0 6px #3a0508;cursor:pointer}
 #lbm.dt3 #dtGo:disabled{color:#a88a78;cursor:default}
+/* 27/11 lag popup: sảnh dừng mọi animation khi bị popup che; popup là lớp vẽ riêng nên thay đổi ở sảnh không bắt vẽ lại popup và ngược lại */
+#lobby.lbpause,#lobby.lbpause *{animation-play-state:paused!important}
+#lobby.lbpause #lbFx{visibility:hidden}
+#inv .ipf.v3,#lbm.dt3 .lbmp{will-change:transform;contain:layout paint}
+#lbm.dt3 .dtbites i{mix-blend-mode:normal!important}
+#lbm.dt3 #dtLeft{display:inline-block;contain:content;font-variant-numeric:tabular-nums}
 /* nút xúc xắc đặt tên ngẫu nhiên */
 #create .crnw{position:relative;display:flex}
 #create .crnw #crName{flex:1;padding-right:clamp(34px,9vh,48px)!important}
@@ -5437,7 +5443,9 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(p
  lobbyTick();setTimeout(lobbyPics,350);setTimeout(lobbyPics,1500);clearInterval(window.__lbh);window.__lbh=setInterval(()=>{if($('#lobby').hidden){clearInterval(window.__lbh);return}lobbyHero()},125);clearInterval(lbTimer);lbTimer=setInterval(()=>{if($('#lobby').hidden){clearInterval(lbTimer);return}lobbyTick()},1000)}
 function dimCanvas(cn){const g=cn.getContext('2d'),a={lbBg:.58}[cn.id]||0;if(!a)return;g.save();g.setTransform(1,0,0,1,0,0);g.fillStyle='rgba(6,4,3,'+a+')';g.fillRect(0,0,cn.width,cn.height);g.restore()}
 function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!P0||$('#lobby').hidden)return;paintLobbyAvatar(P0);try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MAPS.amdia,1);dimCanvas(cn)}catch(e){}}
-let lbHeroT=0;function lobbyHero(){const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
+/* 27/11 lag popup: khi Hành Nang/Thụ Lộc/cửa sổ sảnh đang mở, sảnh phía sau đứng yên (không vẽ lại nhân vật, không canh khung, CSS animation tạm dừng) */
+function lbCovered(){const i=$('#inv'),m=$('#lbm'),c=!!((i&&!i.hidden)||(m&&!m.hidden));const L=$('#lobby');if(L)L.classList.toggle('lbpause',c);return c}
+let lbHeroT=0;function lobbyHero(){if(lbCovered())return;const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
  /* 26/11 sảnh mới: nhân vật theo hồ sơ (lớp vũ khí của phái, vũ khí + trang phục đang mặc), canvas 480x400, chân tại (240,372) */
  const prev=HERO;window.__lbW=profWeapon();try{if(useHero(P0.gender,profWeapon())){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.save();g.scale(2,2);g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore();HERO=prev}}finally{window.__lbW=null}lbHeroT+=0.125}
 function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="diemtam"] small');if(t)t.textContent=dtShort()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
@@ -5449,7 +5457,7 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
 /* ===== SẢNH SÂN KHẤU (26/11): ảnh nền, nhân vật, 2 vùng bấm CÙNG hệ tọa độ ảnh 1672x941, co giãn/dịch chuyển cùng nhau ===== */
 const LB_AR=1672/941;
-function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden)return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;
+function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden||lbCovered())return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;
  const W=Math.max(vw,vh*LB_AR),H=W/LB_AR,bar=$('#lbGrid'),barH=bar?bar.offsetHeight:0;
  /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
  const target=vh-barH-Math.max(12,vh*0.08);let off=H*0.72-target;off=Math.max(0,Math.min(off,H-vh));
