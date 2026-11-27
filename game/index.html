@@ -2191,6 +2191,42 @@ html body #create .cxbar #crGo.busy{pointer-events:none}
 @media (prefers-reduced-motion:reduce){#lbStage .lobby-wisps .wf{animation:none}}
 #lobby.lbpause .lobby-wisps .wf{animation-play-state:paused}
 </style>
+<style id="hudSanh">
+/* 27/11 HUD nhân vật góc trên trái sảnh: khung gỗ xích (ảnh chủ game, lòng khung đã xóa bằng cong_cu/claude/hud_khung.py), avatar tròn viền đồng, cột: tên + cấp, EXP, Lực chiến (icon kiếm), thể lực. Toạ độ theo % ảnh khung 1789x699, chữ theo cqw. */
+html body #lobby .lbprof.lbprof{position:absolute!important;left:max(16px,env(safe-area-inset-left))!important;top:max(10px,env(safe-area-inset-top))!important;right:auto!important;bottom:auto!important;
+ width:clamp(226px,min(24.4vw,43.3vh),312px)!important;height:auto!important;aspect-ratio:1789/699;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;display:block!important;
+ background:url(assets/ui/lobby/hud_khung_450.webp) 0 0/100% 100% no-repeat!important;
+ background-image:-webkit-image-set(url(assets/ui/lobby/hud_khung_450.webp) 1x,url(assets/ui/lobby/hud_khung_600.webp) 2x,url(assets/ui/lobby/hud_khung_900.webp) 3x)!important;
+ background-image:image-set(url(assets/ui/lobby/hud_khung_450.webp) 1x,url(assets/ui/lobby/hud_khung_600.webp) 2x,url(assets/ui/lobby/hud_khung_900.webp) 3x)!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.55));container-type:inline-size;pointer-events:auto;overflow:visible!important;z-index:6}
+html body #lobby .lbprof.lbprof::before,html body #lobby .lbprof.lbprof::after{display:none!important;content:none!important}
+html body #lobby .lbprof #lbAva{position:absolute!important;left:14.980%!important;top:22.890%!important;width:19.229%!important;height:auto!important;aspect-ratio:1;margin:0!important;border-radius:50%!important;
+ box-shadow:0 0 0 max(1px,.45cqw) #2a1a10,0 0 0 max(2px,1.05cqw) #8a6a3a,0 0 0 max(3px,1.45cqw) #3a2614,0 2px 6px max(3px,1.4cqw) rgba(0,0,0,.6)!important;background:#1a1410}
+html body #lobby .lbprof .lbinfo{display:contents!important}
+html body #lobby .lbprof .lbnr{position:absolute;left:35.774%;width:36.892%;top:13.734%;height:13.734%;display:flex;align-items:baseline;gap:4%;white-space:nowrap;min-width:0}
+html body #lobby .lbprof #lbName{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 max(11px,4.35cqw)/1.15 'Noto Serif',Georgia,serif!important;color:#f1e4c6!important;text-shadow:0 1px 0 #000,0 0 3px rgba(0,0,0,.8)!important;letter-spacing:0!important;margin:0!important;padding:0!important}
+html body #lobby .lbprof .lblv{flex:none;font:600 max(8px,3.1cqw)/1.15 'Noto Serif',Georgia,serif!important;color:#c9a46a!important;text-shadow:0 1px 0 #000!important;margin:0!important;padding:0!important;background:none!important;border:0!important}
+html body #lobby .lbprof .lblv i{font-style:normal!important;color:inherit!important}
+html body #lobby .lbprof .lbbar{position:absolute!important;left:35.774%!important;width:43.041%!important;margin:0!important;border-radius:max(2px,.8cqw)!important;overflow:hidden!important;background:#0d0907!important;border:max(1px,.35cqw) solid #4a3020!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.8)!important;padding:0!important}
+html body #lobby .lbprof .lbbar.xp{top:28.612%!important;height:9.156%!important}
+html body #lobby .lbprof .lbbar.sta{top:62.947%!important;height:10.300%!important}
+html body #lobby .lbprof .lbbar>i{position:absolute!important;left:0!important;top:0!important;bottom:0!important;height:auto!important;display:block!important;border-radius:0!important;margin:0!important}
+html body #lobby .lbprof .lbbar.xp>i{background:linear-gradient(#e8c47a,#b8863a 55%,#7a5420)!important;box-shadow:none!important}
+html body #lobby .lbprof .lbbar.sta>i{background:linear-gradient(#9a72c8,#6a4796 55%,#46306a)!important;box-shadow:none!important}
+html body #lobby .lbprof .lbbar>em{position:absolute!important;inset:0!important;display:flex!important;align-items:center;justify-content:center;font:700 max(7px,2.5cqw)/1 'Noto Serif',Georgia,serif!important;font-style:normal!important;color:#f4e8cc!important;text-shadow:0 0 2px #000,0 1px 0 #000!important;letter-spacing:.02em;white-space:nowrap}
+html body #lobby .lbprof .lbbar.sta>em{font-size:max(7px,2.85cqw)!important}
+html body #lobby .lbprof #lbStaN{display:none!important}
+html body #lobby .lbprof .lbcp.lbcp{position:absolute!important;left:35.774%!important;width:43.041%!important;top:40.343%!important;height:18.312%!important;margin:0!important;padding:0 2.2cqw 0 0!important;display:flex!important;align-items:center;gap:1.2cqw;box-sizing:border-box;
+ background:linear-gradient(90deg,#3a1410,#5a1e16 40%,#4a1912 75%,#2a0e0b)!important;border:max(1px,.35cqw) solid #6a3a20!important;border-radius:max(3px,1.4cqw)!important;box-shadow:inset 0 1px 0 rgba(255,200,140,.12),inset 0 -2px 3px rgba(0,0,0,.5)!important;
+ -webkit-mask:none!important;mask:none!important;overflow:visible!important}
+html body #lobby .lbprof .lbcp .cpi{flex:none!important;width:max(20px,9.1cqw)!important;height:max(20px,9.1cqw)!important;margin:0 0 0 -2.4cqw!important;display:block!important;
+ background:url(assets/ui/lobby/ic_lucchien_28.png) center/contain no-repeat!important;
+ background-image:-webkit-image-set(url(assets/ui/lobby/ic_lucchien_28.png) 1x,url(assets/ui/lobby/ic_lucchien_56.png) 2x,url(assets/ui/lobby/ic_lucchien_84.png) 3x)!important;
+ background-image:image-set(url(assets/ui/lobby/ic_lucchien_28.png) 1x,url(assets/ui/lobby/ic_lucchien_56.png) 2x,url(assets/ui/lobby/ic_lucchien_84.png) 3x)!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.7))!important;border:0!important;box-shadow:none!important}
+html body #lobby .lbprof .lbcp .cpi::before,html body #lobby .lbprof .lbcp .cpi::after{display:none!important}
+html body #lobby .lbprof .lbcp small{display:block!important;flex:none;font:600 max(8px,3.1cqw)/1 'Noto Serif',Georgia,serif!important;color:#e8d3a8!important;text-shadow:0 1px 0 #000!important;white-space:nowrap;margin:0!important;letter-spacing:0!important}
+html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!important;text-align:right;font:800 max(10px,4.2cqw)/1 'Noto Serif',Georgia,serif!important;color:#f0a650!important;text-shadow:0 1px 0 #2a0a00,0 0 4px rgba(0,0,0,.7)!important;white-space:nowrap;letter-spacing:0!important;font-variant-numeric:tabular-nums}
+</style>
 </head>
 <body>
 <canvas id="cv"></canvas>
@@ -2285,7 +2321,7 @@ html body #create .cxbar #crGo.busy{pointer-events:none}
  <canvas id="lbBg" width="640" height="400"></canvas>
  <div class="lb">
   <div class="lbl">
-   <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i></span>
+   <div class="lbprof"><canvas id="lbAva" width="160" height="160"></canvas><div class="lbinfo"><div class="lbnr"><b id="lbName"></b><span class="lblv">Cấp <i id="lbLv">1</i></span></div>
     <div class="lbbar xp" title="Kinh nghiệm nhân vật"><i id="lbXp"></i><em id="lbXpT"></em></div>
     <div class="lbcp" title="Lực chiến: sức mạnh tổng từ chỉ số, trang bị và cấp"><i class="cpi" aria-hidden="true"></i><small>Lực chiến</small><b id="lbCp">0</b></div>
     <div class="lbbar sta" title="Thể lực: nhận rương trùm tốn thể lực"><i id="lbSta"></i><em id="lbStaT"></em></div><small id="lbStaN"></small></div></div>
