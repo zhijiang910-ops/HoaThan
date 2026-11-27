@@ -1884,6 +1884,21 @@ html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;c
 html body #lobby .lbgrid.lbgrid.g7>[data-lb=tangbao] i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:url(assets/ui/lobby/ic_tangbao.webp) center/contain no-repeat!important;filter:drop-shadow(0 1px 2px #000)}
 html body #lobby .lbgrid.lbgrid.g7>[data-lb=inv] i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:url(assets/ui/lobby/ic_inv.webp) center/contain no-repeat!important;filter:drop-shadow(0 1px 2px #000)}
 html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyendan] i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:url(assets/ui/lobby/ic_luyendan.webp) center/contain no-repeat!important;filter:drop-shadow(0 1px 2px #000)}
+/* 27/11 khung riêng: ô đá (Hành Nang), khung gỗ (Thụ Lộc), nút đỏ Khởi hành. Khung là ảnh pixel 1:1 CSS px (cỡ do kfFit chọn), lọc nearest; icon và chữ là lớp riêng để game thay được */
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf{justify-content:flex-end!important;padding-bottom:var(--kfb,4px)!important;overflow:visible!important}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf>i{position:relative;width:var(--kfw)!important;height:var(--kfh)!important;margin:0 0 var(--kfg,1px)!important;background:var(--kfi) 0 0/100% 100% no-repeat!important;image-rendering:pixelated;filter:drop-shadow(0 2px 2px rgba(0,0,0,.7))!important;flex:none}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf>i::after{content:"";position:absolute;left:var(--kfx,18%);right:var(--kfx,18%);top:var(--kfy,18%);bottom:var(--kfy,18%);background:var(--kfc) center/contain no-repeat;filter:drop-shadow(0 1px 1px #000)}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf[data-lb=inv]>i::after{--kfc:url(assets/ui/lobby/ic_inv.webp)}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf[data-lb=diemtam]>i::after{--kfc:url(assets/ui/lobby/ic_diemtam.webp)}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf[data-lb=diemtam]>small{top:auto!important;bottom:calc(var(--kfb,4px) + var(--kfg,1px) + var(--kfh) - 6px)!important;left:calc(50% + var(--kfw)/2 - 4px)!important;right:auto!important;transform:none!important}
+#create #crGo{--nd:48px;--ndi:url(assets/ui/khung/nut_do_48.png)}
+@media (max-height:600px){#create #crGo{--nd:40px;--ndi:url(assets/ui/khung/nut_do_40.png)}}
+@media (max-height:300px){#create #crGo{--nd:34px;--ndi:url(assets/ui/khung/nut_do_34.png)}}
+html body #create .cxbar #crGo{height:var(--nd)!important;min-height:0!important;padding:0 4px calc(var(--nd)*.12)!important;background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;border-image-source:var(--ndi)!important;border-image-width:0 var(--nd)!important;border-image-repeat:stretch!important;border-image-slice:0 var(--ndn) 0 var(--ndn) fill!important;image-rendering:pixelated;color:#ecdcb6!important;font:700 calc(var(--nd)*.42)/1 Georgia,"Noto Serif",serif!important;letter-spacing:.04em;text-shadow:0 1px 0 #2a0505,0 0 4px rgba(20,0,0,.9)!important;white-space:nowrap;overflow:visible}
+#create #crGo{--ndn:48}@media (max-height:600px){#create #crGo{--ndn:40}}@media (max-height:300px){#create #crGo{--ndn:34}}
+@media (max-width:720px){html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt.kf[data-lb=diemtam]>small{bottom:calc(var(--kfb,4px) + var(--kfg,1px) + var(--kfh) + 1px)!important;left:50%!important;transform:translateX(-50%)!important}}
+html body #create #crGo::after,html body #create #crGo::before{display:none!important}
+html body #create .cxbar #crGo:disabled{filter:grayscale(.6) brightness(.8)}
 /* nút xúc xắc đặt tên ngẫu nhiên */
 #create .crnw{position:relative;display:flex}
 #create .crnw #crName{flex:1;padding-right:clamp(34px,9vh,48px)!important}
@@ -5200,7 +5215,10 @@ function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden)
  const W=Math.max(vw,vh*LB_AR),H=W/LB_AR,bar=$('#lbGrid'),barH=bar?bar.offsetHeight:0;
  /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
  const target=vh-barH-Math.max(12,vh*0.08);let off=H*0.72-target;off=Math.max(0,Math.min(off,H-vh));
- st.style.width=W+'px';st.style.height=H+'px';st.style.left=((vw-W)/2)+'px';st.style.top=(-off)+'px';st.style.setProperty('--sh',H+'px')}
+ st.style.width=W+'px';st.style.height=H+'px';st.style.left=((vw-W)/2)+'px';st.style.top=(-off)+'px';st.style.setProperty('--sh',H+'px');kfFit()}
+/* ô đá Hành Nang, khung gỗ Thụ Lộc: chọn ảnh khung lớn nhất vừa chỗ (cao khoang trừ chữ, được nhô lên 30% khoang), vẽ 1:1 */
+const KF_N=[72,64,56,48,40,32],KF_W={o_da:[75,66,58,50,41,33],khung_go:[56,49,43,37,31,25]};function kfFit(){const ref=$('#lbGrid .lbt[data-lb=luyendan]');if(!ref)return;const R=ref.getBoundingClientRect(),lb=ref.querySelector('b');if(!R.height||!lb)return;const B=lb.getBoundingClientRect(),gap=Math.max(2,Math.round(R.bottom-B.bottom)),avail=B.top-R.top+R.height*.3-2;const n=KF_N.find(v=>v<=avail)||32;
+ for(const [k,f,ar] of [['inv','o_da',KF_W.o_da],['diemtam','khung_go',KF_W.khung_go]]){const e=$('#lbGrid .lbt[data-lb='+k+']');if(!e)continue;e.classList.add('kf');const st=e.style;st.setProperty('--kfh',n+'px');st.setProperty('--kfw',ar[KF_N.indexOf(n)]+'px');st.setProperty('--kfi','url(assets/ui/khung/'+f+'_'+n+'.png)');st.setProperty('--kfb',gap+'px')}}
 if(window.ResizeObserver)new ResizeObserver(lbStageFit).observe($('#lobby'));addEventListener('resize',lbStageFit);setInterval(lbStageFit,1000);
 /* hiệu ứng canvas #lbFx: sóng chuông + tia vàng (cầu), khói đen tràn từ cửa (cổng) */
 const LBFX={p:[],on:0,t:0,spr:{}};
