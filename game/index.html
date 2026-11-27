@@ -2816,11 +2816,13 @@ function heroFrame(){
  return['idle',Math.floor(P.t*4)%HERO.meta.anims.idle.f.length];
 }
 /* 27/11 bản thử Vạn Kiếm (gói chủ game vankiem-goi-cho-claude): sprite nháp Mao Sơn nam 4 khung 160×128 (đứng, ghìm, chỉ tay, thu tay), chỉ dùng khi đang mặc Bát Quái Bào nam (hero_nam_ms) và đứng yên; trang phục/giới khác dùng động tác cũ */
-const VKPOSE=new Image();VKPOSE.src='assets/hero_nam_ms_vk.png';
+/* 28/11: tư thế Vạn Kiếm cho từng bộ áo: sheet 4 khung hero_<giới>[_<bộ>]_vk.png (dy: chân sheet ms gốc thấp hơn master 2px). Bộ chưa có sheet thì vung kiếm cũ. Sheet mặc định đi qua hairSheet để nhuộm cùng màu áo. */
+const VK_SHEETS={hero_nam_ms:2,hero_nam:0,hero_nam_hg:0},VKP={};
+function vkSheet(id){if(!(id in VK_SHEETS))return null;let v=VKP[id];if(!v){const img=new Image();img.src='assets/'+id+'_vk.png';v=VKP[id]={img,dy:VK_SHEETS[id],h:{id,wg:id.split('_')[1],img,ok:false,_hc:{}}};img.onload=()=>{v.h.ok=true}}return v.img.complete&&v.img.naturalWidth>0?v:null}
 function vkPoseFi(){const p=P&&P._vkp2;if(!p||!G)return -1;const dt=G.t-p.t0;if(dt<2.15||dt>=3.45)return -1;return dt<2.45?0:dt<2.75?1:dt<3.2?2:3}
-window.__vkPose=()=>({fi:vkPoseFi(),on:vkPoseOn(),hero:HERO&&HERO.id});function vkPoseOn(){return HERO&&HERO.id==='hero_nam_ms'&&VKPOSE.complete&&VKPOSE.naturalWidth>0&&P&&!P.moving&&!P.deadAt&&vkPoseFi()>=0}
+window.__vkPose=()=>({fi:vkPoseFi(),on:vkPoseOn(),hero:HERO&&HERO.id});function vkPoseOn(){return HERO&&vkSheet(HERO.id)&&P&&!P.moving&&!P.deadAt&&vkPoseFi()>=0}
 function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
- if(c===X&&!flash&&vkPoseOn()){const M=HERO.meta,i=vkPoseFi();c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(P._vkp2.f*sc,sc);if(alpha!=null)c.globalAlpha=alpha;c.drawImage(VKPOSE,i*160,0,160,128,-M.ax,-M.ay-2,160,128);c.restore();return}
+ if(c===X&&!flash&&vkPoseOn()){const M=HERO.meta,i=vkPoseFi();c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(P._vkp2.f*sc,sc);if(alpha!=null)c.globalAlpha=alpha;const V=vkSheet(HERO.id);c.drawImage(hairSheet(V.h)||V.img,i*160,0,160,128,-M.ax,-M.ay-V.dy,160,128);c.restore();return}
  const M=HERO.meta,A=M.anims[an],fr=A.f[fi];if(fr[2])f=-f;c.save();c.imageSmoothingEnabled=false;
  /* chạy = động tác đi bộ của gói + ngả người, nhún theo bước (không vẽ lại pixel) */
  let k=0,bob=0;if(c===X){if(an==='run'&&M.realRun){bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='run'&&!M.realRun){k=0.08;bob=-Math.round(Math.abs(Math.sin(fi/A.f.length*TAU))*2)}else if(an==='dash')k=0.12;else if(an==='brake')k=-0.06}
@@ -4699,8 +4701,8 @@ function trPanel(){let b=document.getElementById('trP');if(b)b.remove();b=docume
   else if(k==='god'){const ks=Object.keys(GODS),i=ks.indexOf(Object.keys(GODS).find(x=>GODS[x]===P.god.def));TR.god=ks[(i+1)%ks.length];trSave();startTraining();return}
   else if(k==='slow'){TR.scale=TR.scale<1?1:0.25;G.trScale=TR.scale;t.classList.toggle('on',TR.scale<1)}
   else if(k==='godmode'){TR.god_on=G.trGod=!TR.god_on;t.classList.toggle('on',TR.god_on)}
-  else if(k==='vktest'){if(!TR.fold){TR.fold=true;b.classList.add('fold');const fb=b.querySelector('[data-t=fold]');if(fb)fb.textContent='Mở bảng ▾';trSave()}/* 28/11 nút TEST (xóa khi duyệt xong): đổi sang nam + Bát Quái Bào (bản có tư thế chỉ tay) rồi tung Vạn Kiếm Tru Ma về phía mặt nhân vật */const go=()=>{if(!G||!P||!P.kit||!P.kit.ult)return;const u=P.kit.ult;u.lvl=Math.max(1,u.lvl);u.cd=0;P.mp=S.mp;P.vx=P.vy=0;const f=P.facing===-1?-1:1;u.def.cast({x:P.x+f*330,y:P.y},u.lvl);u.cd=u.def.cd};
-   if((HERO.wg||'nam')!=='nam'||TR.outfit!=='ms'){TR.gender='nam';TR.outfit='ms';trSave();startTraining();setTimeout(go,900);return}go()}
+  else if(k==='vktest'){if(!TR.fold){TR.fold=true;b.classList.add('fold');const fb=b.querySelector('[data-t=fold]');if(fb)fb.textContent='Mở bảng ▾';trSave()}/* 28/11 nút TEST (xóa khi duyệt xong): tung Vạn Kiếm Tru Ma về phía mặt nhân vật */const go=()=>{if(!G||!P||!P.kit||!P.kit.ult)return;const u=P.kit.ult;u.lvl=Math.max(1,u.lvl);u.cd=0;P.mp=S.mp;P.vx=P.vy=0;const f=P.facing===-1?-1:1;u.def.cast({x:P.x+f*330,y:P.y},u.lvl);u.cd=u.def.cd};
+   go()}/* 28/11: dùng bộ áo và giới đang thử (đổi bằng nút Áo / Luyện Công) */
   else if(k==='mob'){for(let i=0;i<4;i++){const a=rnd(0,TAU);spawnEnemy(i===3?'can':'tieu',clamp(P.x+Math.cos(a)*260,40,AW-40),clamp(P.y+Math.sin(a)*200,40,AH-40))}}
   else if(k==='reset'){trPlaceDummies()}
   else if(k==='ao'){TR.outfit=({'':'hg',hg:'ms',ms:''})[TR.outfit||'']||'hg';const g=HERO.wg||'nam';useHero(g,'kiem');t.textContent='Áo: '+(({hg:'Huyền Giáp',ms:'Bát Quái Bào'})[TR.outfit]||'Mặc định')}
