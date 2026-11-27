@@ -3023,15 +3023,12 @@ const WEAPONS={
     else if(M===2){later(2.05,()=>{G.shake=Math.max(G.shake||0,5);fx({k:'ring',x:TX,y:TY,r0:6,r1:60,c:'#fff3c0',T:0.25})},null);later(2.55,()=>fin(TX,TY,1),null)}
     else later(2.8,()=>fin(TX,TY,1.1),null);
     notice('Vạn Kiếm Tru Ma')}},
-  {id:'k7',hotkey:'C',power:52,name:'Thái Thượng Trảm Ma',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Triệu một cự kiếm từ trời giáng xuống chỗ đông quái nhất, cắm xuống gây sát thương diện rộng, choáng quái trong vùng; năm lá ngũ lôi phù rơi theo thế ngũ giác, kiếm chạm đất thì năm tia sấm vàng giáng xuống bùa và sét vàng lan quanh trong bát quái.',up:'+25% sát thương, +10 bán kính',
+  {id:'k7',hotkey:'C',power:52,name:'Thái Thượng Trảm Ma',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Phi kiếm vút lên trời, vùng quái đông nhất tối sầm, mưa kiếm trút xuống rồi một cự kiếm giáng xuống cắm ngập vào đất, gây sát thương diện rộng và choáng quái trong vùng.',up:'+25% sát thương, +10 bán kính',
    /* skill RIÊNG (24/11, chủ game): cự kiếm `cukiem.png` rơi 0,55 s, nổ sét đen đỏ `set_no_do`, trước là đòn kết của Vạn Kiếm */
    cast(tg,l){const t0=densest(P.x,P.y,this.range)||tg,tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw(),R=150+10*(l-1);sfx('wanjian_launch',0.55,0.12);
-    const FALL=1.35;addZone({kind:'vkbig',T:FALL+1.2,fall:FALL,src:'h',x:tx,y:ty,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
-    /* 25/11 bùa chú NGŨ LÔI PHÙ: bát quái vàng trải dưới điểm giáng, 5 lá bùa vàng rơi từ trời xuống 5 đỉnh ngũ giác quanh cự kiếm; kiếm chạm thì 5 tia sấm vàng giáng xuống đúng 5 bùa */
-    const FIVE=[0,1,2,3,4].map(i=>{const an=-Math.PI/2+i*TAU/5;return{x:tx+Math.cos(an)*R*0.72,y:ty+Math.sin(an)*R*0.72*0.55}});
-    if(vok('bagua_vang'))fx({k:'img',n:'bagua_vang',x:tx,y:ty+4,s0:0.5,s1:R*2.3/220,sy:0.42,spin:0.9,T:FALL+1.1,al:0.62,add:1,gr:1});
-    if(vok('bua_vang'))FIVE.forEach((q,i)=>fx({k:'bua',n:'bua_vang',x0:q.x+rnd(-20,20),y0:q.y-300,x1:q.x,y1:q.y-18,fl:0.5+i*0.08,rt:(i%2?0.2:-0.2),T:FALL+0.9}));
-    later(FALL+0.06,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,8);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ffd45a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#4a3006',T:0.5});burst(tx,ty,'#ffd45a',14);burst(tx,ty,'#3a2606',10);const NO=vok('set_no_vang')?'set_no_vang':'set_no_do';if(vok(NO)){fx({k:'sp',s:NO,x:tx,y:ty+4,sc:1.7,T:1.0,al:0.78});later(0.22,()=>{fx({k:'sp',s:NO,x:tx,y:ty+4,sc:1.1,T:0.8,al:0.65})},null)}if(vok('set_bolt_vang'))FIVE.forEach((q,i)=>{later(0.12+i*0.1,()=>{fx({k:'sp',s:'set_bolt_vang',x:q.x,y:q.y,sc:1.4,T:0.8,al:1});fx({k:'ring',x:q.x,y:q.y,r0:4,r1:34,c:'#fff0a0',T:0.3});fx({k:'ring',x:q.x,y:q.y,r0:2,r1:16,c:'#ffffff',T:0.16});if(vok(NO))fx({k:'sp',s:NO,x:q.x,y:q.y+2,sc:0.5,T:0.5,al:0.9});burst(q.x,q.y,'#ffe08a',9);G.shake=Math.max(G.shake||0,2)},null)});sfx('sword_hit',0.7,0.1)},null);
+    /* 27/11 chủ game: thay bằng MƯA KIẾM (vkx2 hướng 3): kiếm bay lên trời, vùng tối lại, mưa kiếm, cự kiếm giáng CẮM xuống đất; sát thương một đòn như cũ, lúc cự kiếm chạm đất (2,8 s) */
+    const ang=Math.atan2(ty-P.y,tx-P.x),Dt=Math.max(60,Math.hypot(tx-P.x,ty-P.y));addZone({kind:'vkx2',T:3.9,src:'h',x:P.x,y:P.y,a:ang,ca:Math.cos(ang),sa:Math.sin(ang),Dt,gx:tx,gy:ty,R,n:12,m:3,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
+    later(2.8,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,10);G.flash=Math.max(G.flash||0,0.2);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ffd45a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#3a2606',T:0.5});burst(tx,ty,'#ffd45a',14);burst(tx,ty,'#2a2218',14);if(vok('set_no_vang'))fx({k:'sp',s:'set_no_vang',x:tx,y:ty+4,sc:1.4,T:0.8,al:0.7});sfx('sword_hit',0.7,0.1)},null);
     notice('Thái Thượng Trảm Ma')}},
  ]},
  quyen:{name:'Quyền',g:'拳',role:'Cận chiến, liên kích, cương khí',tr:'Liên quyền, quyền khí xuyên, chấn địa, liên hoàn cương quyền',kit:[
@@ -4324,19 +4321,20 @@ function drawZone(z){
    if(tt>2.15){/* cự kiếm cắm xuống tâm */const land=TY-Lg/2+6,top=TY-360,k=Math.min(1,(tt-2.15)/0.4),cy=top+(land-top)*k*k*k,al=tt<3.3?Math.min(1,(tt-2.15)/0.12):Math.max(0,1-(tt-3.3)/0.35);
     c.save();c.globalAlpha=0.35*k*al;c.fillStyle='#0b1226';c.beginPath();c.ellipse(TX,TY+4,20+40*k,8+14*k,0,0,TAU);c.fill();c.restore();
     if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);sw(TX,cy,Math.PI/2,BS,al,26);if(tt>2.55&&tt<2.95)glow(TX,TY,150,0.6*(1-(tt-2.55)/0.4))}}
-  else{/* M3 mưa kiếm */const RX=140,RYr=60,K=lowfx?18:30;
+  else{/* M3 mưa kiếm; 27/11: mục tiêu ở mặt đất (gx,gy), kiếm cắm ngập mũi xuống đất (cắt phần dưới mặt đất) */const TX=z.gx!=null?z.gx:z.x+ca*z.Dt,TY=z.gy!=null?z.gy:z.y+sa*z.Dt,RX=z.R?z.R*0.9:140,RYr=RX*0.43,K=lowfx?18:30;const swC=(x,y,ang,scl,al,gl,gy)=>{c.save();c.beginPath();c.rect(x-500,gy-1200,1000,1200);c.clip();sw(x,y,ang,scl,al,gl);c.restore()};
    for(let i=0;i<N;i++){const[sx,sy]=fanP(i),ti=Math.abs(i-(N-1)/2)*0.03,tl=0.3+i*0.04;if(tt<ti)continue;
     if(tt<tl){const k=E(clamp((tt-ti)/0.25,0,1));sw(sx,sy+(1-k)*16,-Math.PI/2,wk,k,8)}
     else if(tt<tl+0.32){const k=(tt-tl)/0.32,e=k*k,y=sy-460*e;trail(sx,y+70,sx,y,0.5,4);sw(sx,y,-Math.PI/2,wk,1-Math.max(0,(k-0.6)/0.4),10)}}
    if(tt>0.7&&tt<3.6){const al=Math.min(1,(tt-0.7)/0.3)*(tt<3.2?1:1-(tt-3.2)/0.4);c.save();c.globalAlpha=0.4*al;const g=c.createRadialGradient(TX,TY,0,TX,TY,RX+40);g.addColorStop(0,'rgba(8,10,24,1)');g.addColorStop(1,'rgba(8,10,24,0)');c.fillStyle=g;c.beginPath();c.ellipse(TX,TY,RX+40,(RYr+20),0,0,TAU);c.fill();c.restore()}
    const Lr=W[4]*wk,items=[];
    for(let j=0;j<K;j++){const t0=1.0+j*(1.3/K),rr=Math.sqrt(rnd3(j+1)),th=rnd3(j+7)*TAU,gx=TX+Math.cos(th)*RX*rr,gy=TY+Math.sin(th)*RYr*rr;if(tt<t0||tt>t0+0.75)continue;const u=tt-t0;let cy,al=1;
-    if(u<0.2){const k=u/0.2;cy=gy-Lr/2-280*(1-k*k)}else{cy=gy-Lr/2+3;al=u<0.5?1:1-(u-0.5)/0.25}
+    if(u<0.2){const k=u/0.2;cy=gy-Lr/2+7-280*(1-k*k)}else{cy=gy-Lr/2+7;al=u<0.5?1:1-(u-0.5)/0.25}
     items.push({gx,gy,cy,al,u})}
-   items.sort((p,q)=>p.gy-q.gy);for(const it of items){if(it.u<0.2)trail(it.gx,it.cy-Lr/2-90,it.gx,it.cy-Lr/2,0.5,3);else if(it.u<0.34)glow(it.gx,it.gy,26,0.5*(1-(it.u-0.2)/0.14));sw(it.gx,it.cy,Math.PI/2,wk,it.al,8)}
-   if(tt>2.4){const land=TY-Lg/2+6,top=TY-380,k=Math.min(1,(tt-2.4)/0.4),cy=top+(land-top)*k*k*k,al=tt<3.4?Math.min(1,(tt-2.4)/0.12):Math.max(0,1-(tt-3.4)/0.4);
-    c.save();c.globalAlpha=0.35*k*al;c.fillStyle='#0b1226';c.beginPath();c.ellipse(TX,TY+4,20+40*k,8+14*k,0,0,TAU);c.fill();c.restore();
-    if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);sw(TX,cy,Math.PI/2,BS,al,26);if(tt>2.8&&tt<3.2)glow(TX,TY,160,0.6*(1-(tt-2.8)/0.4))}}}
+   items.sort((p,q)=>p.gy-q.gy);for(const it of items){if(it.u<0.2)trail(it.gx,it.cy-Lr/2-90,it.gx,it.cy-Lr/2,0.5,3);else if(it.u<0.34)glow(it.gx,it.gy,26,0.5*(1-(it.u-0.2)/0.14));swC(it.gx,it.cy,Math.PI/2,wk,it.al,8,it.gy+1)}
+   if(tt>2.4){const land=TY-Lg/2+Lg*0.22,top=TY-Lg/2-420,k=Math.min(1,(tt-2.4)/0.4),cy=top+(land-top)*k*k*k,al=tt<3.4?Math.min(1,(tt-2.4)/0.12):Math.max(0,1-(tt-3.4)/0.4);
+    if(k<1){c.save();c.globalAlpha=0.4*k*al;c.fillStyle='#0b1226';c.beginPath();c.ellipse(TX,TY,20+40*k,8+14*k,0,0,TAU);c.fill();c.restore()}
+    if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);swC(TX,cy,Math.PI/2,BS,al,26,TY+1);
+    if(tt>2.8&&tt<3.5){/* bụi đất bung ra khi cắm */const u=(tt-2.8)/0.7;c.save();c.globalAlpha=0.55*(1-u);c.fillStyle='#3a3026';for(let q=0;q<(lowfx?7:12);q++){const a=q*TAU/12+rnd3(q+40)*0.4,d=(20+60*Math.sqrt(u))*(0.6+rnd3(q+50)*0.6);c.beginPath();c.ellipse(TX+Math.cos(a)*d*1.5,TY+Math.sin(a)*d*0.5-14*u,7+12*u,4+6*u,0,0,TAU);c.fill()}c.restore()}if(tt>2.8&&tt<3.2)glow(TX,TY,160,0.6*(1-(tt-2.8)/0.4))}}}
  else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.48*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
   /* 25/11 bùa chú: bát quái vàng xoay dưới đất (bagua_vang.png, tự vẽ bằng code: cong_cu/claude/bua_assets.py) hiện dần khi kiếm rơi, tan cùng trận */
   /* 27/11: bát quái + elip chuyển xuống lớp NỀN (txkGround, vẽ trước nhân vật/quái) để nằm dưới đất, không còn như bay lơ lửng */
@@ -4663,6 +4661,10 @@ const AURA=new Image();AURA.src='assets/vfx/qi_aura.png';
 function drawAura(x,y){if(!AURA.complete||!AURA.naturalWidth){X.save();X.globalCompositeOperation='lighter';X.fillStyle='rgba(255,200,80,.18)';ell(x,y-24,34,44);X.restore();return}
  const fi=Math.floor(G.t*20)%32,w=90,h=132,sc=1.15;X.save();X.globalCompositeOperation=MAPS[G.cfg.map].ground==='g_snow'?'source-over':'lighter';X.globalAlpha=0.9;
  X.drawImage(AURA,(fi%8)*w,((fi/8)|0)*h,w,h,x-w*sc/2,y-120*sc,w*sc,h*sc);X.restore()}
+function vkCrater(c,z){/* 27/11: hố + vết nứt dưới cự kiếm mưa kiếm, vẽ ở lớp nền (dưới quái) */const TX=z.gx!=null?z.gx:z.x+z.ca*z.Dt,TY=z.gy!=null?z.gy:z.y+z.sa*z.Dt,u=Math.min(1,(z.t-2.8)/0.18),al=z.t<z.T-0.5?1:Math.max(0,(z.T-z.t)/0.5),R=(z.R||150)*0.42*u;if(al<=0)return;
+ c.save();c.globalAlpha=0.75*al;const g=c.createRadialGradient(TX,TY,0,TX,TY,R);g.addColorStop(0,'rgba(6,5,8,1)');g.addColorStop(0.6,'rgba(20,14,12,.8)');g.addColorStop(1,'rgba(20,14,12,0)');c.fillStyle=g;c.beginPath();c.ellipse(TX,TY,R,R*0.4,0,0,TAU);c.fill();
+ c.globalAlpha=0.85*al;c.strokeStyle='#120c0a';c.lineWidth=2;c.beginPath();for(let q=0;q<9;q++){const a=q*TAU/9+0.3,L=R*(1.3+((q*37)%10)/10);let x=TX,y=TY;c.moveTo(x,y);for(let s=1;s<=3;s++){x=TX+Math.cos(a+((q+s)%3-1)*0.12)*L*s/3;y=TY+Math.sin(a+((q*s)%3-1)*0.12)*L*s/3*0.4;c.lineTo(x,y)}}c.stroke();
+ c.globalCompositeOperation='lighter';c.globalAlpha=0.5*al*(z.t<3.6?1:0.4);c.strokeStyle='#ffb24a';c.lineWidth=1;c.stroke();c.restore()}
 function txkGround(c,z){const tt=z.t,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk);if(ringA<=0.01)return;
  if(vok('bagua_vang')){const k0=clamp(tt/0.7,0,1);c.save();c.globalCompositeOperation='lighter';c.translate(z.x,z.y);c.scale(1,0.42);c.rotate(G.t*0.35);c.globalAlpha=0.62*ringA*k0;c.imageSmoothingEnabled=false;const D=z.rx*2.2*(0.55+0.45*k0);c.drawImage(VFX.bagua_vang,-D/2,-D/2,D,D);c.restore()}
  c.save();c.globalAlpha=0.55*ringA;c.strokeStyle='#e8c25a';c.lineWidth=1.5;c.beginPath();c.ellipse(z.x,z.y,z.rx,z.ry,0,0,TAU);c.stroke();c.restore()}
@@ -4677,7 +4679,7 @@ function render(){
  if(G){
   for(const s of G.spawnQ){const k=1-s.t/(s.big?1.6:0.7);c.strokeStyle=`rgba(255,60,30,${0.4+k*0.5})`;c.lineWidth=2;const r=s.big?40:14;c.beginPath();c.arc(s.x,s.y,r,0,TAU);c.stroke();c.beginPath();c.moveTo(s.x-r*.6,s.y-r*.6);c.lineTo(s.x+r*.6,s.y+r*.6);c.moveTo(s.x+r*.6,s.y-r*.6);c.lineTo(s.x-r*.6,s.y+r*.6);c.stroke()}
   for(const h of G.haz)drawHaz(h);
-  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones){if(z.kind==='txk')txkGround(ctx,z);else if(z.kind==='vkx'){z._gp=1;drawZone(z);z._gp=0}else if(z.kind==='vkx2'){/* đại chiêu: nền tối đi để kiếm và quái nổi lên */const t=z.t,al=0.32*(t<0.25?t/0.25:t<z.T-0.5?1:Math.max(0,(z.T-t)/0.5));ctx.save();ctx.globalAlpha=al;ctx.fillStyle='#04050c';ctx.fillRect(z.x-1600,z.y-1200,3200,2400);ctx.restore()}}
+  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones){if(z.kind==='txk')txkGround(ctx,z);else if(z.kind==='vkx'){z._gp=1;drawZone(z);z._gp=0}else if(z.kind==='vkx2'){/* đại chiêu: nền tối đi để kiếm và quái nổi lên */const t=z.t,al=0.32*(t<0.25?t/0.25:t<z.T-0.5?1:Math.max(0,(z.T-t)/0.5));ctx.save();ctx.globalAlpha=al;ctx.fillStyle='#04050c';ctx.fillRect(z.x-1600,z.y-1200,3200,2400);ctx.restore();if(z.m===3&&t>2.8)vkCrater(ctx,z)}}
   drawHeal(c);drawPhase2(c);drawChest(c);drawAmPortal(c);drawSkillAim(c);
   for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,espScale(m),false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,espScale(m),false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
   for(const o of G.orbs)drawOrb(o);
@@ -4794,7 +4796,7 @@ const SWORD_INFO={
  k1:{area:'Xuyên nhiều mục tiêu',unit:'mỗi mục tiêu',effect:l=>'Đẩy lùi, xuyên tối đa '+(l+2)+' mục tiêu.'},
  k2:{area:'Vùng tròn quanh điểm rơi (bán kính 125)',unit:'mỗi đòn',effect:l=>'Đòn nổ khi kiếm chạm đất (x1,2), rồi chém mỗi giây (x0,6) trong '+hudNumber(Math.min(5,3+.5*(l-1)))+' giây.'},
  k3:{area:'Quanh nhân vật',unit:'mỗi lần chạm',effect:l=>'Chí mạng hoặc mỗi 3 đòn thường gọi 1 kiếm (tối đa 3), mỗi kiếm tồn tại '+hudNumber(7+l)+' giây.'},
- k7:{area:'Vòng quanh điểm rơi (bán kính 150)',unit:'một đòn nổ',effect:l=>'Cự kiếm rơi xuống chỗ đông quái nhất, choáng 0,5 giây, bán kính '+(150+10*(l-1))+'.'},
+ k7:{area:'Vòng quanh điểm rơi (bán kính 150)',unit:'một đòn nổ',effect:l=>'Mưa kiếm rồi cự kiếm cắm xuống chỗ đông quái nhất, choáng 0,5 giây, bán kính '+(150+10*(l-1))+'.'},
  k6:{area:'Làn thẳng dài 560, rộng 140 theo hướng ngắm',unit:'mỗi đợt (6 đợt, 8 kiếm)',effect:()=>'Kiếm phóng theo hướng ngắm, xuyên mọi mục tiêu trong làn và đẩy lùi.'}
 };
 const GOD_SKILL_INFO={
