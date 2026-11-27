@@ -1,0 +1,15 @@
+const L=require('/home/user/HoaThan/cong_cu/claude/rec_lib');const OUT=process.argv[2];
+const sizes=process.argv[3].split(',').map(s=>s.split('x').map(Number));
+(async()=>{for(const [w,h] of sizes){const {b,pg,errs}=await L.open('/home/user/HoaThan/game',{w,h,seed:true,dsf:+(process.env.DSF||1),mobile:!!process.env.DSF});await pg.waitForTimeout(1200);
+ const tap=async sel=>{const r=await pg.evaluate(s=>{const e=document.querySelector(s);if(!e)return null;const R=e.getBoundingClientRect();return [R.left+R.width/2,R.top+R.height/2]},sel);if(!r)return 'không có '+sel;if(process.env.DSF)await pg.touchscreen.tap(r[0],r[1]);else await pg.mouse.click(r[0],r[1]);await pg.waitForTimeout(350);return 'ok'};
+ await tap('#lbGrid .lbt[data-lb=inv]');await pg.waitForTimeout(500);
+ await pg.evaluate(()=>{const m=TDST.mats();m.duoc=7;m.hiem=3;m.thiet=12;const p=TDST.pots();p.hp=4;p.mp=2;const d=TDST.danBag();d.cuong=2;document.querySelector('#invTest').click();document.querySelector('#invTest').click()});await pg.waitForTimeout(300);
+ await tap('#bag .gb.has:nth-child(3) .item');await pg.waitForTimeout(400);
+ await pg.screenshot({path:`${OUT}/m_hn_${w}x${h}.png`});
+ await tap('#ipTabs button[data-tab=vat]');await tap('#bag [data-vat]');await pg.waitForTimeout(300);
+ await pg.screenshot({path:`${OUT}/m_hn_vat_${w}x${h}.png`});
+ console.log(w,h,'vat cells',await pg.evaluate(()=>document.querySelectorAll('#bag [data-vat]').length),'idet',await pg.evaluate(()=>document.querySelector('#idet').textContent.slice(0,60)));
+ await pg.evaluate(()=>document.querySelector('#invTestClr').click());await tap('#invBackTop');
+ await pg.evaluate(()=>{const d=new Date();d.setUTCHours(7,30,0,0);window.__TDST_NOW=d.getTime()});
+ await tap('#lbGrid .lbt[data-lb=diemtam]');await pg.waitForTimeout(500);await tap('#dtBun');await pg.waitForTimeout(300);
+ await pg.screenshot({path:`${OUT}/m_tl_${w}x${h}.png`});console.log(w,h,'lit',await pg.evaluate(()=>document.querySelectorAll('.dtbites i.on').length),'err',errs.length,errs.slice(0,2));await b.close()}process.exit(0)})();
