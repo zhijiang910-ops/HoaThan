@@ -3030,7 +3030,7 @@ const WEAPONS={
    /* skill RIÊNG (24/11, chủ game): cự kiếm `cukiem.png` rơi 0,55 s, nổ sét đen đỏ `set_no_do`, trước là đòn kết của Vạn Kiếm */
    cast(tg,l){const t0=densest(P.x,P.y,this.range)||tg,tx=t0.x,ty=t0.y,dmg=this.power*lv(l)*pw(),R=150+10*(l-1);sfx('wanjian_launch',0.55,0.12);
     /* 27/11 chủ game: thay bằng MƯA KIẾM (vkx2 hướng 3): kiếm bay lên trời, vùng tối lại, mưa kiếm, cự kiếm giáng CẮM xuống đất; sát thương một đòn như cũ, lúc cự kiếm chạm đất (2,8 s) */
-    const ang=Math.atan2(ty-P.y,tx-P.x),Dt=Math.max(60,Math.hypot(tx-P.x,ty-P.y));addZone({kind:'vkx2',T:3.9,src:'h',x:P.x,y:P.y,a:ang,ca:Math.cos(ang),sa:Math.sin(ang),Dt,gx:tx,gy:ty,R,n:12,m:3,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
+    const ang=Math.atan2(ty-P.y,tx-P.x),Dt=Math.max(60,Math.hypot(tx-P.x,ty-P.y));addZone({kind:'vkx2',T:3.9,ck:1,src:'h',x:P.x,y:P.y,a:ang,ca:Math.cos(ang),sa:Math.sin(ang),Dt,gx:tx,gy:ty,R,n:12,m:3,art:(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'});
     later(2.8,()=>{for(const e of enemiesIn(tx,ty,R))hit(e,dmg,H({kb:140,stun:0.5}),tx,ty);G.shake=Math.max(G.shake||0,10);G.flash=Math.max(G.flash||0,0.2);fx({k:'ring',x:tx,y:ty,r0:20,r1:R,c:'#ffd45a',T:0.4});fx({k:'ring',x:tx,y:ty,r0:10,r1:R*0.64,c:'#3a2606',T:0.5});burst(tx,ty,'#ffd45a',14);burst(tx,ty,'#2a2218',14);if(vok('set_no_vang'))fx({k:'sp',s:'set_no_vang',x:tx,y:ty+4,sc:1.4,T:0.8,al:0.7});sfx('sword_hit',0.7,0.1)},null);
     notice('Thái Thượng Trảm Ma')}},
  ]},
@@ -4336,7 +4336,8 @@ function drawZone(z){
    items.sort((p,q)=>p.gy-q.gy);for(const it of items){if(it.u<0.2)trail(it.gx,it.cy-Lr/2-90,it.gx,it.cy-Lr/2,0.5,3);else if(it.u<0.34)glow(it.gx,it.gy,26,0.5*(1-(it.u-0.2)/0.14));swC(it.gx,it.cy,Math.PI/2,wk,it.al,8,it.gy+1)}
    if(tt>2.4){const land=TY-Lg/2+Lg*0.22,top=TY-Lg/2-420,k=Math.min(1,(tt-2.4)/0.4),cy=top+(land-top)*k*k*k,al=tt<3.4?Math.min(1,(tt-2.4)/0.12):Math.max(0,1-(tt-3.4)/0.4);
     if(k<1){c.save();c.globalAlpha=0.4*k*al;c.fillStyle='#0b1226';c.beginPath();c.ellipse(TX,TY,20+40*k,8+14*k,0,0,TAU);c.fill();c.restore()}
-    if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);swC(TX,cy,Math.PI/2,BS,al,26,TY+1);
+    if(z.ck&&CKI.complete&&CKI.naturalWidth){/* 27/11 chủ game: Thái Thượng dùng CỰ KIẾM cukiem.png (mũi chúc xuống), vẽ đúng số nguyên pixel, cắm sâu ~18% vào đất */const ks=Math.max(1,Math.round(nz))/nz,Hc=CKI.naturalHeight*ks,tl=TY+Hc*0.18,tp=TY-Hc-300,ty2=tp+(tl-tp)*k*k*k;if(k<1)trail(TX,ty2-Hc-140,TX,ty2-Hc,0.6,12);c.save();c.beginPath();c.rect(TX-400,TY+1-1200,800,1200);c.clip();c.globalAlpha=al;c.imageSmoothingEnabled=false;if(!lowfx){c.shadowColor='rgba(255,215,120,.9)';c.shadowBlur=22}c.translate(Math.round(TX),Math.round(ty2));c.scale(ks,ks);c.drawImage(CKI,-CKI.naturalWidth/2,-CKI.naturalHeight);c.restore()}
+    else{if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);swC(TX,cy,Math.PI/2,BS,al,26,TY+1)}
     if(tt>2.8&&tt<3.5){/* bụi đất bung ra khi cắm */const u=(tt-2.8)/0.7;c.save();c.globalAlpha=0.55*(1-u);c.fillStyle='#3a3026';for(let q=0;q<(lowfx?7:12);q++){const a=q*TAU/12+rnd3(q+40)*0.4,d=(20+60*Math.sqrt(u))*(0.6+rnd3(q+50)*0.6);c.beginPath();c.ellipse(TX+Math.cos(a)*d*1.5,TY+Math.sin(a)*d*0.5-14*u,7+12*u,4+6*u,0,0,TAU);c.fill()}c.restore()}if(tt>2.8&&tt<3.2)glow(TX,TY,160,0.6*(1-(tt-2.8)/0.4))}}}
  else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.48*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
   /* 25/11 bùa chú: bát quái vàng xoay dưới đất (bagua_vang.png, tự vẽ bằng code: cong_cu/claude/bua_assets.py) hiện dần khi kiếm rơi, tan cùng trận */
