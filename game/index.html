@@ -2388,7 +2388,7 @@ const LIGHTS={Dp_vacdau:[[0,.42,170,'255,130,40']],Dp_vacdau2:[[0,.42,170,'255,1
  Dp_guong:[[0,.62,170,'150,240,235']],Dp_ngai:[[0,.55,190,'255,190,90']],Dp_manhba:[[-.15,.28,120,'255,150,60']],Dp_luanhoi:[[0,.5,210,'140,150,255']],Dp_daitron:[[0,.5,240,'170,120,255']],
  Dp_quanmon:[[-.215,.575,110,'255,80,60'],[.212,.575,110,'255,80,60']],Dp_samla:[[-.3,.35,80,'255,230,180'],[.3,.35,80,'255,230,180']],Dp_vonghuong:[[0,.4,100,'255,235,190']],Dp_cotdo:[[0,.55,70,'255,190,90']],
  Forest_stone_lantern:[[0,.6,70,'255,215,150']],City_standing_lantern:[[0,.8,80,'255,225,160']]};
-function drawLights(c,t){const M=MAPS[curMap()];if(!M||!M.am)return;const cx=G.cam.dx||G.cam.x,cy=G.cam.dy||G.cam.y,hw=VW/ZOOM/2+260,hh=VH/ZOOM/2+260;
+function drawLights(c,t){if(window.__mapLite)return;const M=MAPS[curMap()];if(!M||!M.am)return;const cx=G.cam.dx||G.cam.x,cy=G.cam.dy||G.cam.y,hw=VW/ZOOM/2+260,hh=VH/ZOOM/2+260;
  c.save();c.globalCompositeOperation='lighter';
  for(const d of decor){const Ls=LIGHTS[d.n];if(!Ls||Math.abs(d.x-cx)>hw||Math.abs(d.y-cy)>hh)continue;const m=MM[d.n],S=PS*(d.sc||1);
   for(let i=0;i<Ls.length;i++){const L=Ls[i],x=d.x+L[0]*m.w*S,y=d.y-m.ay*S+(1-L[1])*m.h*S,r=L[2]*(d.sc||1)*0.9,fl=0.62+0.22*Math.sin(t*6.5+d.x*0.7+i)+0.12*Math.sin(t*13+d.y);
@@ -2396,7 +2396,7 @@ function drawLights(c,t){const M=MAPS[curMap()];if(!M||!M.am)return;const cx=G.c
  if(M.lights)for(const L of M.lights){if(Math.abs(L.x-cx)>hw||Math.abs(L.y-cy)>hh)continue;const fl=0.62+0.22*Math.sin(t*6.5+L.x*0.7)+0.12*Math.sin(t*13+L.y),r=L.r,g=c.createRadialGradient(L.x,L.y,0,L.x,L.y,r);g.addColorStop(0,`rgba(${L.c},${0.42*fl})`);g.addColorStop(.35,`rgba(${L.c},${0.16*fl})`);g.addColorStop(1,`rgba(${L.c},0)`);c.fillStyle=g;c.fillRect(L.x-r,L.y-r,r*2,r*2)}
  c.restore()}
 const AMB={hoang:{k:'ash'},bian:{k:'petal'},nghiep:{k:'mote'},uong:{k:'ember'},vong:{k:'wisp'},diemla:{k:'ember2'},luan:{k:'soul'}};
-function drawAmbient(c,t){const M=MAPS[curMap()];if(!M||!M.am||!M.amb)return;const k=M.amb,N=(LOWFX||MOBILE)?20:38;c.save();
+function drawAmbient(c,t){if(window.__mapLite)return;const M=MAPS[curMap()];if(!M||!M.am||!M.amb)return;const k=M.amb,N=(LOWFX||MOBILE)?20:38;c.save();
  for(let i=0;i<N;i++){const u=(i*0.6180339)%1,v=(i*0.7548776)%1,w=(i*0.3819660)%1;let x,y,sz=2;
   if(k==='ash'){x=((u*VW+t*(14+w*12)+Math.sin(t*.7+i)*14)%VW+VW)%VW;y=((v*VH+t*(22+w*20))%VH+VH)%VH;c.fillStyle=`rgba(190,180,165,${.28+.2*w})`;c.fillRect(x,y,sz,sz)}
   else if(k==='petal'){x=((u*VW+t*(30+w*20)+Math.sin(t*.9+i)*24)%VW+VW)%VW;y=((v*VH+t*(26+w*16))%VH+VH)%VH;c.fillStyle=`rgba(${200+w*40|0},${30+w*30|0},${60+w*30|0},.75)`;c.fillRect(x,y,3,2);c.fillRect(x+1,y+2,2,1)}
@@ -2407,7 +2407,7 @@ function drawAmbient(c,t){const M=MAPS[curMap()];if(!M||!M.am||!M.amb)return;con
  c.restore()}
 const stainList=[];
 function buildStains(M){stainList.length=0;if(!M||!M.dec)return;const D=M.dec,mk=(k,n)=>{for(let i=0;i<(n||0);i++)stainList.push({k,x:rnd(120,AW-120),y:rnd(160,AH-120),r:rnd(k==='crack'?40:k==='puddle'?34:k==='moss'?30:26,k==='crack'?110:k==='puddle'?90:k==='moss'?70:60),a:rnd(0,TAU),sd:Math.random()*1e3})};mk('crack',D.crack);mk('puddle',D.puddle);mk('stain',D.stain);mk('moss',D.moss)}
-function drawStains(M,c,cx,cy,hw,hh){if(!stainList.length)return;const D=M.dec;
+function drawStains(M,c,cx,cy,hw,hh){if(window.__mapLite)return;if(!stainList.length)return;const D=M.dec;
  for(const q of stainList){if(Math.abs(q.x-cx)>hw+120||Math.abs(q.y-cy)>hh+120)continue;c.save();c.translate(q.x,q.y);c.rotate(q.a);
   if(q.k==='crack'){c.strokeStyle='rgba(8,6,6,.55)';c.lineWidth=2;c.beginPath();let x=-q.r,y=0;c.moveTo(x,y);for(let i=0;i<7;i++){x+=q.r*2/7;y+=Math.sin(q.sd+i*2.1)*q.r*.18;c.lineTo(x,y);if(i%2===1){c.moveTo(x,y);c.lineTo(x+q.r*.12,y+q.r*(.22+Math.sin(q.sd+i)*.1));c.moveTo(x,y)}}c.stroke()}
   else if(q.k==='puddle'){c.scale(1,.4);const g=c.createRadialGradient(0,0,0,0,0,q.r);g.addColorStop(0,D.puddleC||'rgba(20,60,70,.55)');g.addColorStop(.8,D.puddleC||'rgba(20,60,70,.45)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(0,0,q.r,0,TAU);c.fill();c.strokeStyle='rgba(200,235,240,.18)';c.lineWidth=2;c.beginPath();c.arc(-q.r*.15,-q.r*.1,q.r*.45,3.5,5.2);c.stroke()}
@@ -2432,7 +2432,7 @@ function drawMapEdge(M,c,cx,cy,hw,hh){const e=(M.edge||'#0a0a0a').replace('#',''
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
  if(pat){c.fillStyle=pat;c.fillRect(cx-hw,cy-hh,hw*2,hh*2)}
- if(M.bg&&mok(M.bg)){c.save();c.imageSmoothingEnabled=false;c.beginPath();c.rect(0,0,AW,AH);c.clip();c.drawImage(MIMG[M.bg],0,0,AW,AH);c.restore()}
+ if(M.bg&&mok(M.bg)){/* 26/11 lag: trước vẽ CẢ ảnh 1600x1140 phóng ×2 (3200x2280 đơn vị thế giới, hàng chục Mpx trên màn DPR cao) mỗi khung rồi mới cắt; nay chỉ cắt đúng vùng đang thấy (nguồn nguyên pixel, đích ×2) */const im=MIMG[M.bg],S=AW/im.naturalWidth,sx0=Math.max(0,Math.floor((cx-hw)/S)-1),sy0=Math.max(0,Math.floor((cy-hh)/S)-1),sx1=Math.min(im.naturalWidth,Math.ceil((cx+hw)/S)+1),sy1=Math.min(im.naturalHeight,Math.ceil((cy+hh)/S)+1);if(sx1>sx0&&sy1>sy0){c.save();c.imageSmoothingEnabled=false;c.drawImage(im,sx0,sy0,sx1-sx0,sy1-sy0,sx0*S,sy0*S,(sx1-sx0)*S,(sy1-sy0)*S);c.restore()}}
  if(M.bgq){c.save();c.imageSmoothingEnabled=false;for(const[k,qx,qy]of M.bgq){if(!mok(k)||qx>cx+hw||qx+1600<cx-hw||qy>cy+hh||qy+1140<cy-hh)continue;c.drawImage(MIMG[k],qx,qy)}c.restore()}/* nền 1:1 chia 4 góc 1600x1140 (ChatGPT vẽ) */
  if(M.ground==='g_snow'){c.fillStyle='rgba(30,44,60,.16)';c.fillRect(cx-hw,cy-hh,hw*2,hh*2)}
  const pp=M.patch&&gPat(M.patch);
@@ -6108,7 +6108,9 @@ function loadGate(label,kind){/* gọi sau khi dựng map + chọn vũ khí: ch�
  LDG.tip.textContent=LDG_TIPS[LDG.tipI++%LDG_TIPS.length];LDG.tipT=setInterval(ldgTipNext,4200);LDG.anim=setInterval(()=>{const el=performance.now()-t0;LDG.tgt=Math.max(LDG.tgt,Math.min(0.92,1-Math.exp(-el/1600)));ldgDraw()},60);
  const poll=setInterval(()=>{const el=performance.now()-t0;if((ready()&&el>=700)||el>20000){clearInterval(poll);if(window.__bootRelease)window.__bootRelease();window.__bootDone=Math.round(el);LDG.tgt=1;setTimeout(()=>{clearInterval(LDG.anim);clearInterval(LDG.tipT);LDG.shown=false;ldgClose()},150)}},100)})();
 function frame(now){
- const dt=Math.min(0.05,(now-lastT)/1000);lastT=now;
+ const raw=(now-lastT)/1000,dt=Math.min(0.05,raw);lastT=now;
+ /* 26/11 lag Âm Giới (chủ game: như chỉnh tốc độ 0,25): đo khung hình, nếu trung bình > 34 ms trong ~2 s thì tự TẮT lớp trang trí map (ánh sáng, hạt, sương, bóng, vết nền); bật lại không tự động */
+ if(G&&G.am&&raw>0&&raw<1){window.__ft=(window.__ft||0.016)*0.94+raw*0.06;window.__ftN=(window.__ftN||0)+1;if(!window.__mapLite&&window.__ftN>150&&window.__ft>0.034){window.__mapLite=1;try{lobbyToast&&0}catch(e){}}}
  if(rotationBlocked()){lastTutControl=null;requestAnimationFrame(frame);return}
  try{
   const tutorial=tutControl(), waiting=tutorial||G?.inspect;
