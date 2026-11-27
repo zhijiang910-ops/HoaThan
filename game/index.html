@@ -1881,6 +1881,14 @@ html body #godBtn #godTxt{white-space:nowrap!important;font-size:9.5px!important
 html body #lobby .lbgrid.lbgrid.g7>[data-lb=diemtam] i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:url(assets/ui/lobby/ic_diemtam.webp) center/contain no-repeat!important;filter:drop-shadow(0 1px 2px #000)}
 html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyenvk] i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:url(assets/ui/lobby/ic_luyenvk.webp) center/contain no-repeat!important;filter:drop-shadow(0 1px 2px #000)}
 html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:url(assets/ui/lobby/ic_luyencong.webp) center/contain no-repeat!important;filter:drop-shadow(0 1px 2px #000)}
+/* nút xúc xắc đặt tên ngẫu nhiên */
+#create .crnw{position:relative;display:flex}
+#create .crnw #crName{flex:1;padding-right:clamp(34px,9vh,48px)!important}
+#create .crdice{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:clamp(28px,7.6vh,40px);height:clamp(28px,7.6vh,40px);padding:2px;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#create .crdice img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 3px #000);pointer-events:none}
+#create .crdice:hover img{filter:drop-shadow(0 0 6px rgba(220,40,40,.8))}
+#create .crdice.roll img{animation:crroll .5s ease-out}
+@keyframes crroll{0%{transform:rotate(0) scale(1)}35%{transform:rotate(200deg) scale(1.25)}100%{transform:rotate(360deg) scale(1)}}
 </style>
 </head>
 <body>
@@ -1937,7 +1945,7 @@ html body #lobby .lbgrid.lbgrid.g7>[data-lb=luyencong] i{font-size:0!important;c
  <div class="cx">
   <div class="cxp cxL">
    <label for="crName" class="cxh cxh1">Tên nhân vật</label>
-   <input id="crName" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Nhập tên (4–12 ký tự)">
+   <div class="crnw"><input id="crName" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Nhập tên (4–12 ký tự)"><button type="button" id="crDice" class="crdice" aria-label="Đặt tên ngẫu nhiên" title="Đặt tên ngẫu nhiên"><img src="assets/ui/xucxac.webp" alt="" draggable="false"></button></div>
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
    <div class="cxdeco"><img id="crDeco" src="assets/ui/creation/deco-dao.webp" alt="" decoding="async"></div>
@@ -5095,6 +5103,11 @@ $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(
  if(b.dataset.oc)cr.outC=b.dataset.oc;
  if(b.dataset.sk)cr.sk=+b.dataset.sk;
  const H0=HAIR[cr.gender][cr.hairI];if(H0.on)cr.hair=H0.k;$('#crErr').textContent='';renderCreateAvatars();renderCreateScene();renderCreate()});
+/* tên ngẫu nhiên kiểu tiên hiệp/âm giới, luôn 4–12 ký tự */
+const NAME_HO=['Hàn','Mặc','Diệp','Lăng','Tiêu','Bạch','Hắc','Vân','Thanh','Huyền','Lãnh','Ôn','Sở','Mộ Dung','Liễu','Tạ','Phong','Kỳ','Cố','Âu'];
+const NAME_TEN=['Phong','Tà','Vô Ngân','Hàn Nguyệt','Ma Ảnh','Thiên Tuyệt','Dạ Vũ','Huyết Sát','Vô Cực','Quỷ Cốc','Linh Vân','Tử Dạ','Trấn Hồn','Minh Nguyệt','Phá Quân','Kiếm Tâm','Thanh Ảnh','Hồi Hồn','Vong Xuyên','U Minh','Thạch','Lôi','Tuyết','Ngọc Hư'];
+function randomName(){for(let i=0;i<60;i++){const n=NAME_HO[Math.random()*NAME_HO.length|0]+' '+NAME_TEN[Math.random()*NAME_TEN.length|0],l=[...n].length;if(l>=4&&l<=12)return n}return 'Hàn Phong'}
+(function(){const b=document.getElementById('crDice'),i=document.getElementById('crName');if(!b||!i)return;b.addEventListener('click',()=>{i.value=randomName();document.getElementById('crErr').textContent='';b.classList.remove('roll');void b.offsetWidth;b.classList.add('roll')})})();
 $('#crName').addEventListener('input',()=>{$('#crErr').textContent=''});
 $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click()});
 $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim();
