@@ -3012,12 +3012,16 @@ const WEAPONS={
    cast(tg,l){const dd=Math.hypot(tg.x-P.x,tg.y-P.y),a=dd>24?Math.atan2(tg.y-P.y,tg.x-P.x):(P.facing===-1?Math.PI:0),f=Math.cos(a)<0?-1:1;if(Math.abs(Math.cos(a))>0.15)P.facing=f;const x0=P.x,y0=P.y,dmg=this.power*lv(l)*pw()*0.6,ca=Math.cos(a),sa=Math.sin(a);
     /* sprite gốc phóng sang phải; hướng trái thì lật ngang rồi xoay phần còn lại để kiếm không bị ngược */
     /* 27/11 chủ game: làm lại theo NHỊP, bỏ trận pháp/bát quái/bùa. Nhịp 1: 12 kiếm (chính kiếm đang cầm) xòe quạt sau lưng, lần lượt phóng tới mục tiêu và xuyên qua. Nhịp 2: quay đầu bay về, nhập thành một cự kiếm (kiếm đang cầm phóng to) trên đầu nhân vật. Sát thương giữ nguyên: 6 đợt × 0,6 power trong làn. */
-    sfx('wanjian_launch',0.6,0.15);const wartV=(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu';const Dt=clamp(dd,140,420),LEN=Dt+170;
-    if(WPN[wartV])addZone({kind:'vkx2',T:3.5,src:'h',x:x0,y:y0,a,ca,sa,Dt,n:12,art:wartV});else fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
-    for(let i=0;i<6;i++){const t0=0.4+i*2*0.06;later(t0,()=>{const ax=x0,ay=y0-20,bx=x0+ca*LEN,by=ay+sa*LEN,mx=(ax+bx)/2,my=(ay+by)/2,hl=LEN/2;
-     for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70){const dl=clamp(((e.x-ax)*ca+(e.y-ay)*sa)/LEN,0,1);/* kiếm bay tới đâu trúng tới đó (bay 0,34 s, nhanh dần) */later(0.34*Math.sqrt(dl),()=>{if(e.dead)return;hit(e,dmg,H({kb:40}),ax,ay);vkHit(e,a);G.shake=Math.max(G.shake||0,2)},null)}}
-     },null)}
-    later(2.15,()=>{G.shake=Math.max(G.shake||0,5);fx({k:'ring',x:P.x+Math.cos(Math.atan2(sa*0.45,ca))*70,y:P.y-54,r0:10,r1:90,c:'#fff3c0',T:0.35});sfx('sword_hit',0.6,0.1)},null);
+    /* 27/11: 3 HƯỚNG ĐẠI CHIÊU để chủ game chọn (window.__vkMode 1|2|3, mặc định 1). 1 = phóng cự kiếm xuyên làn; 2 = vạn kiếm vây khốn rồi cự kiếm cắm xuống tâm; 3 = mưa kiếm rồi cự kiếm giáng. Sát thương mỗi đợt giữ nguyên (6 đợt × 0,6 power); đòn kết chỉ là hiệu ứng. Hướng 2/3 đánh vùng tròn quanh mục tiêu thay vì làn (để khớp hình). */
+    sfx('wanjian_launch',0.6,0.15);const wartV=(HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu';const Dt=clamp(dd,140,420),LEN=Dt+170,M=window.__vkMode||1,TX=x0+ca*Dt,TY=y0-20+sa*Dt+20;
+    const ZT=M===1?3.9:M===2?3.7:3.9;if(WPN[wartV])addZone({kind:'vkx2',T:ZT,src:'h',x:x0,y:y0,a,ca,sa,Dt,n:12,art:wartV,m:M});else fx({k:'sp',s:'vk_e',x:x0,y:y0,sc:0.96,fx:f,ang:f===1?a:a-Math.PI,T:3.83,follow:0});
+    const lane=()=>{const ax=x0,ay=y0-20,bx=x0+ca*LEN,by=ay+sa*LEN,mx=(ax+bx)/2,my=(ay+by)/2,hl=LEN/2;for(const e of enemiesIn(mx,my,hl+110)){if(e.dead)continue;if(segDist(e.x,e.y,ax,ay,bx,by)<=e.r+70){const dl=clamp(((e.x-ax)*ca+(e.y-ay)*sa)/LEN,0,1);later(0.34*Math.sqrt(dl),()=>{if(e.dead)return;hit(e,dmg,H({kb:40}),ax,ay);vkHit(e,a);G.shake=Math.max(G.shake||0,2)},null)}}};
+    const circle=()=>{for(const e of enemiesIn(TX,TY,140)){if(e.dead)continue;hit(e,dmg,H({kb:20}),TX,TY);vkHit(e,Math.atan2(e.y-TY,e.x-TX));G.shake=Math.max(G.shake||0,2)}};
+    const W0=M===1?[0.4,0.12]:M===2?[0.66,0.22]:[1.0,0.24];for(let i=0;i<6;i++)later(W0[0]+i*W0[1],M===1?lane:circle,null);
+    const fin=(x,y,sz)=>{G.shake=Math.max(G.shake||0,10);G.flash=Math.max(G.flash||0,0.2);fx({k:'ring',x,y,r0:16,r1:170*sz,c:'#ffd45a',T:0.45});fx({k:'ring',x,y,r0:8,r1:100*sz,c:'#fff3b0',T:0.3});burst(x,y,'#ffd45a',20);if(vok('set_no_vang'))fx({k:'sp',s:'set_no_vang',x,y:y+4,sc:1.5*sz,T:0.8,al:0.75});sfx('sword_hit',0.85,0.1)};
+    if(M===1){later(2.15,()=>{G.shake=Math.max(G.shake||0,4);sfx('sword_hit',0.5,0.1)},null);later(3.0,()=>{for(let k=0;k<6;k++)later(k*0.05,()=>{const d=40+k*(Dt+220)/6,x=x0+ca*d,y=y0+sa*d;fx({k:'ring',x,y,r0:8,r1:70,c:'#ffd45a',T:0.35});burst(x,y,'#ffe08a',6);if(vok('set_no_vang')&&k%2==0)fx({k:'sp',s:'set_no_vang',x,y:y+4,sc:0.8,T:0.6,al:0.7})},null);G.shake=Math.max(G.shake||0,10);G.flash=Math.max(G.flash||0,0.2);sfx('sword_hit',0.85,0.1)},null)}
+    else if(M===2){later(2.05,()=>{G.shake=Math.max(G.shake||0,5);fx({k:'ring',x:TX,y:TY,r0:6,r1:60,c:'#fff3c0',T:0.25})},null);later(2.55,()=>fin(TX,TY,1),null)}
+    else later(2.8,()=>fin(TX,TY,1.1),null);
     notice('Vạn Kiếm Tru Ma')}},
   {id:'k7',hotkey:'C',power:52,name:'Thái Thượng Trảm Ma',g:'天',kind:'active',cd:16,mp:35,range:360,desc:'Triệu một cự kiếm từ trời giáng xuống chỗ đông quái nhất, cắm xuống gây sát thương diện rộng, choáng quái trong vùng; năm lá ngũ lôi phù rơi theo thế ngũ giác, kiếm chạm đất thì năm tia sấm vàng giáng xuống bùa và sét vàng lan quanh trong bát quái.',up:'+25% sát thương, +10 bán kính',
    /* skill RIÊNG (24/11, chủ game): cự kiếm `cukiem.png` rơi 0,55 s, nổ sét đen đỏ `set_no_do`, trước là đòn kết của Vạn Kiếm */
@@ -4285,23 +4289,54 @@ function drawZone(z){
    if(al<=0.01)continue;c.save();if(clip){c.beginPath();c.rect(o.gx-160,o.gy-700,320,700+2);c.clip()}c.globalAlpha=al;c.translate(cx_,cy_);c.rotate(ang);c.scale(wk*SZ,wk*SZ);c.translate(-WPN[art][4]/2,0);
    if(!lowfx){c.shadowColor='rgba(255,200,90,.95)';c.shadowBlur=big?22:11}
    drawWeaponOutline(c,art,1.3/(wk*SZ));drawWeaponArt(c,art,0,0,1);c.restore()}}
- else if(z.kind==='vkx2'){const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,W=WPN[art],nz=Math.max(1,ZOOM*DPR),wk=Math.max(1,Math.round(2*nz))/nz,tt=z.t,N=z.n,ca=z.ca,sa=z.sa,px=-sa,py=ca,lowfx=MOBILE,TX=z.x+ca*z.Dt,TY=z.y-20+sa*z.Dt,GA=Math.atan2(sa*0.45,ca),GL=W[4]*Math.max(1,Math.round(3*nz))/nz,GX=P.x+Math.cos(GA)*(GL*0.5+22),GY0=P.y-54+Math.sin(GA)*(GL*0.5+22)*0.5;
-  const sw=(x,y,ang,scl,al,glow)=>{if(al<=0.01)return;c.save();c.globalAlpha=al;c.translate(Math.round(x),Math.round(y));c.rotate(ang);c.scale(scl,scl);c.translate(-W[4]/2,0);if(glow&&!lowfx){c.shadowColor='rgba(255,215,120,.95)';c.shadowBlur=glow}drawWeaponOutline(c,art,1.3/scl);drawWeaponArt(c,art,0,0,1);c.restore()};
+ else if(z.kind==='vkx2'){const art0=z.art,art=(WPN[art0+'_f']&&WIMG[art0+'_f']&&WIMG[art0+'_f'].complete)?art0+'_f':art0,W=WPN[art],nz=Math.max(1,ZOOM*DPR),wk=Math.max(1,Math.round(2*nz))/nz,BS=Math.max(1,Math.round(3*nz))/nz,tt=z.t,N=z.n,ca=z.ca,sa=z.sa,A=Math.atan2(sa,ca),lowfx=MOBILE,TX=z.x+ca*z.Dt,TY=z.y-20+sa*z.Dt,M=z.m||1,E=u=>u*u*(3-2*u),Lg=W[4]*BS;
+  const sw=(x,y,ang,scl,al,gl)=>{if(al<=0.01)return;c.save();c.globalAlpha=Math.min(1,al);c.translate(Math.round(x),Math.round(y));c.rotate(ang);c.scale(scl,scl);c.translate(-W[4]/2,0);if(gl&&!lowfx){c.shadowColor='rgba(255,215,120,.95)';c.shadowBlur=gl}drawWeaponOutline(c,art,1.3/scl);drawWeaponArt(c,art,0,0,1);c.restore()};
   const trail=(x0,y0,x1,y1,al,w)=>{if(al<=0.01)return;c.save();c.globalCompositeOperation='lighter';const g=c.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,'rgba(255,230,160,0)');g.addColorStop(1,'rgba(255,240,200,'+al+')');c.strokeStyle=g;c.lineCap='round';c.lineWidth=w;c.beginPath();c.moveTo(x0,y0);c.lineTo(x1,y1);c.stroke();c.restore()};
-  const E=u=>u*u*(3-2*u);let back=0;
-  for(let i=0;i<N;i++){const u=i/(N-1)-0.5,fan=Math.atan2(-sa,-ca)+u*2.4,sx=z.x+Math.cos(fan)*(70+(i%2)*22),sy=z.y-52+Math.sin(fan)*(40+(i%2)*12),ord=Math.abs(i-(N-1)/2),ti=ord*0.03,tl=0.4+i*0.06,FL=0.34,tr=tl+FL+0.22,RB=0.45;
-   const GY=GY0,dx=TX-sx,dy=TY-sy,dl=Math.hypot(dx,dy)||1,ex=TX+dx/dl*170,ey=TY+dy/dl*170,fa=Math.atan2(dy,dx);
-   if(tt<ti)continue;
-   if(tt<tl){const k=E(clamp((tt-ti)/0.25,0,1));sw(sx,sy+(1-k)*16+Math.sin(tt*7+i)*1.5,fa,wk,k,8);continue}
-   if(tt<tl+FL){const k=(tt-tl)/FL,e=k*k,x=sx+(ex-sx)*e,y=sy+(ey-sy)*e;trail(x-dx/dl*90*k,y-dy/dl*90*k,x,y,0.55,4);sw(x,y,fa,wk,1,10);continue}
-   if(tt<tr){const k=(tt-tl-FL)/(tr-tl-FL),dr=24*(1-(1-k)*(1-k)),x=ex+dx/dl*dr,y=ey+dy/dl*dr,ba=Math.atan2(GY-y,GX-x);let d=ba-fa;d=Math.atan2(Math.sin(d),Math.cos(d));sw(x,y,fa+d*E(k),wk,1,10);continue}
-   if(tt<tr+RB){const k=E((tt-tr)/RB),rx=ex+dx/dl*24,ry=ey+dy/dl*24,x=rx+(GX-rx)*k,y=ry+(GY-ry)*k,ba=Math.atan2(GY-ry,GX-rx);trail(x-Math.cos(ba)*70,y-Math.sin(ba)*70,x,y,0.45*(1-k),3);sw(x,y,ba,wk*(1-0.35*k),1-Math.max(0,(k-0.75)/0.25),10);continue}
-   back++}
-  /* nhịp 2: cự kiếm = kiếm đang cầm phóng to, lớn dần theo số kiếm đã về */
-  const BS=Math.max(1,Math.round(3*nz))/nz,GY=GY0,fm=back/N,gk=Math.max(fm,tt>2.15?1:0),out=tt>3.0?clamp((tt-3.0)/0.45,0,1):0;if(gk>0){const sc=BS*(0.55+0.45*E(gk)),al=Math.min(1,0.25+0.75*gk)*(1-out),bob=Math.sin(tt*3)*3;
-   if(tt>2.15&&tt<2.5){const q=(tt-2.15)/0.35;c.save();c.globalCompositeOperation='lighter';const g=c.createRadialGradient(GX,GY,0,GX,GY,120);g.addColorStop(0,'rgba(255,240,190,'+(0.55*(1-q))+')');g.addColorStop(1,'rgba(255,220,140,0)');c.fillStyle=g;c.fillRect(GX-130,GY-130,260,260);c.restore()}
-   {c.save();c.globalCompositeOperation='lighter';const L2=W[4]*sc*0.6,g=c.createRadialGradient(GX,GY+bob,0,GX,GY+bob,L2);g.addColorStop(0,'rgba(255,215,130,'+(0.35*al)+')');g.addColorStop(1,'rgba(255,200,110,0)');c.fillStyle=g;c.beginPath();c.ellipse(GX,GY+bob,L2,L2*0.35,GA,0,TAU);c.fill();c.restore()}
-   sw(GX,GY+bob,GA,sc,al,22)}}
+  const glow=(x,y,r,al)=>{if(al<=0.01)return;c.save();c.globalCompositeOperation='lighter';const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,'rgba(255,225,150,'+al+')');g.addColorStop(1,'rgba(255,200,110,0)');c.fillStyle=g;c.fillRect(x-r,y-r,2*r,2*r);c.restore()};
+  const fanP=i=>{const u=i/(N-1)-0.5,fan=Math.atan2(-sa,-ca)+u*2.4;return[z.x+Math.cos(fan)*(70+(i%2)*22),z.y-52+Math.sin(fan)*(40+(i%2)*12)]};
+  const rnd3=s=>{const x=Math.sin(s*12.9898+z.x*0.001)*43758.5453;return x-Math.floor(x)};
+  if(M===1){const GA=Math.atan2(sa*0.45,ca);if(!z.L||tt<2.45)z.L={x:P.x+Math.cos(GA)*(Lg*0.5+22),y:P.y-54+Math.sin(GA)*(Lg*0.5+22)*0.5};const GX=z.L.x,GY=z.L.y;let back=0;
+   for(let i=0;i<N;i++){const[sx,sy]=fanP(i),ord=Math.abs(i-(N-1)/2),ti=ord*0.03,tl=0.4+i*0.06,FL=0.34,tr=tl+FL+0.22,RB=0.45,dx=TX-sx,dy=TY-sy,dl=Math.hypot(dx,dy)||1,ex=TX+dx/dl*170,ey=TY+dy/dl*170,fa=Math.atan2(dy,dx);
+    if(tt<ti)continue;
+    if(tt<tl){const k=E(clamp((tt-ti)/0.25,0,1));sw(sx,sy+(1-k)*16+Math.sin(tt*7+i)*1.5,fa,wk,k,8);continue}
+    if(tt<tl+FL){const k=(tt-tl)/FL,e=k*k,x=sx+(ex-sx)*e,y=sy+(ey-sy)*e;trail(x-dx/dl*90*k,y-dy/dl*90*k,x,y,0.55,4);sw(x,y,fa,wk,1,10);continue}
+    if(tt<tr){const k=(tt-tl-FL)/(tr-tl-FL),dr=24*(1-(1-k)*(1-k)),x=ex+dx/dl*dr,y=ey+dy/dl*dr,ba=Math.atan2(GY-y,GX-x);let d=ba-fa;d=Math.atan2(Math.sin(d),Math.cos(d));sw(x,y,fa+d*E(k),wk,1,10);continue}
+    if(tt<tr+RB){const k=E((tt-tr)/RB),rx=ex+dx/dl*24,ry=ey+dy/dl*24,x=rx+(GX-rx)*k,y=ry+(GY-ry)*k,ba=Math.atan2(GY-ry,GX-rx);trail(x-Math.cos(ba)*70,y-Math.sin(ba)*70,x,y,0.45*(1-k),3);sw(x,y,ba,wk*(1-0.35*k),1-Math.max(0,(k-0.75)/0.25),10);continue}
+    back++}
+   const gk=Math.max(back/N,tt>2.15?1:0);
+   if(gk>0&&tt<2.75){/* nhịp 2: cự kiếm lớn dần; 2,45-2,75 kéo lùi như giương cung, xoay theo hướng phóng */const pb=tt>2.45?E((tt-2.45)/0.3):0,ang=GA+(A-GA)*pb,x=GX-Math.cos(A)*26*pb,y=GY-Math.sin(A)*26*pb*0.5,sc=BS*(0.55+0.45*E(gk));glow(x,y,Lg*0.7,0.3*gk+0.25*pb);if(tt>2.15&&tt<2.5)glow(x,y,120,0.5*(1-(tt-2.15)/0.35));sw(x,y+Math.sin(tt*3)*3*(1-pb),ang,sc,Math.min(1,0.25+0.75*gk),22)}
+   else if(tt>=2.75){/* nhịp 3: phóng xuyên làn, để lại đường chém sáng trên đất */const sx=GX-Math.cos(A)*26,sy=GY-Math.sin(A)*13,D=z.Dt+260,k=Math.min(1,(tt-2.75)/0.25),e=k*k,x=sx+Math.cos(A)*D*e,y=sy+Math.sin(A)*D*e,fo=tt<3.0?1:Math.max(0,1-(tt-3.0)/0.9);
+    c.save();c.globalCompositeOperation='lighter';c.globalAlpha=0.75*fo;c.strokeStyle='#ffd77a';c.lineCap='round';c.lineWidth=14*fo+2;c.beginPath();c.moveTo(sx,sy+54);c.lineTo(x,y+54);c.stroke();c.lineWidth=4;c.strokeStyle='#fff6d8';c.stroke();c.restore();
+    if(tt<3.0){trail(sx,sy,x,y,0.85,10);sw(x,y,A,BS,1,26)}}}
+  else if(M===2){const R=95,RY=0.45,w=2.4,cy0=TY-12,slot=(phi,t)=>[TX+Math.cos(phi+w*t)*R,cy0+Math.sin(phi+w*t)*R*RY];
+   if(tt>0.6&&tt<2.1){const al=Math.min(1,(tt-0.6)/0.3)*(tt<1.9?1:1-(tt-1.9)/0.2);c.save();c.globalCompositeOperation='lighter';c.globalAlpha=0.35*al;c.strokeStyle='#ffe08a';c.lineWidth=2;c.beginPath();c.ellipse(TX,cy0+8,R,R*RY,0,0,TAU);c.stroke();c.restore()}
+   const items=[];
+   for(let i=0;i<N;i++){const[sx,sy]=fanP(i),phi=i*TAU/N,ti=Math.abs(i-(N-1)/2)*0.03,tl=0.3+i*0.035,arr=tl+0.32,st=1.85+(i%3)*0.03;let x,y,ang,al=1,tr=0;
+    if(tt<ti)continue;
+    if(tt<tl){const k=E(clamp((tt-ti)/0.25,0,1));x=sx;y=sy+(1-k)*16;ang=Math.atan2(TY-sy,TX-sx);al=k}
+    else if(tt<arr){const k=(tt-tl)/0.32,e=k*k,[qx,qy]=slot(phi,arr);x=sx+(qx-sx)*e;y=sy+(qy-sy)*e;ang=Math.atan2(qy-sy,qx-sx);tr=1}
+    else if(tt<st){[x,y]=slot(phi,tt);ang=Math.atan2(cy0-y,TX-x)}
+    else if(tt<st+0.14){const k=(tt-st)/0.14,[qx,qy]=slot(phi,st);x=qx+(TX-qx)*k*k;y=qy+(cy0-qy)*k*k;ang=Math.atan2(cy0-qy,TX-qx);tr=1}
+    else continue;
+    items.push({x,y,ang,al,tr,i})}
+   items.sort((p,q)=>p.y-q.y);for(const it of items){if(it.tr)trail(it.x-Math.cos(it.ang)*60,it.y-Math.sin(it.ang)*60,it.x,it.y,0.45,3);sw(it.x,it.y,it.ang,wk,it.al,10)}
+   if(tt>2.02&&tt<2.4)glow(TX,cy0,110,0.55*(1-(tt-2.02)/0.38));
+   if(tt>2.15){/* cự kiếm cắm xuống tâm */const land=TY-Lg/2+6,top=TY-360,k=Math.min(1,(tt-2.15)/0.4),cy=top+(land-top)*k*k*k,al=tt<3.3?Math.min(1,(tt-2.15)/0.12):Math.max(0,1-(tt-3.3)/0.35);
+    c.save();c.globalAlpha=0.35*k*al;c.fillStyle='#0b1226';c.beginPath();c.ellipse(TX,TY+4,20+40*k,8+14*k,0,0,TAU);c.fill();c.restore();
+    if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);sw(TX,cy,Math.PI/2,BS,al,26);if(tt>2.55&&tt<2.95)glow(TX,TY,150,0.6*(1-(tt-2.55)/0.4))}}
+  else{/* M3 mưa kiếm */const RX=140,RYr=60,K=lowfx?18:30;
+   for(let i=0;i<N;i++){const[sx,sy]=fanP(i),ti=Math.abs(i-(N-1)/2)*0.03,tl=0.3+i*0.04;if(tt<ti)continue;
+    if(tt<tl){const k=E(clamp((tt-ti)/0.25,0,1));sw(sx,sy+(1-k)*16,-Math.PI/2,wk,k,8)}
+    else if(tt<tl+0.32){const k=(tt-tl)/0.32,e=k*k,y=sy-460*e;trail(sx,y+70,sx,y,0.5,4);sw(sx,y,-Math.PI/2,wk,1-Math.max(0,(k-0.6)/0.4),10)}}
+   if(tt>0.7&&tt<3.6){const al=Math.min(1,(tt-0.7)/0.3)*(tt<3.2?1:1-(tt-3.2)/0.4);c.save();c.globalAlpha=0.4*al;const g=c.createRadialGradient(TX,TY,0,TX,TY,RX+40);g.addColorStop(0,'rgba(8,10,24,1)');g.addColorStop(1,'rgba(8,10,24,0)');c.fillStyle=g;c.beginPath();c.ellipse(TX,TY,RX+40,(RYr+20),0,0,TAU);c.fill();c.restore()}
+   const Lr=W[4]*wk,items=[];
+   for(let j=0;j<K;j++){const t0=1.0+j*(1.3/K),rr=Math.sqrt(rnd3(j+1)),th=rnd3(j+7)*TAU,gx=TX+Math.cos(th)*RX*rr,gy=TY+Math.sin(th)*RYr*rr;if(tt<t0||tt>t0+0.75)continue;const u=tt-t0;let cy,al=1;
+    if(u<0.2){const k=u/0.2;cy=gy-Lr/2-280*(1-k*k)}else{cy=gy-Lr/2+3;al=u<0.5?1:1-(u-0.5)/0.25}
+    items.push({gx,gy,cy,al,u})}
+   items.sort((p,q)=>p.gy-q.gy);for(const it of items){if(it.u<0.2)trail(it.gx,it.cy-Lr/2-90,it.gx,it.cy-Lr/2,0.5,3);else if(it.u<0.34)glow(it.gx,it.gy,26,0.5*(1-(it.u-0.2)/0.14));sw(it.gx,it.cy,Math.PI/2,wk,it.al,8)}
+   if(tt>2.4){const land=TY-Lg/2+6,top=TY-380,k=Math.min(1,(tt-2.4)/0.4),cy=top+(land-top)*k*k*k,al=tt<3.4?Math.min(1,(tt-2.4)/0.12):Math.max(0,1-(tt-3.4)/0.4);
+    c.save();c.globalAlpha=0.35*k*al;c.fillStyle='#0b1226';c.beginPath();c.ellipse(TX,TY+4,20+40*k,8+14*k,0,0,TAU);c.fill();c.restore();
+    if(k<1)trail(TX,cy-Lg*0.5-140,TX,cy-Lg*0.5,0.6,12);sw(TX,cy,Math.PI/2,BS,al,26);if(tt>2.8&&tt<3.2)glow(TX,TY,160,0.6*(1-(tt-2.8)/0.4))}}}
  else if(z.kind==='txk'){const tt=z.t,N=7,W=CKI.naturalWidth,Hh=CKI.naturalHeight,s=0.48*z.sc,outk=tt>z.end?clamp((tt-z.end)/0.6,0,1):0,ringA=clamp(tt/0.5,0,1)*(1-outk),items=[];
   /* 25/11 bùa chú: bát quái vàng xoay dưới đất (bagua_vang.png, tự vẽ bằng code: cong_cu/claude/bua_assets.py) hiện dần khi kiếm rơi, tan cùng trận */
   /* 27/11: bát quái + elip chuyển xuống lớp NỀN (txkGround, vẽ trước nhân vật/quái) để nằm dưới đất, không còn như bay lơ lửng */
@@ -4642,7 +4677,7 @@ function render(){
  if(G){
   for(const s of G.spawnQ){const k=1-s.t/(s.big?1.6:0.7);c.strokeStyle=`rgba(255,60,30,${0.4+k*0.5})`;c.lineWidth=2;const r=s.big?40:14;c.beginPath();c.arc(s.x,s.y,r,0,TAU);c.stroke();c.beginPath();c.moveTo(s.x-r*.6,s.y-r*.6);c.lineTo(s.x+r*.6,s.y+r*.6);c.moveTo(s.x+r*.6,s.y-r*.6);c.lineTo(s.x-r*.6,s.y+r*.6);c.stroke()}
   for(const h of G.haz)drawHaz(h);
-  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones){if(z.kind==='txk')txkGround(ctx,z);else if(z.kind==='vkx'){z._gp=1;drawZone(z);z._gp=0}}
+  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones){if(z.kind==='txk')txkGround(ctx,z);else if(z.kind==='vkx'){z._gp=1;drawZone(z);z._gp=0}else if(z.kind==='vkx2'){/* đại chiêu: nền tối đi để kiếm và quái nổi lên */const t=z.t,al=0.32*(t<0.25?t/0.25:t<z.T-0.5?1:Math.max(0,(z.T-t)/0.5));ctx.save();ctx.globalAlpha=al;ctx.fillStyle='#04050c';ctx.fillRect(z.x-1600,z.y-1200,3200,2400);ctx.restore()}}
   drawHeal(c);drawPhase2(c);drawChest(c);drawAmPortal(c);drawSkillAim(c);
   for(const k of G.corpses){const m=ESPR[k.type],h=CH[m[0]];if(!h.ok)continue;const A=h.meta.anims.death;if(!A)continue;const fi=Math.min(A.f.length-1,Math.floor(k.t*A.fps));if(h.meta.proc){const hv=h.meta.proc==='hover',u=Math.min(1,k.t/0.55);c.save();c.translate(k.x,k.y);if(!hv)c.rotate(u*1.35*k.f);const al=Math.max(0,1-Math.max(0,k.t-0.35)/1.1);c.translate(0,hv?-12-u*18:0);drawSpr(c,h,'death',0,0,0,k.f,espScale(m),false,al);c.restore()}else drawSpr(c,h,'death',fi,k.x,k.y,k.f,espScale(m),false,k.t>1.1?Math.max(0,(1.8-k.t)/0.7):1)}
   for(const o of G.orbs)drawOrb(o);
