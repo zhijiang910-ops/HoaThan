@@ -2,7 +2,7 @@
 
 Game hành động sinh tồn pixel art một file (`game/index.html` + `game/assets/`), canvas, chạy trên trình duyệt, ưu tiên điện thoại xoay ngang. Chủ game nói tiếng Việt, xưng "tao/mày"; trả lời bằng tiếng Việt.
 
-Repo có chứa asset mua có giấy phép (`game/assets/`, `nguon/pack_wuxia/`). Chủ game đã đồng ý lưu ở đây và chịu trách nhiệm. (27/11) Chủ game GỠ luật không công khai: được công khai repo và link game; gói Wuxia gốc `nguon/pack_wuxia/` đã GỠ khỏi cây repo (vẫn còn trong lịch sử git, lấy lại: `git checkout 4c4f6c9eccc8354b1985f67750ffd222267af595 -- nguon/pack_wuxia`, thư mục nằm trong .gitignore, đừng commit lại); game chạy trên GitHub Pages qua workflow `.github/workflows/pages.yml` (đẩy `main` là tự đăng thư mục `game/`).
+Repo có chứa asset mua có giấy phép (`game/assets/`, `nguon/pack_wuxia/`). Chủ game đã đồng ý lưu ở đây và chịu trách nhiệm. (27/11) Chủ game GỠ luật không công khai: được công khai repo và link game; gói Wuxia gốc `nguon/pack_wuxia/` đã GỠ khỏi cây repo (vẫn còn trong lịch sử git, lấy lại: `git checkout 4c4f6c9eccc8354b1985f67750ffd222267af595 -- nguon/pack_wuxia`, thư mục nằm trong .gitignore, đừng commit lại); game chạy trên GitHub Pages qua workflow `.github/workflows/pages.yml` (đẩy `main` là tự đăng thư mục `game/`). (27/11) Repo đã đổi tên `HoaThan` → **`zhijiang910-ops/KhuTaDietMa`**; link game: **https://zhijiang910-ops.github.io/KhuTaDietMa/** (link `.../HoaThan/` cũ không còn). Remote cũ `.../HoaThan` vẫn đẩy được nhờ GitHub tự chuyển hướng.
 
 Tình trạng hệ thống: `TONG_HOP_TINH_NANG.md`. Tài liệu bàn giao Tây Du cũ (`BAT_DAU_CLAUDE.md`, `HANDOFF_CHATGPT.md`, `tai_lieu/`, `QA_*`, `demo/`) đã xóa 24/11, xem lại bằng lịch sử git. Khi mâu thuẫn, file này và code game là bản đúng.
 
