@@ -553,7 +553,7 @@ html.needland #rot{display:flex}
 .pzb{display:grid;grid-template-columns:1fr 1.25fr;gap:16px}
 .pzs{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
 .pzs div{background:rgba(0,0,0,.28);border:1px solid rgba(201,164,94,.22);border-radius:8px;padding:6px 9px;display:flex;flex-direction:column;gap:1px}
-.pzs span{font:600 11px "Be Vietnam Pro",sans-serif;color:#9fb8ae}.pzs b{font:700 16px "Noto Serif",serif;color:#f5e3bd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pzs span{font:600 11px "Be Vietnam Pro",sans-serif;color:#9fb8ae}.pzs b{font:700 16px "Noto Serif",serif;color:#f5e3bd;white-space:nowrap!important;width:max-content;overflow:hidden;text-overflow:ellipsis}
 .pzo{display:flex;flex-direction:column;gap:2px}
 .seg{display:inline-flex;border:1px solid #7a3448;border-radius:6px;overflow:hidden;flex:none}.seg button{appearance:none;border:0;background:rgba(14,9,12,.85);color:#c9b99a;font:700 12px "Be Vietnam Pro",sans-serif;padding:6px 11px;cursor:pointer}.seg button+button{border-left:1px solid #5a2f3c}.seg button.on{background:linear-gradient(#8a3a2c,#5a1f28);color:#ffe9b0}.seglb{font:600 12px "Be Vietnam Pro",sans-serif;color:#c9b99a;margin-right:-8px}
 @media (max-height:420px){.seg button{padding:4px 8px;font-size:11px}.seglb{font-size:11px}}
@@ -1799,7 +1799,7 @@ html body #lobby .lbgear{position:absolute;top:max(2.6vh,env(safe-area-inset-top
 html body #lobby .lbgear:active{color:#fff}
 html body #lobby .lbfoot{display:none!important}
 html body #lobby .lbfoot.open{display:flex!important;position:absolute;top:calc(max(2.6vh,env(safe-area-inset-top)) + clamp(34px,5.4vh,52px) + 6px);right:max(2.2vw,env(safe-area-inset-right));left:auto;bottom:auto;height:auto;padding:8px 10px;gap:8px 10px;background:rgba(8,8,12,.92);border:1px solid #6b5a3c;border-radius:4px;z-index:5}
-html body #lobby .lbgrid.g7>[data-lb=amgioi]{display:none!important}
+html body #lobby .lbgrid.lbgrid.g7>.lbt[data-lb=amgioi]{display:none!important}
 html body #lobby .lbgrid.g7>*{flex-basis:33.2%!important;width:33.2%}
 html body #lobby .lbgrid.g7>[data-lb=inv]{order:1}html body #lobby .lbgrid.g7>[data-lb=luyenvk]{order:2}html body #lobby .lbgrid.g7>[data-lb=luyendan]{order:3}html body #lobby .lbgrid.g7>[data-lb=tangbao]{order:4}html body #lobby .lbgrid.g7>[data-lb=diemtam]{order:5}html body #lobby .lbgrid.g7>[data-lb=luyencong]{order:6}
 html body #lobby .lbgrid.g7>[data-lb=tangbao]:before,html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
@@ -1854,6 +1854,30 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 #lbStage .lbleaf-r{clip-path:polygon(68.1% 27.5%,73.8% 27.5%,73.8% 49.4%,68.1% 49.4%);transform-origin:73.8% 38%}
 #lbStage.dopen .lbleaf-l{transform:scaleX(.7) skewY(-3deg)}#lbStage.dopen .lbleaf-r{transform:scaleX(.7) skewY(3deg)}
 #lbStage #lbFx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+/* ===== THANH SÁU Ô "TỦ GIAM HỒN" (chủ game 26/11): ảnh có sẵn khung, chỉ vẽ nhãn một lần; 6 vùng bấm theo % ảnh ===== */
+#lobby{--dw:min(calc(100vw - 12px),calc(100vh*2.75));--barH:calc(var(--dw)*0.1160)}
+html body #lobby .lbgrid.lbgrid{left:50%!important;right:auto!important;bottom:max(0px,env(safe-area-inset-bottom))!important;width:var(--dw)!important;height:var(--barH)!important;transform:translateX(-50%);padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:url(assets/ui/lobby/tugiam.webp) center/100% 100% no-repeat!important;display:block!important;pointer-events:none!important;z-index:3}
+html body #lobby .lbgrid.lbgrid.g7>.lbt{position:absolute!important;flex:none!important;height:auto!important;width:auto!important;pointer-events:auto;margin:0!important;padding:0!important;display:flex!important;flex-direction:column!important;align-items:center;justify-content:center;gap:0;background:transparent!important;box-shadow:none!important;border:0!important;border-radius:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;overflow:hidden}
+html body #lobby .lbgrid.g7>*:before{display:none!important}
+html body #lobby .lbgrid.g7>[data-lb=amgioi]{display:none!important}
+html body #lobby .lbgrid.g7>[data-lb=inv]{left:9.576%!important;width:11.510%!important;top:38.095%!important;height:51.587%!important}
+html body #lobby .lbgrid.g7>[data-lb=diemtam]{left:23.849%!important;width:10.866%!important;top:38.095%!important;height:51.587%!important}
+html body #lobby .lbgrid.g7>[data-lb=luyendan]{left:37.523%!important;width:11.096%!important;top:38.095%!important;height:51.587%!important}
+html body #lobby .lbgrid.g7>[data-lb=luyenvk]{left:51.427%!important;width:11.050%!important;top:38.095%!important;height:51.587%!important}
+html body #lobby .lbgrid.g7>[data-lb=tangbao]{left:65.239%!important;width:11.004%!important;top:38.095%!important;height:51.587%!important}
+html body #lobby .lbgrid.g7>[data-lb=luyencong]{left:79.098%!important;width:11.188%!important;top:38.095%!important;height:51.587%!important}
+html body #lobby .lbgrid.g7 .lbt i{font:600 calc(var(--dw)*.0215)/1 "Noto Serif",serif!important;color:#e8cf94;text-shadow:0 0 8px rgba(255,150,70,.45),0 1px 2px #000;width:auto!important;height:auto!important}
+html body #lobby .lbgrid.g7 .lbt b{font:700 calc(var(--dw)*.0125)/1.15 "Noto Serif",serif!important;color:#efe3c8;text-shadow:0 1px 3px #000,0 0 6px #000;white-space:nowrap;margin-top:calc(var(--dw)*.004)}
+html body #lobby .lbgrid.g7 .lbt small{display:none!important}
+html body #lobby .lbgrid.lbgrid.g7>[data-lb=diemtam] small{display:block!important;position:absolute!important;top:2%;left:0;right:0;width:auto!important;max-width:none!important;text-align:center;font:700 max(6.5px,calc(var(--dw)*.0072))/1 "Be Vietnam Pro",sans-serif!important;color:#a8e6b8;text-shadow:0 1px 2px #000,0 0 4px #000;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
+html body #lobby .lbgrid.lbgrid.g7 .lbt{flex-direction:column!important;gap:0!important}
+html body #lobby .lbgrid.g7 .lbt:active{background:rgba(255,200,110,.14)!important}
+#lbBridge .lbtag{left:22%!important;top:66%!important}
+html body #lobby .lbgrid.g7 .lbt.off{opacity:.55}
+@media (hover:hover){html body #lobby .lbgrid.g7 .lbt:hover{background:rgba(255,200,110,.1)!important}}
+html body #lobby .lbmain{bottom:calc(var(--barH) + 6px)!important}
+/* 26/11 web: nhãn "Thần Giáng · Sẵn sàng" rộng hơn nút và đè lên ô kỹ năng bên phải: thu chữ, giữ một dòng, căn giữa dưới nút */
+html body #godBtn #godTxt{white-space:nowrap!important;font-size:9.5px!important;letter-spacing:0!important;padding:1px 6px!important;left:50%!important;right:auto!important;transform:translateX(-50%)}
 </style>
 </head>
 <body>
@@ -3738,7 +3762,7 @@ setInterval(viewApply,500);
 /* HUD điện thoại ngang: đo vị trí thật của nút Lướt và cụm kỹ năng rồi đặt thanh máu nằm giữa, nút Thần Giáng ngồi trên cụm kỹ năng -> không bao giờ đè nhau ở mọi cỡ màn */
 function hudFit(){const hud=$('#hud');if(!hud||hud.hidden)return;const vb=$('#vbars'),gb=$('#godBtn'),sk=$('#skills'),dh=$('#dashBtn');if(!vb||!sk||!dh)return;
  const low=(VIEW.on?(VIEW.rot?VIEW.W:VIEW.H):innerHeight)<=520;
- if(!low){vb.style.left=vb.style.right='';if(gb){gb.style.right=gb.style.bottom='';gb.style.left=''}return}
+ if(!low){vb.style.left=vb.style.right='';if(gb){gb.style.right=gb.style.bottom='';gb.style.left='';/* 26/11: CSS giả định ô kỹ năng rộng 222px nhưng ô to hơn (231px) nên nút Thần Giáng đè lên ô Q; đặt sát mép trái cụm kỹ năng thật */{const W0=VIEW.on?(VIEW.rot?VIEW.H:VIEW.W):innerWidth,k0=lrect(sk);if(k0&&k0.width>0&&getComputedStyle(gb).position!=='static')gb.style.setProperty('right',Math.round(W0-k0.left+8)+'px','important')}}return}
  const W=VIEW.on?(VIEW.rot?VIEW.H:VIEW.W):innerWidth,H=VIEW.on?(VIEW.rot?VIEW.W:VIEW.H):innerHeight,d=lrect(dh),k=lrect(sk);
  vb.style.setProperty('left',Math.round(d.right+8)+'px','important');vb.style.setProperty('right',Math.round(W-k.left+10)+'px','important');
  if(gb){gb.style.setProperty('left','auto','important');gb.style.setProperty('right',Math.round(W-k.left-gb.offsetWidth)+'px','important');gb.style.setProperty('bottom',Math.round(H-k.top+16)+'px','important')}}
@@ -5079,14 +5103,14 @@ $('#crGo').addEventListener('click',()=>{const n=($('#crName').value||'').replac
  sel.gender=cr.gender;sel.weapon=SECT_WEAPON[cr.sect]||'kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();persist();clearInterval(window.__crh);showLobby()});
 /* --- sảnh --- */
 const LBT=[
- {k:'inv',g:'庫',n:'Kho Đồ',st:()=>invList().length+' món · '+Object.keys(books()).length+' bí tịch'},
- {k:'diemtam',g:'點',n:'Điểm Tâm',st:()=>dtStatus()},
- {k:'luyendan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
- {k:'luyenvk',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
+ {k:'inv',lbn:'Hành Nang',g:'庫',n:'Kho Đồ',st:()=>invList().length+' món · '+Object.keys(books()).length+' bí tịch'},
+ {k:'diemtam',lbn:'Thụ Lộc',g:'點',n:'Điểm Tâm',st:()=>dtStatus()},
+ {k:'luyendan',lbn:'Luyện Đan',g:'丹',n:'Luyện Đan',st:()=>MATN.duoc+' '+mats().duoc+' · '+MATN.hiem+' '+mats().hiem},
+ {k:'luyenvk',lbn:'Rèn Binh Khí',g:'鍛',n:'Luyện Vũ Khí',st:()=>{const w=eqWeapon();return w?w.name+(forgeLevel(w)?' +'+forgeLevel(w):''):'Chưa mặc vũ khí'}},
  {k:'chieumo',g:'募',n:'Chiêu Mộ',st:()=>'Thần Giáng '+gods().own.length+'/'+Object.keys(GODS).length,hide:1},
- {k:'tangbao',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
+ {k:'tangbao',lbn:'Tàng Bảo Các',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
  {k:'amgioi',g:'冥',n:'Âm Giới',st:()=>amStatus()},
- {k:'luyencong',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
+ {k:'luyencong',lbn:'Luyện Công',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
  {k:'banghoi',g:'幫',n:'Bang Hội',st:()=>'Cần máy chủ',off:1,hide:1}];
 // Kiếm khởi đầu: nhân vật mới (và hồ sơ cũ chưa từng có vũ khí) nhận 1 thanh Phàm +0 để thấy ngay hệ cường hóa.
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
@@ -5097,7 +5121,7 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{needVfxFor(p
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.amdia;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
  giveStarterSword();
- $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"><i>${t.g}</i><b>${t.n}</b><small>${t.st()}</small></button>`).join('');$('#lbGrid').classList.toggle('g7',LBT.filter(t=>!t.hide).length>6);{const am=$('#lbAmS');if(am)am.textContent=amStatus();}$('#againBtn').hidden=false;
+ $('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}" aria-label="${t.lbn||t.n}" title="${t.lbn||t.n}"><i aria-hidden="true">${t.g}</i><b>${t.lbn||t.n}</b><small>${t.st()}</small></button>`).join('');$('#lbGrid').classList.toggle('g7',LBT.filter(t=>!t.hide).length>6);{const am=$('#lbAmS');if(am)am.textContent=amStatus();}$('#againBtn').hidden=false;
  {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?RN(cp.rmap)+' '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss · bấm để kết toán':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
  $('#lbGoS').textContent=save.bossChest?'Có rương Boss chờ: nhận trước khi hạ Boss lần nữa':RN(sel.map)+' · đã mở '+stars(rprog().star);
  $('#lbRes').textContent=String(save.ngoc||0);$('#lbRes').title='Tiên ngọc: '+(save.ngoc||0)+(save.wins?' · '+save.wins+' lần hạ trùm':'');$('#lowfx3').checked=LOWFX;
