@@ -1,0 +1,31 @@
+# BÀN GIAO NÂNG CẤP CHUẨN CARBON DARK-WUXIA PIXEL ART — ĐÒN ABC & KIM CHUNG TRÁO THIÊN CƯƠNG MÔN
+
+Đọc kỹ `CLAUDE.md` trước khi sửa `game/index.html`. Bộ 4 sprite lần này được làm lại **đồng bộ 100% chuẩn phong cách Carbon** trong `cap-nhat-dong-bo-thien-cuong-mon.zip` (`vfx_ab_fist_impact`, `vfx_c_star_sweep_arc`, `vfx_f_thien_cuong_tinh_luan`):
+- **KHÔNG viền mực đen dày kiểu hoạt hình** trên hiệu ứng năng lượng — dùng hạt pixel năng lượng lửa đồng cổ–chu sa–vàng ngà sắc nét, tách nền đen chuẩn 32-bit RGBA.
+- **Kim Chung Tráo Đầu Hổ** đồng bộ chất liệu giáp đồng cổ & mây đỏ chu sa của ấn Thiên Cương Tinh Luân, với **thân chuông thủy tinh linh khí trong suốt toàn phần** (kể cả lòng đáy) để nhân vật bên trong rõ nét 100%! (**0 LƯỢT PIXELLAB**, gắn `?v=2911tccarbon` chống cache).
+
+## 1. ĐÒN ĐÁNH THƯỜNG `A - B - C (+6)` — BẠCH HỔ THIÊN CƯƠNG QUYỀN (CHUẨN CARBON)
+Vẽ bằng `source-over` (`alpha: 0.96 -> 0.0`, giữ nguyên độ rực của lõi vàng ngà & viền chu sa):
+- **Đòn A (`0.24s` · Khai Sơn Trực Quyền)**: `assets/vfx/vfx_tc_a_punch_shock.png?v=2911tccarbon`
+  * Kích thước: `w = 132, h = 104`, đặt tại `P.x + dir * 56, P.y - 54`, `alpha: 0.96 -> 0.0` trong `0.18s`.
+  * Vòng sóng đồng cổ + tia quyền kình lửa chu sa–vàng ngà đâm thẳng cực gọn và sắc nét.
+- **Đòn B (`0.26s` · Bạch Hổ Trảo Quyền)**: `assets/vfx/vfx_tc_b_hook_arc.png?v=2911tccarbon`
+  * Kích thước: `w = 148, h = 128`, đặt tại `P.x + dir * 56, P.y - 56`, `alpha: 0.96 -> 0.0` trong `0.20s`.
+  * 3 vệt cào Bạch Hổ lửa chu sa–vàng kim ẩn bóng đầu Hổ mờ sau vệt cào, tách biệt hoàn toàn với chém đao.
+- **Đòn C (`+6` · *Tảo Tinh Cước*, `0.38s`)**: `assets/vfx/vfx_tc_c_sweep_25d.png?v=2911tccarbon`
+  * Kích thước: `w = 225, h = 152`, đặt sát đất tại `P.x + dir * 16, P.y - 12`, `alpha: 0.96 -> 0.0` trong `0.24s`.
+  * Vòng quét 2.5D lửa đồng–chu sa kèm 7 sao Bắc Đẩu nối nét chấm mảnh sắc nét.
+
+## 2. BUFF `V` (*THIÊN CƯƠNG TINH CHUNG*) — KIM CHUNG TRÁO ĐẦU HỔ LÒNG KÍNH TRONG SUỐT
+- **XÓA BỎ HOÀN TOÀN** các file chuông cũ (`vfx_tc_bell_back_halo.png`, `vfx_tc_bell_ground_ring.png`, `vfx_tc_bell_aura.png`) khỏi code!
+- Dùng 1 sprite duy nhất **`assets/vfx/vfx_tc_kimchung_dome.png?v=2911tccarbon`** (32-bit RGBA PNG, đỉnh Đầu Hổ đồng cổ + viền chân chuông khắc cổ tự vàng đặc nét, toàn bộ thân kính & lòng đáy trong suốt thấy rõ nhân vật + 7 sao Bắc Đẩu):
+  * Kích thước & vị trí chuẩn (khớp chibi `104px`): `w = 216, h = 216`, đặt tâm tại **`P.x, P.y - 84`**.
+    - Đỉnh Đầu Hổ + đai mây đỏ chu sa nằm gọn **phía trên đỉnh đầu** nhân vật (không che mặt).
+    - Thân kính linh khí trong suốt bao trọn đầu, mặt và thân nhân vật.
+    - Vành chân chuông đồng cổ khắc phù văn ôm gọn quanh bàn chân.
+  * Vẽ bằng `source-over` với `ctx.globalAlpha = 0.95`.
+  * Nhịp mở chiêu (`0.0s -> 0.20s`): úp từ trên xuống `yOffset: -22 -> 0`, `scale: 1.15 -> 1.0`; duy trì nhấp nhô nhẹ `scale = 1 + 0.015 * Math.sin(G.t * 5)`. Khi kích hoạt Chuông Ngân (tối đa 3 nhịp): bung sóng xung kích đồng–chu sa `radius = 155px` trong `0.22s`.
+
+## 3. Nghiệm thu bắt buộc
+- Gắn `?v=2911tccarbon` cho cả 4 file, chạy `pack_check.sh` đảm bảo ngân sách VFX phái `<= 3.5 MB`.
+- Soi đủ **8 cỡ màn ngang** (`550×278`, `811×260`, `667×375`, `852×393`, `932×430`, `956×440`, `1100×620`, `1280×720`) và quay lại 2 clip `thiencuong_ABC` + `thiencuong_buff_V` gửi chủ game.

@@ -1,0 +1,27 @@
+# BÀN GIAO NÂNG CẤP CHIÊU Q, F (2 CÁNH TAY QUỶ CẦM ĐAO ĐÁNH PHỤ) & KHÔI PHỤC V CŨ — ĐOẠN HỒN CỐC
+
+Đọc kỹ `CLAUDE.md` trước khi sửa `game/index.html`. Chủ game đã xem clip test `doanhon_Q_F_V_30-11.mp4` và yêu cầu nâng cấp dứt điểm 3 chiêu `Q · F · V` chuẩn phong cách Carbon (**0 LƯỢT PIXELLAB**, gắn `?v=2911dhcarbon` chống cache):
+
+## 1. CHIÊU Q (`Khai Sơn Huyết Tụ`) — SÓNG ĐAO HUYẾT KHÍ CHUẨN CARBON (KHÔNG BÓP MÉO)
+- Thay `assets/vfx/vfx_dh_q_charge_wave.png?v=2911dhcarbon` (tỷ lệ ngang chuẩn `380×200`, lưỡi sóng trăng khuyết bạc-đỏ rực kéo hỏa diễm máu & khói đen, **KHÔNG viền mực hoạt hình**).
+- **Lúc đang giữ gồng (`0.25s -> 0.85s`)**: vẽ vòng tụ huyết khí đỏ xoáy quanh nhân vật + vạch mờ báo đường bổ phía trước; chạm mốc hoàn hảo `0.65s` lóe chớp trắng-đỏ 1 nhịp rõ ràng.
+- **Lúc phóng đao khí**: giữ đúng tỷ lệ ngang (`w = 240, h = 126`, **KHÔNG bóp dẹt thành `330×115`**!), vẽ `source-over` (`alpha = 0.96`) bay lướt xuyên `340px` trong `0.38s` kèm vệt cháy đỏ mờ sát đất (`drawDecals`) dọc đường bay + rung camera `4px` + `2 frame` hit-stop!
+
+## 2. CHIÊU F (`Huyết Quỷ Song Thủ` — ĐỔI TỪ 2 LƯỠI ĐAO TĨNH SANG 2 CÁNH TAY QUỶ CẦM TRỌNG ĐAO ĐÁNH PHỤ!)
+- **XÓA BỎ** `vfx_dh_f_phantom_blade.png` cũ (nhỏ và đứng im vô dụng).
+- Dùng sprite mới **`assets/vfx/vfx_dh_f_demon_arm_blade.png?v=2911dhcarbon`** (`400×192`, cánh tay giáp sắt quấn xích máu + bùa vàng cầm Trọng Đao Huyết Ma chuẩn Carbon).
+- **Cơ chế & Diễn hoạt rõ ràng trong `5,0s`** (CD `10,0s`, `14 NL`, tự hiến `12%` Máu hiện tại, sàn bảo vệ `15%` HP):
+  1. Triệu hồi **2 Cánh Tay Huyết Quỷ cầm Trọng Đao (`w = 175, h = 84`)** lơ lửng 2 bên vai trái/phải nhân vật (`offset (-46, -74)` lật ngang và `(+46, -74)` — vẽ khéo 2 bên vai để không che mặt nhân vật, nhấp nhô theo nhịp `Math.sin(G.t * 4.5)`).
+  2. **CHỦ ĐỘNG VUNG CHÉM PHỤ CỰC RÕ**:
+     - Tự động khóa quái gần nhất trong bán kính `220px` và **vung chém luân phiên mỗi `0,55s`** (tay trái → tay phải). Ngoài ra mỗi khi nhân vật đánh thường hoặc tung `Q/C`, tay sẵn sàng lập tức chém bồi thêm!
+     - **Hoạt ảnh chém thật sự**: mỗi nhịp chém (`0,24s`), cánh tay quỷ **giơ ngược lấy đà (`-50°`) rồi bổ mạnh tới trước (`+70°`)** đồng thời lao dịch về phía mục tiêu `36px`, vẽ vệt chém đỏ-đen **`vfx_dh_cleaver_slash_arc.png`** (`145px`) ngay tại mục tiêu!
+     - Mỗi nhát chém phụ gây **`55%` ATK**, gắn Dấu Đoạn Mạch và **hút `15%` sát thương thành Máu** (vẽ tia huyết khí đỏ bay từ quái về người chơi + hiện số hồi máu rõ ràng).
+  3. **Kết thúc `5,0s`**: 2 cánh tay quỷ đồng loạt chém chéo chữ X (`130%` ATK, đẩy lùi) rồi tan thành khói đen!
+
+## 3. CHIÊU BUFF V — KHÔI PHỤC NGUYÊN BẢN VÒNG TRÒN ĐỎ CŨ CỦA ĐOẠN HỒN
+- **KHÔI PHỤC LẠI SKILL `V` CŨ TẠO VÒNG TRÒN ĐỎ** trên mặt đất của Đoạn Hồn Cốc (bỏ hoàn toàn tấm `vfx_dh_blood_shield_aura.png` xám mờ hiện tại)!
+- Giữ đúng hiệu ứng vòng tròn đỏ rõ nét, rực rỡ quanh chân nhân vật như bản V cũ mà chủ game đã duyệt (vẽ ở ground layer dưới chân nhân vật, không che người).
+
+## 4. Nghiệm thu bắt buộc
+- Gắn `?v=2911dhcarbon`, chạy `pack_check.sh` đảm bảo `PACKS.vfx.dao <= 3.5 MB`.
+- Soi đủ **8 cỡ màn ngang** (`550×278` → `1280×720`) và quay lại clip `doanhon_Q_F_V` gửi chủ game kiểm chứng!
