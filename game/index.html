@@ -2227,6 +2227,37 @@ html body #lobby .lbprof .lbcp .cpi::before,html body #lobby .lbprof .lbcp .cpi:
 html body #lobby .lbprof .lbcp small{display:block!important;flex:none;font:600 max(8px,3.1cqw)/1 'Noto Serif',Georgia,serif!important;color:#e8d3a8!important;text-shadow:0 1px 0 #000!important;white-space:nowrap;margin:0!important;letter-spacing:0!important}
 html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!important;text-align:right;font:800 max(10px,4.2cqw)/1 'Noto Serif',Georgia,serif!important;color:#f0a650!important;text-shadow:0 1px 0 #2a0a00,0 0 4px rgba(0,0,0,.7)!important;white-space:nowrap;letter-spacing:0!important;font-variant-numeric:tabular-nums}
 </style>
+<style id="sanhFx">
+/* 28/11 hiệu ứng sảnh: neo theo % ảnh nền (cùng #lbStage nên bám lư hương và khe cổng khi đổi cỡ màn) */
+#lbStage .lbinc{position:absolute;z-index:1;pointer-events:none;background:url(assets/ui/lobby/khoi_huong.webp) center bottom/100% 100% no-repeat;transform-origin:43% 100%;opacity:.62;animation:lbIncIdle 4.6s ease-in-out infinite}
+/* chân khói (43% bề ngang, đáy) đặt đúng đầu nhang: lư trái (33,6% ; 44,9%), lư phải (39,0% ; 45,2%) */
+#lbStage .lbinc-a{left:calc(33.6% - 0.43*1.60%);top:calc(44.9% - 10%);width:1.60%;height:10%}
+#lbStage .lbinc-b{left:calc(39.0% - 0.43*1.28%);top:calc(45.2% - 8%);width:1.28%;height:8%;animation-delay:-2.1s;animation-duration:5.3s}
+@keyframes lbIncIdle{0%,100%{transform:translateY(0) skewX(0);opacity:.55}50%{transform:translateY(-4%) skewX(-3deg);opacity:.72}}
+#lbStage.pray .lbinc{animation:lbIncRise .35s ease-out forwards}
+@keyframes lbIncRise{0%{transform:translateY(0) scale(1);opacity:.7}100%{transform:translateY(-38%) scale(1.15,1.25);opacity:0}}
+#lbAltar .lbz{clip-path:polygon(25.5% 54%,25.5% 33%,27% 27%,34% 25.5%,42% 27%,43% 33%,43% 54%)}
+#lbAltar .lbtag{left:34%;top:57.5%}
+#lbAltar.hot .lbtag{color:#ffe08a!important;border-color:#ffd36a!important;background:rgba(44,30,6,.82)!important}
+/* mắt đỏ nằm SAU 2 cánh, khung tràn = lòng cổng nên chỉ lộ trong khe mở */
+#lbStage .lbeyes{position:absolute;left:62.9%;top:27.5%;width:10.9%;height:21.9%;z-index:1;overflow:hidden;pointer-events:none}
+#lbStage .lbeyes>i{position:absolute;left:50%;top:44%;width:72%;aspect-ratio:640/123;transform:translate(-50%,-50%) scale(.9);background:url(assets/ui/lobby/mat_do.webp) center/100% 100% no-repeat;opacity:0;filter:brightness(1.7) saturate(1.25) drop-shadow(0 0 3px rgba(255,40,20,.9))}
+#lbStage .lbslit{position:absolute;left:calc(68.1% - .5%);top:27.5%;width:1%;height:21.9%;z-index:2;pointer-events:none;opacity:0;transform:scaleX(.4);background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(255,60,40,.95),rgba(150,10,12,.6) 45%,transparent 75%);mix-blend-mode:screen}
+#lbStage .lbsmk{position:absolute;left:calc(68.4% - 12%);top:41%;width:24%;aspect-ratio:900/284;z-index:2;pointer-events:none;opacity:0;background:url(assets/ui/lobby/khoi_den.webp) center/100% 100% no-repeat;transform-origin:50% 30%}
+#lbStage.gopen .lbslit{animation:lbSlit .3s ease-out}
+@keyframes lbSlit{0%{opacity:0;transform:scaleX(.4)}35%{opacity:1;transform:scaleX(1.6)}100%{opacity:0;transform:scaleX(2.4)}}
+#lbStage.gopen .lbleaf{transition:transform .42s cubic-bezier(.25,.8,.3,1) .16s}
+#lbStage.gopen .lbleaf-l,#lbStage.gopen .lbleaf-r{transform:scaleX(.55)}
+#lbStage.gopen .lbeyes>i{animation:lbEyes .62s linear .3s forwards}
+@keyframes lbEyes{0%{opacity:0;transform:translate(-50%,-50%) scale(.9)}20%{opacity:1;transform:translate(-50%,-50%) scale(1)}55%{opacity:1;transform:translate(-50%,-50%) scale(1.02)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.04)}}
+#lbStage.gopen .lbsmk{animation:lbSmk 1.25s cubic-bezier(.3,.6,.4,1) .32s forwards}
+@keyframes lbSmk{0%{opacity:0;transform:translateY(-22%) scale(.45,.5)}18%{opacity:.95}60%{opacity:.85;transform:translateY(22%) scale(1.15,.9)}100%{opacity:0;transform:translateY(40%) scale(1.45,.8)}}
+#lobby.lbbusy::after{content:"";position:fixed;inset:0;z-index:9999}
+/* màn thấp: HUD che góc trên trái nên khói hương ngắn lại, nhãn bàn thờ hạ xuống khỏi đáy HUD */
+@media (max-height:300px){#lbStage .lbinc-a{top:calc(44.9% - 5.5%);height:5.5%;width:.88%;left:calc(33.6% - .43*.88%)}#lbStage .lbinc-b{top:calc(45.2% - 4.6%);height:4.6%;width:.74%;left:calc(39% - .43*.74%)}#lbAltar .lbtag{left:39.5%!important;top:57.5%!important}}
+#lobby.lbpause #lbStage .lbinc{animation-play-state:paused}
+#lbStage .lobby-wisps[data-reduced-motion="true"]~.lbinc{animation:none}
+</style>
 </head>
 <body>
 <canvas id="cv"></canvas>
@@ -2282,7 +2313,7 @@ html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!im
  <div class="cx">
   <div class="cxp cxL">
    <label for="crName" class="cxh cxh1">Tên nhân vật</label>
-   <div class="crnw"><input id="crName" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Nhập tên (4–12 ký tự)"><button type="button" id="crDice" class="crdice" aria-label="Đặt tên ngẫu nhiên" title="Đặt tên ngẫu nhiên"><img src="assets/ui/xucxac.webp" alt="" draggable="false"></button></div>
+   <div class="crnw"><input id="crName" maxlength="8" autocomplete="off" spellcheck="false" placeholder="Nhập tên (4–8 ký tự)"><button type="button" id="crDice" class="crdice" aria-label="Đặt tên ngẫu nhiên" title="Đặt tên ngẫu nhiên"><img src="assets/ui/xucxac.webp" alt="" draggable="false"></button></div>
    <div class="cxg" id="crGender"></div>
    <div class="cxavw top left"><h3 class="cxh">Ảnh đại diện</h3><div id="crAvatars" class="cxavatars" role="group" aria-label="Chọn ảnh đại diện"></div></div>
    <div class="cxdeco"><img id="crDeco" src="assets/ui/creation/deco-dao.webp" alt="" decoding="async"></div>
@@ -2314,8 +2345,9 @@ html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!im
  <div id="lbStage" aria-label="Sảnh Khử Tà Diệt Ma">
   <img id="lbArt" src="assets/ui/lobby/sanh.webp" alt="" draggable="false">
   <div class="lobby-wisps" id="lbWisps" aria-hidden="true" data-reduced-motion="false"><i class="wf wf-luc" style="left:17.469%;top:44.520%;width:6.754%;height:20%;background-image:url(assets/ui/lobby/wispa_luc.png);animation-duration:1.6s,3.04s;animation-delay:-0.3s,-0.39s"></i><i class="wf wf-lam" style="left:27.954%;top:57.438%;width:7.091%;height:21%;background-image:url(assets/ui/lobby/wispa_lam.png);animation-duration:1.45s,2.76s;animation-delay:-0.9s,-1.17s"></i><i class="wf wf-tim" style="left:87.794%;top:51.419%;width:4.052%;height:12%;background-image:url(assets/ui/lobby/wispa_tim.png);animation-duration:1.75s,3.32s;animation-delay:-0.5s,-0.65s"></i><i class="wf wf-do" style="left:93.128%;top:57.019%;width:3.714%;height:11%;background-image:url(assets/ui/lobby/wispa_do.png);animation-duration:1.55s,2.94s;animation-delay:-1.1s,-1.43s"></i></div>
-  <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
+  <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbinc lbinc-a" aria-hidden="true"></i><i class="lbinc lbinc-b" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbeyes" aria-hidden="true"><i></i></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><i class="lbslit" aria-hidden="true"></i><i class="lbsmk" aria-hidden="true"></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
   <div class="lbsp lbsp-b" id="lbBridge"><button type="button" class="lbz" aria-label="Xuất Trận" title="Xuất Trận: chọn ải"></button><button type="button" class="lbtag">Xuất Trận</button></div>
+  <div class="lbsp lbsp-a" id="lbAltar"><button type="button" class="lbz" aria-label="Thần Giáng Đàn" title="Thần Giáng Đàn: chiêu mộ thần tướng"></button><button type="button" class="lbtag">Thần Giáng Đàn</button></div>
   <div class="lbsp lbsp-d" id="lbDoor"><i class="lbtal" aria-hidden="true"></i><button type="button" class="lbz" aria-label="Quỷ Môn Quan" title="Quỷ Môn Quan: Âm Giới"></button><button type="button" class="lbtag">Quỷ Môn Quan</button></div>
  </div>
  <canvas id="lbBg" width="640" height="400"></canvas>
@@ -5580,20 +5612,20 @@ $('#create').addEventListener('click',e=>{const b=e.target.closest('button');if(
  if(b.dataset.oc)cr.outC=b.dataset.oc;
  if(b.dataset.sk)cr.sk=+b.dataset.sk;
  const H0=HAIR[cr.gender][cr.hairI];if(H0.on)cr.hair=H0.k;$('#crErr').textContent='';renderCreateAvatars();renderCreateScene();renderCreate()});
-/* tên ngẫu nhiên kiểu tiên hiệp/âm giới, luôn 4–12 ký tự */
+/* tên ngẫu nhiên kiểu tiên hiệp/âm giới, luôn 4–8 ký tự (28/11: HUD sảnh hiện đủ tên) */
 const NAME_HO=['Hàn','Mặc','Diệp','Lăng','Tiêu','Bạch','Hắc','Vân','Thanh','Huyền','Lãnh','Ôn','Sở','Mộ Dung','Liễu','Tạ','Phong','Kỳ','Cố','Âu'];
 const NAME_TEN=['Phong','Tà','Vô Ngân','Hàn Nguyệt','Ma Ảnh','Thiên Tuyệt','Dạ Vũ','Huyết Sát','Vô Cực','Quỷ Cốc','Linh Vân','Tử Dạ','Trấn Hồn','Minh Nguyệt','Phá Quân','Kiếm Tâm','Thanh Ảnh','Hồi Hồn','Vong Xuyên','U Minh','Thạch','Lôi','Tuyết','Ngọc Hư'];
-function randomName(){for(let i=0;i<60;i++){const n=NAME_HO[Math.random()*NAME_HO.length|0]+' '+NAME_TEN[Math.random()*NAME_TEN.length|0],l=[...n].length;if(l>=4&&l<=12)return n}return 'Hàn Phong'}
+function randomName(){for(let i=0;i<60;i++){const n=NAME_HO[Math.random()*NAME_HO.length|0]+' '+NAME_TEN[Math.random()*NAME_TEN.length|0],l=[...n].length;if(l>=4&&l<=8)return n}return 'Hàn Phong'}
 (function(){const b=document.getElementById('crDice'),i=document.getElementById('crName');if(!b||!i)return;b.addEventListener('click',()=>{i.value=randomName();document.getElementById('crErr').textContent='';if(window.crNa)window.crNa();b.classList.remove('roll');void b.offsetWidth;b.classList.add('roll')})})();
 $('#crName').addEventListener('input',()=>{$('#crErr').textContent=''});
 $('#crName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#crGo').click()});
-window.crNa=()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim(),L=[...n].length;$('#crGo').classList.toggle('na',L<4||L>12)};$('#crName').addEventListener('input',window.crNa);
+window.crNa=()=>{const n=($('#crName').value||'').replace(/\s+/g,' ').trim(),L=[...n].length;$('#crGo').classList.toggle('na',L<4||L>8)};$('#crName').addEventListener('input',window.crNa);
 /* 27/11: sau khi bấm Khởi hành thành công, chặn chạm 0,7 s để cú chạm thừa không rơi xuống sảnh (trước: bấm liên tiếp mở luôn Luyện Công) */
 function crShield(){window.__crBusy=1;$('#crGo').classList.add('busy');const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:99999;background:transparent;touch-action:none';['pointerdown','pointerup','click','touchstart','touchend'].forEach(t=>d.addEventListener(t,e=>{e.preventDefault();e.stopPropagation()},{passive:false}));document.body.appendChild(d);setTimeout(()=>{d.remove();window.__crBusy=0;$('#crGo').classList.remove('busy')},700)}
 $('#crGo').addEventListener('click',()=>{if(window.__crBusy)return;/* 27/11: chạm liên tục chỉ tạo một lần */const n=($('#crName').value||'').replace(/\s+/g,' ').trim();
  if(!sectOpen(cr.sect)){$('#crErr').textContent='Phái này chưa mở khóa, chưa chơi được';return}
  if(!HAIR[cr.gender][cr.hairI].on){$('#crErr').textContent='Kiểu tóc này chưa mở';return}
- if([...n].length<4){$('#crErr').textContent='Tên cần ít nhất 4 ký tự';$('#crName').focus();return}if([...n].length>12){$('#crErr').textContent='Tên tối đa 12 ký tự';return}
+ if([...n].length<4){$('#crErr').textContent='Tên cần ít nhất 4 ký tự';$('#crName').focus();return}if([...n].length>8){$('#crErr').textContent='Tên tối đa 8 ký tự';return}
  if(save.prof){const P0=save.prof;P0.name=n;P0.gender=cr.gender;P0.avatar=cr.avatars[cr.gender];P0.sect=cr.sect;P0.weapon=SECT_WEAPON[cr.sect]||'kiem';sel.weapon=P0.weapon;P0.hair=cr.hair;P0.hairC=cr.hairC;P0.outC=cr.outC;sel.gender=cr.gender;save.gender=cr.gender;crShield();persist();clearInterval(window.__crh);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}return showLobby()}
  save.prof={name:n,gender:cr.gender,avatar:cr.avatars[cr.gender],sect:cr.sect,weapon:SECT_WEAPON[cr.sect]||'kiem',hair:cr.hair,hairC:cr.hairC,outC:cr.outC,lv:1,exp:0,created:Date.now()};
  sel.gender=cr.gender;sel.weapon=SECT_WEAPON[cr.sect]||'kiem';save.gender=sel.gender;save.weapon=sel.weapon;sta();crShield();persist();clearInterval(window.__crh);showLobby()});
@@ -5681,11 +5713,16 @@ function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?36:64;
  for(let i=0;i<(lite?6:12);i++)LBFX.p.push({k:'smoke',x:1139+(Math.random()-.5)*50,y:378+Math.random()*60,vx:(Math.random()-.5)*34,vy:-(20+Math.random()*28),g:-3,r0:12,r1:38+Math.random()*34,al:.6,c:'6,5,9',a:-(Math.random()*.8),life:2+Math.random()});const nw=lite?5:9;for(let i=0;i<nw;i++){const a=(-.5+i/(nw-1))*1.7+(Math.random()-.5)*.25;const sp=170+Math.random()*140;LBFX.p.push({k:'wraith',x:1139+(Math.random()-.5)*40,y:402+Math.random()*30,vx:Math.sin(a)*sp*1.25,vy:-Math.cos(a)*sp*.55-30,up:8+Math.random()*10,s:52+Math.random()*34,fl:Math.random()<.5?-1:1,al:.95,a:-(.05+i*.11+Math.random()*.1),life:1.9+Math.random()*.9})}
  lbFxKick()}
 (function(){const hot=(el,on)=>el.classList.toggle('hot',on);let busy=0;const st=$('#lbStage');
- for(const id of ['lbBridge','lbDoor']){const el=$('#'+id);if(!el)continue;for(const t of el.querySelectorAll('.lbz,.lbtag')){t.addEventListener('pointerdown',()=>hot(el,true));t.addEventListener('pointerenter',()=>hot(el,true));for(const ev of ['pointerup','pointerleave','pointercancel'])t.addEventListener(ev,()=>hot(el,false))}}
+ for(const id of ['lbBridge','lbDoor','lbAltar']){const el=$('#'+id);if(!el)continue;for(const t of el.querySelectorAll('.lbz,.lbtag')){t.addEventListener('pointerdown',()=>hot(el,true));t.addEventListener('pointerenter',()=>hot(el,true));for(const ev of ['pointerup','pointerleave','pointercancel'])t.addEventListener(ev,()=>hot(el,false))}}
  const go=()=>{if(busy)return;busy=1;st.classList.remove('bring');void st.offsetWidth;st.classList.add('bring');lbBellFx();setTimeout(()=>st.classList.remove('bring'),1500);setTimeout(()=>{busy=0;$('#lbGo').click()},720)};
- const door=()=>{if(busy)return;busy=1;st.classList.add('dopen');/* 27/11 chủ game: bỏ khói + bóng ma (tụt FPS), chỉ mở cửa */setTimeout(()=>st.classList.remove('dopen'),2800);setTimeout(()=>{busy=0;const t=document.querySelector('#lbGrid [data-lb="amgioi"]');if(t)t.click();for(const p of LBFX.p){if(p.a<0)p.a=p.life;else p.life=Math.min(p.life,p.a+.35)}},1500)};
+ /* 28/11 chủ game: cổng = khe lóe đỏ sẫm → hé 2 cánh từ bản lề ngoài → mắt đỏ sau khe (~200 ms rõ) → khói đen trườn xuống bậc, ~1 s rồi vào Âm Giới. Chỉ transform/opacity; chặn bấm lặp (#lobby.lbbusy). */
+ const lock=on=>$('#lobby').classList.toggle('lbbusy',on);
+ const door=()=>{if(busy)return;busy=1;lock(1);st.classList.remove('gopen');void st.offsetWidth;st.classList.add('gopen');setTimeout(()=>{const t=document.querySelector('#lbGrid [data-lb="amgioi"]');if(t)t.click();busy=0;lock(0)},1000);setTimeout(()=>st.classList.remove('gopen'),2600)};
+ /* 28/11: Thần Giáng Đàn = bàn thờ: khói hương nổi lên rồi mờ 350 ms, sau đó mở Chiêu Mộ (giao diện triệu hồi có sẵn) */
+ const altar=()=>{if(busy)return;busy=1;lock(1);st.classList.remove('pray');void st.offsetWidth;st.classList.add('pray');setTimeout(()=>{busy=0;lock(0);openLbm('chieumo')},350);setTimeout(()=>st.classList.remove('pray'),1400)};
  for(const t of $('#lbBridge').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',go);
- for(const t of $('#lbDoor').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',door)})();
+ for(const t of $('#lbDoor').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',door);
+ for(const t of $('#lbAltar').querySelectorAll('.lbz,.lbtag'))t.addEventListener('click',altar)})();
 $('#lbGear').addEventListener('click',e=>{e.stopPropagation();$('.lbfoot').classList.toggle('open');resSync();$('#perf3').checked=!!PERF.on});
 $('#perf3').addEventListener('change',e=>perfSet(e.target.checked));
 $('#lobby').addEventListener('click',e=>{const t=e.target.closest('.lbt');if(!t)return;const k=t.dataset.lb;
