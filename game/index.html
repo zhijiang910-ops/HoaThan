@@ -3165,7 +3165,8 @@ function mscDraw(c,z,top){const t=z.t,TT=z.T||2.2,B0=z.b0==null?0.35:z.b0,L0=z.l
  c.restore()}
 
 /* 29/11 HỘ THỂ + NỘI TẠI (gói chủ game passive-va-ho-the, nguon/master_amgioi/passive_ho_the_29-11/): ô bấm hàng dưới HUD (cờ low), bấm được cả khi bị khống chế (cờ cc), tự bật khi Máu < 35%. Số TẠM theo json. */
-function wardSk(){return P&&P.kit&&P.kit.act.find(s=>s.def.low)}
+const MS_HIDE_AUTO=true;/* đặt false để trả 2 ô hàng dưới của Mao Sơn */
+function wardSk(){if(MS_HIDE_AUTO&&msOn())return null;return P&&P.kit&&P.kit.act.find(s=>s.def.low)}
 function wardCdCut(v){const s=wardSk();if(s)s.cd=Math.max(0,s.cd-v)}
 function clearCC(){if(!P.st)return;for(const k in P.st)if(k!=='doc')delete P.st[k]}
 function stunE(e,t){if(!e||e.dead||e.boss)return;e.stun=Math.max(e.stun||0,t*(e.elite?0.5:1))}
@@ -4167,6 +4168,7 @@ function requestHumanSkill(key){
  if(sk&&sk.def.id==='k1'&&msOn()&&canRequestHumanSkill()&&msQTp())return;
  if(!canRequestHumanSkill(sk&&sk.def.cc))return;
  if(!sk?.def.hotkey)return;
+ if(MS_HIDE_AUTO&&msOn()&&sk.def.low)return;
  if(P.skillAim?.key===key){cancelSkillAim();return}
  if(!sk.lvl){notice(sk.def.name,'Chưa lĩnh ngộ chiêu này.');return}
  if(sk.cd>0){notice(sk.def.name,'Còn hồi '+hudSeconds(Math.ceil(sk.cd*10)/10));return}
@@ -5304,7 +5306,7 @@ function hudSkills(){paintAva();closeSkillInspect();
   man.push(cell('c5 ult','u',k.ult.def,k.ult.lvl,k.ult.lvl));
   /* nội tại cộng chỉ số không hiện ô; chỉ chiêu tự thi triển (có hồi chiêu) mới hiện */
   r1=man.slice(0,4).join('')+empty(4-man.length);
-  r2=aut.slice(0,2).join('')+empty(2-aut.length);
+  if(MS_HIDE_AUTO&&msOn())aut.length=0;/* 28/11 chủ game: Mao Sơn tạm bỏ 2 ô hàng dưới (Linh Kiếm Hộ Pháp, Huyền Thiên Kim Quang Chú) */r2=aut.slice(0,2).join('')+empty(2-aut.length);
  }
  /* 29/11 chủ game: bỏ 2 ô bình máu/nội lực, để trống chờ ô mới */r2+='<div class="sk emp spare" aria-hidden="true"></div>'.repeat(3);
  el.skills.innerHTML='<div class="skr">'+r1+'</div><div class="skr s2">'+r2+'</div>';{const db=$('#dashBtn');if(db){db.classList.toggle('qc',qcOn());db.classList.toggle('ms',msOn());db.setAttribute('aria-label',qcOn()?'Bộ Hư Lưu Phù':msOn()?'Thế Thân Độn Phù':'Lướt né')}const dh=$('#dashHelp');if(dh)dh.setAttribute('aria-label','Xem chi tiết '+(qcOn()?'Bộ Hư Lưu Phù':msOn()?'Thế Thân Độn Phù':'Lướt'))}
