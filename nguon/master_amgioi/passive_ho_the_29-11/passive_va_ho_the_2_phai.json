@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "cacheBust": "2911pas",
+    "zeroPixelLab": true,
+    "hudBottomSlotRule": "Gắn vào ô kỹ năng phụ hàng dưới HUD (vừa cho người chơi BẤM CHỦ ĐỘNG bất cứ lúc nào kể cả khi đang bị Choáng/Trói để giải khống, vừa tự động kích hoạt bảo hiểm nếu Máu tụt dưới 35% mà kỹ năng đang sẵn sàng!)."
+  },
+  "thienCuongMon": {
+    "sect": "thiencuong",
+    "weapon": "quyen",
+    "defensiveBuffSkill": {
+      "id": "y_bell",
+      "replacesOld": "kimchung (bỏ hoàn toàn qy_bell.png màu tím-lam cũ bị lệch tông)",
+      "name": "Thiên Cương Tinh Chung",
+      "icon": "assets/ui/quyen/tc_ic_bell.webp?v=2911pas",
+      "vfx": "assets/vfx/tc_bell.webp?v=2911pas",
+      "cooldownSec": 14.0,
+      "mpCost": 15,
+      "castWhileCC": true,
+      "autoTriggerBelowHpPct": 35,
+      "durationSec": 3.0,
+      "shieldMaxHpPct": 22,
+      "damageReductionPct": 40,
+      "superArmorInitialSec": 1.2,
+      "bellResonance": {
+        "maxPulses": 3,
+        "minIntervalSec": 0.45,
+        "pulseRadiusPx": 155,
+        "pulseMagAtkPct": 85,
+        "appliesChuSaStack": 1,
+        "finalBreakOrEndStunSec": 0.6
+      },
+      "desc": "Xóa sạch Khống chế, chụp Đại Hồng Chung Bắc Đẩu bán trong suốt quanh người trong 3,0s: tạo Giáp Chuông 22% Máu tối đa + giảm 40% sát thương nhận. Mỗi khi bị đánh (tối đa 3 nhịp), chuông ngân sóng đồng bán kính 155px gây 85% Công Phép và khắc 1 Ấn Chu Sa; khi hết giờ hoặc vỡ chuông chấn choáng 0,6s."
+    },
+    "passives": [
+      {
+        "id": "tc_pas1_chusa",
+        "name": "Chưởng Ấn Chu Sa",
+        "startUnlocked": true,
+        "desc": "Đánh thường kết chuỗi, Lướt, Q, F khắc Ấn Chu Sa (tối đa 3 tầng, 6s). C và X kích nổ ấn (+35% Công Phép/tầng, hồi 4 Nội lực/tầng); nổ đủ 3 tầng gây Tán Hồn 4s (+18% ST nhận vào) và giảm ngay 1,0s hồi chiêu Thiên Cương Tinh Chung."
+      },
+      {
+        "id": "tc_pas2_thattinh",
+        "name": "Thất Tinh Bộ Cương",
+        "startUnlocked": false,
+        "desc": "Sau khi Lướt (Bộ Hư Lưu Phù) hoặc bật Tinh Chung, nhận Đạp Đẩu 3,0s: nhát đánh thường kế tiếp lao áp sát 90px tới mục tiêu, tung thẳng cú quét C · Tảo Tinh Cước (kể cả khi vũ khí chưa +6) và tăng +15% tốc đánh trong 2,5s."
+      },
+      {
+        "id": "tc_pas3_phamacuong",
+        "name": "Phá Ma Cương Quyền",
+        "startUnlocked": false,
+        "desc": "Mỗi tầng Ấn Chu Sa kích nổ tích 1 tầng Cương Khí (tối đa 5 tầng trong 8s: +4% Xuyên kháng & +3% Giảm thương/tầng). Đủ 5 tầng, chiêu Q/F/C kế tiếp nổ Chấn Tinh Mang phá 50% giáp ảo địch và hồi 4% Máu tối đa."
+      },
+      {
+        "id": "tc_pas4_bachho",
+        "name": "Bạch Hổ Bất Khuất",
+        "startUnlocked": false,
+        "desc": "Khi trong bán kính 140px có từ 3 quái trở lên hoặc có Trùm, tăng +18% Phòng thủ & Kháng phép. Khi Máu xuống dưới 30%, lập tức làm mới hồi chiêu Thiên Cương Tinh Chung và tăng +25% sát thương nổ Ấn Chu Sa trong 5s (hồi 35s)."
+      }
+    ]
+  },
+  "maoSonPhai": {
+    "sect": "maoson",
+    "weapon": "kiem",
+    "defensiveBuffSkill": {
+      "id": "k_ward",
+      "name": "Huyền Thiên Kim Quang Chú",
+      "icon": "assets/ui/maoson/ms_ic_ward.webp?v=2911pas",
+      "vfx": "assets/vfx/ms_ward.webp?v=2911pas",
+      "cooldownSec": 15.0,
+      "mpCost": 18,
+      "castWhileCC": true,
+      "autoTriggerBelowHpPct": 35,
+      "durationSec": 3.5,
+      "shieldMaxHpPct": 20,
+      "moveSpeedBonusPct": 25,
+      "evasionBonusPct": 20,
+      "instantMaxSpiritSwords": true,
+      "spiritSwordSpeedMult": 1.35,
+      "onBreakThunderPushPx": 160,
+      "desc": "Xóa sạch làm chậm/khống chế, dựng Lồng Bát Quái Kim Quang & 4 Đạo Phù xoay hộ thể trong 3,5s: tạo Giáp Kim Quang 20% Máu tối đa, tăng +25% Tốc chạy & +20% Né tránh, đồng thời lập tức triệu hồi đủ 3 thanh Linh Kiếm Hộ Pháp tăng 35% tốc chém. Nếu khiên vỡ, 4 đạo phù nổ sấm vàng đẩy lùi quái 160px và dán Ấn Bùa lên toàn bộ."
+    },
+    "passives": [
+      {
+        "id": "ms_pas1_linhkiem",
+        "replacesOrUpgrades": "k3 (Linh Kiếm Hộ Pháp)",
+        "name": "Linh Kiếm Hộ Pháp",
+        "startUnlocked": true,
+        "desc": "Mỗi đòn Chí mạng hoặc mỗi 3 nhát đánh thường gọi 1 Phi Kiếm hộ thể (tối đa 3 thanh, sống 8s). Nâng cấp mới: Phi Kiếm chém trúng mục tiêu đang mang Ấn Bùa sẽ tăng +30% sát thương và giảm 0,5s hồi chiêu cho Q và F."
+      },
+      {
+        "id": "ms_pas2_chusaphu",
+        "replacesOrUpgrades": "swordMarkUntil (+10% cũ nâng lên nổ lan)",
+        "name": "Chu Sa Phù Ấn",
+        "startUnlocked": true,
+        "desc": "Chiêu Q, F, C và đòn C đánh thường dán Ấn Bùa Vàng lên đầu quái (4s). Đánh thường hoặc Phi Kiếm kích nổ Ấn Bùa gây nổ Bát Quái nhỏ 75% Công Phép lan bán kính 85px, làm chậm 25% trong 1,5s và hồi 3 Nội lực."
+      },
+      {
+        "id": "ms_pas3_nguloi",
+        "name": "Ngũ Lôi Dẫn Pháp",
+        "startUnlocked": false,
+        "desc": "Mỗi 4 lần kích nổ Ấn Bùa (hoặc ngay khi tung Vạn Kiếm Tru Ma X), tự động giáng 1 tia Sấm Vàng (set_bolt_vang.png) xuống kẻ địch nhiều Máu nhất trong 280px, gây 135% Công Phép xuyên 25% kháng và tê liệt 0,4s."
+      },
+      {
+        "id": "ms_pas4_nguphong",
+        "name": "Ngự Phong Đạo Thể",
+        "startUnlocked": false,
+        "desc": "Không nhận sát thương trong 3s giúp tăng +12% Tốc chạy và +10% Tỷ lệ Chí mạng. Khi đang duy trì đủ 3 thanh Phi Kiếm hộ thể bay quanh người, tăng thêm +15% Công Phép và giảm 15% Nội lực tiêu hao của mọi kỹ năng."
+      }
+    ]
+  }
+}

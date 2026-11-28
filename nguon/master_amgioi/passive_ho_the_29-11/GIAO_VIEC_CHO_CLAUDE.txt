@@ -1,0 +1,38 @@
+# BÀN GIAO TRIỂN KHAI VÀO `game/index.html`: LÀM LẠI CHUÔNG HỘ THỂ + BỘ 4 PASSIVE CHO THIÊN CƯƠNG MÔN & MAO SƠN PHÁI
+
+Đọc kỹ `CLAUDE.md` trước khi làm. Chủ game yêu cầu làm lại cái Chuông của Thiên Cương Môn (bỏ `qy_bell.png` màu tím-lam cũ lệch tông), bổ sung kỹ năng Hộ Thể tương ứng cho Mao Sơn Phái, và thiết kế lại trọn bộ 4 Nội Tại (Passive) có chiều sâu cho cả 2 phái đang mở khóa. **TỐN 0 LƯỢT PIXELLAB**.
+
+## 1. Tài nguyên đính kèm trong gói (nhớ gắn `?v=2911pas` chống cache!)
+- `assets/vfx/tc_bell.webp`: Đại Hồng Chung Đồng Cổ Quai Hổ Phù khắc Thất Tinh Bắc Đẩu (đã xử lý bán trong suốt 62% ở vách đồng để thấy rõ nhân vật đứng bên trong, sao Bắc Đẩu và vành chu sa sáng nét!).
+- `assets/vfx/ms_ward.webp`: Lồng Bát Quái Kim Quang Đồng Vàng & 4 Đạo Phù chữ đỏ xoay hộ thể (bán trong suốt).
+- `assets/ui/quyen/tc_ic_bell.webp`: Icon HUD 160×160 của *Thiên Cương Tinh Chung*.
+- `assets/ui/maoson/ms_ic_ward.webp`: Icon HUD 160×160 của *Huyền Thiên Kim Quang Chú*.
+
+## 2. Đưa Kỹ Năng Hộ Thể Xuống Ô Phụ Hàng Dưới HUD (Cơ chế 2 trong 1: Bấm Chủ Động Giải Khống + Bảo Hiểm Tự Bật)
+Trong `game/index.html`, hàng dưới HUD vốn có sẵn 2 ô chiêu phụ có hồi chiêu:
+1. **Thiên Cương Môn (`y_bell` — Thiên Cương Tinh Chung, thay thế hoàn toàn `kimchung` cũ)**:
+   - Hồi chiêu `14,0s`, tốn `15 Nội lực`.
+   - **Chủ động:** Người chơi bấm trực tiếp vào ô chuông (hoặc phím tắt phụ) bất cứ lúc nào — **kể cả khi đang bị Choáng/Trói** — để xóa sạch Khống chế ngay lập tức!
+   - **Bảo hiểm tự động:** Nếu người chơi chưa bấm mà bị đánh tụt xuống dưới `35%` Máu khi chiêu đang hồi xong (`cd <= 0`), tự động bật chuông cứu mạng!
+   - **Hiệu ứng trong `3,0s`:** Dựng `tc_bell.webp` bám tâm nhân vật (`P.x, P.y - 52`, nhịp ngân co giãn nhẹ ±2%), cấp Giáp Chuông `22%` Máu tối đa + giảm `40%` sát thương nhận + `1,2s` đầu Bá Thể. Mỗi khi bị đánh (tối đa 3 nhịp, cách nhau >= 0,45s), chuông ngân vòng sóng đồng bán kính `155px` gây `85%` Công Phép và **khắc 1 tầng Ấn Chu Sa** lên quái xung quanh; khi hết `3,0s` hoặc vỡ giáp chuông thì chấn choáng `0,6s`!
+   - Gỡ bỏ `qy_bell.png` tím-lam cũ khỏi `kimChung()`.
+
+2. **Mao Sơn Phái (`k_ward` — Huyền Thiên Kim Quang Chú)**:
+   - Hồi chiêu `15,0s`, tốn `18 Nội lực`, cơ chế Bấm Giải Khống + Tự Bật dưới `35%` Máu tương tự Tinh Chung.
+   - **Hiệu ứng trong `3,5s`:** Dựng `ms_ward.webp` bám quanh nhân vật (xoay nhẹ hoặc lơ lửng ±3px), cấp Giáp Kim Quang `20%` Máu tối đa, tăng `+25%` Tốc chạy & `+20%` Né tránh, đồng thời **lập tức gọi đủ tối đa 3 thanh phi kiếm `Linh Kiếm Hộ Pháp` (`hpSummon`)** và tăng `+35%` tốc độ lao chém của phi kiếm trong `3,5s`! Nếu khiên bị đánh vỡ, nổ vòng sấm vàng `set_no_vang` đẩy lùi quái `160px` và dán Ấn Bùa (`swordMarkUntil`) lên mọi quái trúng!
+
+## 3. Triển khai Bộ 4 Nội Tại (Passive) Cho Mỗi Phái (Chi tiết đầy đủ trong `passive_va_ho_the_2_phai.json`)
+- **Thiên Cương Môn (`WEAPONS.quyen`):**
+  1. *Chưởng Ấn Chu Sa* (mở sẵn): nổ đủ 3 ấn gây Tán Hồn 4s (+18% ST nhận) + giảm `1,0s` CD *Tinh Chung*.
+  2. *Thất Tinh Bộ Cương* (thẻ tu luyện / lĩnh ngộ): sau khi Lướt hoặc bật Tinh Chung, đòn đánh thường kế tiếp trong 3s lao áp sát `90px` và tung thẳng cú quét `C · Tảo Tinh Cước` (kể cả khi vũ khí chưa +6) + tăng 15% tốc đánh.
+  3. *Phá Ma Cương Quyền*: mỗi ấn nổ tích 1 tầng Cương Khí (tối đa 5 tầng: +4% xuyên kháng, +3% giảm thương); đủ 5 tầng đòn Q/F/C kế nổ phá 50% khiên địch và hồi 4% Máu tối đa.
+  4. *Bạch Hổ Bất Khuất*: >= 3 quái hoặc có Trùm trong 140px tăng +18% Thủ/Kháng; dưới 30% Máu làm mới ngay hồi chiêu *Tinh Chung* (hồi 35s).
+- **Mao Sơn Phái (`WEAPONS.kiem`):**
+  1. *Linh Kiếm Hộ Pháp* (mở sẵn): giữ gọi 3 phi kiếm, thêm tương tác chém trúng quái có Ấn Bùa tăng +30% ST và giảm `0,5s` CD của Q/F.
+  2. *Chu Sa Phù Ấn* (mở sẵn, nâng cấp `swordMarkUntil`): kích nổ Ấn Bùa gây nổ lan `75%` Công Phép bán kính `85px` (chớp `bagua_vang` nhỏ), làm chậm 25% 1,5s và hồi `3 Nội lực`.
+  3. *Ngũ Lôi Dẫn Pháp*: cứ 4 lần nổ Ấn Bùa (hoặc khi bấm X) tự giáng 1 tia `set_bolt_vang.png` xuống quái nhiều máu nhất tầm `280px` gây `135%` Công Phép.
+  4. *Ngự Phong Đạo Thể*: 3s không trúng đòn tăng +12% tốc chạy & +10% chí mạng; khi đủ 3 phi kiếm bay quanh tăng +15% Công Phép & giảm 15% MP tiêu hao.
+
+## 4. Nghiệm thu bắt buộc
+- Cập nhật mô tả chi tiết trong popup **Nhân Vật → Kỹ Năng (`renderKN`)** và màn Tạo Nhân Vật.
+- Soi đủ **8 cỡ màn ngang bắt buộc** (`550×278`, `811×260`, `667×375`, `852×393`, `932×430`, `956×440`, `1100×620`, `1280×720`) đảm bảo ô Hộ Thể hàng dưới HUD không đè thanh Máu/Nội lực. Quay clip ngắn test *Thiên Cương Tinh Chung* và *Huyền Thiên Kim Quang Chú* ở Luyện Công gửi chủ game!
