@@ -5303,7 +5303,7 @@ function hudSkills(){paintAva();closeSkillInspect();
   r1=man.slice(0,4).join('')+empty(4-man.length);
   r2=aut.slice(0,2).join('')+empty(2-aut.length);
  }
- r2+=['hp','mp'].map(t=>`<button class="sk potc ${t}" type="button" data-pot="${t}" data-info="${t}" aria-label="${POT[t].n} · xem thông tin và dùng"><i></i><span class="sk-mode" aria-hidden="true">BẤM</span><span class="pi ${t}"></span><small>0</small></button>`).join('')+'<div class="sk emp spare" aria-hidden="true"></div>';
+ /* 29/11 chủ game: bỏ 2 ô bình máu/nội lực, để trống chờ ô mới */r2+='<div class="sk emp spare" aria-hidden="true"></div>'.repeat(3);
  el.skills.innerHTML='<div class="skr">'+r1+'</div><div class="skr s2">'+r2+'</div>';{const db=$('#dashBtn');if(db){db.classList.toggle('qc',qcOn());db.classList.toggle('ms',msOn());db.setAttribute('aria-label',qcOn()?'Bộ Hư Lưu Phù':msOn()?'Thế Thân Độn Phù':'Lướt né')}const dh=$('#dashHelp');if(dh)dh.setAttribute('aria-label','Xem chi tiết '+(qcOn()?'Bộ Hư Lưu Phù':msOn()?'Thế Thân Độn Phù':'Lướt'))}
  updPots(true);el.skEls=[...el.skills.querySelectorAll('.sk[data-i]')];
  last.pcd=null;
@@ -7027,7 +7027,7 @@ addEventListener('keydown',e=>{
   if(slot&&P.form==='human'){if(!e.repeat)requestHumanSkill(slot);e.preventDefault();return}
   {const gk={KeyQ:'g0',KeyF:'g1',KeyX:'g2',KeyR:'gu'}[e.code];if(gk&&P.form==='god'){if(!e.repeat)requestGodSkill(gk);e.preventDefault();return}}
  }
- keys[e.code]=true;if(e.code==='Space'){dash();e.preventDefault()}if(e.code==='KeyR'||e.code==='KeyE')tryTransform();if(e.code==='KeyM'){MUTE=!MUTE;try{localStorage.setItem('tdst_mute',MUTE?'1':'0')}catch(_){}setSnd();if(G)notice(MUTE?'Tắt âm thanh':'Bật âm thanh','Phím M')}if(e.code==='Escape'||e.code==='KeyP')togglePause();if(e.code==='Digit1')drinkPot('hp');if(e.code==='Digit2')drinkPot('mp')});
+ keys[e.code]=true;if(e.code==='Space'){dash();e.preventDefault()}if(e.code==='KeyR'||e.code==='KeyE')tryTransform();if(e.code==='KeyM'){MUTE=!MUTE;try{localStorage.setItem('tdst_mute',MUTE?'1':'0')}catch(_){}setSnd();if(G)notice(MUTE?'Tắt âm thanh':'Bật âm thanh','Phím M')}if(e.code==='Escape'||e.code==='KeyP')togglePause();/* phím 1/2 bình máu/nội lực đã bỏ 29/11 */});
 addEventListener('keyup',e=>{keys[e.code]=false});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;if(!rotationBlocked()&&G&&G.state==='play'&&!G.paused&&!G.inspect)togglePause()});
 const joyEl=$('#joy');
