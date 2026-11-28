@@ -3349,11 +3349,11 @@ const WEAPONS={
     if(t0&&t0.x!=null){const d=Math.min(180*Ar(),Math.max(0,Math.hypot(t0.x-P.x,t0.y-P.y)-(t0.r||16)-30));if(d>8){P.dashAng=a;P.dashT=d/780;dt0=P.dashT;P.inv=Math.max(P.inv,dt0+0.1);spawnGhostMist(P.x,P.y-14,{n:1,sz:64,ma:0.4,T:0.7})}}
     if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;sfx('suodi_cast',0.35,0.15);
     for(let i=0;i<6;i++)later(dt0+0.04+i*0.125,()=>{const e=nearest(P.x,P.y,200),a2=e?angTo(e):a;P.avAnim=i%2?'attack2':'attack';swing(a2,i%2?-1:1);P.av=P.avTotal=0.2;P.runSwing=true;if(Math.abs(Math.cos(a2))>0.15)P.facing=Math.cos(a2)>=0?1:-1;
-     arc(P.x,P.y-8,a2,100*Ar(),1.6,fl,H({nofx:1}),null,i%2?-1:1);sfx('sword_hit',0.22,0.12);
+     arc(P.x,P.y-8,a2,100*Ar(),1.6,fl,H({nofx:1,noflash:1/* 29/11 (7) chủ game: tắt chớp trắng quái khi trúng để thấy rõ bàn tay chưởng */}),null,i%2?-1:1);sfx('sword_hit',0.22,0.12);
      /* 29/11 (5) chủ game: thay vệt bàn tay vàng (trông như trăng khuyết) bằng chớp đấm thẳng của bộ A-B-C */if(vok('qc_fistimp')&&G.fx.length<(MOBILE?60:150))fx({k:'fistcone',f:Math.cos(a2)>=0?1:-1,tilt:clamp(Math.atan2(Math.sin(a2),Math.abs(Math.cos(a2))),-0.35,0.35)+(i%2?0.1:-0.05),sc:i%2?1.0:0.9,fl:i===5?1:0,T:0.14});
      if(vok('bua_vang')&&e&&G.fx.length<(MOBILE?60:150))for(let j=0;j<2;j++){const an=rnd(0,TAU),v=rnd(70,130);fx({k:'buafly',x:e.x+rnd(-8,8),y:e.y-e.r*1.3+rnd(-10,6),vx:Math.cos(an)*v,vy:Math.sin(an)*v*0.6-60,r0:rnd(0,TAU),dr:rnd(-9,9),T:rnd(0.4,0.55)})}},'h');
     later(dt0+0.04+6*0.125+0.06,()=>{const e=nearest(P.x,P.y,220),a2=e?angTo(e):a;P.avAnim='attack3';swing(a2,1);const cx=P.x+Math.cos(a2)*62,cy=P.y+Math.sin(a2)*40;let mp=0;const cb={n:2};
-     for(const en of enemiesIn(cx,cy,125*Ar())){hit(en,fin,H({kb:140,stun:0.3,cb,nofx:1}),P.x,P.y);mp+=detonateChuSa(en)}qcMpBack(mp);
+     for(const en of enemiesIn(cx,cy,125*Ar())){hit(en,fin,H({kb:140,stun:0.3,cb,nofx:1,noflash:1}),P.x,P.y);mp+=detonateChuSa(en)}qcMpBack(mp);
      if(vok('qc_burst'))fx({k:'qimg',n:'qc_burst',x:cx,y:cy-30,h:190,s0:0.5,s1:1.25,T:0.42,fo:0.28,al:1});burst(cx,cy-24,'#ffd27a',18);G.shake=Math.max(G.shake||0,8);sfx('rulai_impact',0.45,0.1)},'h')}},
   {id:'kimchung',start:1,name:'Kim Chung Hộ Thể',g:'鐘',kind:'passive',desc:'Khi bị đánh (hồi 12 giây): chuông tím úp quanh người 3 giây, giảm 45% sát thương nhận vào, phản lại 50% sát thương cho kẻ đánh, và chấn lùi quái xung quanh.'},
   {id:'chusa',start:1,name:'Chưởng Ấn Chu Sa',g:'印',kind:'passive',desc:'Thiên Cương Phục Ma Quyền (mỗi 2 chu kỳ A–B khắc 1 tầng lên mục tiêu chính; ở +6 đòn C khắc lên mọi quái trúng), Bộ Hư Lưu Phù và Phược Hồn Cương Quyền khắc Ấn Chu Sa lên quái (tối đa 3 tầng, giữ 6 giây). Toái Phách Bát Cực Chưởng và Quỷ Môn Trấn Ngục Ấn kích nổ ấn: thêm 35% ATK mỗi tầng, hồi 4 Nội lực mỗi tầng (tối đa 12), +2 Liên kích mỗi tầng; đủ 3 tầng gây Tán Hồn 4 giây (nhận thêm 18% sát thương).'},
@@ -3894,7 +3894,7 @@ function hit(e,dmg,o,sx,sy){
  d=Math.max(1,d*rnd(0.92,1.08));
  if(e.shield>0){e.shT=0;const sd=d*(o.mark?2:1);e.shield-=sd;if(e.shield>0){e.flash=0.06;num(e.x,e.y-e.r*1.6-14,Math.round(sd),'b');addCombo();return}d=Math.max(1,-e.shield);e.shield=0;e.stun=Math.max(e.stun,1.6);G.shake=Math.max(G.shake,6);burst(e.x,e.y-e.r,'#9fe8ff',18);notice('Phá Cương Khí','Tinh anh choáng 1,6 giây')}
  if(e.boss&&G.route&&G.star>=5&&!e.phase2&&e.hp-d<e.mhp*0.5){e.phase2=true;bossPhase2(e)}
- e.hp-=d;e.flash=0.09;G.dmgDealt+=d;G.wD+=d;if(o.src==='g'&&P.form==='god'&&P.god.def.look==='wukong'&&!LOWFX&&G.t-(e._wkh||0)>0.18&&G.fx.length<(MOBILE?50:140)&&vok('wk_hit')){e._wkh=G.t;fx({k:'sp',s:'wk_hit',x:e.x+rnd(-5,5),y:e.y-e.r*1.3,sc:e.boss?1:0.6,T:0.45})}
+ e.hp-=d;if(!o.noflash)e.flash=0.09;G.dmgDealt+=d;G.wD+=d;if(o.src==='g'&&P.form==='god'&&P.god.def.look==='wukong'&&!LOWFX&&G.t-(e._wkh||0)>0.18&&G.fx.length<(MOBILE?50:140)&&vok('wk_hit')){e._wkh=G.t;fx({k:'sp',s:'wk_hit',x:e.x+rnd(-5,5),y:e.y-e.r*1.3,sc:e.boss?1:0.6,T:0.45})}
  if(o.src==='h'){sfx('sword_hit',0.2,0.07);if(!LOWFX&&!o.swordBasic&&P.form!=='god'&&!(P.kit&&P.kit.w==='quyen')/* 29/11 (6) Quyền không dùng vệt trăng khuyết vàng khi trúng */&&G.fx.length<(MOBILE?50:140)&&Math.random()<(MOBILE?0.25:0.55))hitFx(e.x,e.y-e.r*1.3,Math.atan2(e.y-sy,e.x-sx),0.7)}
  const ct=P.pf.conthe&&o.src==='h';
  if(o.kb&&!e.boss){const a=Math.atan2(e.y-sy,e.x-sx);const k=o.kb*(ct?1.4:1)*(e.elite?0.3:1)*3;e.kx+=Math.cos(a)*k;e.ky+=Math.sin(a)*k}
