@@ -2327,6 +2327,11 @@ html body #lobby #lbAltar .lbtag.lbtag{--bh:.0451;left:34.5%!important;top:57.4%
 html body #lobby #lbDoor .lbtag.lbtag{--bh:.0486;top:57.4%!important}
 @media (max-width:720px){html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{top:-4%!important}}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{white-space:nowrap!important;width:max-content!important;height:auto!important;line-height:1.1!important}
+/* 29/11 chủ game: khung đỏ mặt quỷ cho Quỷ Môn Quan, khung xanh đen lư hương cho Thần Giáng Đàn (cong_cu/claude/sanh_bien2_build.py). Mặt quỷ/lư hương nhô ra trên-dưới thân biển nên --bh lớn hơn để thân biển cỡ như cũ; --pl chừa chỗ hình trang trí trái, --pr chừa bùa giấy/mây bên phải. */
+html body #lobby #lbDoor .lbtag.lbtag{--bh:.06;--ba:4.832;--pl:1.12;--pr:.5;--pt:.03;--h:max(calc(var(--sh,700px)*var(--bh)),31px)!important}
+html body #lobby #lbAltar .lbtag.lbtag{--bh:.053;--ba:5.294;--pl:1.2;--pr:.9;--pt:.05;--h:max(calc(var(--sh,700px)*var(--bh)),30px)!important}
+html body #lobby #lbAltar .lbtag.lbtag,html body #lobby #lbDoor .lbtag.lbtag{overflow:visible!important}
+@media (max-height:270px){html body #lobby #lbAltar .lbtag.lbtag{left:41.6%!important}}
 </style>
 <style id="lbVh">/* 29/11 iPhone Safari ngang: khi thanh công cụ thu lại, position:fixed;inset:0 chỉ cao bằng khung NHỎ (thiếu ~63px dưới đáy) nên sảnh hở dải đen dưới và mất phần trên. Dùng chiều cao khung ĐỘNG. */
 html body #lobby:not([hidden]){top:0!important;bottom:auto!important;height:100%!important;height:100dvh!important;min-height:100%!important}
