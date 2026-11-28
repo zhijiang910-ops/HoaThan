@@ -2249,9 +2249,11 @@ html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!im
    Khói: khoi_cong.webp (atlas 6x5 ô 256x112 của chủ game, nhuộm lại bằng cong_cu/claude/cong_fx_build.py), điểm (128,91) neo chân khe. Cao ô = rộng*1672/941*112/256 = rộng*0,7774. */
 #lbStage .lbsmk{position:absolute;pointer-events:none;opacity:0;overflow:hidden}
 #lbStage .lbsmk.on{opacity:1}
+#lbStage .lbsmk>b+b{opacity:0}
+#lbStage .lbpuff{position:absolute;left:68.1%;top:46%;width:11%;aspect-ratio:1;z-index:2;pointer-events:none;opacity:0;background:url(assets/ui/lobby/khoi_hat.webp) center/100% 100% no-repeat;will-change:transform,opacity}
 #lbStage .lbsmk>b{position:absolute;left:0;top:0;width:600%;height:500%;display:block;background:url(assets/ui/lobby/khoi_cong.webp) 0 0/100% 100% no-repeat;will-change:transform}
-#lbStage .lbsmk2{left:calc(68.1% - 7%);top:calc(49.4% - 8.84%);width:14%;height:10.88%;z-index:1}
-#lbStage .lbsmk1{left:calc(68.1% - 17%);top:calc(53.5% - 21.48%);width:34%;height:26.43%;z-index:2}
+#lbStage .lbsmk2{left:calc(68.1% - 7%);top:calc(49.4% - 8.84%);width:14%;height:15.55%;z-index:1}
+#lbStage .lbsmk1{left:calc(68.1% - 17%);top:calc(53.5% - 21.48%);width:34%;height:37.76%;z-index:2}
 #lbStage .lbglow{position:absolute;left:calc(68.1% - 21%);top:calc(48% - 17%);width:42%;height:34%;z-index:1;pointer-events:none;opacity:0;transform:scale(.25,.5);background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(255,56,32,.95),rgba(200,22,18,.6) 30%,rgba(130,8,12,.28) 58%,transparent 80%);mix-blend-mode:screen;will-change:transform,opacity}
 #lbStage .lbdin::after{content:"";position:absolute;inset:0;opacity:0;background:radial-gradient(ellipse 75% 36% at 50% 100%,rgba(255,62,36,.8),rgba(150,14,14,.38) 55%,transparent 92%)}
 #lbStage .lblant{position:absolute;width:4.4%;aspect-ratio:1;z-index:1;pointer-events:none;border-radius:50%;background:radial-gradient(circle,rgba(255,90,60,.7),rgba(220,30,20,.28) 40%,transparent 70%);mix-blend-mode:screen;opacity:.55;transform:translate(-50%,-50%);animation:lbLant 3.4s ease-in-out infinite}
@@ -2378,7 +2380,7 @@ html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!im
  <div id="lbStage" aria-label="Sảnh Khử Tà Diệt Ma">
   <img id="lbArt" src="assets/ui/lobby/sanh.webp" alt="" draggable="false">
   <div class="lobby-wisps" id="lbWisps" aria-hidden="true" data-reduced-motion="false"><i class="wf wf-luc" style="left:17.469%;top:44.520%;width:6.754%;height:20%;background-image:url(assets/ui/lobby/wispa_luc.png);animation-duration:1.6s,3.04s;animation-delay:-0.3s,-0.39s"></i><i class="wf wf-lam" style="left:27.954%;top:57.438%;width:7.091%;height:21%;background-image:url(assets/ui/lobby/wispa_lam.png);animation-duration:1.45s,2.76s;animation-delay:-0.9s,-1.17s"></i><i class="wf wf-tim" style="left:87.794%;top:51.419%;width:4.052%;height:12%;background-image:url(assets/ui/lobby/wispa_tim.png);animation-duration:1.75s,3.32s;animation-delay:-0.5s,-0.65s"></i><i class="wf wf-do" style="left:93.128%;top:57.019%;width:3.714%;height:11%;background-image:url(assets/ui/lobby/wispa_do.png);animation-duration:1.55s,2.94s;animation-delay:-1.1s,-1.43s"></i></div>
-  <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbinc lbinc-a" aria-hidden="true"></i><i class="lbinc lbinc-b" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbeyes" aria-hidden="true"><i></i></i><i class="lbglow" aria-hidden="true"></i><i class="lbsmk lbsmk2" aria-hidden="true"><b></b></i><i class="lblant lblant-l" aria-hidden="true"></i><i class="lblant lblant-r" aria-hidden="true"></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><i class="lbslit" aria-hidden="true"></i><i class="lbsmk lbsmk1" aria-hidden="true"><b></b></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
+  <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbinc lbinc-a" aria-hidden="true"></i><i class="lbinc lbinc-b" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbeyes" aria-hidden="true"><i></i></i><i class="lbglow" aria-hidden="true"></i><i class="lbsmk lbsmk2" aria-hidden="true"><b></b><b></b></i><i class="lblant lblant-l" aria-hidden="true"></i><i class="lblant lblant-r" aria-hidden="true"></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><i class="lbslit" aria-hidden="true"></i><i class="lbsmk lbsmk1" aria-hidden="true"><b></b><b></b></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
   <div class="lbsp lbsp-b" id="lbBridge"><button type="button" class="lbz" aria-label="Xuất Trận" title="Xuất Trận: chọn ải"></button><button type="button" class="lbtag">Xuất Trận</button></div>
   <div class="lbsp lbsp-a" id="lbAltar"><button type="button" class="lbz" aria-label="Thần Giáng Đàn" title="Thần Giáng Đàn: chiêu mộ thần tướng"></button><button type="button" class="lbtag">Thần Giáng Đàn</button></div>
   <div class="lbsp lbsp-d" id="lbDoor"><i class="lbtal" aria-hidden="true"></i><button type="button" class="lbz" aria-label="Quỷ Môn Quan" title="Quỷ Môn Quan: Âm Giới"></button><button type="button" class="lbtag">Quỷ Môn Quan</button></div>
@@ -5677,7 +5679,7 @@ const LBT=[
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
  const it={id:'kiem0_'+Date.now().toString(36),slot:'vk',tier:0,st:1,name:'Thanh Phong Kiếm',base:{dmgW:6,dmgM:6},aff:[]};L.push(it);const E=eqMap();if(!E.vk)E.vk=it.id;persist()}
 let lbTimer=null,invFrom='menu';
-function showLobby(){const P0=prof();if(!P0)return openCreate();try{const im=window.__smkPre||(window.__smkPre=Object.assign(new Image(),{src:'assets/ui/lobby/khoi_cong.webp'}));window.__veilPre=window.__veilPre||Object.assign(new Image(),{src:'assets/ui/lobby/khoi_man.webp'});im.decode&&im.decode().catch(()=>{})}catch(e){}/* 28/11 nạp sẵn khói cổng khi vào sảnh */try{needVfxFor(profWeapon())}catch(e){}setTimeout(()=>{try{const A0=amSave(),F0=amFloor(A0.cp||1);packWant({map:sel.map,mons:monsForRoute(sel.map),weapon:profWeapon(),god:sel.god});if(F0)packWant({map:F0.map,mons:monsForFloor(A0.cp||1)})}catch(e){}},1500);/* tải sẵn map của trận kế trong lúc đứng ở sảnh */if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
+function showLobby(){const P0=prof();if(!P0)return openCreate();try{const im=window.__smkPre||(window.__smkPre=Object.assign(new Image(),{src:'assets/ui/lobby/khoi_cong.webp'}));window.__veilPre=window.__veilPre||Object.assign(new Image(),{src:'assets/ui/lobby/khoi_man.webp'});window.__puffPre=window.__puffPre||Object.assign(new Image(),{src:'assets/ui/lobby/khoi_hat.webp'});im.decode&&im.decode().catch(()=>{})}catch(e){}/* 28/11 nạp sẵn khói cổng khi vào sảnh */try{needVfxFor(profWeapon())}catch(e){}setTimeout(()=>{try{const A0=amSave(),F0=amFloor(A0.cp||1);packWant({map:sel.map,mons:monsForRoute(sel.map),weapon:profWeapon(),god:sel.god});if(F0)packWant({map:F0.map,mons:monsForFloor(A0.cp||1)})}catch(e){}},1500);/* tải sẵn map của trận kế trong lúc đứng ở sảnh */if(window.__trG0!=null){P0.gender=window.__trG0;window.__trG0=null;TR.gender=null;try{persist()}catch(e){}}G=null;document.body.classList.remove('playing');$('#hud').hidden=true;showOnly('lobby');
  sel.gender=P0.gender;sel.weapon=P0.weapon||'kiem';
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.amdia;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
@@ -5754,10 +5756,23 @@ function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?36:64;
  /* 28/11 Quỷ Môn Quan v2: lịch (ms từ lúc bấm): 0 báo trước (tối rìa, đèn lồng chập chờn, bùa rung) · 300 khe lóe + cửa bật hé + rung · 520 mở toang · 420 khói sau (khe) · 650 khói trước (bậc) · 520 mắt (mở, chớp, nheo) · 1350 khói phủ màn · 1900 mở Âm Giới dưới khói rồi khói tan. Khung khói theo thời gian (rAF). */
  const vig=document.createElement('i');vig.className='lbvig';vig.setAttribute('aria-hidden','true');st.parentNode.insertBefore(vig,st.nextSibling);
  const SC=6,SR=5,SN=30;
- const smoke=(el,delay,f1,f2)=>{const B=el.querySelector('b');const T=k=>k<18?k/f1:18/f1+(k-18)/f2,END=T(SN);let t0=0,stop=0;
-  const fr=k=>{B.style.transform='translate('+(-(k%SC)*100/SC)+'%,'+(-Math.floor(k/SC)*100/SR)+'%)'};
-  const tick=now=>{if(stop)return;if(!t0)t0=now;const e=(now-t0)/1000;if(e>=END){el.classList.remove('on');return}fr(Math.min(SN-1,e<18/f1?Math.floor(e*f1):18+Math.floor((e-18/f1)*f2)));requestAnimationFrame(tick)};
-  setTimeout(()=>{if(stop)return;fr(0);el.classList.add('on');requestAnimationFrame(tick)},delay);return()=>{stop=1;el.classList.remove('on')}};
+ /* 28/11 chủ game: khói chạy theo thời gian liên tục 60 fps, TRỘN 2 khung kề nhau (b đầu = khung i, b sau = khung i+1, độ đục theo phần lẻ) nên không còn nấc 12 fps; bật ngay lúc cửa hé (scale nhỏ + alpha tăng 0,15 s), đuôi tan kéo tới lúc khói phủ màn. Ô atlas nay 256x160 (đáy đã làm mờ). */
+ const smoke=(el,delay,dur)=>{const [A,B]=el.querySelectorAll('b');let t0=0,stop=0;
+  const pos=k=>'translate('+(-(k%SC)*100/SC)+'%,'+(-Math.floor(k/SC)*100/SR)+'%)';
+  const tick=now=>{if(stop)return;if(!t0)t0=now;const e=(now-t0)/1000;if(e>=dur){el.style.opacity=0;return}
+   const u=e/dur,p=Math.min(SN-1.001,Math.pow(u,1.12)*(SN-1)),i=Math.floor(p),f=p-i;
+   A.style.transform=pos(i);B.style.transform=pos(i+1);A.style.opacity=Math.sqrt(1-f);B.style.opacity=Math.sqrt(f);
+   const fi=Math.min(1,e/.15),ez=1-Math.pow(1-fi,3);el.style.opacity=ez*(u>.82?Math.max(0,(1-u)/.18):1);el.style.transform='scale('+(.6+.4*ez)+')';
+   requestAnimationFrame(tick)};
+  el.style.transformOrigin='50% 57%';setTimeout(()=>{if(stop)return;requestAnimationFrame(tick)},delay);return()=>{stop=1;el.style.opacity=0}};
+ /* 5 hạt khói mềm (khoi_hat.webp) bay từ khe cửa ở 60 fps: to dần ease-out, tạt 2 bên, trôi xuống bậc, xoay 5–15°, mờ dần; lấp khoảng giữa cửa và che nấc atlas */
+ const puffs=()=>{const W=st.getBoundingClientRect().width,P=[...st.querySelectorAll('.lbpuff')];let t0=0,stop=0;
+  const D=P.map((p,i)=>({p,t:.3+i*.11+Math.random()*.05,life:1.35+Math.random()*.35,dx:(i%2?1:-1)*W*(.03+Math.random()*.05)*(i?1:.4),dy:W*(.025+Math.random()*.03),rot:(Math.random()<.5?-1:1)*(5+Math.random()*10),s0:.35+Math.random()*.15,s1:1.5+Math.random()*.7}));
+  const tick=now=>{if(stop)return;if(!t0)t0=now;const e=(now-t0)/1000;let live=0;
+   for(const d of D){const k=(e-d.t)/d.life;if(k<0||k>1){d.p.style.opacity=0;if(k<0)live=1;continue}live=1;const ez=1-Math.pow(1-k,3);
+    d.p.style.transform='translate(-50%,-50%) translate('+d.dx*ez+'px,'+d.dy*ez+'px) rotate('+d.rot*ez+'deg) scale('+(d.s0+(d.s1-d.s0)*ez)+')';
+    d.p.style.opacity=(Math.min(1,k/.1)*Math.pow(1-k,.8)*.95).toFixed(3)}
+   if(live)requestAnimationFrame(tick)};requestAnimationFrame(tick);return()=>{stop=1;for(const d of D)d.p.style.opacity=0}};
  const veil=()=>{const r=st.getBoundingClientRect(),gx=r.left+r.width*.681,gy=r.top+r.height*.47,vw=innerWidth,vh=innerHeight,D=Math.max(vw,vh)*1.05,lite=typeof LOWFX!=='undefined'&&LOWFX;
   const v=document.createElement('div');v.className='qmqveil';const n=lite?3:6,P=[];
   for(let i=0;i<n;i++){const p=document.createElement('i');p.style.width=p.style.height=D+'px';v.appendChild(p);
@@ -5772,10 +5787,10 @@ function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?36:64;
  const door=()=>{if(busy)return;busy=1;lock(1);const L=$('#lobby'),lite=typeof LOWFX!=='undefined'&&LOWFX;
   st.classList.remove('gopen','gshake');L.classList.remove('qmq');void st.offsetWidth;st.classList.add('gopen');L.classList.add('qmq');
   if(!lite)setTimeout(()=>{st.classList.remove('gshake');void st.offsetWidth;st.classList.add('gshake')},300);
-  const s2=smoke($('#lbStage .lbsmk2'),420,24,14),s1=smoke($('#lbStage .lbsmk1'),650,20,11);let v=null,done=0;
+  const s2=smoke($('#lbStage .lbsmk2'),300,2.0),s1=smoke($('#lbStage .lbsmk1'),360,2.05),pf=puffs();let v=null,done=0;
   setTimeout(()=>{v=veil()},1350);
   const fin=()=>{if(done)return;done=1;const t=document.querySelector('#lbGrid [data-lb="amgioi"]');if(t)t.click();
-   setTimeout(()=>{s1();s2();st.classList.remove('gopen','gshake');L.classList.remove('qmq');busy=0;lock(0);if(v){v.classList.add('out');setTimeout(()=>v.remove(),500)}},60)};
+   setTimeout(()=>{s1();s2();pf();st.classList.remove('gopen','gshake');L.classList.remove('qmq');busy=0;lock(0);if(v){v.classList.add('out');setTimeout(()=>v.remove(),500)}},60)};
   setTimeout(fin,1900)};
  /* 28/11: Thần Giáng Đàn = bàn thờ: khói hương nổi lên rồi mờ 350 ms, sau đó mở Chiêu Mộ (giao diện triệu hồi có sẵn) */
  const altar=()=>{if(busy)return;busy=1;lock(1);st.classList.remove('pray');void st.offsetWidth;st.classList.add('pray');setTimeout(()=>{busy=0;lock(0);openLbm('chieumo')},350);setTimeout(()=>st.classList.remove('pray'),1400)};

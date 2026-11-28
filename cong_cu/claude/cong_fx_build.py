@@ -17,7 +17,21 @@ col=col*(1-rim[...,None]*.7)+rimc*rim[...,None]*.7
 col=col*(1-red[...,None]*.5)+redc*red[...,None]*.5
 A=np.clip(al*1.6,0,1)**.85
 o=np.dstack([np.clip(col,0,255),A*255]).astype(np.uint8)
-Image.fromarray(o,'RGBA').save(out+'khoi_cong.webp',quality=86,method=6)
+# 28/11 chủ game: đáy ô bị cắt phẳng -> làm mờ 26 px cuối mỗi ô (và 14 px hai bên), đệm thêm 48 px trong suốt dưới mỗi ô (ô mới 256x160, neo (128,91) giữ nguyên)
+PAD=48;F=26;FS=14
+def feather(cell):
+    h,w=cell.shape[:2];m=np.ones((h,w))
+    r=np.arange(h);m*=np.clip((h-1-r)/F,0,1)[:,None]**1.6
+    c=np.arange(w);m*=np.clip(np.minimum(c,w-1-c)/FS,0,1)[None,:]
+    cell=cell.copy();cell[...,3]=cell[...,3]*m;return cell
+O=np.zeros((5*(ch+PAD),6*cw,4),np.uint8)
+for k in range(30):
+    cx0,cy0=(k%6)*cw,(k//6)*ch
+    cell=feather(o[cy0:cy0+ch,cx0:cx0+cw].astype(float)).astype(np.uint8)
+    O[(k//6)*(ch+PAD):(k//6)*(ch+PAD)+ch,cx0:cx0+cw]=cell
+Image.fromarray(O,'RGBA').save(out+'khoi_cong.webp',quality=86,method=6)
+# hạt khói mềm (soft puff) 128px: tím xám, mép mờ, dưới ửng đỏ
+n=128;yy,xx=np.mgrid[0:n,0:n];r=np.sqrt((xx-n/2)**2+(yy-n/2)**2)/(n/2)
 # tấm khói phủ màn: đám mây mềm từ nhiễu fbm (tím đen), lặp ghép để phình từ cổng ra
 rng=np.random.default_rng(7);N=384
 def fbm(n):
@@ -32,4 +46,9 @@ A=np.clip((f-.25)*2.2,0,1)*m
 c=np.dstack([7+f*20,4+f*10,11+f*24])
 o=np.dstack([np.clip(c,0,255),A*255]).astype(np.uint8)
 Image.fromarray(o,'RGBA').save(out+'khoi_man.webp',quality=82,method=6)
+n=128;yy,xx=np.mgrid[0:n,0:n];r=np.sqrt((xx-n/2)**2+(yy-n/2)**2)/(n/2)
+f2=fbm(128);A=np.clip(1-r,0,1)**1.5*np.clip(.55+f2*.7,0,1)
+lowr=np.clip((yy/n-.35)/.65,0,1)
+col=np.dstack([78+f2*60+lowr*70,58+f2*40,96+f2*50-lowr*20])
+Image.fromarray(np.dstack([np.clip(col,0,255),np.clip(A*235,0,255)]).astype(np.uint8),'RGBA').save(out+'khoi_hat.webp',quality=86,method=6)
 print('ok')
