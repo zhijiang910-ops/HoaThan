@@ -28,10 +28,10 @@
       "id": "qc_basic",
       "slot": "basic_attack",
       "seal_glyph": "斬",
-      "name": "Phục Ma Liên Quyền",
+      "name": "Thiên Cương Phục Ma Quyền",
       "replaces": "Thiên Cương Liên Hoàn",
-      "tooltip": "Tung chuỗi quyền cước dồn dập khắc tối đa ba tầng Chưởng Ấn Chu Sa lên kẻ địch trước mặt.",
-      "type_label": "Cơ bản · giữ để đánh",
+      "tooltip": "Tự động tung song quyền dương cương A–B; khi vũ khí đạt +6 mở khóa cước quét sao Bắc Đẩu diện rộng khắc Chưởng Ấn.",
+      "type_label": "Tự động đánh khi gần quái (Vũ khí +6 mở đòn C)",
       "cooldown_sec": 0.0,
       "mana_cost": 0,
       "hotkey": "J",
@@ -42,7 +42,35 @@
         80
       ],
       "applies_chu_sa_on_final_hit": 1,
-      "icon": "assets/icons/icon_attack_phuc_ma_lien_quyen.png"
+      "icon": "assets/icons/icon_attack_phuc_ma_lien_quyen.png",
+      "combo_stages": {
+        "A_left_jab": {
+          "duration_sec": 0.19,
+          "damage_pct": 50,
+          "micro_lunge_px": 6,
+          "vfx": "assets/vfx/vfx_ab_fist_impact.png",
+          "scale": 0.82
+        },
+        "B_right_straight": {
+          "duration_sec": 0.18,
+          "damage_pct": 65,
+          "micro_lunge_px": 10,
+          "vfx": "assets/vfx/vfx_ab_fist_impact.png",
+          "scale": 1.08
+        },
+        "C_plus6_star_sweep": {
+          "requires_weapon_plus": 6,
+          "duration_sec": 0.34,
+          "damage_pct": 130,
+          "micro_lunge_px": 14,
+          "sweep_angle_deg": 200,
+          "sweep_radius_px": 135,
+          "mini_stagger_sec": 0.2,
+          "hit_stop_frames_60fps": 2,
+          "applies_chu_sa_all_targets": 1,
+          "vfx": "assets/vfx/vfx_c_star_sweep_arc.png"
+        }
+      }
     },
     {
       "id": "qc_dash",
