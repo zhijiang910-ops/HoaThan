@@ -2831,7 +2831,7 @@ const STF={wk_staff:{w:20,t:65,b:62+3,tile:62},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();if(LAZY_VFX_RE.test(n))lazyImg(VFX,n,i,'assets/vfx/'+n+'.png',preDecode);else{i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}}
 /* 28/11 gói Quyền Cước (nguon/master_amgioi/quyen_cuoc/, dựng bằng cong_cu/claude/quyen_cuoc_build.py): tải lười cùng gói Quyền */
-const QC_VFX=['qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff','qc_tinhluan','qc_fistimp','qc_starsweep','qc_fissure','qc_erupt'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911e',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
+const QC_VFX=['qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff','qc_tinhluan','qc_fistimp','qc_starsweep','qc_erupt','qc_hof'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911f',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
 /* điểm va chạm đồng bộ với kiếm (24/11): MỘT chớp chém xanh-tím xoay theo hướng lưỡi, thay bộ swhit (mảnh băng) */
 /* va chạm Vạn Kiếm: biến thể xem thử (window.__vkv) 1=kiếm cắm lại, 2=kiếm khí xuyên, 3=chữ X */
 function vkLift(){const dt=G.t-P._vkp;if(dt>2.4||P.deadAt){P._vkp=null;return 0}const E=u=>u*u*(3-2*u);return Math.round(-9*(dt<0.5?E(dt/0.5):dt<1.9?1:1-E((dt-1.9)/0.5)))}/* 25/11 Vạn Kiếm: nhân vật nhấc lên bắt ấn */
@@ -2990,7 +2990,7 @@ function drawTileField(M,c,cx,cy,hw,hh){const o=tileFieldCache(M),[x0,y0,x1,y1,F
  c.restore()}
 /* 29/11 tách riêng: map cũ (Luyện Công) không qua drawGroundMap nên trước đây không thấy decal (hố F) */
 function drawDecals(c){
- for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;if(d.fis){drawFissureDecal(c,im,d);continue}if(d.tl){drawTinhLuanDecal(c,im,d);continue}c.save();let al=Math.min(1,(1-k)*2),sc=1;if(d.pop){/* 25/11 vết chưởng Như Lai (gói Wuxia 04_Rulai): bung ra kiểu back-ease 0,22 s, hiện nhanh 0,12 s, giữ rồi mờ 0,7 s cuối */const t=d.t,x=Math.min(1,t/0.22)-1;sc=t<0.22?0.3+0.7*(1+2.70158*x*x*x+1.70158*x*x):1;const fo=d.fo||0.7;al=(t<0.12?t/0.12:1)*(t>d.T-fo?Math.max(0,(d.T-t)/fo):1)}c.globalAlpha=al*(d.a||1)*(d.pulse?0.78+0.22*Math.sin(d.t*6):1);if(d.sm){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high'}c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w*sc/2,-d.h*sc/2,d.w*sc,d.h*sc);c.restore()}
+ for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;if(d.hof){drawHofDecal(c,im,d);continue}if(d.tl){drawTinhLuanDecal(c,im,d);continue}c.save();let al=Math.min(1,(1-k)*2),sc=1;if(d.pop){/* 25/11 vết chưởng Như Lai (gói Wuxia 04_Rulai): bung ra kiểu back-ease 0,22 s, hiện nhanh 0,12 s, giữ rồi mờ 0,7 s cuối */const t=d.t,x=Math.min(1,t/0.22)-1;sc=t<0.22?0.3+0.7*(1+2.70158*x*x*x+1.70158*x*x):1;const fo=d.fo||0.7;al=(t<0.12?t/0.12:1)*(t>d.T-fo?Math.max(0,(d.T-t)/fo):1)}c.globalAlpha=al*(d.a||1)*(d.pulse?0.78+0.22*Math.sin(d.t*6):1);if(d.sm){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high'}c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w*sc/2,-d.h*sc/2,d.w*sc,d.h*sc);c.restore()}
 }
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
@@ -3337,14 +3337,13 @@ const WEAPONS={
   {id:'y2',ic:'f',hotkey:'F',power:42,name:'Thiên Cương Đạp Tinh Cước',g:'震',kind:'active',cd:9,mp:20,range:200,tl:'Chủ động · bấm để dùng',desc:'Giậm cước kích nổ Tinh Luân Bắc Đẩu dưới đất, làm choáng mọi quái trước mặt và thiêu đốt âm khí.',up:'+25% sát thương, -6% hồi chiêu',
    qi(l){return ['Vùng tròn bán kính '+hudNumber(150*Ar())+' trước mặt',hudNumber(this.power*lv(l)*pw())+' / mục tiêu · trận đốt '+hudNumber(qcP(25)*lv(l)*pw())+' mỗi giây','Choáng 1,3 giây. Tinh Luân tồn tại 3 giây, làm chậm 25% quái bước vào. +4 Liên kích.']},
    cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw(),dot=qcP(25)*lv(l)*pw();P.avAnim='attack3';swing(a,1);sfx('rulai_impact',0.5,0.1);
-    later(0.3,()=>{const fd=Math.cos(a)>=0?1:-1,cx=P.x+fd*72,cy=P.y-10/* 29/11 (10) gói 'nổ tung nứt đất': tâm trước mặt 72 px, cao 10 px */,R=150*Ar();circ(cx,cy,R,dmg,H({stun:1.3,cb:{n:3},nofx:1}),null);
+    later(0.3,()=>{const cx=P.x+Math.cos(a)*95,cy=P.y+Math.sin(a)*95/* 29/11 (11) chủ game: bỏ bản nứt đất, tâm về lại mặt đất trước mặt 95 px */,R=150*Ar();circ(cx,cy,R,dmg,H({stun:1.3,cb:{n:3},nofx:1}),null);
      /* 29/11 (3) Thiên Cương Tinh Luân (gói chủ game): decal mặt đất ép 0,58, bung 0,12->1,15->1,0 + sóng dư chấn cộng sáng, xoay nghiền 2,65 s, thu ấn 0,35 s; KHÔNG vẽ vòng tròn bằng code */
-     /* 3 lớp (gói chủ game 29/11): A vết nứt dung nham (decal, không xoay), B bánh xe Tinh Luân (decal), C vụ nổ đá văng + 12 mảnh đá (lớp thế giới) */
-     if(vok('qc_fissure')&&G.decals.length<40)G.decals.push({img:'qc_fissure',fis:1,x:cx,y:cy,w:350,h:350,t:0,T:3.0});
-     if(vok('qc_tinhluan')&&G.decals.length<40)G.decals.push({img:'qc_tinhluan',tl:2,x:cx,y:cy,w:244,h:244,t:0,T:3.0});
+     /* 29/11 (11) chủ game gửi ảnh hố đá Tinh Bàn nứt đỏ (đã vẽ sẵn phối cảnh mặt đất): decal hof, không xoay, không ép thêm; dậm thì nổ tung đá văng */
+     if(vok('qc_hof')&&G.decals.length<40){const w=360;G.decals.push({img:'qc_hof',hof:1,x:cx,y:cy,w,h:w*VFX.qc_hof.naturalHeight/VFX.qc_hof.naturalWidth,t:0,T:3.0})}
      if(vok('qc_erupt'))fx({k:'erupt',x:cx,y:cy,T:0.34});
      {const rk=[];for(let i=0;i<12;i++)rk.push({x:cx,y:cy,vx:rnd(-160,160),vy:rnd(-260,-130),fl:cy+rnd(-25,25),b:0,s:rnd(4,8),r:rnd(0,TAU),vr:rnd(-9,9),n:3+(i%3)});fx({k:'fdeb',rk,T:0.95})}
-     G.shake=Math.max(G.shake||0,5);/* rung 5 px; KHÔNG hit-stop (luật 5) */
+     G.shake=Math.max(G.shake||0,9);/* KHÔNG hit-stop (luật 5) */
      for(let t=0.25;t<=3.01;t+=0.25){const tick=Math.abs(t-Math.round(t))<0.01;later(t,()=>{for(const e of enemiesIn(cx,cy,R)){e.slowT=Math.max(e.slowT,0.4);e.slowF=Math.max(e.slowF,0.25)}if(tick)circ(cx,cy,R,dot,H({nofx:1}),null);if(!LOWFX)for(let i=0;i<3;i++){const an=rnd(0,TAU),rr=rnd(0,R*0.85);part(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr*0.5,rnd(-6,6),rnd(-50,-25),rnd(0.4,0.7),rnd(2,4),i%2?'#ff6e40':'#ffd27a',1)}},'h')}},'h')}},
   {id:'y3',ic:'e',hotkey:'C',power:22,name:'Toái Phách Bát Cực Chưởng',g:'破',kind:'active',cd:12,mp:22,range:220,tl:'Chủ động · bấm để dùng',desc:'Lao sát mục tiêu tung sáu chưởng dán bùa liên hoàn, kích nổ toàn bộ Ấn Chu Sa để hồi Nội lực.',up:'+25% sát thương, -6% hồi chiêu',
    qi(l){return ['Lao tới tối đa 180, chưởng trước mặt',hudNumber(qcP(30)*lv(l)*pw())+' × 6 + '+hudNumber(this.power*lv(l)*pw())+' nổ cuối','Đòn cuối kích nổ Ấn Chu Sa: +35% ATK mỗi tầng, hồi 4 Nội lực mỗi tầng (tối đa 12), đủ 3 tầng gây Tán Hồn 4 giây (nhận thêm 18% sát thương). +8 Liên kích.']},
@@ -4788,6 +4787,9 @@ function drawEarthFissures(ctx,img,cx,cy,R,scale,alpha,flashAlpha=0){/* chủ ga
 function drawFissureDecal(c,im,d){/* 0-0,12 xé 0,2->1,05 cubic-out rồi 1,0; chớp cộng sáng 0,6->0 trong 0,2 s; 0,12-2,6 phập phồng; 2,6-3,0 nguội */const t=d.t;let sc=1,al;
  if(t<0.12){const u=t/0.12;sc=0.2+0.85*(1-Math.pow(1-u,3))}else if(t<0.16)sc=1.05-0.05*(t-0.12)/0.04;
  al=t<0.12?1:t<2.6?0.88+0.10*Math.sin(t*12):0.9*Math.max(0,1-(t-2.6)/0.4);drawEarthFissures(c,im,d.x,d.y,175,sc,al,t<0.2?0.6*(1-t/0.2):0)}
+function drawHofDecal(c,im,d){/* hố Tinh Bàn: 0-0,12 s bung 0,3->1,08 (cubic-out) rồi 1,0 tới 0,2 s, chớp cộng sáng 0,2 s, lõi đỏ phập phồng, mờ 2,6-3,0 s */const t=d.t;let sc=1;if(t<0.12){const u=t/0.12;sc=0.3+0.78*(1-Math.pow(1-u,3))}else if(t<0.2)sc=1.08-0.08*(t-0.12)/0.08;
+ const al=t<2.6?1:Math.max(0,1-(t-2.6)/0.4),w=d.w*sc,h=d.h*sc;c.save();c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.globalAlpha=al;c.drawImage(im,d.x-w/2,d.y-h/2,w,h);
+ const fl=t<0.2?0.6*(1-t/0.2):0.1+0.08*Math.sin(t*9);c.globalCompositeOperation='lighter';c.globalAlpha=al*fl;c.drawImage(im,d.x-w/2,d.y-h/2,w,h);c.restore()}
 function drawEarthEruptionBurst(ctx,img,cx,cy,e){/* chủ game đưa sẵn */const T=0.34;if(e<0||e>T)return;const bW=295,bH=bW*img.naturalHeight/img.naturalWidth;let sx,sy,al;
  if(e<=0.12){const p=e/0.12,es=1-Math.pow(1-p,3);sx=0.45+0.65*es;sy=0.3+0.85*es;al=1}else{const p=(e-0.12)/(T-0.12);sx=1.1+0.16*p;sy=1.15+0.1*p;al=Math.pow(1-p,1.4)}
  const w=bW*sx,h=bH*sy;ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.globalAlpha=Math.max(0,al);ctx.drawImage(img,cx-w*0.5,cy+12-h,w,h);if(e<0.1){ctx.globalCompositeOperation='lighter';ctx.globalAlpha=(1-e/0.1)*0.55;ctx.drawImage(img,cx-w*0.52,cy+12-h*1.04,w*1.04,h*1.04)}ctx.restore()}
