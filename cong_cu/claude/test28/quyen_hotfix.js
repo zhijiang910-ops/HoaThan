@@ -14,8 +14,8 @@ const OUT=process.argv[2],[W,H]=(process.argv[3]||'852x393').split('x').map(Numb
  await prep();await step(2);await shot('an_chu_sa');
  const seq=async(key,name,marks)=>{await prep();await pg.keyboard.press(key);let t=0;for(const m of marks){await step(Math.round(m*60)-t);t=Math.round(m*60);await shot(`${name}_${m}`)}await step(40)};
  await seq('KeyX','R',[0.3,0.6,0.7,0.8,1.0,1.15,1.35,1.55]);
- await seq('KeyQ','Q',[0.3,0.4]);
- await seq('KeyF','F',[0.33,0.42,1.6]);
+ await seq('KeyQ','Q',[0.3,0.36,0.5,0.6]);
+ await seq('KeyF','F',[0.33,0.42,1.6,3.3]);
  await seq('KeyC','E',[0.35,0.6,1.0,1.12]);
  await prep();await pg.evaluate(()=>{TDST.P.dashCd=0});await pg.keyboard.press('Space');for(const m of [0.05,0.2,0.65]){await step(Math.round(m*60)-(m===0.05?0:0));await shot('luot_'+m)}
  await step(30);await pg.screenshot({path:`${OUT}/hud.png`,clip:{x:W-260,y:H-140,width:260,height:140}});await pg.screenshot({path:`${OUT}/hud_luot.png`,clip:{x:0,y:H-140,width:260,height:140}});
