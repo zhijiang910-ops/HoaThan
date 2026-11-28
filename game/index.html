@@ -1867,7 +1867,7 @@ html body #lobby .lbgrid.g7>[data-lb=inv]:before{display:none}
 #lbStage #lbFx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 /* ===== THANH SÁU Ô "TỦ GIAM HỒN" (chủ game 26/11): ảnh có sẵn khung, chỉ vẽ nhãn một lần; 6 vùng bấm theo % ảnh ===== */
 #lobby{--dw:min(calc(100vw - 12px),calc(100vh*2.75));--barH:calc(var(--dw)*0.1160)}
-html body #lobby .lbgrid.lbgrid{left:50%!important;right:auto!important;bottom:max(0px,env(safe-area-inset-bottom))!important;width:var(--dw)!important;height:var(--barH)!important;transform:translateX(-50%);padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:url(assets/ui/lobby/tugiam.webp) center/100% 100% no-repeat!important;display:block!important;pointer-events:none!important;z-index:3}
+html body #lobby .lbgrid.lbgrid{left:50%!important;right:auto!important;bottom:max(0px,env(safe-area-inset-bottom))!important;width:var(--dw)!important;height:var(--barH)!important;transform:translateX(-50%);padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:url(assets/ui/lobby/tugiam.webp?v=2911sanh) center/100% 100% no-repeat!important;display:block!important;pointer-events:none!important;z-index:3}
 html body #lobby .lbgrid.lbgrid.g7>.lbt{position:absolute!important;flex:none!important;height:auto!important;width:auto!important;pointer-events:auto;margin:0!important;padding:0!important;display:flex!important;flex-direction:column!important;align-items:center;justify-content:center;gap:0;background:transparent!important;box-shadow:none!important;border:0!important;border-radius:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;overflow:hidden}
 html body #lobby .lbgrid.g7>*:before{display:none!important}
 html body #lobby .lbgrid.g7>[data-lb=amgioi]{display:none!important}
@@ -2186,16 +2186,22 @@ html body #create .cxbar #crGo.busy{pointer-events:none}
 @media (max-width:700px){html body #create .cxskr{gap:4px}html body #create .cxskr>span{width:40px}html body #create .cxskr>div{flex-wrap:nowrap;gap:3px}}
 </style>
 <style id="wispAnim">/* 28/11: ma trơi sảnh = hoạt ảnh PixelLab 32 khung 48×80 (wispa_*.png, dải ngang), 4 màu đổi bằng code từ một bản; quầng sáng + cộng sáng cho có độ sáng thật; điểm neo chân lửa = 81% chiều cao */
-#lbStage .lobby-wisps .wf{position:absolute;display:block;pointer-events:none;background-repeat:no-repeat;background-size:3200% 100%;image-rendering:pixelated;mix-blend-mode:screen;transform-origin:50% 81%;animation-name:wfFr,wfGl;animation-timing-function:steps(32,jump-none),ease-in-out;animation-iteration-count:infinite,infinite;animation-direction:normal,alternate}
-#lbStage .lobby-wisps .wf-luc{filter:drop-shadow(0 0 3.75px rgba(90,255,140,.75)) drop-shadow(0 0 10.5px rgba(60,220,120,.45))}/* 29/11: quầng 2 đốm trái -25% cho khỏi lấn biển */
-#lbStage .lobby-wisps .wf-lam{filter:drop-shadow(0 0 3.75px rgba(90,200,255,.75)) drop-shadow(0 0 10.5px rgba(60,150,255,.45))}
-#lbStage .lobby-wisps .wf-tim{filter:drop-shadow(0 0 4px rgba(200,120,255,.8)) drop-shadow(0 0 10px rgba(160,80,255,.5))}
-#lbStage .lobby-wisps .wf-do{filter:drop-shadow(0 0 4px rgba(255,90,70,.8)) drop-shadow(0 0 10px rgba(255,60,40,.5))}
+#lbStage .lobby-wisps .wf{position:absolute;display:block;pointer-events:none;background-repeat:no-repeat;background-size:3200% 100%;image-rendering:auto;mix-blend-mode:screen;transform-origin:50% 90.6%;animation-name:wfFr,wfGl;animation-timing-function:steps(32,jump-none),ease-in-out;animation-iteration-count:infinite,infinite;animation-direction:normal,alternate}
+#lbStage .lobby-wisps .wf-luc{filter:drop-shadow(0 0 6px rgba(80,200,150,.42))}
+#lbStage .lobby-wisps .wf-lam{filter:drop-shadow(0 0 6px rgba(90,160,230,.42))}
+#lbStage .lobby-wisps .wf-tim{filter:drop-shadow(0 0 6px rgba(160,110,220,.42))}
+#lbStage .lobby-wisps .wf-do{filter:drop-shadow(0 0 6px rgba(220,90,70,.42))}
 @keyframes wfFr{from{background-position:0 0}to{background-position:100% 0}}
 @keyframes wfGl{0%{opacity:.85;transform:translateY(0) scale(1)}100%{opacity:1;transform:translateY(-3%) scale(1.04)}}
 #lbStage .lobby-wisps[data-reduced-motion="true"] .wf{animation:none}
 @media (prefers-reduced-motion:reduce){#lbStage .lobby-wisps .wf{animation:none}}
 #lobby.lbpause .lobby-wisps .wf{animation-play-state:paused}
+/* 29/11 gói thẩm mỹ sảnh: dải 32 khung 96x160 vẽ mịn (không pixelated), phản chiếu mờ dưới chân trên gạch ướt */
+#lbStage .lobby-wisps .wf::after{content:"";position:absolute;left:26%;width:48%;top:88%;height:9%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,240,210,.9),rgba(255,240,210,0) 70%);opacity:.22;filter:blur(5px)}
+#lbStage .lobby-wisps .wf-luc::after{background:radial-gradient(ellipse at center,rgba(140,230,190,.95),rgba(140,230,190,0) 70%)}
+#lbStage .lobby-wisps .wf-lam::after{background:radial-gradient(ellipse at center,rgba(150,200,250,.95),rgba(150,200,250,0) 70%)}
+#lbStage .lobby-wisps .wf-tim::after{background:radial-gradient(ellipse at center,rgba(200,160,250,.95),rgba(200,160,250,0) 70%)}
+#lbStage .lobby-wisps .wf-do::after{background:radial-gradient(ellipse at center,rgba(250,150,130,.95),rgba(250,150,130,0) 70%)}
 </style>
 <style id="hudSanh">
 /* 27/11 HUD nhân vật góc trên trái sảnh: khung gỗ xích (ảnh chủ game, lòng khung đã xóa bằng cong_cu/claude/hud_khung.py), avatar tròn viền đồng, cột: tên + cấp, EXP, Lực chiến (icon kiếm), thể lực. Toạ độ theo % ảnh khung 1789x699, chữ theo cqw. */
@@ -2226,14 +2232,21 @@ html body #lobby .lbprof .lbcp.lbcp{position:absolute!important;left:35.774%!imp
  background:linear-gradient(90deg,#3a1410,#5a1e16 40%,#4a1912 75%,#2a0e0b)!important;border:max(1px,.35cqw) solid #6a3a20!important;border-radius:max(3px,1.4cqw)!important;box-shadow:inset 0 1px 0 rgba(255,200,140,.12),inset 0 -2px 3px rgba(0,0,0,.5)!important;
  -webkit-mask:none!important;mask:none!important;overflow:visible!important}
 html body #lobby .lbprof .lbcp .cpi{flex:none!important;width:max(20px,9.1cqw)!important;height:max(20px,9.1cqw)!important;margin:0 0 0 -2.4cqw!important;display:block!important;
- background:url(assets/ui/lobby/ic_lucchien_28.png) center/contain no-repeat!important;
- background-image:-webkit-image-set(url(assets/ui/lobby/ic_lucchien_28.png) 1x,url(assets/ui/lobby/ic_lucchien_56.png) 2x,url(assets/ui/lobby/ic_lucchien_84.png) 3x)!important;
- background-image:image-set(url(assets/ui/lobby/ic_lucchien_28.png) 1x,url(assets/ui/lobby/ic_lucchien_56.png) 2x,url(assets/ui/lobby/ic_lucchien_84.png) 3x)!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.7))!important;border:0!important;box-shadow:none!important}
+ background:url(assets/ui/lobby/ic_lucchien.webp?v=2911sanh) center/contain no-repeat!important;
+filter:drop-shadow(0 1px 1px rgba(0,0,0,.7))!important;border:0!important;box-shadow:none!important}
 html body #lobby .lbprof .lbcp .cpi::before,html body #lobby .lbprof .lbcp .cpi::after{display:none!important}
 html body #lobby .lbprof .lbcp small{display:block!important;flex:none;font:600 max(8px,3.1cqw)/1 'Noto Serif',Georgia,serif!important;color:#e8d3a8!important;text-shadow:0 1px 0 #000!important;white-space:nowrap;margin:0!important;letter-spacing:0!important}
 html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!important;text-align:right;font:800 max(10px,4.2cqw)/1 'Noto Serif',Georgia,serif!important;color:#f0a650!important;text-shadow:0 1px 0 #2a0a00,0 0 4px rgba(0,0,0,.7)!important;white-space:nowrap;letter-spacing:0!important;font-variant-numeric:tabular-nums}
 /* 29/11 chủ game: chơi trên web (màn rộng) ô hồ sơ nhỏ -> to hơn trên màn >=1000 px rộng */
 @media (min-width:1000px) and (min-height:540px){html body #lobby .lbprof.lbprof{width:clamp(300px,min(27vw,62vh),440px)!important}}
+/* 29/11 gói thẩm mỹ sảnh: thanh thể lực tím huyết tinh có icon hồ lô, bánh xe cơ quan bát quái thay bánh răng, quầng chọn tủ vàng bùa */
+html body #lobby .lbprof .lbbar.sta{background:#180E1C!important;border:1px solid rgba(184,149,90,.65)!important;overflow:visible!important}
+html body #lobby .lbprof .lbbar.sta>i{background:linear-gradient(180deg,#643579 0%,#3A1B4A 100%)!important;box-shadow:inset 0 1px 0 rgba(255,230,200,.22)!important;border-radius:max(2px,.8cqw)!important}
+html body #lobby .lbprof .lbbar.sta::before{content:"";position:absolute;z-index:2;left:0;top:50%;width:max(14px,5.6cqw);height:max(14px,5.6cqw);transform:translate(-62%,-50%);background:url(assets/ui/lobby/ic_theluc.webp?v=2911sanh) center/contain no-repeat;filter:drop-shadow(0 1px 1px rgba(0,0,0,.8));pointer-events:none}
+html body #lobby #lbGear.lbgear{font-size:0!important;color:transparent!important;background:url(assets/ui/lobby/ic_caidat.webp?v=2911sanh) center/86% 86% no-repeat!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.75));transition:transform .25s ease}
+html body #lobby:has(.lbfoot.open) #lbGear.lbgear{transform:rotate(30deg)}
+html body #lobby .lbgrid.g7 .lbt{-webkit-tap-highlight-color:transparent}html body #lobby .lbgrid.g7 .lbt:focus,html body #lobby .lbgrid.g7 .lbt:focus-visible{outline:none!important;background:radial-gradient(ellipse at 50% 88%,rgba(218,174,96,.55),rgba(218,174,96,0) 62%)!important}
+html body #lobby .lbgrid.g7 .lbt:active,html body #lobby .lbgrid.g7 .lbt:hover{background:radial-gradient(ellipse at 50% 88%,rgba(218,174,96,.55),rgba(218,174,96,0) 62%)!important}
 </style>
 <style id="sanhFx">
 /* 28/11 hiệu ứng sảnh: neo theo % ảnh nền (cùng #lbStage nên bám lư hương và khe cổng khi đổi cỡ màn) */
@@ -2351,9 +2364,9 @@ html body #lobby .lbcur[data-c=dong]{--cf:url(assets/ui/lobby/tt_khung_dong.webp
 html body #lobby .lbcur[data-c=hon]{--cf:url(assets/ui/lobby/tt_khung_hon.webp)}
 html body #lobby .lbcur[data-c=nap]{--cf:url(assets/ui/lobby/tt_khung_nap.webp)}
 html body #lobby .lbcur.lbcur>i{position:absolute;left:calc(var(--ch)*3.4305*.169);top:50.5%;width:calc(var(--ch)*.62)!important;height:calc(var(--ch)*.62)!important;transform:translate(-50%,-50%);background-size:contain!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.8))}
-html body #lobby .lbcur[data-c=dong]>i{background-image:url(assets/ui/lobby/tt_dongte2.png)!important}
-html body #lobby .lbcur[data-c=hon]>i{background-image:url(assets/ui/lobby/tt_linhhon2.png)!important}
-html body #lobby .lbcur[data-c=nap]>i{background-image:url(assets/ui/lobby/tt_ngoctt2.png)!important}
+html body #lobby .lbcur[data-c=dong]>i{background-image:url(assets/ui/lobby/tt_dongte2.webp?v=2911sanh)!important}
+html body #lobby .lbcur[data-c=hon]>i{background-image:url(assets/ui/lobby/tt_linhhon2.webp?v=2911sanh)!important}
+html body #lobby .lbcur[data-c=nap]>i{background-image:url(assets/ui/lobby/tt_ngoctt2.webp?v=2911sanh)!important}
 html body #lobby .lbcur.lbcur>b{flex:none!important;text-align:right;font:700 calc(var(--ch)*.42)/1 "Noto Serif",Georgia,serif!important;color:#f1e4c6!important;text-shadow:0 1px 0 #000,0 0 4px rgba(0,0,0,.9)}
 </style>
 <style id="lbVh">/* 29/11 iPhone Safari ngang: khi thanh công cụ thu lại, position:fixed;inset:0 chỉ cao bằng khung NHỎ (thiếu ~63px dưới đáy) nên sảnh hở dải đen dưới và mất phần trên. Dùng chiều cao khung ĐỘNG. */
@@ -2498,7 +2511,7 @@ html body #dashBtn.ms svg,html body #dashBtn.ms>span{display:none!important}
 <section id="lobby" class="screen" hidden>
  <div id="lbStage" aria-label="Sảnh Khử Tà Diệt Ma">
   <img id="lbArt" src="assets/ui/lobby/sanh.webp" alt="" draggable="false">
-  <div class="lobby-wisps" id="lbWisps" aria-hidden="true" data-reduced-motion="false"><i class="wf wf-luc" style="left:17.469%;top:44.520%;width:6.754%;height:20%;background-image:url(assets/ui/lobby/wispa_luc.png);animation-duration:1.6s,3.04s;animation-delay:-0.3s,-0.39s"></i><i class="wf wf-lam" style="left:27.954%;top:57.438%;width:7.091%;height:21%;background-image:url(assets/ui/lobby/wispa_lam.png);animation-duration:1.45s,2.76s;animation-delay:-0.9s,-1.17s"></i><i class="wf wf-tim" style="left:87.794%;top:51.419%;width:4.052%;height:12%;background-image:url(assets/ui/lobby/wispa_tim.png);animation-duration:1.75s,3.32s;animation-delay:-0.5s,-0.65s"></i><i class="wf wf-do" style="left:93.128%;top:57.019%;width:3.714%;height:11%;background-image:url(assets/ui/lobby/wispa_do.png);animation-duration:1.55s,2.94s;animation-delay:-1.1s,-1.43s"></i></div>
+  <div class="lobby-wisps" id="lbWisps" aria-hidden="true" data-reduced-motion="false"><i class="wf wf-luc" style="left:18.059%;top:44.564%;width:5.575%;height:16.508%;background-image:url(assets/ui/lobby/wispa_luc.webp?v=2911sanh);animation-duration:1.6s,3.04s;animation-delay:-0.3s,-0.39s"></i><i class="wf wf-lam" style="left:28.573%;top:57.484%;width:5.853%;height:17.333%;background-image:url(assets/ui/lobby/wispa_lam.webp?v=2911sanh);animation-duration:1.45s,2.76s;animation-delay:-0.9s,-1.17s"></i><i class="wf wf-tim" style="left:88.148%;top:51.445%;width:3.345%;height:9.905%;background-image:url(assets/ui/lobby/wispa_tim.webp?v=2911sanh);animation-duration:1.75s,3.32s;animation-delay:-0.5s,-0.65s"></i><i class="wf wf-do" style="left:93.452%;top:57.043%;width:3.066%;height:9.079%;background-image:url(assets/ui/lobby/wispa_do.webp?v=2911sanh);animation-duration:1.55s,2.94s;animation-delay:-1.1s,-1.43s"></i></div>
   <i class="lbbell lbbell-l" style="left:8.672%;top:41.552%;width:3.947%;height:13.496%;transform-origin:51.5% 3.9%;background-image:url(assets/ui/lobby/chuong_l.webp)" aria-hidden="true"></i><i class="lbbell lbbell-c" style="left:12.978%;top:43.783%;width:4.486%;height:14.453%;transform-origin:49.3% 2.9%;background-image:url(assets/ui/lobby/chuong_c.webp)" aria-hidden="true"></i><i class="lbbell lbbell-r" style="left:17.404%;top:45.484%;width:2.333%;height:8.289%;transform-origin:48.7% 6.4%;background-image:url(assets/ui/lobby/chuong_r.webp)" aria-hidden="true"></i><i class="lbinc lbinc-a" aria-hidden="true"></i><i class="lbinc lbinc-b" aria-hidden="true"></i><i class="lbdin" aria-hidden="true"></i><i class="lbeyes" aria-hidden="true"><i></i></i><i class="lbglow" aria-hidden="true"></i><i class="lbsmk lbsmk2" aria-hidden="true"><b></b><b></b></i><i class="lblant lblant-l" aria-hidden="true"></i><i class="lblant lblant-r" aria-hidden="true"></i><i class="lbleaf lbleaf-l" aria-hidden="true"></i><i class="lbleaf lbleaf-r" aria-hidden="true"></i><i class="lbslit" aria-hidden="true"></i><i class="lbsmk lbsmk1" aria-hidden="true"><b></b><b></b></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><i class="lbpuff" aria-hidden="true"></i><canvas id="lbHero" width="480" height="400" aria-hidden="true"></canvas><canvas id="lbFx" aria-hidden="true"></canvas>
   <div class="lbsp lbsp-b" id="lbBridge"><button type="button" class="lbz" aria-label="Xuất Trận" title="Xuất Trận: chọn ải"></button><button type="button" class="lbtag">Xuất Trận</button></div>
   <div class="lbsp lbsp-a" id="lbAltar"><button type="button" class="lbz" aria-label="Thỉnh Thần" title="Thỉnh Thần: chiêu mộ thần tướng"></button><button type="button" class="lbtag">Thỉnh Thần</button></div>
@@ -6009,7 +6022,7 @@ function lobbyPics(){const P0=prof();if(!$('#create').hidden)renderCreate();if(!
 function lbCovered(){const i=$('#inv'),m=$('#lbm'),c=!!((i&&!i.hidden)||(m&&!m.hidden));const L=$('#lobby');if(L)L.classList.toggle('lbpause',c);return c}
 let lbHeroT=0;function lobbyHero(){if(lbCovered())return;const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
  /* 26/11 sảnh mới: nhân vật theo hồ sơ (lớp vũ khí của phái, vũ khí + trang phục đang mặc), canvas 480x400, chân tại (240,372) */
- const prev=HERO;window.__lbW=profWeapon();try{if(useHero(P0.gender,profWeapon())){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.save();g.scale(2,2);g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore();HERO=prev}}finally{window.__lbW=null}lbHeroT+=0.125}
+ const prev=HERO;window.__lbW=profWeapon();try{if(useHero(P0.gender,profWeapon())){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.save();g.scale(2,2);g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();if(!LOWFX){g.save();g.globalAlpha=.15;g.translate(0,372);g.scale(1,-1);drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore()}/* 29/11 phản chiếu chân trên sân mưa */drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore();HERO=prev}}finally{window.__lbW=null}lbHeroT+=0.125}
 function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="sukien"] small');if(t)t.textContent=dtShort();const b=document.querySelector('[data-lb="sukien"]');if(b){const i=dtInfo();b.classList.toggle('dtok',!!(i.open&&i.rem>0))}}if(!$('#lbm').hidden&&lbmK==='sukien'){const e=$('#skDT');if(e)e.textContent=dtStatus()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
  $('#lbLv').textContent=P0.lv;{const c=$('#lbCp');if(c)c.textContent=lobbyPower().toLocaleString('vi-VN')}$('#lbXp').style.width=Math.min(100,P0.exp/need*100)+'%';$('#lbXpT').textContent=P0.exp+'/'+need;
  $('#lbSta').style.width=Math.min(100,s0.v/STA.max*100)+'%';$('#lbStaT').textContent=s0.v+'/'+STA.max;

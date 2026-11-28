@@ -1,0 +1,23 @@
+# BÀN GIAO NÂNG CẤP ĐỒNG BỘ THẨM MỸ SẢNH (`#lobby` trong `game/index.html`)
+
+Đọc kỹ `CLAUDE.md` trước khi làm. Chủ game đã gửi ảnh chụp sảnh thực tế và yêu cầu thay bộ lửa ma trơi bị vỡ ô pixel, thay icon Lực chiến bị răng cưa thò đuôi, đồng thời nâng cấp đồng bộ các chi tiết UI còn lệch tông cổ trang âm phủ ở sảnh. **TỐN 0 LƯỢT PIXELLAB** (mọi tài nguyên đã dựng sẵn trong gói này).
+
+## 1. Tài nguyên đính kèm (chép đè vào `game/assets/ui/lobby/`, nhớ gắn `?v=2911sanh` chống cache!)
+1. **4 Dải Động Lửa Ma Trơi Mịn 32 Khung (`wispa_{luc,lam,tim,do}.webp` — `3072×160`, 32 khung `96×160` mượt không răng cưa pixel!) + ảnh tĩnh `wisp_{luc,lam,tim,do}.webp`:**
+   - Bản cũ (`48×80` phóng to + màu neon gắt) bị vỡ bậc thang ô vuông trên nền tranh sảnh `sanh.webp`.
+   - Bản mới vẽ mịn kiểu khói lụa âm phủ (tâm ngà ấm -> viền ngọc u minh / lam hồn / tím minh giới / đỏ huyết phách dịu mắt), uốn lượn 32 khung nối vòng tròn khép kín 100%.
+   - Trong `#wispAnim` (CSS của `.wf`): giữ nguyên `steps(32)`, đổi tỉ lệ khung sang `aspect-ratio: 96 / 160` (`background-size: 3200% 100%`), bỏ `filter: saturate contrast` gắt cũ, thêm 1 elip phản chiếu mờ dưới chân mỗi ngọn lửa trên nền gạch ướt (`::after`, `opacity: 0.22`, `filter: blur(5px)`).
+2. **Biểu tượng Lực Chiến Mới (`ic_lucchien_{28,56,84}.png` + `ic_lucchien.webp`):**
+   - Song kiếm giao nhau trên Hổ Phù đồng cổ cân xứng 1:1, không còn chuôi kiếm thò dài chọc xuống thanh Thể lực bên dưới! Căn giữa dọc tuyệt đối ở đầu dải Lực chiến trong `<style id="hudSanh">`.
+3. **Nút Bánh Răng Cài Đặt Cổ Trang (`ic_caidat.webp` / `.png`):**
+   - Thay thế icon bánh răng trắng phẳng kiểu điện thoại hiện đại ở `#lbGear` góc phải trên bằng **Bánh Xe Cơ Quan Bát Quái Đồng Cổ** (khi bấm mở menu cài đặt xoay nhẹ `30deg`).
+4. **3 Icon Tiền Tệ Độ Phân Giải Cao 96×96 (`tt_dongte2.png`, `tt_linhhon2.png`, `tt_ngoctt2.png`):**
+   - Thay thế 3 icon cắt tạm ~40px bị mềm nét trên màn `@3x` (ghi chú ngày 29/11 trong `CLAUDE.md`).
+5. **Icon Hồ Lô Thể Lực (`ic_theluc.webp`) + CSS Thanh Thể Lực & Đèn Chọn Tủ Dưới:**
+   - **Thanh Thể Lực `100/100` trong khung hồ sơ góc trái trên:** Bỏ màu tím pastel nhựa sáng hiện tại; đổi sang nền rãnh tối `#180E1C`, viền đồng mảnh `1px solid rgba(184,149,90,0.65)`, dải đầy màu **Tím Huyết Tinh Đá Cổ (`linear-gradient(180deg, #643579 0%, #3A1B4A 100%)`)** có bóng sáng mép trên `inset 0 1px 0 rgba(255,230,200,0.22)`, đặt icon `ic_theluc.webp` nhỏ gọn đầu trái thanh.
+   - **Vệt sáng dưới ô đang chọn/nhấn ở tủ 6 ô dưới đáy (`#lbGrid`):** Đổi quầng xanh cyan lạnh lệch tông sang vàng bùa ấm `rgba(218, 174, 96, 0.55)`.
+   - **Bóng phản chiếu chân nhân vật trên sân mưa (`#lbHero`):** Thêm bóng phản chiếu mờ nhẹ dưới gót chân trên mặt gạch ướt (`opacity: 0.15`, tắt khi bật Giảm hiệu ứng `LOWFX`).
+
+## 2. Kiểm thử bắt buộc (Luật 10 & Luật 12 trong `CLAUDE.md`)
+- Mở ảnh kiểm bằng mắt đủ **8 cỡ màn ngang bắt buộc**: `550×278`, `811×260` (Safari), `667×375`, `852×393`, `932×430`, `956×440`, `1100×620`, `1280×720`.
+- Kiểm `bash cong_cu/claude/pack_check.sh` và quay video 4 giây sảnh ở `852×393@3` xác nhận 4 ngọn lửa ma trơi uốn lượn mượt, không vỡ ô vuông!
