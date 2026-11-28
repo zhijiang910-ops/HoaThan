@@ -54,7 +54,7 @@ for k in 'qfer':
 V = [('qc_fist', 'vfx_q_fist_projectile', dict(w=520)),
      ('qc_mark', 'vfx_passive_chu_sa_mark', dict(h=120)),
      ('qc_burst', 'vfx_e_talisman_burst', dict(w=320)),
-     ('qc_palm', 'vfx_r_giant_exorcist_palm', dict(h=1005)),
+     ('qc_palm', 'vfx_r_giant_exorcist_palm_chup_xuong', dict(h=495)),  # 29/11 (2): bàn tay chụp xuống mới, giữ nguyên độ phân giải
      ('qc_crater', 'vfx_r_bagua_crater_decal', dict(w=700)),
      ('qc_puff', 'vfx_soft_ghost_smoke_puff', dict(w=128))]
 for n, f, kw in V:
