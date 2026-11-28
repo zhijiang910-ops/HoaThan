@@ -1,6 +1,6 @@
 {
-  "sect_id": "quyen_cuoc_tru_ta",
-  "sect_name": "Phục Ma Quyền Cước",
+  "sect_id": "thien_cuong_mon",
+  "sect_name": "Thiên Cương Môn (Quyền)",
   "resource": {
     "name": "Nội lực",
     "max": 100,
@@ -87,9 +87,9 @@
       "id": "qc_skill_2",
       "slot": "skill_2",
       "seal_glyph": "震",
-      "name": "Bát Quái Chấn Địa Cước",
+      "name": "Thiên Cương Đạp Tinh Cước",
       "replaces": "Chấn Địa Quyền",
-      "tooltip": "Giậm cước khắc trận Bát Quái xuống đất, làm choáng mọi quái trước mặt và thiêu đốt âm khí.",
+      "tooltip": "Giậm cước kích nổ Tinh Luân Bắc Đẩu dưới đất, làm choáng mọi quái trước mặt và thiêu đốt âm khí.",
       "type_label": "Chủ động · bấm để dùng",
       "cooldown_sec": 9.0,
       "mana_cost": 20,
@@ -100,9 +100,9 @@
       "ground_dot_pct_per_sec": 25,
       "ground_slow_pct": 25,
       "combo_gain": 4,
-      "icon": "assets/icons/icon_f_bat_quai_chan_dia_cuoc.png",
+      "icon": "assets/icons/icon_f_thien_cuong_dap_tinh_cuoc.png",
       "seal_icon": "assets/icons_seal/seal_f_chan.png",
-      "vfx_ground_decal": "assets/vfx/vfx_r_bagua_crater_decal.png"
+      "vfx_ground_decal": "assets/vfx/vfx_f_thien_cuong_tinh_luan.png"
     },
     {
       "id": "qc_skill_3",

@@ -2831,7 +2831,7 @@ const STF={wk_staff:{w:20,t:65,b:62+3,tile:62},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();if(LAZY_VFX_RE.test(n))lazyImg(VFX,n,i,'assets/vfx/'+n+'.png',preDecode);else{i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}}
 /* 28/11 gói Quyền Cước (nguon/master_amgioi/quyen_cuoc/, dựng bằng cong_cu/claude/quyen_cuoc_build.py): tải lười cùng gói Quyền */
-const QC_VFX=['qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911b',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
+const QC_VFX=['qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff','qc_tinhluan'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911c',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
 /* điểm va chạm đồng bộ với kiếm (24/11): MỘT chớp chém xanh-tím xoay theo hướng lưỡi, thay bộ swhit (mảnh băng) */
 /* va chạm Vạn Kiếm: biến thể xem thử (window.__vkv) 1=kiếm cắm lại, 2=kiếm khí xuyên, 3=chữ X */
 function vkLift(){const dt=G.t-P._vkp;if(dt>2.4||P.deadAt){P._vkp=null;return 0}const E=u=>u*u*(3-2*u);return Math.round(-9*(dt<0.5?E(dt/0.5):dt<1.9?1:1-E((dt-1.9)/0.5)))}/* 25/11 Vạn Kiếm: nhân vật nhấc lên bắt ấn */
@@ -2990,7 +2990,7 @@ function drawTileField(M,c,cx,cy,hw,hh){const o=tileFieldCache(M),[x0,y0,x1,y1,F
  c.restore()}
 /* 29/11 tách riêng: map cũ (Luyện Công) không qua drawGroundMap nên trước đây không thấy decal (hố F) */
 function drawDecals(c){
- for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;c.save();let al=Math.min(1,(1-k)*2),sc=1;if(d.pop){/* 25/11 vết chưởng Như Lai (gói Wuxia 04_Rulai): bung ra kiểu back-ease 0,22 s, hiện nhanh 0,12 s, giữ rồi mờ 0,7 s cuối */const t=d.t,x=Math.min(1,t/0.22)-1;sc=t<0.22?0.3+0.7*(1+2.70158*x*x*x+1.70158*x*x):1;const fo=d.fo||0.7;al=(t<0.12?t/0.12:1)*(t>d.T-fo?Math.max(0,(d.T-t)/fo):1)}c.globalAlpha=al*(d.a||1)*(d.pulse?0.78+0.22*Math.sin(d.t*6):1);if(d.sm){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high'}c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w*sc/2,-d.h*sc/2,d.w*sc,d.h*sc);c.restore()}
+ for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;if(d.tl){drawTinhLuanDecal(c,im,d);continue}c.save();let al=Math.min(1,(1-k)*2),sc=1;if(d.pop){/* 25/11 vết chưởng Như Lai (gói Wuxia 04_Rulai): bung ra kiểu back-ease 0,22 s, hiện nhanh 0,12 s, giữ rồi mờ 0,7 s cuối */const t=d.t,x=Math.min(1,t/0.22)-1;sc=t<0.22?0.3+0.7*(1+2.70158*x*x*x+1.70158*x*x):1;const fo=d.fo||0.7;al=(t<0.12?t/0.12:1)*(t>d.T-fo?Math.max(0,(d.T-t)/fo):1)}c.globalAlpha=al*(d.a||1)*(d.pulse?0.78+0.22*Math.sin(d.t*6):1);if(d.sm){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high'}c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w*sc/2,-d.h*sc/2,d.w*sc,d.h*sc);c.restore()}
 }
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
@@ -3082,7 +3082,7 @@ function startSwordCut(target,basic){
 }
 /* ===== 28/11 PHỤC MA QUYỀN CƯỚC (gói chủ game bo-tai-nguyen-quyen-cuoc-claude.zip): 100% ATK = 20 power (chủ game chọn), số TẠM chưa cân bằng ===== */
 const QC_ATK=20,USE_SEAL_ICONS=false,qcP=p=>p/100*QC_ATK;
-const QC_IC=k=>'assets/ui/quyen/'+(USE_SEAL_ICONS&&'qfer'.includes(k)&&k.length===1?'qc_seal_'+k:'qc_'+k)+'.webp';
+const QC_IC=k=>'assets/ui/quyen/'+(USE_SEAL_ICONS&&'qfer'.includes(k)&&k.length===1?'qc_seal_'+k:'qc_'+k)+'.webp?v=2911c';
 const skG=d=>d&&d.ic?`<img class="skic" src="${QC_IC(d.ic)}" alt="" draggable="false">`:(d?d.g:'');
 function eTopY(e){if(e.ai==='dummy'&&DUMMY.naturalWidth)return e.y-DUMMY.height*1.4+4;const m=ESPR[e.type],h=m&&CH[m[0]];if(h&&h.ok)return e.y-h.meta.ay*espScale(m)-(h.meta.proc==='hover'?12:0);return e.y-Math.max(60,e.r*3)}
 function qcFireDraw(c,z){/* lửa cháy trên mặt trận F: 1 cụm giữa + 5 cụm quanh, lệch pha khung, hiện 0,2 s, tắt dần 0,5 s cuối */if(!vok('wk_aura_fire'))return;const A=AURAF,im=VFX.wk_aura_fire;if(!z.p){z.p=[{dx:0,dy:4,s:1.35,ph:0}];for(let i=0;i<5;i++){const an=i*TAU/5+rnd(-0.3,0.3),rr=z.R*rnd(0.5,0.68);z.p.push({dx:Math.cos(an)*rr,dy:Math.sin(an)*rr*0.45,s:rnd(0.85,1.05),ph:(Math.random()*A.n)|0})}z.p.sort((a,b)=>a.dy-b.dy)}
@@ -3321,12 +3321,12 @@ const WEAPONS={
    qi(l){return ['Bay thẳng 300, xuyên 5 mục tiêu',hudNumber(this.power*lv(l)*pw())+' / mục tiêu','Giật tụ quái về gần 40, khựng 0,35 giây, khắc 1 tầng Ấn Chu Sa. +2 Liên kích mỗi quái.']},
    cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();P.avAnim='attack';swing(a,1);sfx('sword_wave',0.45,0.1);
     later(0.22,()=>{shoot(P.x+Math.cos(a)*30,P.y-24+Math.sin(a)*30,a,560,{dmg,pierce:5,r:34,life:0.55,kind:'qcfist',o:H({pull:40,stun:0.35,chuSa:1,comboX:1,nofx:1})});G.shake=Math.max(G.shake||0,3)},'h')}},
-  {id:'y2',ic:'f',hotkey:'F',power:42,name:'Bát Quái Chấn Địa Cước',g:'震',kind:'active',cd:9,mp:20,range:200,tl:'Chủ động · bấm để dùng',desc:'Giậm cước khắc trận Bát Quái xuống đất, làm choáng mọi quái trước mặt và thiêu đốt âm khí.',up:'+25% sát thương, -6% hồi chiêu',
-   qi(l){return ['Vùng tròn bán kính '+hudNumber(150*Ar())+' trước mặt',hudNumber(this.power*lv(l)*pw())+' / mục tiêu · trận đốt '+hudNumber(qcP(25)*lv(l)*pw())+' mỗi giây','Choáng 1,3 giây. Trận Bát Quái tồn tại 3 giây, làm chậm 25% quái bước vào. +4 Liên kích.']},
+  {id:'y2',ic:'f',hotkey:'F',power:42,name:'Thiên Cương Đạp Tinh Cước',g:'震',kind:'active',cd:9,mp:20,range:200,tl:'Chủ động · bấm để dùng',desc:'Giậm cước kích nổ Tinh Luân Bắc Đẩu dưới đất, làm choáng mọi quái trước mặt và thiêu đốt âm khí.',up:'+25% sát thương, -6% hồi chiêu',
+   qi(l){return ['Vùng tròn bán kính '+hudNumber(150*Ar())+' trước mặt',hudNumber(this.power*lv(l)*pw())+' / mục tiêu · trận đốt '+hudNumber(qcP(25)*lv(l)*pw())+' mỗi giây','Choáng 1,3 giây. Tinh Luân tồn tại 3 giây, làm chậm 25% quái bước vào. +4 Liên kích.']},
    cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw(),dot=qcP(25)*lv(l)*pw();P.avAnim='attack3';swing(a,1);sfx('rulai_impact',0.5,0.1);
     later(0.3,()=>{const cx=P.x+Math.cos(a)*95,cy=P.y+Math.sin(a)*95,R=150*Ar();circ(cx,cy,R,dmg,H({stun:1.3,cb:{n:3},nofx:1}),null);
-     if(vok('qc_crater')&&G.decals.length<40){const w=210;G.decals.push({img:'qc_crater',x:cx,y:cy,w,h:w*VFX.qc_crater.naturalHeight/VFX.qc_crater.naturalWidth,t:0,T:3.0,pop:1,sm:1,a:0.9})}
-     fx({k:'ring',x:cx,y:cy,r0:20,r1:140,c:'#ffb040',T:0.25,sy:0.5,lw:5});later(0.06,()=>fx({k:'ring',x:cx,y:cy,r0:20,r1:140,c:'#ff6e30',T:0.25,sy:0.5,lw:3}),'h');
+     /* 29/11 (3) Thiên Cương Tinh Luân (gói chủ game): decal mặt đất ép 0,58, bung 0,12->1,15->1,0 + sóng dư chấn cộng sáng, xoay nghiền 2,65 s, thu ấn 0,35 s; KHÔNG vẽ vòng tròn bằng code */
+     if(vok('qc_tinhluan')&&G.decals.length<40)G.decals.push({img:'qc_tinhluan',tl:1,x:cx,y:cy,w:260,h:260,t:0,T:3.0});
      
      for(let i=0;i<14;i++){const an=rnd(0,TAU),v=rnd(80,200);part(cx+Math.cos(an)*30,cy+Math.sin(an)*14,Math.cos(an)*v,Math.sin(an)*v*0.5-70,rnd(0.3,0.55),rnd(2,4),i%2?'#ff6e40':'#ffe082',1)}
      G.shake=Math.max(G.shake||0,9);
@@ -4762,6 +4762,16 @@ function drawFx(f){
  }
  c.restore();
 }
+function drawGroundTinhLuan(ctx,img,cx,cy,baseRadius,scale,angleRad,alpha,additive=false){/* chủ game đưa sẵn: ép phối cảnh 0,58 TRƯỚC khi xoay để bánh xe xoay đúng mặt sàn */
+ if(alpha<=0.01||scale<=0.02)return;const r=baseRadius*scale;ctx.save();ctx.globalAlpha=alpha;if(additive)ctx.globalCompositeOperation='lighter';ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.translate(cx,cy);ctx.scale(1,0.58);ctx.rotate(angleRad);ctx.drawImage(img,-r,-r,r*2,r*2);ctx.restore()}
+function drawTinhLuanDecal(c,im,d){/* 3 giai đoạn, tổng 3,0 s: 0-0,22 bung (0,12->1,15 trong 0,15 s cubic-out, nảy về 1,0 trong 0,07 s, xoay 0,5 rad); 0,22-2,65 xoay 1,1 rad/s, thở 3%; 2,65-3,0 xoáy 5 rad/s thu về 0,08 cubic-in */
+ const t=d.t,B=130;let sc,an,al;
+ if(t<0.15){const u=t/0.15,e=1-Math.pow(1-u,3);sc=0.12+(1.15-0.12)*e;an=0.5*(t/0.22);al=0.95}
+ else if(t<0.22){const u=(t-0.15)/0.07;sc=1.15-0.15*u;an=0.5*(t/0.22);al=0.95}
+ else if(t<2.65){sc=1+0.03*Math.sin(t*10);an=0.5+1.1*(t-0.22);al=0.92}
+ else{const u=Math.min(1,(t-2.65)/0.35),e=u*u*u;sc=1-(1-0.08)*e;an=0.5+1.1*2.43+5*(t-2.65);al=0.92*(1-e)}
+ drawGroundTinhLuan(c,im,d.x,d.y,B,sc,an,al);
+ if(t<0.35){const u=t/0.35;drawGroundTinhLuan(c,im,d.x,d.y,B,0.65+u,an,0.7*(1-u),true)}}
 function drawHongTuyenRibbon(ctx,tailX,tailY,headX,headY,timeSec,alphaMul=1){
  const dx=headX-tailX,dy=headY-tailY,dist=Math.hypot(dx,dy);if(dist<8)return;
  const nx=-dy/dist,ny=dx/dist,steps=28;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';

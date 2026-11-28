@@ -12,7 +12,7 @@ from PIL import Image
 
 src = sys.argv[1]
 game = sys.argv[2] if len(sys.argv) > 2 else 'game'
-A = os.path.join(src, 'assets')
+A = os.path.join(src, 'assets') if os.path.isdir(os.path.join(src, 'assets')) else src
 ui = os.path.join(game, 'assets/ui/quyen'); vfx = os.path.join(game, 'assets/vfx')
 os.makedirs(ui, exist_ok=True)
 
@@ -41,7 +41,7 @@ def crop(im, thr=6):
     bb = a.getbbox(); return im.crop(bb) if bb else im
 
 icons = {'icon_attack_phuc_ma_lien_quyen': 'qc_basic', 'icon_dash_bo_hu_luu_phu': 'qc_dash',
-         'icon_q_phuoc_hon_cuong_quyen': 'qc_q', 'icon_f_bat_quai_chan_dia_cuoc': 'qc_f',
+         'icon_q_phuoc_hon_cuong_quyen': 'qc_q', 'icon_f_thien_cuong_dap_tinh_cuoc': 'qc_f',
          'icon_e_toai_phach_bat_cuc_chuong': 'qc_e', 'icon_r_quy_mon_tran_nguc_an': 'qc_r'}
 for a, b in icons.items():
     shrink(Image.open(f'{A}/icons/{a}.png'), 160).save(f'{ui}/{b}.webp', quality=90, method=6)
@@ -54,7 +54,8 @@ for k in 'qfer':
 V = [('qc_fist', 'vfx_q_fist_projectile', dict(w=520)),
      ('qc_mark', 'vfx_passive_chu_sa_mark', dict(h=120)),
      ('qc_burst', 'vfx_e_talisman_burst', dict(w=320)),
-     ('qc_palm', 'vfx_r_giant_exorcist_palm_chup_xuong', dict(h=495)),  # 29/11 (2): bàn tay chụp xuống mới, giữ nguyên độ phân giải
+     ('qc_palm', 'vfx_r_giant_exorcist_palm', dict(h=533)),  # 29/11 (3): bàn tay Thiên Cương (ấn Kim Cang Tinh Mang), giữ nguyên độ phân giải
+     ('qc_tinhluan', 'vfx_f_thien_cuong_tinh_luan', dict(w=512)),  # F: Tinh Luân Bắc Đẩu
      ('qc_crater', 'vfx_r_bagua_crater_decal', dict(w=700)),
      ('qc_puff', 'vfx_soft_ghost_smoke_puff', dict(w=128))]
 for n, f, kw in V:
