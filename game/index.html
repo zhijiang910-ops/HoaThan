@@ -3043,6 +3043,7 @@ function vkSheet(id){if(!(id in VK_SHEETS))return null;let v=VKP[id];if(!v){cons
 function vkPoseFi(){const p=P&&P._vkp2;if(!p||!G)return -1;const dt=G.t-p.t0;if(dt<2.15||dt>=3.45)return -1;return dt<2.45?0:dt<2.75?1:dt<3.2?2:3}
 window.__vkPose=()=>({fi:vkPoseFi(),on:vkPoseOn(),hero:HERO&&HERO.id});function vkPoseOn(){return HERO&&vkSheet(HERO.id)&&P&&!P.moving&&!P.deadAt&&vkPoseFi()>=0}
 function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
+ const hurtFl=flash;flash=false;/* 29/11 (8) chủ game: chớp trắng toàn thân của nhân vật khi bị đánh quá chói; nay vẽ sprite bình thường rồi phủ lớp trắng mờ 28% */
  if(c===X&&!flash&&vkPoseOn()){const M=HERO.meta,i=vkPoseFi();c.save();c.imageSmoothingEnabled=false;c.translate(Math.round(x),Math.round(y));c.scale(P._vkp2.f*sc,sc);if(alpha!=null)c.globalAlpha=alpha;const V=vkSheet(HERO.id);c.drawImage(hairSheet(V.h)||V.img,i*160,0,160,128,-M.ax,-M.ay-V.dy,160,128);c.restore();return}
  const M=HERO.meta,A=M.anims[an],fr=A.f[fi];if(fr[2])f=-f;c.save();c.imageSmoothingEnabled=false;
  /* chạy = động tác đi bộ của gói + ngả người, nhún theo bước (không vẽ lại pixel) */
@@ -3053,7 +3054,7 @@ function drawHeroFrame(c,an,fi,x,y,f,sc,flash,alpha,tf){
  const sk=HERO.wg&&WSOCK[HERO.wg][fr[0]+','+fr[1]];
  const dw=()=>{c.save();c.translate(-M.ax+sk[0],-M.ay+sk[1]);c.rotate(sk[2]*Math.PI/180);drawWeaponArt(c,heroWeaponArt(HERO.wg),auraLv(),G?G.t:performance.now()/1000);c.restore()};
  if(sk&&sk[3]==='b')dw();
- c.drawImage(flash?HERO.flash:tf&&tf.tint&&HERO.tint?HERO.tint:hairSheet(HERO),fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);
+ c.drawImage(flash?HERO.flash:tf&&tf.tint&&HERO.tint?HERO.tint:hairSheet(HERO),fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);if(hurtFl&&HERO.flash){const ga=c.globalAlpha;c.globalAlpha=ga*0.28;c.drawImage(HERO.flash,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h);c.globalAlpha=ga}
  if(sk&&sk[3]!=='b'){dw();if(HERO.hand&&HERO.hand.complete&&!flash)c.drawImage(HERO.hand,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h)}
  {const qs=HERO.id&&HERO.id.endsWith('_qy')&&QSOCK[HERO.wg]&&QSOCK[HERO.wg][fr[0]+','+fr[1]];if(qs&&!flash){const art=heroWeaponArt(HERO.wg);/* có găng: vẽ găng tại socket; không: vẽ lớp nắm tay */if(art&&WPN[art]){const k=QGS[art]||1;for(const s of qs){c.save();c.translate(-M.ax+s[0],-M.ay+s[1]);c.rotate(s[2]*Math.PI/180);c.scale(k,k);drawWeaponArt(c,art,0,0,true);c.restore()}}else if(HERO.hand&&HERO.hand.complete)c.drawImage(HERO.hand,fr[0],fr[1],M.w,M.h,-M.ax,-M.ay,M.w,M.h)}}
  c.restore();
