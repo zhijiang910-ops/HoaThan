@@ -50,14 +50,15 @@ for k in 'qfer':
     shrink(Image.open(f'{A}/icons_seal/seal_{k}_{n}.png'), 160).save(f'{ui}/qc_seal_{k}.webp', quality=90, method=6)
 
 # (tên game, file gói, bề rộng hoặc cao đích)
-V = [('qc_fist', 'vfx_q_fist_projectile', dict(w=240)),
-     ('qc_mark', 'vfx_passive_chu_sa_mark', dict(h=96)),
+# 29/11 hotfix: đạn Q và bàn tay R vẽ to hơn nhiều nên giữ độ phân giải cao (hết mờ trên màn 3x); ấn Chu Sa cắt sát lõi (alpha>120)
+V = [('qc_fist', 'vfx_q_fist_projectile', dict(w=520)),
+     ('qc_mark', 'vfx_passive_chu_sa_mark', dict(h=120)),
      ('qc_burst', 'vfx_e_talisman_burst', dict(w=320)),
-     ('qc_palm', 'vfx_r_giant_exorcist_palm', dict(h=560)),
+     ('qc_palm', 'vfx_r_giant_exorcist_palm', dict(h=1005)),
      ('qc_crater', 'vfx_r_bagua_crater_decal', dict(w=700)),
      ('qc_puff', 'vfx_soft_ghost_smoke_puff', dict(w=128))]
 for n, f, kw in V:
-    im = crop(Image.open(f'{A}/vfx/{f}.png').convert('RGBA'))
+    im = crop(Image.open(f'{A}/vfx/{f}.png').convert('RGBA'), 120 if n == 'qc_mark' else 6)
     im = shrink(im, **kw)
     im.save(f'{vfx}/{n}.webp', quality=88, method=6)
     print(n, im.size, os.path.getsize(f'{vfx}/{n}.webp'))
