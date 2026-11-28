@@ -5968,7 +5968,11 @@ function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK===
  $('#lbStaN').textContent=s0.v>=STA.max?'Thể lực đầy':'+1 thể lực sau '+mmss(nx)}
 /* ===== SẢNH SÂN KHẤU (26/11): ảnh nền, nhân vật, 2 vùng bấm CÙNG hệ tọa độ ảnh 1672x941, co giãn/dịch chuyển cùng nhau ===== */
 const LB_AR=1672/941;
-function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden||lbCovered())return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;
+function profFit(){/* 29/11 chủ game: ô hồ sơ sát trái, rộng hết mức miễn không đè biển Thần Giáng Đàn (và tiêu đề) */const pr=$('#lobby .lbprof'),al=$('#lbAltar .lbtag')||$('#lbAltar'),ti=$('#lobby .lbtitle');if(!pr||!al)return;
+ const AR=1789/699,GAP=6,left=2,top=pr.getBoundingClientRect().top,A=al.getBoundingClientRect(),T=ti?ti.getBoundingClientRect():null;
+ let w=Math.min(560,innerWidth*0.42);if(T&&T.width)w=Math.min(w,T.left-GAP-left);/* chạm biển nếu bề ngang vượt mép trái biển VÀ đáy vượt đỉnh biển */if(left+w>A.left-GAP&&top+w/AR>A.top-GAP)w=Math.max(A.left-GAP-left,(A.top-GAP-top)*AR);w=Math.max(200,Math.floor(w));
+ pr.style.setProperty('left',left+'px','important');pr.style.setProperty('width',w+'px','important')}
+function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden||lbCovered())return;const vw=L.clientWidth,vh=L.clientHeight;if(!vw||!vh)return;requestAnimationFrame(profFit);
  const W=Math.max(vw,vh*LB_AR),H=W/LB_AR,bar=$('#lbGrid'),barH=bar?bar.offsetHeight:0;
  /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
  const target=vh-barH-Math.max(12,vh*0.08);let off=H*0.72-target;off=Math.max(0,Math.min(off,H-vh));
