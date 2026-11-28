@@ -2193,7 +2193,7 @@ html body #create .cxbar #crGo.busy{pointer-events:none}
 </style>
 <style id="hudSanh">
 /* 27/11 HUD nhân vật góc trên trái sảnh: khung gỗ xích (ảnh chủ game, lòng khung đã xóa bằng cong_cu/claude/hud_khung.py), avatar tròn viền đồng, cột: tên + cấp, EXP, Lực chiến (icon kiếm), thể lực. Toạ độ theo % ảnh khung 1789x699, chữ theo cqw. */
-html body #lobby .lbprof.lbprof{position:absolute!important;left:max(16px,env(safe-area-inset-left))!important;top:max(10px,env(safe-area-inset-top))!important;right:auto!important;bottom:auto!important;
+html body #lobby .lbprof.lbprof{position:absolute!important;left:max(8px,calc(env(safe-area-inset-left)*.3))!important;top:max(10px,env(safe-area-inset-top))!important;right:auto!important;bottom:auto!important;
  width:clamp(226px,min(24.4vw,43.3vh),312px)!important;height:auto!important;aspect-ratio:1789/699;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;display:block!important;
  background:url(assets/ui/lobby/hud_khung_450.webp) 0 0/100% 100% no-repeat!important;
  background-image:-webkit-image-set(url(assets/ui/lobby/hud_khung_450.webp) 1x,url(assets/ui/lobby/hud_khung_600.webp) 2x,url(assets/ui/lobby/hud_khung_900.webp) 3x)!important;
