@@ -2336,12 +2336,14 @@ html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s="2"]{left:23.849%!important;width
 html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s="3"]{left:37.523%!important;width:11.096%!important}
 html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s="4"]{left:51.427%!important;width:11.050%!important}
 html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s="5"]{left:65.239%!important;width:11.004%!important}
+html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s="6"]{left:79.55%!important;width:10.95%!important}/* 29/11 ô 6 = Luyện Công */
 html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt[data-s]>i{font-size:0!important;color:transparent!important;text-shadow:none!important;width:calc(var(--dw)*.036)!important;height:calc(var(--dw)*.036)!important;background:var(--ic) center/contain no-repeat!important;transform:scale(var(--is,1));border:0!important;box-shadow:none!important}
 html body #lobby .lbt[data-lb=nhanvat]{--ic:url(assets/ui/lobby/nv_ao.webp);--is:1}
 html body #lobby .lbt[data-lb=inv]{--ic:url(assets/ui/lobby/nv_tui.webp);--is:1}
 html body #lobby .lbt[data-lb=tangbao]{--ic:url(assets/ui/lobby/nv_lau.webp);--is:1.06}
 html body #lobby .lbt[data-lb=sukien]{--ic:url(assets/ui/lobby/nv_caothi.webp);--is:1}
 html body #lobby .lbt[data-lb=banghoi]{--ic:url(assets/ui/lobby/nv_banghoi.webp);--is:1.1}
+html body #lobby .lbt[data-lb=luyencong]{--ic:url(assets/ui/lobby/ic_luyencong.webp);--is:1}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>i{filter:grayscale(.8) brightness(.78)!important}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>b{color:#8d8474!important}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{position:absolute;top:5%;right:4%;font:600 max(7px,calc(var(--dw)*.0068))/1 "Noto Serif",serif;font-style:normal;color:#cbb994;background:rgba(10,7,5,.85);border:1px solid #5d4a33;border-radius:3px;padding:2px 4px;pointer-events:none}
@@ -5835,7 +5837,7 @@ const LBT=[
  {k:'tangbao',s:3,lbn:'Tàng Bảo Các',g:'寶',n:'Tàng Bảo Các',st:()=>{const c=tbcCount();return 'Đã có '+c.own+'/'+c.all+' món'}},
  {k:'amgioi',g:'冥',n:'Âm Giới',st:()=>amStatus()},
  {k:'sukien',s:4,lbn:'Sự Kiện',g:'告',n:'Sự Kiện',st:()=>dtShort()},
- {k:'luyencong',hide:1,lbn:'Luyện Công',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
+ {k:'luyencong',s:6,lbn:'Luyện Công',g:'樁',n:'Luyện Công',st:()=>'Cọc gỗ · thử đòn, Thần Giáng'},
  {k:'banghoi',s:5,lbn:'Bang Hội',g:'幫',n:'Bang Hội',st:()=>'Chưa mở',off:1}];
 // Kiếm khởi đầu: nhân vật mới (và hồ sơ cũ chưa từng có vũ khí) nhận 1 thanh Phàm +0 để thấy ngay hệ cường hóa.
 function giveStarterSword(){if(save.starterKiem)return;save.starterKiem=1;const L=invList();if(L.some(x=>x.slot==='vk'))return persist();
@@ -5846,7 +5848,7 @@ function showLobby(){const P0=prof();if(!P0)return openCreate();try{const im=win
  $('#lbName').textContent=P0.name;paintLobbyAvatar(P0);
  const MP=MAPS.amdia;try{const cn=$('#lbBg');paintMapPack(cn,cn.getContext('2d'),640,400,MP,1)}catch(e){}
  giveStarterSword();
- /* 28/11 thanh 6 ô: ô 1–5 theo t.s, ô 6 để trống (không có nút, không nhận chạm) */$('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"${t.s?' data-s="'+t.s+'"':''} aria-label="${(t.lbn||t.n)+(t.off?' (chưa mở)':'')}" title="${(t.lbn||t.n)+(t.off?': chưa mở':'')}"><i aria-hidden="true">${t.g}</i><b>${t.lbn||t.n}</b><small>${t.st()}</small>${t.off?'<em class="lbofft">Chưa mở</em>':''}</button>`).join('');$('#lbGrid').classList.add('g7');{const am=$('#lbAmS');if(am)am.textContent=amStatus();}$('#againBtn').hidden=false;
+ /* 28/11 thanh 6 ô theo t.s; 29/11 ô 6 = Luyện Công */$('#lbGrid').innerHTML=LBT.filter(t=>!t.hide).map(t=>`<button class="lbt${t.off?' off':''}" data-lb="${t.k}"${t.s?' data-s="'+t.s+'"':''} aria-label="${(t.lbn||t.n)+(t.off?' (chưa mở)':'')}" title="${(t.lbn||t.n)+(t.off?': chưa mở':'')}"><i aria-hidden="true">${t.g}</i><b>${t.lbn||t.n}</b><small>${t.st()}</small>${t.off?'<em class="lbofft">Chưa mở</em>':''}</button>`).join('');$('#lbGrid').classList.add('g7');{const am=$('#lbAmS');if(am)am.textContent=amStatus();}$('#againBtn').hidden=false;
  {const cp=save.cp;$('#lbCont').disabled=!cp;$('#lbCont').hidden=!cp;$('#lbContS').textContent=cp?RN(cp.rmap)+' '+stars(cp.star)+' · '+(cp.chestDone?'đã hạ Boss · bấm để kết toán':cp.phase==='rest'?'đang nghỉ sau ải '+cp.ai+'/5':'vào ải '+cp.next+'/5')+(cp.path?' · '+(cp.path==='ven'?'Ven núi':'Trại cướp'):''):'Chưa có ải đang dở'}
  $('#lbGoS').textContent=save.bossChest?'Có rương Boss chờ: nhận trước khi hạ Boss lần nữa':RN(sel.map)+' · đã mở '+stars(rprog().star);
  curSync();$('#lowfx3').checked=LOWFX;wispSync();
