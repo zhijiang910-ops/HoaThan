@@ -1,0 +1,11 @@
+# BÀN GIAO TỔNG ĐỒNG BỘ 6 MÔN PHÁI — KHỬ TÀ DIỆT MA
+
+Đọc kỹ `CLAUDE.md` trước khi triển khai. Chủ game yêu cầu **đồng bộ 100% phong cách Dark Wuxia Pixel Art (nét mực sắc nét, nền icon `#0B0B10`, viền đồng cổ mảnh 2 lớp cho chiêu thường & viền rồng vàng-đỏ cho Đại Chiêu X)** theo đúng chuẩn `Mao Sơn.zip` và `cap-nhat-dong-bo-thien-cuong-mon.zip` cho **cả 6 môn phái**. **TỐN 0 LƯỢT PIXELLAB**.
+
+## 1. Quy tắc bất di bất dịch
+1. **Cache-busting**: Gắn `?v=2911all` cho mọi asset mới/cập nhật trong `game/index.html`.
+2. **6 Quỹ đạo Đại Chiêu X tách biệt hoàn toàn**: Chỉ **Thiên Cương Môn** rơi từ trời; 5 phái còn lại giữ đúng quỹ đạo trong `skills_6_mon_phai_dong_bo.json`.
+3. **Mao Sơn F (`Bát Quái Tỏa Ma Trận`) & Q (`Du Long Ngự Kiếm Phù`)**: Ở chiêu **F**, bỏ hoàn toàn hố đá nứt đất (`vfx_ms_crater_ring.png`), vẽ `vfx_ms_bagua_seal.png` phẳng qua `drawDecals(c)` tại `cy = P.y` + **8 phi kiếm cắm dựng quanh vành** + `vfx_ms_f_lei_web.png` giật điện bên trong; giữ nguyên chiêu **C** (`Thái Thanh Phù Kiếm Vũ` — `icon_ms_c.png` gốc); đổi chiêu **Q** sang phóng kiếm lượn chữ S (`icon_ms_q_new.png` + `vfx_ms_q_vortex.png`).
+4. **Cả 6 phái đều có Ô Buff Hộ Thể hàng dưới HUD** (bấm chủ động kể cả khi đang bị Choáng/Trói + tự động kích hoạt khi Máu < 35%).
+5. **Tương thích ngược `normSectKey()`**: `tramyeu->doanhon`, `phucma->phasat`, `huyenlinh->cuuu`, `truyhon->truynguyet`.
+6. **Nghiệm thu bắt buộc**: Kiểm tra ngân sách tải lười (`<= 3.5 MB`/gói phái), cập nhật mô tả `renderKN`, và soi đủ **8 cỡ màn ngang** (`550×278`, `811×260`, `667×375`, `852×393`, `932×430`, `956×440`, `1100×620`, `1280×720`).
