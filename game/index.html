@@ -3413,8 +3413,7 @@ const WEAPONS={
     for(let t=T0;t<=T0+DUR;t+=0.25)later(t,()=>{for(const e of inT()){e.slowT=Math.max(e.slowT,0.4);e.slowF=Math.max(e.slowF,0.6)}},'h');
     for(let t=T0+0.5;t<T0+DUR-0.05;t+=0.5)later(t,()=>{for(const e of inT().slice(0,6)){hit(e,qcP(48)*k,H({nofx:1,noflash:1}),gx,gy);stunE(e,0.12);if(ZF&&ZF.arcs){let b=null,bd=1e9;for(const q of ZF.sk){const dd=(q.x-e.x)**2+(q.y-e.y)**2;if(dd<bd){bd=dd;b=q}}if(b){const ey=e.y-(e.r||20)*0.9;ZF.arcs.push({t0:ZF.t,hx:b.x,hy:b.y-50,ex:e.x,ey,fl:Math.random()<0.5});fx({k:'qimg',n:'ms_f_shock',x:e.x,y:ey,h:64,s0:1,s1:1.19,T:0.16,add:1,fo:0.5})}}}sfx('sword_hit',0.2,0.2)},'h');
     for(let t=T0+0.65;t<T0+DUR-0.1;t+=0.65)later(t,()=>{const es=inT().sort(()=>Math.random()-0.5).slice(0,2);for(const e of es)hit(e,qcP(45)*k,H({nofx:1,noflash:1}),gx,gy)},'h')}},
-  {id:'k3',ic:'ms_pas2k',power:12,name:'Linh Kiếm Hộ Pháp',g:'旋',kind:'auto',cd:9,mp:0,range:260,desc:'Nội tại: mỗi đòn Chí mạng hoặc mỗi 3 nhát đánh thường gọi 1 Phi Kiếm hộ thể (tối đa 3 thanh, sống 8 giây). Phi Kiếm chém trúng quái đang mang Ấn Bùa tăng 30% sát thương và giảm 0,5 giây hồi chiêu Q và F.',up:'+1 giây tồn tại, +25% sát thương',
-   cast(tg,l){hpPassive()}},
+  /* 30/11 chủ game: TẠM XÓA Linh Kiếm Hộ Pháp (k3) khỏi game; hpSummon thoát sớm khi kit không có k3 nên cơ chế phi kiếm tắt hẳn. Khôi phục: lấy lại 2 dòng k3 từ lịch sử git (commit trước 'Xoa Linh Kiem Ho Phap'). */
   {id:'ms_pas2_chusaphu',ic:'ms_pas2',start:1,name:'Chu Sa Phù Ấn',g:'符',kind:'passive',desc:'Q, F, C và đòn C đánh thường dán Ấn Bùa Vàng lên đầu quái (4 giây). Đánh thường hoặc Phi Kiếm kích nổ Ấn Bùa: nổ Bát Quái nhỏ 75% ATK lan bán kính 85, làm chậm 25% trong 1,5 giây và hồi 3 Nội lực.'},
   {id:'ms_pas3_nguloi',ic:'ms_pas3',name:'Ngũ Lôi Dẫn Pháp',g:'雷',kind:'passive',desc:'Mỗi 4 lần kích nổ Ấn Bùa (hoặc ngay khi tung Bát Quái Vạn Kiếm Quy Tông) tự giáng 1 tia sấm vàng xuống kẻ địch nhiều Máu nhất trong 280: 135% ATK, xuyên 25% giáp, tê liệt 0,4 giây.'},
   {id:'ms_pas4_nguphong',ic:'ms_pas4',name:'Ngự Phong Đạo Thể',g:'風',kind:'passive',desc:'Không nhận sát thương trong 3 giây: +12% tốc chạy và +10% Chí mạng. Khi đủ 3 Phi Kiếm hộ thể bay quanh người: thêm +15% sát thương và giảm 15% Nội lực tiêu hao của mọi chiêu.'},
@@ -5971,7 +5970,7 @@ const PLAYER_AVATAR_SHEETS={};
 for(const gender of ['nam','nu']){const img=new Image();PLAYER_AVATAR_SHEETS[gender]=img;img.onload=()=>{const profile=prof();if(profile?.gender===gender&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===gender)paintAva()};img.src='assets/portraits/avatar-'+gender+'.webp'}
 const SECT_KEYS=['maoson','thiencuong','tramyeu','phucma','huyenlinh','truyhon'];/* 29/11 thứ tự hiển thị theo chủ game; khóa giữ tên cũ (tramyeu=Đoạn Hồn Cốc, phucma=Phá Sát Môn, huyenlinh=Cửu U Tông, truyhon=Truy Nguyệt Các) */
 /* 25/11 (chủ game): chỉ MỞ Kiếm (Mao Sơn) + Quyền (Thiên Cương) khi tạo nhân vật; 4 phái còn lại khóa, hiện hình ổ khóa (assets/ui/khoa.png). Bộ chiêu Đao/Trượng/Quạt/Cung vẫn nằm trong code; hồ sơ ĐÃ có phái bị khóa vẫn chơi được (sectOpen). Mở lại: thêm khóa phái vào SECT_OPEN. */
-const SECT_OPEN=['maoson','thiencuong'];const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
+const SECT_OPEN=['maoson','thiencuong','tramyeu','phucma','huyenlinh','truyhon'];/* 30/11 chủ game mở khóa cả 6 phái để xem icon skill */const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
 const LOCK_IMG='<img class="lkimg" src="assets/ui/khoa.png" alt="khóa" width="16" height="16">';
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
 /* 25/11 (chủ game): bỏ ô avatar 9-14 (chân dung phái); không nạp ảnh phai-*.webp nữa */
@@ -6058,7 +6057,7 @@ function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=sectOpen(cr.s
  const go=$('#crGo');go.disabled=!open;if(window.crNa)window.crNa();
  if(!open){$('#crSkH').hidden=true;$('#crSk').innerHTML='';$('#crSkD').innerHTML=`<p>Bộ chiêu của ${SC.n} đang được chuẩn bị.</p>`;return}
  $('#crSkH').hidden=false;
- const kit=W.kit,rows=[['Chủ động',kit.filter(x=>x.hotkey)],['Tự kích hoạt',kit.filter(x=>x.kind!=='passive'&&!x.hotkey)],['Nội tại',kit.filter(x=>x.kind==='passive'&&!x.legacy)]].filter(([,arr])=>arr.length);
+ const kit=W.kit,rows=[['Chủ động',kit.filter(x=>x.hotkey).sort((a,b)=>'QFCVX'.indexOf(a.hotkey)-'QFCVX'.indexOf(b.hotkey))/* 30/11 chủ game: thứ tự Q F C V X ở màn tạo nhân vật */],['Tự kích hoạt',kit.filter(x=>x.kind!=='passive'&&!x.hotkey)],['Nội tại',kit.filter(x=>x.kind==='passive'&&!x.legacy)]].filter(([,arr])=>arr.length);
  $('#crSk').innerHTML=rows.map(([lab,arr])=>`<div class="cxskr"><span>${lab}</span><div>${arr.map(x=>{const i=kit.indexOf(x);return `<button class="cxs ${x.kind}${cr.sk===i?' on':''}" data-sk="${i}" title="${x.name}">${skG(x)}</button>`}).join('')}</div></div>`).join('');
  const X=kit[cr.sk]||kit[0],KN=X.hotkey?'Chủ động · '+X.hotkey:{basic:'Đánh thường tự động',active:'Chiêu tự kích hoạt',auto:'Bị động tự kích hoạt',ult:'Tuyệt kỹ tự kích hoạt',passive:'Nội tại'}[X.kind]||'';
  $('#crSkD').innerHTML=`<b>${X.ic?skG(X).replace('class="skic"','class="skic sm"'):X.g} ${X.name}</b><small>${KN}${X.cd&&X.kind!=='basic'?' · hồi '+String(X.cd).replace('.',',')+' giây':''}${X.mp?' · '+X.mp+' nội lực':''}</small><p>${X.desc}</p>`;
