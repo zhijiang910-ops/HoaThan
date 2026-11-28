@@ -5309,10 +5309,11 @@ function hudSkills(){paintAva();closeSkillInspect();
  }else{
   /* hàng trên: 4 ô chủ động (bấm), hàng dưới: 2 ô tự kích hoạt/nội tại + máu + mana + 1 ô dự phòng */
   const k=P.kit,man=[],aut=[];
-  k.act.forEach((s,i)=>{if(MS_HIDE_AUTO&&msOn()&&s.def.id==='k3')return;/* 28/11 chủ game: Mao Sơn bỏ ô Linh Kiếm Hộ Pháp (nội tại vẫn chạy ngầm) */(s.def.hotkey&&!s.def.low?man:aut).push(cell('c'+i,'a'+i,s.def,s.lvl,s.lvl))});
-  man.push(cell('c5 ult','u',k.ult.def,k.ult.lvl,k.ult.lvl));
+  const ORD=['Q','F','C','X','V'],bySlot={};/* 30/11 chủ game: thứ tự cố định Q F C X V cho mọi phái, thiếu phím nào thì để ô trống đúng vị trí */
+  k.act.forEach((s,i)=>{if(MS_HIDE_AUTO&&msOn()&&s.def.id==='k3')return;/* 28/11 chủ game: Mao Sơn bỏ ô Linh Kiếm Hộ Pháp (nội tại vẫn chạy ngầm) */const c=cell('c'+i,'a'+i,s.def,s.lvl,s.lvl);if(s.def.hotkey&&ORD.includes(s.def.hotkey))bySlot[s.def.hotkey]=c;else aut.push(c)});
+  bySlot[k.ult.def.hotkey||'X']=cell('c5 ult','u',k.ult.def,k.ult.lvl,k.ult.lvl);
   /* nội tại cộng chỉ số không hiện ô; chỉ chiêu tự thi triển (có hồi chiêu) mới hiện */
-  r1=man.slice(0,5).join('')+empty(5-man.length);/* 30/11: 5 ô chủ động */
+  r1=ORD.map(h=>bySlot[h]||empty(1)).join('');
   r2=aut.slice(0,2).join('')+empty(2-aut.length);
  }
  /* 29/11 chủ game: bỏ 2 ô bình máu/nội lực, để trống chờ ô mới *//* 30/11: hàng dưới đúng 2 ô tự kích hoạt */
