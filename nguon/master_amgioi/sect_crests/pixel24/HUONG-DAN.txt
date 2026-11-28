@@ -1,0 +1,14 @@
+Dùng đúng thứ tự 6 thẻ trong project:
+1. Mao Sơn Phái — crest_2_mao_son_phai.png
+2. Thiên Cương Môn — crest_1_thien_cuong_mon.png
+3. Đoạn Hồn Cốc — crest_4_doan_hon_coc.png
+4. Phá Sát Môn — crest_3_pha_sat_mon.png
+5. Cửu U Tông — crest_5_cuu_u_tong.png
+6. Truy Nguyệt Các — crest_6_truy_nguyet_cac.png
+
+24px: lưới gốc, RGBA với alpha 0 hoặc 255. 48px và 72px là bản nearest-neighbor x2 và x3.
+iPhone: dùng bản 72px ở kích thước 72×72. Máy tính và màn nhỏ: dùng bản 48px ở 48×48.
+Nếu dùng ảnh gốc 24px, scale nguyên bằng nearest-neighbor (web: image-rendering: pixelated).
+Căn icon tại tọa độ nguyên trong renderer và tránh scale lẻ do phần tử cha.
+Xem trước trên #0B1E22: hàng trên là mặc định, hàng dưới minh họa độ sáng 66% khi khóa.
+Giữ mapping và logic khóa theo ID phái hiện có. Các file mới thay phần hình huy hiệu.
