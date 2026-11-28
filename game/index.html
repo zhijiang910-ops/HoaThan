@@ -2314,6 +2314,19 @@ html body #lobby .lbcur>b{flex:1;text-align:right;font:700 clamp(10px,2.5vh,17px
 #rerollBtn .rri{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.22em;margin:0 .1em;background:center/100% 100% no-repeat}
 #rerollBtn .rr-dong{background-image:url(assets/ui/lobby/tt_dongte.png)}#rerollBtn .rr-hon{background-image:url(assets/ui/lobby/tt_linhhon.png)}
 @media (max-width:700px){html body #lobby .lbcurs{right:max(2.2vw,env(safe-area-inset-right));top:calc(max(2.6vh,env(safe-area-inset-top)) + clamp(34px,5.4vh,52px) + 2px)}}
+/* 28/11: hàng trên sảnh đồng đều + 3 biển cùng cỡ nhìn */
+html body #lobby{--lbTop:max(16px,calc(env(safe-area-inset-top) + 8px),3.8vh)}
+html body #lobby .lbprof.lbprof{top:var(--lbTop)!important}
+html body #lobby .lbtitle{top:calc(var(--lbTop) - 4px)!important}
+html body #lobby .lbres{top:var(--lbTop)!important}
+html body #lobby .lbgear{top:var(--lbTop)!important}
+@media (max-width:700px){html body #lobby .lbtitle{left:calc(50% + 56px)!important;width:clamp(150px,28vw,200px)!important;height:clamp(30px,9vh,40px)!important}}
+@media (min-width:701px){html body #lobby .lbcurs{top:calc(var(--lbTop) + 5px)!important}}
+html body #lobby #lbBridge .lbtag.lbtag{--bh:.053}
+html body #lobby #lbAltar .lbtag.lbtag{--bh:.0451;left:34.5%!important;top:57.4%!important}
+html body #lobby #lbDoor .lbtag.lbtag{--bh:.0486;top:57.4%!important}
+@media (max-width:720px){html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{top:-4%!important}}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{white-space:nowrap!important;width:max-content!important;height:auto!important;line-height:1.1!important}
 </style>
 <style id="sanhMenu">
 /* 28/11 thanh 6 ô: vị trí theo ô (data-s), icon chủ game (cong_cu/claude/sanh_menu_build.py), ô 6 trống */
