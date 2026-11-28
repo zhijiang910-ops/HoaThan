@@ -2245,7 +2245,7 @@ html body #lobby .lbprof .lbcp #lbCp{flex:0 0 auto!important;margin-left:auto!im
 #lbStage .lbslit{position:absolute;left:calc(68.1% - .5%);top:27.5%;width:1%;height:21.9%;z-index:2;pointer-events:none;opacity:0;transform:scaleX(.4);background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(255,60,40,.95),rgba(150,10,12,.6) 45%,transparent 75%);mix-blend-mode:screen}
 /* 28/11 (chủ game, atlas quy-mon-quan-smoke.png 6x5, ô 256x112): điểm (128,91) của ô neo vào chân khe cửa (68,1% ; 49,4%).
    Ô rộng 26% sân khấu (khói đầy phủ vừa bậc đá) => cao 26%*1672/941*112/256 = 20,21%; left = 68,1 - 26*128/256, top = 49,4 - 20,21*91/112. Bản trong game đã làm SÁNG (gốc xám xanh đậm chìm hẳn trên khe tối), gốc ở nguon/master_amgioi/sanh_fx/quy-mon-quan-smoke_goc.png. Khung do JS đặt theo thời gian (24 fps), chỉ đổi transform. */
-#lbStage .lbsmk{position:absolute;left:calc(68.1% - 13%);top:calc(49.4% - 16.42%);width:26%;height:20.21%;z-index:2;pointer-events:none;opacity:0;overflow:hidden}
+#lbStage .lbsmk{position:absolute;left:calc(68.1% - 13%);top:calc(52.4% - 16.42%);/* 28/11 chủ game: hạ xuống bậc thang 3% */width:26%;height:20.21%;z-index:2;pointer-events:none;opacity:0;overflow:hidden}
 #lbStage .lbsmk.on{opacity:1}
 #lbStage .lbsmk>b{position:absolute;left:0;top:0;width:600%;height:500%;display:block;background:url(assets/ui/lobby/quy-mon-quan-smoke.png) 0 0/100% 100% no-repeat;will-change:transform}
 #lbStage.gopen .lbslit{animation:lbSlit .3s ease-out}
@@ -5724,9 +5724,9 @@ function lbDoorFx(){const lite=LOWFX||MOBILE,n=lite?36:64;
  const smkFrame=k=>{SMB.style.transform='translate('+(-(k%SMC)*100/SMC)+'%,'+(-Math.floor(k/SMC)*100/SMR)+'%)'};
  const door=()=>{if(busy)return;busy=1;lock(1);st.classList.remove('gopen');void st.offsetWidth;st.classList.add('gopen');let t0=0,done=0;
   const fin=()=>{if(done)return;done=1;SMK.classList.remove('on');const t=document.querySelector('#lbGrid [data-lb="amgioi"]');if(t)t.click();busy=0;lock(0);setTimeout(()=>st.classList.remove('gopen'),1200)};
-  const tick=now=>{if(done)return;if(!t0)t0=now;const k=Math.floor((now-t0)/1000*SMF);if(k>=SMN){fin();return}smkFrame(k);requestAnimationFrame(tick)};
+  /* 28/11 chủ game: tan chậm hơn: 18 khung đầu (bùng) 24 fps, 12 khung tan 13 fps */const SMT=k=>k<18?k/SMF:18/SMF+(k-18)/13,SMEND=SMT(SMN);const tick=now=>{if(done)return;if(!t0)t0=now;const e=(now-t0)/1000;if(e>=SMEND){fin();return}let k=e<18/SMF?Math.floor(e*SMF):18+Math.floor((e-18/SMF)*13);smkFrame(Math.min(SMN-1,k));requestAnimationFrame(tick)};
   setTimeout(()=>{smkFrame(0);SMK.classList.add('on');requestAnimationFrame(tick)},180);
-  setTimeout(fin,180+SMN/SMF*1000+900)/* chốt an toàn nếu rAF bị dừng (tab ẩn) */};
+  setTimeout(fin,180+SMEND*1000+900)/* chốt an toàn nếu rAF bị dừng (tab ẩn) */};
  window.__smkPre=window.__smkPre||Object.assign(new Image(),{src:'assets/ui/lobby/quy-mon-quan-smoke.png'});
  /* 28/11: Thần Giáng Đàn = bàn thờ: khói hương nổi lên rồi mờ 350 ms, sau đó mở Chiêu Mộ (giao diện triệu hồi có sẵn) */
  const altar=()=>{if(busy)return;busy=1;lock(1);st.classList.remove('pray');void st.offsetWidth;st.classList.add('pray');setTimeout(()=>{busy=0;lock(0);openLbm('chieumo')},350);setTimeout(()=>st.classList.remove('pray'),1400)};
