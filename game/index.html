@@ -3781,7 +3781,7 @@ const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'mini',t
    avatar = chân dung đại diện nam/nữ (ảnh ChatGPT do chủ game đưa, cắt từ tấm tổng hợp). Chỉ Mao Sơn Phái (Kiếm) đã có trong game. */
 const SECTS={
  maoson:{n:'Mao Sơn Phái',zh:'茅山派',weapon:'Kiếm & Phù chú',role:'Tầm xa, đạo thuật, phù chú, trấn tà',color:'Xanh đậm, vàng'},
- tramyeu:{n:'Đoạn Hồn Cốc',zh:'斷魂谷',weapon:'Trọng Đao',role:'Cận chiến, bạo kích, sát thương diện rộng',color:'Đỏ, đen, vàng đồng'},
+ doanhon:{n:'Đoạn Hồn Cốc',zh:'斷魂谷',weapon:'Trọng Đao',role:'Cận chiến, bạo kích, sát thương diện rộng',color:'Đỏ, đen, vàng đồng'},
  phucma:{n:'Phá Sát Môn',zh:'破煞門',weapon:'Trường Thương',role:'Cận chiến, xuyên phá, trấn sát',color:'Đỏ sẫm, đồng'},
  thiencuong:{n:'Thiên Cương Môn',zh:'天罡門',weapon:'Quyền Cước',role:'Cận chiến, liên kích, cương khí',color:'Trắng, đỏ sẫm'},
  huyenlinh:{n:'Cửu U Tông',zh:'九幽宗',weapon:'Hồn Phiên',role:'Tầm xa, pháp thuật, khống chế',color:'Lục u, đen'},
@@ -6039,7 +6039,7 @@ function hairSheet(h){const ok=outKey(),O=OUTC.find(o=>o.k===ok),baseOut=/^hero_
   if(o){a[q]=o[0];a[q+1]=o[1];a[q+2]=o[2]}}
  g.putImageData(d,0,0);h._hc[key]=c;return c}catch(e){h._hc[key]=h.img;return h.img}}
 const STA={max:100,cap:115,regenMs:15*60*1000};
-function prof(){return save.prof||null}
+function prof(){const p=save.prof||null;if(p&&p.sect==='tramyeu')p.sect='doanhon';/* 30/11 đổi khóa phái Trảm Yêu → Đoạn Hồn, hồ sơ cũ tự chuyển */return p}
 function profNeed(lv){return Math.round(200+lv*60+lv*lv*3)} /* giảm dốc cho đường tới Lv200 */
 function profGain(x){const P0=prof();if(!P0||!(x>0))return 0;let up=0;P0.exp=(P0.exp||0)+Math.round(x);while(P0.lv<LV_OPEN&&P0.exp>=profNeed(P0.lv)){P0.exp-=profNeed(P0.lv);P0.lv++;up++}if(P0.lv>=LV_OPEN)P0.exp=Math.min(P0.exp,profNeed(P0.lv)-1);persist();return up}
 function sta(){return save.sta||(save.sta={v:STA.max,t:Date.now()})}
@@ -6053,14 +6053,14 @@ const WICON={kiem:{g:0},phu:{g:10},dao:{src:'data:image/png;base64,iVBORw0KGgoAA
 /* 24/11: bỏ sheet avatar cũ (avatar-nam/nu.webp) và 8 tranh cảnh; chỉ còn chân dung 6 phái */
 /* avatar 1-8: tấm ảnh nhỏ cũ (avatar-nam/nu.webp, có tranh cảnh); avatar 9-14: chân dung đại diện 6 môn phái (SECTS, ảnh rời) */
 /* môn phái chơi được và lớp vũ khí tương ứng (24/11): Mao Sơn = Kiếm, Trảm Yêu Môn = Đao */
-const SECT_WEAPON={maoson:'kiem',tramyeu:'dao',phucma:'truong',thiencuong:'quyen',huyenlinh:'quat',truyhon:'cung'};
+const SECT_WEAPON={maoson:'kiem',doanhon:'dao',phucma:'truong',thiencuong:'quyen',huyenlinh:'quat',truyhon:'cung'};
 function profWeapon(){const P0=prof();return P0&&P0.sect&&SECT_WEAPON[P0.sect]||'kiem'}
 /* 25/11 (chủ game: lấy lại hình avatar cũ + giữ 6 chân dung hiện tại): avatar 1-8 = tấm ảnh nhỏ cũ (avatar-nam/nu.webp, 4x2 ô), 9-14 = chân dung 6 phái */
 const PLAYER_AVATAR_SHEETS={};
 for(const gender of ['nam','nu']){const img=new Image();PLAYER_AVATAR_SHEETS[gender]=img;img.onload=()=>{const profile=prof();if(profile?.gender===gender&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===gender)paintAva()};img.src='assets/portraits/avatar-'+gender+'.webp'}
-const SECT_KEYS=['maoson','thiencuong','tramyeu','phucma','huyenlinh','truyhon'];/* 29/11 thứ tự hiển thị theo chủ game; khóa giữ tên cũ (tramyeu=Đoạn Hồn Cốc, phucma=Phá Sát Môn, huyenlinh=Cửu U Tông, truyhon=Truy Nguyệt Các) */
+const SECT_KEYS=['maoson','thiencuong','doanhon','phucma','huyenlinh','truyhon'];/* 29/11 thứ tự hiển thị theo chủ game; khóa giữ tên cũ (doanhon=Đoạn Hồn Cốc, phucma=Phá Sát Môn, huyenlinh=Cửu U Tông, truyhon=Truy Nguyệt Các) */
 /* 25/11 (chủ game): chỉ MỞ Kiếm (Mao Sơn) + Quyền (Thiên Cương) khi tạo nhân vật; 4 phái còn lại khóa, hiện hình ổ khóa (assets/ui/khoa.png). Bộ chiêu Đao/Trượng/Quạt/Cung vẫn nằm trong code; hồ sơ ĐÃ có phái bị khóa vẫn chơi được (sectOpen). Mở lại: thêm khóa phái vào SECT_OPEN. */
-const SECT_OPEN=['maoson','thiencuong','tramyeu','phucma','huyenlinh','truyhon'];/* 30/11 chủ game mở khóa cả 6 phái để xem icon skill */const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
+const SECT_OPEN=['maoson','thiencuong','doanhon','phucma','huyenlinh','truyhon'];/* 30/11 chủ game mở khóa cả 6 phái để xem icon skill */const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
 const LOCK_IMG='<img class="lkimg" src="assets/ui/khoa.png" alt="khóa" width="16" height="16">';
 const SECT_AVATAR_IMGS={nam:{},nu:{}};
 /* 25/11 (chủ game): bỏ ô avatar 9-14 (chân dung phái); không nạp ảnh phai-*.webp nữa */
