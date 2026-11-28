@@ -3345,7 +3345,7 @@ const WEAPONS={
      if(vok('qc_cring')&&vok('qc_tinhluan')&&G.decals.length<40)G.decals.push({img:'qc_cring',fring:1,x:cx,y:cy,w:390,h:390,t:0,T:3.0});
      {const rk=[];for(let i=0;i<10;i++){const an=rnd(0,TAU),v=rnd(90,190);rk.push({x:cx+Math.cos(an)*30,y:cy+Math.sin(an)*14,vx:Math.cos(an)*v,vy:rnd(-150,-70),fl:cy+Math.sin(an)*rnd(30,70),b:0,s:rnd(4,7),r:rnd(0,TAU),vr:rnd(-9,9),n:3+(i%3)})}fx({k:'fdeb',rk,T:0.9,c:'#4A3C33',o:'#1C1512'})}
      for(let i=0;i<4;i++){const an=i*TAU/4+rnd(-0.4,0.4);spawnGhostMist(cx+Math.cos(an)*60,cy+Math.sin(an)*22,{n:1,sz:rnd(70,95),ma:0.3,T:rnd(0.7,0.95),drift:60,vy:rnd(-6,2),brown:1})}
-     G.shake=Math.max(G.shake||0,4);/* KHÔNG hit-stop (luật 5) */
+     G.shake=Math.max(G.shake||0,4);G.hs2=Math.max(G.hs2||0,0.033);/* 29/11 chủ game cho thử hit-stop 2 khung (ngoại lệ luật 5); G.hitstop cũ không có chỗ đọc nên dùng biến riêng */
      for(let t=0.25;t<=3.01;t+=0.25){const tick=Math.abs(t-Math.round(t))<0.01;later(t,()=>{for(const e of enemiesIn(cx,cy,R)){e.slowT=Math.max(e.slowT,0.4);e.slowF=Math.max(e.slowF,0.25)}if(tick)circ(cx,cy,R,dot,H({nofx:1}),null);if(!LOWFX)for(let i=0;i<3;i++){const an=rnd(0,TAU),rr=rnd(0,R*0.85);part(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr*0.5,rnd(-6,6),rnd(-50,-25),rnd(0.4,0.7),rnd(2,4),i%2?'#ff6e40':'#ffd27a',1)}},'h')}},'h')}},
   {id:'y3',ic:'e',hotkey:'C',power:22,name:'Toái Phách Bát Cực Chưởng',g:'破',kind:'active',cd:12,mp:22,range:220,tl:'Chủ động · bấm để dùng',desc:'Lao sát mục tiêu tung sáu chưởng dán bùa liên hoàn, kích nổ toàn bộ Ấn Chu Sa để hồi Nội lực.',up:'+25% sát thương, -6% hồi chiêu',
    qi(l){return ['Lao tới tối đa 180, chưởng trước mặt',hudNumber(qcP(30)*lv(l)*pw())+' × 6 + '+hudNumber(this.power*lv(l)*pw())+' nổ cuối','Đòn cuối kích nổ Ấn Chu Sa: +35% ATK mỗi tầng, hồi 4 Nội lực mỗi tầng (tối đa 12), đủ 3 tầng gây Tán Hồn 4 giây (nhận thêm 18% sát thương). +8 Liên kích.']},
@@ -3358,7 +3358,7 @@ const WEAPONS={
      if(vok('qc_cpalm')&&G.fx.length<(MOBILE?60:150))for(const oy of[-28,14])fx({k:'cpalm',f:ld,oy,w:rnd(135,150),dist:90,T:0.2})},'h');
     later(dt0+0.72,()=>{P.facing=ld;P.avAnim='attack3';swing(la,1);P.av=P.avTotal=0.28;if(vok('qc_cpalm'))fx({k:'cpalm',f:ld,oy:-10,w:215,dist:95,T:0.22,big:1});sfx('rulai_impact',0.45,0.1)},'h');
     later(dt0+0.80,()=>{const cx=P.x+ld*95,cy=P.y;let mp=0;const cb={n:2};
-     for(const en of enemiesIn(cx,cy,125*Ar())){hit(en,fin,H({kb:140,stun:0.3,cb,nofx:1,noflash:1}),P.x,P.y);mp+=detonateChuSa(en)}qcMpBack(mp);
+     for(const en of enemiesIn(cx,cy,125*Ar())){hit(en,fin,H({kb:140,stun:0.3,cb,nofx:1,noflash:1}),P.x,P.y);mp+=detonateChuSa(en)}qcMpBack(mp);G.hs2=Math.max(G.hs2||0,0.033);/* 29/11 chủ game cho thử hit-stop 2 khung */
      if(vok('qc_cburst'))fx({k:'qimg',n:'qc_cburst',x:cx,y:cy-40,h:200,s0:0.6,s1:1.0,T:0.45,fo:0.28,al:1});G.shake=Math.max(G.shake||0,8)},'h')}},
   {id:'kimchung',start:1,name:'Kim Chung Hộ Thể',g:'鐘',kind:'passive',desc:'Khi bị đánh (hồi 12 giây): chuông tím úp quanh người 3 giây, giảm 45% sát thương nhận vào, phản lại 50% sát thương cho kẻ đánh, và chấn lùi quái xung quanh.'},
   {id:'chusa',start:1,name:'Chưởng Ấn Chu Sa',g:'印',kind:'passive',desc:'Thiên Cương Phục Ma Quyền (mỗi 2 chu kỳ A–B khắc 1 tầng lên mục tiêu chính; ở +6 đòn C khắc lên mọi quái trúng), Bộ Hư Lưu Phù và Phược Hồn Cương Quyền khắc Ấn Chu Sa lên quái (tối đa 3 tầng, giữ 6 giây). Toái Phách Bát Cực Chưởng và Quỷ Môn Trấn Ngục Ấn kích nổ ấn: thêm 35% ATK mỗi tầng, hồi 4 Nội lực mỗi tầng (tối đa 12), +2 Liên kích mỗi tầng; đủ 3 tầng gây Tán Hồn 4 giây (nhận thêm 18% sát thương).'},
@@ -7047,7 +7047,7 @@ function frame(now){
  try{
   const tutorial=tutControl(), waiting=tutorial||G?.inspect;
   if(tutorial&&$('#tutShade').hidden||G?.tut&&G.tut.step!==2)tutRender();
-  if(G&&G.state==='play'&&!G.paused&&!waiting&&!window.__LOADING){pm0();update(dt*(G.trScale||1));if(G&&G.training)trainingTick(dt);pm('cập nhật logic')}
+  if(G&&G.hs2>0&&G.state==='play'&&!G.paused){G.hs2-=dt}else if(G&&G.state==='play'&&!G.paused&&!waiting&&!window.__LOADING){pm0();update(dt*(G.trScale||1));if(G&&G.training)trainingTick(dt);pm('cập nhật logic')}
   if((!waiting||waiting!==lastTutControl)&&(G||!coverOn()))render();
   lastTutControl=waiting;
   pm0();hud(waiting?0:dt);pm('HUD (giao diện)');
