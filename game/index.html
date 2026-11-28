@@ -2833,7 +2833,7 @@ const STF={wk_staff:{w:20,t:65,b:62+3,tile:62},wk_staff_big:{w:35,t:110,b:111}};
 for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}
 for(const n in SPX){const i=new Image();if(LAZY_VFX_RE.test(n))lazyImg(VFX,n,i,'assets/vfx/'+n+'.png',preDecode);else{i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}}
 /* 28/11 gói Quyền Cước (nguon/master_amgioi/quyen_cuoc/, dựng bằng cong_cu/claude/quyen_cuoc_build.py): tải lười cùng gói Quyền */
-const QC_VFX=['qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff','qc_tinhluan','qc_fistimp','qc_starsweep','qc_cring','qc_cpalm','qc_cburst'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911g',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
+const QC_VFX=['qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff','qc_tinhluan','qc_fistimp','qc_starsweep','qc_cring','qc_cring_rim','qc_cpalm','qc_cburst'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911h',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
 /* điểm va chạm đồng bộ với kiếm (24/11): MỘT chớp chém xanh-tím xoay theo hướng lưỡi, thay bộ swhit (mảnh băng) */
 /* va chạm Vạn Kiếm: biến thể xem thử (window.__vkv) 1=kiếm cắm lại, 2=kiếm khí xuyên, 3=chữ X */
 function vkLift(){const dt=G.t-P._vkp;if(dt>2.4||P.deadAt){P._vkp=null;return 0}const E=u=>u*u*(3-2*u);return Math.round(-9*(dt<0.5?E(dt/0.5):dt<1.9?1:1-E((dt-1.9)/0.5)))}/* 25/11 Vạn Kiếm: nhân vật nhấc lên bắt ấn */
@@ -2992,7 +2992,7 @@ function drawTileField(M,c,cx,cy,hw,hh){const o=tileFieldCache(M),[x0,y0,x1,y1,F
  c.restore()}
 /* 29/11 tách riêng: map cũ (Luyện Công) không qua drawGroundMap nên trước đây không thấy decal (hố F) */
 function drawDecals(c){
- for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;if(d.fring){const t=d.t,an=0.95*t+(t>2.6?2.5*(t-2.6)*(t-2.6):0);renderSkillFGround(c,im,VFX.qc_tinhluan,d.x,d.y,t,an);continue}if(d.hof){drawHofDecal(c,im,d);continue}if(d.tl){drawTinhLuanDecal(c,im,d);continue}c.save();let al=Math.min(1,(1-k)*2),sc=1;if(d.pop){/* 25/11 vết chưởng Như Lai (gói Wuxia 04_Rulai): bung ra kiểu back-ease 0,22 s, hiện nhanh 0,12 s, giữ rồi mờ 0,7 s cuối */const t=d.t,x=Math.min(1,t/0.22)-1;sc=t<0.22?0.3+0.7*(1+2.70158*x*x*x+1.70158*x*x):1;const fo=d.fo||0.7;al=(t<0.12?t/0.12:1)*(t>d.T-fo?Math.max(0,(d.T-t)/fo):1)}c.globalAlpha=al*(d.a||1)*(d.pulse?0.78+0.22*Math.sin(d.t*6):1);if(d.sm){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high'}c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w*sc/2,-d.h*sc/2,d.w*sc,d.h*sc);c.restore()}
+ for(const d of G?G.decals:[]){const k=d.t/d.T,im=VFX[d.img];if(!vok(d.img))continue;if(d.fring){const t=d.t,an=0.95*t+(t>2.6?2.5*(t-2.6)*(t-2.6):0);renderSkillFGround(c,im,VFX.qc_tinhluan,d.x,d.y,t,an,vok('qc_cring_rim')?VFX.qc_cring_rim:null);continue}if(d.hof){drawHofDecal(c,im,d);continue}if(d.tl){drawTinhLuanDecal(c,im,d);continue}c.save();let al=Math.min(1,(1-k)*2),sc=1;if(d.pop){/* 25/11 vết chưởng Như Lai (gói Wuxia 04_Rulai): bung ra kiểu back-ease 0,22 s, hiện nhanh 0,12 s, giữ rồi mờ 0,7 s cuối */const t=d.t,x=Math.min(1,t/0.22)-1;sc=t<0.22?0.3+0.7*(1+2.70158*x*x*x+1.70158*x*x):1;const fo=d.fo||0.7;al=(t<0.12?t/0.12:1)*(t>d.T-fo?Math.max(0,(d.T-t)/fo):1)}c.globalAlpha=al*(d.a||1)*(d.pulse?0.78+0.22*Math.sin(d.t*6):1);if(d.sm){c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high'}c.translate(d.x,d.y);if(d.ang)c.rotate(d.ang);c.drawImage(im,-d.w*sc/2,-d.h*sc/2,d.w*sc,d.h*sc);c.restore()}
 }
 function drawGroundMap(M,cx,cy,hw,hh){const c=X,pat=gPat(M.ground);
  c.fillStyle=M.edge;c.fillRect(cx-hw,cy-hh,hw*2,hh*2);
@@ -3116,6 +3116,7 @@ function finishFist(cut){
   /* chưa +6: mỗi lần xong đòn B thứ 2 (2 chu kỳ A-B) khắc 1 tầng Chưởng Ấn lên mục tiêu chính */
   if(step===1&&!plus6){basic.bN=(basic.bN||0)+1;if(basic.bN%2===0){const e=nearest(P.x+Math.cos(angle)*50,P.y+Math.sin(angle)*30,110);if(e)chuSaAdd(e,1)}}}
  else{/* C: quạt 200°, bán kính 135, khựng 0,2 s, khắc ấn lên MỌI quái trúng. KHÔNG hit-stop (luật 5) */
+  {const rr=135*Ar(),hc=enemiesIn(P.x,P.y-2,rr).filter(e=>Math.abs(angDiff(Math.atan2(e.y-P.y+2,e.x-P.x),angle))<=100*Math.PI/180+0.2).length;if(hc>=2)G.hs2=Math.max(G.hs2||0,0.033)/* 29/11 hit-stop 2 khung khi quét trúng >=2 quái */}
   arc(P.x,P.y-2,angle,135*Ar(),200*Math.PI/180,dmg,H({kb:110,stun:0.2,nofx:1,swordBasic:true,chuSa:1}),'#ffe082',dir);
   if(vok('qc_starsweep'))fx({k:'starsweep',f,T:0.24});G.shake=Math.max(G.shake||0,4)}
 }
@@ -3339,10 +3340,10 @@ const WEAPONS={
   {id:'y2',ic:'f',hotkey:'F',power:42,name:'Thiên Cương Đạp Tinh Cước',g:'震',kind:'active',cd:9,mp:20,range:200,tl:'Chủ động · bấm để dùng',desc:'Giậm cước kích nổ Tinh Luân Bắc Đẩu dưới đất, làm choáng mọi quái trước mặt và thiêu đốt âm khí.',up:'+25% sát thương, -6% hồi chiêu',
    qi(l){return ['Vùng tròn bán kính '+hudNumber(150*Ar())+' trước mặt',hudNumber(this.power*lv(l)*pw())+' / mục tiêu · trận đốt '+hudNumber(qcP(25)*lv(l)*pw())+' mỗi giây','Choáng 1,3 giây. Tinh Luân tồn tại 3 giây, làm chậm 25% quái bước vào. +4 Liên kích.']},
    cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw(),dot=qcP(25)*lv(l)*pw();P.avAnim='attack3';swing(a,1);sfx('rulai_impact',0.5,0.1);
-    later(0.3,()=>{const fd=Math.cos(a)>=0?1:-1,cx=P.x+fd*72,cy=P.y-8/* 29/11 (12) gói đồng bộ: tâm trước mặt 72 px, cao 8 px */,R=150*Ar();circ(cx,cy,R,dmg,H({stun:1.3,cb:{n:3},nofx:1}),null);
+    later(0.3,()=>{const fd=Math.cos(a)>=0?1:-1,cx=P.x+fd*72,cy=P.y/* 29/11 (13) tâm ĐÚNG mặt đất ngang chân (bỏ nâng 8 px) */,R=150*Ar();circ(cx,cy,R,dmg,H({stun:1.3,cb:{n:3},nofx:1}),null);
      /* 29/11 (3) Thiên Cương Tinh Luân (gói chủ game): decal mặt đất ép 0,58, bung 0,12->1,15->1,0 + sóng dư chấn cộng sáng, xoay nghiền 2,65 s, thu ấn 0,35 s; KHÔNG vẽ vòng tròn bằng code */
      /* 29/11 (12) gói 'đồng bộ Thiên Cương': vành hố đá 2.5D qc_cring (không ép, không xoay) + ấn đồng cổ qc_tinhluan xoay trong lòng hố (renderSkillFGround); 10 mảnh đá nâu tối nảy thấp + 4 khói bụi nâu */
-     if(vok('qc_cring')&&vok('qc_tinhluan')&&G.decals.length<40)G.decals.push({img:'qc_cring',fring:1,x:cx,y:cy,w:390,h:390,t:0,T:3.0});
+     if(vok('qc_cring')&&vok('qc_tinhluan')&&G.decals.length<40)G.decals.push({img:'qc_cring',fring:1,x:cx,y:cy,w:520,h:520,t:0,T:3.0});
      {const rk=[];for(let i=0;i<10;i++){const an=rnd(0,TAU),v=rnd(90,190);rk.push({x:cx+Math.cos(an)*30,y:cy+Math.sin(an)*14,vx:Math.cos(an)*v,vy:rnd(-150,-70),fl:cy+Math.sin(an)*rnd(30,70),b:0,s:rnd(4,7),r:rnd(0,TAU),vr:rnd(-9,9),n:3+(i%3)})}fx({k:'fdeb',rk,T:0.9,c:'#4A3C33',o:'#1C1512'})}
      for(let i=0;i<4;i++){const an=i*TAU/4+rnd(-0.4,0.4);spawnGhostMist(cx+Math.cos(an)*60,cy+Math.sin(an)*22,{n:1,sz:rnd(70,95),ma:0.3,T:rnd(0.7,0.95),drift:60,vy:rnd(-6,2),brown:1})}
      G.shake=Math.max(G.shake||0,4);G.hs2=Math.max(G.hs2||0,0.033);/* 29/11 chủ game cho thử hit-stop 2 khung (ngoại lệ luật 5); G.hitstop cũ không có chỗ đọc nên dùng biến riêng */
@@ -3369,7 +3370,7 @@ const WEAPONS={
     if(vok('qc_crater')&&G.decals.length<40){const w=340;G.decals.push({img:'qc_crater',x:c.x,y:c.y,w,h:w*VFX.qc_crater.naturalHeight/VFX.qc_crater.naturalWidth,t:0,T:1.55,fo:0.4,pop:1,sm:1})}
     addZone({kind:'qcult',T:1.6,src:'h',x:c.x,y:c.y});
     for(let t=0;t<0.55;t+=0.05)later(t,()=>{for(const e of enemiesIn(c.x,c.y,R)){if(e.boss)continue;e.slowT=Math.max(e.slowT,0.8);e.slowF=Math.max(e.slowF,0.7);const dx=c.x-e.x,dy=c.y-e.y,d=Math.hypot(dx,dy);if(d<20)continue;const m=Math.min(d-18,(d*0.14+4)*(e.elite?0.5:1));e.x+=dx/d*m;e.y+=dy/d*m}if(!LOWFX&&Math.random()<0.6){const an=rnd(0,TAU);part(c.x+Math.cos(an)*R*0.9,c.y+Math.sin(an)*R*0.45,-Math.cos(an)*160,-Math.sin(an)*80,0.45,rnd(3,5),'rgba(255,90,60,.7)',1)}},'h');
-    later(0.70,()=>{sfx('rulai_impact',0.85,0.1);G.flash=Math.max(G.flash||0,0.05);G.shake=Math.max(G.shake||0,3);let mp=0;const cb={n:5};
+    later(0.70,()=>{sfx('rulai_impact',0.85,0.1);G.flash=Math.max(G.flash||0,0.05);G.hs2=Math.max(G.hs2||0,0.05);/* 29/11 hit-stop 3 khung (chủ game duyệt) */G.shake=Math.max(G.shake||0,3);let mp=0;const cb={n:5};
      for(const e of enemiesIn(c.x,c.y,R)){hit(e,dmg,H({exec:[0.3,0.3],stun:0.5,cb,nofx:1}),c.x,c.y);mp+=detonateChuSa(e)}qcMpBack(mp);
      fx({k:'ring',x:c.x,y:c.y+6,r0:20,r1:R,c:'#ffe082',T:0.4,sy:0.45,lw:3});fx({k:'ring',x:c.x,y:c.y+6,r0:10,r1:R*0.75,c:'#ff6e40',T:0.48,sy:0.45,lw:2});burst(c.x,c.y-20,'#ffb070',24);
      for(let i=0;i<7;i++)later(0.45+i*0.03,()=>spawnGhostMist(c.x+rnd(-120,120),c.y+26+rnd(-22,10),{n:1,sz:rnd(100,140),ma:0.42,T:rnd(0.6,0.8),drift:34}),'h')},'h')}}
@@ -4790,11 +4791,12 @@ function drawEarthFissures(ctx,img,cx,cy,R,scale,alpha,flashAlpha=0){/* chủ ga
 function drawFissureDecal(c,im,d){/* 0-0,12 xé 0,2->1,05 cubic-out rồi 1,0; chớp cộng sáng 0,6->0 trong 0,2 s; 0,12-2,6 phập phồng; 2,6-3,0 nguội */const t=d.t;let sc=1,al;
  if(t<0.12){const u=t/0.12;sc=0.2+0.85*(1-Math.pow(1-u,3))}else if(t<0.16)sc=1.05-0.05*(t-0.12)/0.04;
  al=t<0.12?1:t<2.6?0.88+0.10*Math.sin(t*12):0.9*Math.max(0,1-(t-2.6)/0.4);drawEarthFissures(c,im,d.x,d.y,175,sc,al,t<0.2?0.6*(1-t/0.2):0)}
-function renderSkillFGround(ctx,craterImg,sealImg,cx,cy,elapsedSec,angleRad){/* chủ game đưa sẵn (gói đồng bộ 29/11) */
- if(elapsedSec<0||elapsedSec>3.0)return;const cbW=390,cbH=cbW*craterImg.naturalHeight/craterImg.naturalWidth,sR=(cbW*0.53)*0.5;let cS=1,sS=1,cA=0.95,sA=0.95;
+function renderSkillFGround(ctx,craterImg,sealImg,cx,cy,elapsedSec,angleRad,rimImg){/* hàm chủ game (gói đồng bộ 29/11), SỬA 29/11 (13) cho ấn nằm DƯỚI mặt đất: ảnh vành hố có lòng hố chỉ rộng ~0,31 bề ngang ảnh, ấn 0,53 như prompt to gấp 1,7 lòng hố nên đè lên đá vành, trông như cái đĩa bay. Nay: vành rộng 520, ấn đường kính 0,36 (vừa lòng hố, mép chui dưới đá), ép 0,66 đúng độ dẹt lòng hố, vẽ vành rồi ấn rồi lớp ĐÁ VÀNH (qc_cring_rim, lòng hố đã khoét) đè lên mép ấn */
+ if(elapsedSec<0||elapsedSec>3.0)return;const cbW=520,cbH=cbW*craterImg.naturalHeight/craterImg.naturalWidth,sR=(cbW*0.36)*0.5,oy=-cbH*2/348;let cS=1,sS=1,cA=0.95,sA=0.95;
  if(elapsedSec<0.18){const p=elapsedSec/0.18,pop=p<0.75?(0.25+0.79*(p/0.75)):(1.04-0.04*((p-0.75)/0.25));cS=pop;sS=pop}else if(elapsedSec>2.6){const p=(elapsedSec-2.6)/0.4;cA=0.95*(1-p);sA=0.95*(1-p);sS=1-0.85*p*p}
  const cw=cbW*cS,ch=cbH*cS;ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.globalAlpha=Math.max(0,cA);ctx.drawImage(craterImg,cx-cw*0.5,cy-ch*0.5,cw,ch);ctx.restore();
- const sr=sR*sS;ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.globalAlpha=Math.max(0,sA);ctx.translate(cx,cy);ctx.scale(1,0.62);ctx.rotate(angleRad);ctx.drawImage(sealImg,-sr,-sr,sr*2,sr*2);ctx.restore()}
+ const sr=sR*sS;ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.globalAlpha=Math.max(0,sA);ctx.translate(cx,cy+oy*cS);ctx.scale(1,0.66);ctx.rotate(angleRad);ctx.drawImage(sealImg,-sr,-sr,sr*2,sr*2);ctx.restore();
+ if(rimImg){ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.globalAlpha=Math.max(0,cA);ctx.drawImage(rimImg,cx-cw*0.5,cy-ch*0.5,cw,ch);ctx.restore()}}
 function drawHofDecal(c,im,d){/* hố Tinh Bàn: 0-0,12 s bung 0,3->1,08 (cubic-out) rồi 1,0 tới 0,2 s, chớp cộng sáng 0,2 s, lõi đỏ phập phồng, mờ 2,6-3,0 s */const t=d.t;let sc=1;if(t<0.12){const u=t/0.12;sc=0.3+0.78*(1-Math.pow(1-u,3))}else if(t<0.2)sc=1.08-0.08*(t-0.12)/0.08;
  const al=t<2.6?1:Math.max(0,1-(t-2.6)/0.4),w=d.w*sc,h=d.h*sc;c.save();c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.globalAlpha=al;c.drawImage(im,d.x-w/2,d.y-h/2,w,h);
  const fl=t<0.2?0.6*(1-t/0.2):0.1+0.08*Math.sin(t*9);c.globalCompositeOperation='lighter';c.globalAlpha=al*fl;c.drawImage(im,d.x-w/2,d.y-h/2,w,h);c.restore()}
