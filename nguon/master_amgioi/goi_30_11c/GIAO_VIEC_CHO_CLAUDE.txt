@@ -1,0 +1,28 @@
+# BÀN GIAO NÂNG CẤP ĐÒN `A - B` CUỘN KHÍ HỎA KIM & ĐÒN `C (+6)` QUÉT CHÂN TRIỆU HỒI LINH HỔ VỒ TỚI — THIÊN CƯƠNG MÔN
+
+Đọc kỹ `CLAUDE.md` trước khi sửa `game/index.html`. Theo đúng clip tham khảo chủ game gửi:
+- Đòn 1–2 (`A–B`) dùng dải hỏa-kim cuộn khí xé gió mượt mà đối chiều nhau (không cứng nhắc, không viền mực hoạt hình).
+- Đòn 3 (`C +6`) **BỎ HOÀN TOÀN vòng elip tròn cũ** — thay bằng **QUÉT CHÂN TRIỆU HỒI LINH HỔ HỎA KIM VỒ THẲNG TỚI TRƯỚC** cực mãn nhãn! (**0 LƯỢT PIXELLAB**, gắn `?v=2911tctiger` chống cache).
+
+## 1. ĐÒN ĐÁNH THƯỜNG `A - B - C (+6)` — HỎA KIM LINH HỔ QUYỀN (CHUẨN CARBON)
+Vẽ bằng `source-over` (giữ nguyên lõi vàng ngà, lửa đồng cổ chu sa & vân gió trong suốt, **KHÔNG** bóp méo tỷ lệ):
+
+- **Đòn A (`0.22s` · Hỏa Kim Toàn Quyền — Tay Trái cuộn ngang)**:
+  * Sprite: `assets/vfx/vfx_tc_a_punch_shock.png?v=2911tctiger` (`294×199`).
+  * Diễn hoạt: quét cuộn từ `P.x + dir * 18` → `P.x + dir * 56`, `P.y - 52` (`w = 155, h = 105`, `scale: 0.85 -> 1.06`, `alpha: 0.96 -> 0.0` trong `0.18s`) + rung nhẹ camera `2px` + 3 tia bụi gió mảnh.
+
+- **Đòn B (`0.24s` · Phản Thủ Liệt Phong — Tay Phải hất ngược lên)**:
+  * Sprite: `assets/vfx/vfx_tc_b_hook_arc.png?v=2911tctiger` (`294×284`).
+  * Diễn hoạt: quét ngược từ dưới hất chéo lên từ `P.x + dir * 22` → `P.x + dir * 60`, `P.y - 52` (`w = 150, h = 145`, `scale: 0.85 -> 1.08`, `alpha: 0.96 -> 0.0` trong `0.20s`) + rung camera `3px`.
+
+- **Đòn C (`+6` · *Hổ Khiếu Tảo Cước*, `0.38s` — QUÉT CHÂN RA LINH HỔ VỒ TỚI!)**:
+  * Sprite: `assets/vfx/vfx_tc_c_sweep_25d.png?v=2911tctiger` (`368×315` — Toàn thân Linh Hổ Hỏa Kim gầm vồ tới, đuôi lửa quét vòng quanh 7 sao Bắc Đẩu!).
+  * **KHÔNG ép dẹt thành elip 2.5D!** Giữ đúng tỷ lệ nguyên bản con Hổ (`w = 220, h = 188`, lật ngang theo `dir`), phóng vồ mạnh từ `P.x + dir * 12, P.y - 52` lao vọt tới `P.x + dir * 92, P.y - 54` trong `0.32s` (`scale: 0.72 -> 1.08`, `alpha: 0.98 -> 0.0` theo `Ease-Out`) + `2 frame` hit-stop + rung camera `4.5px` + 1 vòng sóng gió mỏng dưới chân (`scale(1, 0.55)`) lúc Hổ bật nhảy!
+
+## 2. BUFF `V` (*THIÊN CƯƠNG TINH CHUNG*) — KIM CHUNG TRÁO ĐẦU HỔ KÍNH TRONG SUỐT CHUẨN CARBON
+- Xóa bỏ các file chuông cũ (`vfx_tc_bell_back_halo.png`, `vfx_tc_bell_ground_ring.png`, `vfx_tc_bell_aura.png`).
+- Dùng duy nhất **`assets/vfx/vfx_tc_kimchung_dome.png?v=2911tctiger`** (`w = 216, h = 216`, đặt tâm tại `P.x, P.y - 84`, vẽ `source-over`, `globalAlpha = 0.95`).
+
+## 3. Nghiệm thu bắt buộc
+- Gắn `?v=2911tctiger`, chạy `pack_check.sh` đảm bảo ngân sách VFX phái `<= 3.5 MB`.
+- Soi đủ **8 cỡ màn ngang** (`550×278` → `1280×720`) và quay clip `thiencuong_ABC` kiểm chứng đòn 1–2 cuộn khí + đòn 3 quét chân triệu hồi Linh Hổ vồ tới!
