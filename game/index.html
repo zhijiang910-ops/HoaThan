@@ -2181,8 +2181,8 @@ html body #create .cxbar #crGo.busy{pointer-events:none}
 </style>
 <style id="wispAnim">/* 28/11: ma trơi sảnh = hoạt ảnh PixelLab 32 khung 48×80 (wispa_*.png, dải ngang), 4 màu đổi bằng code từ một bản; quầng sáng + cộng sáng cho có độ sáng thật; điểm neo chân lửa = 81% chiều cao */
 #lbStage .lobby-wisps .wf{position:absolute;display:block;pointer-events:none;background-repeat:no-repeat;background-size:3200% 100%;image-rendering:pixelated;mix-blend-mode:screen;transform-origin:50% 81%;animation-name:wfFr,wfGl;animation-timing-function:steps(32,jump-none),ease-in-out;animation-iteration-count:infinite,infinite;animation-direction:normal,alternate}
-#lbStage .lobby-wisps .wf-luc{filter:drop-shadow(0 0 5px rgba(90,255,140,.75)) drop-shadow(0 0 14px rgba(60,220,120,.45))}
-#lbStage .lobby-wisps .wf-lam{filter:drop-shadow(0 0 5px rgba(90,200,255,.75)) drop-shadow(0 0 14px rgba(60,150,255,.45))}
+#lbStage .lobby-wisps .wf-luc{filter:drop-shadow(0 0 3.75px rgba(90,255,140,.75)) drop-shadow(0 0 10.5px rgba(60,220,120,.45))}/* 29/11: quầng 2 đốm trái -25% cho khỏi lấn biển */
+#lbStage .lobby-wisps .wf-lam{filter:drop-shadow(0 0 3.75px rgba(90,200,255,.75)) drop-shadow(0 0 10.5px rgba(60,150,255,.45))}
 #lbStage .lobby-wisps .wf-tim{filter:drop-shadow(0 0 4px rgba(200,120,255,.8)) drop-shadow(0 0 10px rgba(160,80,255,.5))}
 #lbStage .lobby-wisps .wf-do{filter:drop-shadow(0 0 4px rgba(255,90,70,.8)) drop-shadow(0 0 10px rgba(255,60,40,.5))}
 @keyframes wfFr{from{background-position:0 0}to{background-position:100% 0}}
@@ -2327,11 +2327,26 @@ html body #lobby #lbAltar .lbtag.lbtag{--bh:.0451;left:34.5%!important;top:57.4%
 html body #lobby #lbDoor .lbtag.lbtag{--bh:.0486;top:57.4%!important}
 @media (max-width:720px){html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{top:-4%!important}}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{white-space:nowrap!important;width:max-content!important;height:auto!important;line-height:1.1!important}
-/* 29/11 chủ game: khung đỏ mặt quỷ cho Quỷ Môn Quan, khung xanh đen lư hương cho Thần Giáng Đàn (cong_cu/claude/sanh_bien2_build.py). Mặt quỷ/lư hương nhô ra trên-dưới thân biển nên --bh lớn hơn để thân biển cỡ như cũ; --pl chừa chỗ hình trang trí trái, --pr chừa bùa giấy/mây bên phải. */
-html body #lobby #lbDoor .lbtag.lbtag{--bh:.06;--ba:4.832;--pl:1.12;--pr:.5;--pt:.03;--h:max(calc(var(--sh,700px)*var(--bh)),31px)!important}
-html body #lobby #lbAltar .lbtag.lbtag{--bh:.053;--ba:5.294;--pl:1.2;--pr:.9;--pt:.05;--h:max(calc(var(--sh,700px)*var(--bh)),30px)!important}
-html body #lobby #lbAltar .lbtag.lbtag,html body #lobby #lbDoor .lbtag.lbtag{overflow:visible!important}
+/* 29/11 (2) chủ game: 3 biển mới (cong_cu/claude/sanh_bien3_build.py): chuông nứt = Xuất Trận, lư hương = Thần Giáng Đàn, mặt quỷ = Quỷ Môn Quan.
+   Cùng chiều cao THÂN biển (--P), chiều cao cả ảnh = --P / tỉ lệ thân (--fr). 9-slice: icon trái (--L) và trang trí phải (--R) giữ nguyên, thân giữa giãn theo độ dài nhãn. Chữ căn giữa thân (--pt bù độ lệch tâm thân so với tâm ảnh). Viền gỗ đã chỉnh cùng độ sáng trong ảnh. */
+html body #lobby #lbStage #lbBridge .lbtag.lbtag,html body #lobby #lbStage #lbAltar .lbtag.lbtag,html body #lobby #lbStage #lbDoor .lbtag.lbtag{--P:max(calc(var(--sh,700px)*.044),24px);--h:calc(var(--P)/var(--fr))!important;height:var(--h)!important;width:auto!important;background:none!important;border-style:solid!important;border-color:transparent!important;border-width:0 calc(var(--h)*var(--R)/120) 0 calc(var(--h)*var(--L)/120)!important;border-image:var(--bi3) 0 var(--Rs) 0 var(--Ls) fill stretch!important;padding:calc(var(--h)*var(--pt)) calc(var(--h)*.16) 0!important;overflow:visible!important}
+html body #lobby #lbStage #lbBridge .lbtag.lbtag{--bi3:url(assets/ui/lobby/bien3_xuattran.webp);--fr:.946;--L:118;--R:55;--Ls:118;--Rs:55;--pt:.049}
+html body #lobby #lbStage #lbAltar .lbtag.lbtag{--bi3:url(assets/ui/lobby/bien3_thangiang.webp);--fr:.86;--L:137;--R:118;--Ls:137;--Rs:118;--pt:.047}
+html body #lobby #lbStage #lbDoor .lbtag.lbtag{--bi3:url(assets/ui/lobby/bien3_quymon.webp);--fr:.786;--L:131;--R:59;--Ls:131;--Rs:59;--pt:.02;color:#f1e4c6!important}
 @media (max-height:270px){html body #lobby #lbAltar .lbtag.lbtag{left:41.6%!important}}
+/* 29/11 cụm tiền tệ: 3 khung chủ game (cam = Đồng Tệ, xanh ngọc = Linh Hồn, xanh lục = Ngọc Trấn Tà; cong_cu/claude/sanh_tien_te_build.py), cùng cỡ, tỉ lệ 1012:295.
+   Icon (tách từ ảnh ráp thử) căn vào hốc tròn: tâm 16,9% ngang / 50,5% dọc, đường kính hốc 76,6% chiều cao. Số dư màu kem căn phải trong lòng khung (từ 30% tới 95,3% bề ngang). */
+html body #lobby .lbcurs{gap:clamp(3px,.6vw,6px)!important}
+html body #lobby .lbcur.lbcur{--ch:clamp(24px,4.9vh,34px);position:relative;height:var(--ch)!important;width:calc(var(--ch)*3.4305)!important;min-width:0!important;padding:0 calc(var(--ch)*3.4305*.047) 0 calc(var(--ch)*3.4305*.30)!important;background:var(--cf) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;display:flex!important;align-items:center;justify-content:flex-end}
+@media (max-width:700px){html body #lobby .lbcurs.lbcurs{top:calc(var(--lbTop) + clamp(34px,5.4vh,52px) + 5px)!important}}
+html body #lobby .lbcur[data-c=dong]{--cf:url(assets/ui/lobby/tt_khung_dong.webp)}
+html body #lobby .lbcur[data-c=hon]{--cf:url(assets/ui/lobby/tt_khung_hon.webp)}
+html body #lobby .lbcur[data-c=nap]{--cf:url(assets/ui/lobby/tt_khung_nap.webp)}
+html body #lobby .lbcur.lbcur>i{position:absolute;left:calc(var(--ch)*3.4305*.169);top:50.5%;width:calc(var(--ch)*.62)!important;height:calc(var(--ch)*.62)!important;transform:translate(-50%,-50%);background-size:contain!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.8))}
+html body #lobby .lbcur[data-c=dong]>i{background-image:url(assets/ui/lobby/tt_dongte2.png)!important}
+html body #lobby .lbcur[data-c=hon]>i{background-image:url(assets/ui/lobby/tt_linhhon2.png)!important}
+html body #lobby .lbcur[data-c=nap]>i{background-image:url(assets/ui/lobby/tt_ngoctt2.png)!important}
+html body #lobby .lbcur.lbcur>b{flex:none!important;text-align:right;font:700 calc(var(--ch)*.42)/1 "Noto Serif",Georgia,serif!important;color:#f1e4c6!important;text-shadow:0 1px 0 #000,0 0 4px rgba(0,0,0,.9)}
 </style>
 <style id="lbVh">/* 29/11 iPhone Safari ngang: khi thanh công cụ thu lại, position:fixed;inset:0 chỉ cao bằng khung NHỎ (thiếu ~63px dưới đáy) nên sảnh hở dải đen dưới và mất phần trên. Dùng chiều cao khung ĐỘNG. */
 html body #lobby:not([hidden]){top:0!important;bottom:auto!important;height:100%!important;height:100dvh!important;min-height:100%!important}
@@ -2348,7 +2363,11 @@ html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt[data-s]>i{font-size:0!important;colo
 html body #lobby .lbt[data-lb=nhanvat]{--ic:url(assets/ui/lobby/nv_ao.webp);--is:1}
 html body #lobby .lbt[data-lb=inv]{--ic:url(assets/ui/lobby/nv_tui.webp);--is:1}
 html body #lobby .lbt[data-lb=tangbao]{--ic:url(assets/ui/lobby/nv_lau.webp);--is:1.06}
-html body #lobby .lbt[data-lb=sukien]{--ic:url(assets/ui/lobby/nv_caothi.webp);--is:1}
+html body #lobby .lbt[data-lb=sukien]{--ic:url(assets/ui/lobby/nv_longden.webp);--is:1.04}
+html body #lobby .lbgrid.lbgrid.g7>.lbt.lbt[data-lb=sukien]>i{transform:translateY(-7%) scale(var(--is))!important}
+/* 29/11: ô Sự Kiện không hiện giờ nữa (giờ mở nằm trong popup Thụ Lộc), chỉ có chấm đỏ khi đang có lộc nhận (.dtok, lobbyTick) */
+html body #lobby .lbgrid.lbgrid.g7>[data-lb=sukien] small{display:none!important}
+html body #lobby #lbGrid.lbgrid.g7>.lbt.lbt[data-lb=sukien].dtok>small{z-index:3!important;min-width:0!important;max-width:none!important;line-height:0!important;display:block!important;font-size:0!important;color:transparent!important;background:radial-gradient(circle at 40% 35%,#ff8a70,#d8231a 60%,#7a0d08)!important;border:1px solid #2a0705!important;box-shadow:0 0 5px rgba(255,60,40,.8)!important;border-radius:50%!important;width:max(8px,calc(var(--dw)*.0075))!important;height:max(8px,calc(var(--dw)*.0075))!important;padding:0!important;top:9%!important;left:auto!important;right:7%!important;transform:none!important}
 html body #lobby .lbt[data-lb=banghoi]{--ic:url(assets/ui/lobby/nv_banghoi.webp);--is:1.1}
 html body #lobby .lbt[data-lb=luyencong]{--ic:url(assets/ui/lobby/ic_luyencong.webp);--is:1}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>i{filter:grayscale(.8) brightness(.78)!important}
@@ -5897,7 +5916,7 @@ function lbCovered(){const i=$('#inv'),m=$('#lbm'),c=!!((i&&!i.hidden)||(m&&!m.h
 let lbHeroT=0;function lobbyHero(){if(lbCovered())return;const P0=prof(),cn=$('#lbHero');if(!P0||!cn||$('#lobby').hidden)return;const g=cn.getContext('2d');g.clearRect(0,0,cn.width,cn.height);
  /* 26/11 sảnh mới: nhân vật theo hồ sơ (lớp vũ khí của phái, vũ khí + trang phục đang mặc), canvas 480x400, chân tại (240,372) */
  const prev=HERO;window.__lbW=profWeapon();try{if(useHero(P0.gender,profWeapon())){const A=HERO.meta.anims.idle,fi=Math.floor(lbHeroT*(A.fps||6))%A.f.length;g.save();g.scale(2,2);g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(120,186,46,10,0,0,TAU);g.fill();drawHeroFrame(g,'idle',fi,120,186,1,1.55,false);g.restore();HERO=prev}}finally{window.__lbW=null}lbHeroT+=0.125}
-function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="sukien"] small');if(t)t.textContent=dtShort()}if(!$('#lbm').hidden&&lbmK==='sukien'){const e=$('#skDT');if(e)e.textContent=dtStatus()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
+function lobbyTick(){const P0=prof();if(!P0)return;if(!$('#lbm').hidden&&lbmK==='diemtam')renderDT(true);{const t=document.querySelector('[data-lb="sukien"] small');if(t)t.textContent=dtShort();const b=document.querySelector('[data-lb="sukien"]');if(b){const i=dtInfo();b.classList.toggle('dtok',!!(i.open&&i.rem>0))}}if(!$('#lbm').hidden&&lbmK==='sukien'){const e=$('#skDT');if(e)e.textContent=dtStatus()}const need=profNeed(P0.lv),s0=staTick(),nx=staNextMs();
  $('#lbLv').textContent=P0.lv;{const c=$('#lbCp');if(c)c.textContent=lobbyPower().toLocaleString('vi-VN')}$('#lbXp').style.width=Math.min(100,P0.exp/need*100)+'%';$('#lbXpT').textContent=P0.exp+'/'+need;
  $('#lbSta').style.width=Math.min(100,s0.v/STA.max*100)+'%';$('#lbStaT').textContent=s0.v+'/'+STA.max;
  const chest=save.bossChest;
