@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "sect": "maoson",
+    "weapon": "kiem",
+    "cacheBust": "2911msqc",
+    "zeroPixelLab": true,
+    "designGoals": [
+      "1) Skill C (k7): Bỏ hoàn toàn hố đá vỡ nứt đất (vkCrater) và bỏ cự kiếm rơi cắm tâm hố; thay bằng 8 thanh phi kiếm kèm bùa bay vồng cắm dựng vào 8 đỉnh trận Bát Quái sạch (ms_c_bagua) và phóng lưới điện (ms_c_lei1/lei2) giật liên hoàn quái bên trong + kích nổ Ấn Bùa ở 0,95s.",
+      "2) Skill Q (k1): Bỏ chiêu lao xoáy đỏ cận chiến cũ (giống màu đỏ và cảm giác Q/C của Thiên Cương Môn); đổi hẳn sang Du Long Ngự Kiếm Phù — phóng chính thanh kiếm đang cầm lượn đường cong chữ S / Boomerang vàng-lam ra xa xoáy chém (ms_q_vortex) dán Ấn Bùa rồi tự lượn cong bay về tay nhân vật (bấm Q lần 2 khi kiếm đang xoáy thì dịch chuyển theo kiếm nếu muốn áp sát)."
+    ]
+  },
+  "assets": {
+    "icons": {
+      "q": "assets/ui/maoson/ms_ic_q.webp?v=2911msqc",
+      "c": "assets/ui/maoson/ms_ic_c.webp?v=2911msqc"
+    },
+    "vfx": {
+      "ms_c_bagua": "assets/vfx/ms_c_bagua.webp?v=2911msqc",
+      "ms_c_lei1": "assets/vfx/ms_c_lei1.webp?v=2911msqc",
+      "ms_c_lei2": "assets/vfx/ms_c_lei2.webp?v=2911msqc",
+      "ms_q_vortex": "assets/vfx/ms_q_vortex.webp?v=2911msqc"
+    }
+  },
+  "skills": {
+    "k1_new_Q": {
+      "id": "k1",
+      "slot": "Q",
+      "name": "Du Long Ngự Kiếm Phù",
+      "cooldownSec": 5.5,
+      "mpCost": 16,
+      "rangePx": 275,
+      "flightTimelineSec": {
+        "outboundCurve": [
+          0.0,
+          0.24
+        ],
+        "vortexSpinAtTarget": [
+          0.24,
+          0.56
+        ],
+        "returnCurveToPlayer": [
+          0.56,
+          0.8
+        ]
+      },
+      "damageMagAtkPct": {
+        "outboundHit": 80,
+        "vortexTicks": [
+          45,
+          45
+        ],
+        "returnPierceHit": 75,
+        "total": 245
+      },
+      "effects": [
+        "Dán Ấn Bùa Vàng (swordMarkUntil) lên mọi quái trúng xoáy kiếm.",
+        "Lúc kiếm bay về tới tay: nếu đã trúng >= 1 quái thì hoàn trả 1,0s hồi chiêu.",
+        "Biến chiêu tùy chọn (Nhân Kiếm Hợp Nhất): trong khoảng 0,24s–0,56s khi kiếm đang xoáy tại mục tiêu, nếu người chơi bấm Q lần 2 thì đạo sĩ hóa chớp vàng dịch chuyển tới ngay tâm xoáy!"
+      ]
+    },
+    "k7_new_C": {
+      "id": "k7",
+      "slot": "C",
+      "name": "Thái Thượng Ngũ Lôi Kiếm Trận",
+      "cooldownSec": 15.0,
+      "mpCost": 32,
+      "rangePx": 340,
+      "arrayEllipse": [
+        155,
+        96
+      ],
+      "timelineSec": {
+        "eightSwordsArcAndPlant": [
+          0.0,
+          0.42
+        ],
+        "baguaIgniteAndLightningPulses": [
+          0.42,
+          1.85
+        ],
+        "sealDetonationPeak": 0.95,
+        "fadeOut": [
+          1.85,
+          2.2
+        ]
+      },
+      "damageMagAtkPct": {
+        "plantImpact": 60,
+        "lightningWebPulses4x": [
+          50,
+          50,
+          50,
+          50
+        ],
+        "peakSealDetonationAt095s": 120,
+        "total": 380
+      },
+      "effects": [
+        "TUYỆT ĐỐI KHÔNG VẼ HỐ ĐÁ NỨT ĐẤT (vkCrater) VÀ KHÔNG THẢ CỰ KIẾM TỪ TRỜI XUỐNG.",
+        "8 phi kiếm (chính vũ khí đang cầm + bùa vàng nhỏ ở chuôi) bay vồng từ lưng người chơi cắm dựng vào đúng 8 ổ tròn trên rìa Trận Bát Quái ms_c_bagua (4 kiếm nửa trên vẽ dưới quái, 4 kiếm nửa dưới vẽ trước quái chuẩn 2.5D).",
+        "Bên trong trận, luân phiên chớp đảo ms_c_lei1.webp và ms_c_lei2.webp (xoay nhẹ/lật gương mỗi 0,08s, vẽ cộng sáng lighter) tạo lưới hồ quang điện giật tất cả quái trong vòng, làm tê liệt ngắn 0,2s mỗi nhịp; đúng mốc 0,95s bừng sáng tâm Thái Cực kích nổ toàn bộ Ấn Bùa!"
+      ]
+    }
+  }
+}

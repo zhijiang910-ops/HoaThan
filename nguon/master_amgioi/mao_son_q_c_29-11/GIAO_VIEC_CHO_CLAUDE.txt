@@ -1,0 +1,33 @@
+# BÀN GIAO CẬP NHẬT `game/index.html`: LÀM LẠI SKILL `C` (8 KIẾM BÁT QUÁI GIẬT ĐIỆN KHÔNG NỨT ĐẤT) & ĐỔI MỚI SKILL `Q` (DU LONG NGỰ KIẾM PHÙ) CHO MAO SƠN PHÁI
+
+Đọc kỹ `CLAUDE.md` trước khi làm. Chủ game yêu cầu:
+1. **Skill `C` của Mao Sơn (`k7`)**: **Bỏ hoàn toàn vết vỡ nứt đất (`vkCrater`), bụi đá và bỏ luôn cự kiếm rơi cắm tâm hố**. Thay bằng **8 thanh kiếm kèm bùa bay vồng cắm xuống 8 đỉnh trận Bát Quái phẳng sạch**, bên dưới hiện **Trận Bát Quái** và **các tia điện giật quái bên trong trận** (vẫn giữ nhịp bùng nổ kích nổ Ấn Bùa ở `0,95s`).
+2. **Skill `Q` của Mao Sơn (`k1`)**: Đổi hẳn sang kỹ năng Ngự Kiếm tầm trung riêng biệt để **không còn giống chiêu `Q` bắn thẳng dây đỏ của Thiên Cương Môn** (giữ nguyên `Q` *Phược Hồn Cương Quyền* của Thiên Cương cho class Quyền tay ngắn kéo quái). **TỐN 0 LƯỢT PIXELLAB**.
+
+## 1. Tài nguyên đính kèm trong gói (tải lười cùng gói Kiếm, gắn `?v=2911msqc`)
+- Chép vào `game/assets/ui/maoson/`:
+  - `ms_ic_q.webp` (160×160 — Icon mới cho `Q` *Du Long Ngự Kiếm Phù*).
+  - `ms_ic_c.webp` (160×160 — Icon mới cho `C` *Thái Thượng Ngũ Lôi Kiếm Trận*).
+- Chép vào `game/assets/vfx/`:
+  - `ms_c_bagua.webp`: Trận đồ Bát Quái Thái Cực Kim – Lam 2.5D nằm phẳng sạch (đã dựng sẵn độ dẹt 0,62 và có 8 ổ tròn phát sáng trên vành để cắm đúng 8 thanh kiếm!).
+  - `ms_c_lei1.webp` & `ms_c_lei2.webp`: 2 biến thể Lưới Hồ Quang Lôi Điện 2.5D nối ngang khắp lòng trận (đảo luân phiên + lật gương tạo hiệu ứng điện giật sống động ở 60fps!).
+  - `ms_q_vortex.webp`: Vòng xoáy kiếm khí Vàng Kim – Lam Ngọc kèm 2 lá bùa và tàn ảnh kiếm cho đỉnh xoáy của chiêu `Q`.
+
+## 2. Triển khai chi tiết `C` Mao Sơn (`k7` — Thái Thượng Ngũ Lôi Kiếm Trận)
+- **Xóa sạch:** `vkCrater` (hố tối + vết nứt đá), bụi đá bung, và thanh cự kiếm rơi cắm giữa hố.
+- **Trình tự mượt 2,2s tại cụm đông quái nhất (`densest`, tầm 340px):**
+  1. `0,0s – 0,42s`: 8 thanh phi kiếm (vẽ bằng chính kiếm nhân vật đang cầm + lá bùa vàng nhỏ `bua_vang.png` ở chuôi) bay vồng đường cong parabol từ người chơi tới cắm dựng đứng vào **8 đỉnh elip `rx = 155, ry = 96`** quanh tâm trận (`(gx, gy)`). Vẽ 4 kiếm có `y <= gy` ở lớp trước quái/nhân vật, 4 kiếm có `y > gy` ở lớp sau để có chiều sâu 2.5D thật!
+  2. `0,35s – 1,85s`: Lớp nền mặt đất (`drawDecals` / lớp ground dưới chân quái) hiện `ms_c_bagua.webp` rộng `340px` (bung mượt 0,35->0,48s, giữ sáng, thu mờ 1,85->2,20s).
+  3. `0,42s – 1,85s`: Bên trong vòng 8 kiếm, vẽ cộng sáng (`globalCompositeOperation = 'lighter'`) lưới điện đảo luân phiên giữa `ms_c_lei1.webp` và `ms_c_lei2.webp` (mỗi `0,08s` đổi ảnh + xoay nhẹ/lật ngang) kèm vài tia điện nối từ chân 8 kiếm vào chính những con quái đang đứng trong trận!
+  4. **Sát thương & Nhịp `0,95s`:** Khi 8 kiếm vừa cắm (`0,42s`) gây `60%` Công Phép; 4 đợt điện giật (`0,55s, 0,80s, 1,25s, 1,55s`) mỗi đợt `50%` Công Phép + khựng tê liệt nhẹ `0,2s`; đúng mốc **`0,95s`** tâm Thái Cực bừng chớp sáng kích nổ toàn bộ Ấn Bùa trong trận gây **`120%` Công Phép**!
+
+## 3. Triển khai chi tiết `Q` Mới Mao Sơn (`k1` — Du Long Ngự Kiếm Phù)
+- Thay thế hoàn toàn chiêu lao xoáy máu đỏ cũ (`hv_*` / `bua_do`), tách biệt 100% với đạn đấm thẳng dây đỏ của Thiên Cương Môn:
+  1. **Nhịp 1 — Phóng Kiếm Lượn Cung Chữ S (`0,0s – 0,24s`):** Đạo sĩ đứng giữ vị trí an toàn (vừa di chuyển vừa tung được!), phóng thanh kiếm đang cầm (`×1,5` nguyên pixel, dẫn đầu bởi 1 lá `bua_vang`) bay lượn **đường cong Bézier bậc 2 lệch sang sườn trái 65px** tới điểm mục tiêu phía trước (`tầm 275px`), để lại dải lụa vàng kim – lam thanh mượt mà, gây `80%` Công Phép xuyên quái trên đường đi.
+  2. **Nhịp 2 — Du Long Xoáy Trận (`0,24s – 0,56s`):** Tại điểm đích, hiện vòng xoáy `ms_q_vortex.webp` rộng `210px` xoay nhanh 2 vòng: gây `2 đợt × 45%` Công Phép, gom nhẹ quái `30px` vào tâm xoáy và **dán Ấn Bùa Vàng (`swordMarkUntil`)** lên mọi quái trúng!
+     - **Biến chiêu linh hoạt (Nhân Kiếm Hợp Nhất):** Trong `0,24s – 0,56s` lúc kiếm đang xoáy, nếu người chơi **bấm `Q` thêm 1 lần nữa**, nhân vật hóa tia sáng vàng dịch chuyển tức thời tới tâm xoáy (dành cho lúc muốn chủ động áp sát hoặc vượt chướng ngại!). Nếu không bấm lần 2, đạo sĩ vẫn đứng ngoài tầm xa an toàn.
+  3. **Nhịp 3 — Hồ Tuyến Thu Kiếm (`0,56s – 0,80s`):** Thanh kiếm lượn **đường cong ngược sang sườn phải** đuổi theo vị trí hiện tại của `P` bay về tay, gây `75%` Công Phép xuyên lưng quái dọc đường; bắt lại kiếm nếu đã trúng >= 1 quái thì hoàn trả `1,0s` hồi chiêu!
+
+## 4. Kiểm thử bắt buộc
+- Cập nhật icon `ms_ic_q.webp`, `ms_ic_c.webp` và mô tả mới trong HUD, màn Tạo Nhân Vật và bảng Kỹ Năng.
+- Soi 8 cỡ màn ngang bắt buộc (`550×278` .. `1280×720`), kiểm `pack_check.sh`, và quay video Luyện Công + Âm Giới tầng 1 gửi chủ game kiểm chứng: `Q` lượn vòng chữ S vàng-lam khác hẳn `Q` Quyền, và `C` 8 kiếm Bát Quái phóng lưới điện không còn vết nứt đất!

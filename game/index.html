@@ -2158,7 +2158,7 @@ html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{wh
 @media (max-width:720px){html body #hud #top{left:204px!important;right:auto!important;transform:none!important;width:min(360px,calc(100vw - 280px))!important}}
 /* 29/11 huy hiệu môn phái mới (crest_*.png 128px, thu mịn): khóa = tối nhẹ vẫn thấy chi tiết; đang chọn = sáng + bóng */
 #create .cxsb .sic.big{height:auto!important;width:auto!important;margin:0 0 1px!important}
-#create .cxsb .sic.big img{image-rendering:pixelated!important;image-rendering:crisp-edges;filter:none!important;width:24px!important;height:24px!important;min-width:24px!important;min-height:24px!important;max-width:none!important;max-height:none!important;flex:none!important}
+#create .cxsb .sic.big img{image-rendering:auto!important;filter:none!important;width:24px!important;height:24px!important;min-width:24px!important;min-height:24px!important;max-width:none!important;max-height:none!important;flex:none!important}
 @media (min-height:600px) and (min-width:1000px){#create .cxsb .sic.big img{width:48px!important;height:48px!important}}
 #create .cxsb.lock .sic.big img{filter:brightness(.66)!important}
 #create .cxsb.on .sic.big img{filter:brightness(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.65))!important}
@@ -2855,7 +2855,7 @@ for(const n of Object.keys(STF)){const i=new Image();i.src='assets/vfx/'+n+'.png
 for(const n in SPX){const i=new Image();if(LAZY_VFX_RE.test(n))lazyImg(VFX,n,i,'assets/vfx/'+n+'.png',preDecode);else{i.src='assets/vfx/'+n+'.png';preDecode(i);VFX[n]=i}}
 /* 28/11 gói Quyền Cước (nguon/master_amgioi/quyen_cuoc/, dựng bằng cong_cu/claude/quyen_cuoc_build.py): tải lười cùng gói Quyền */
 const QC_VFX=['tc_bell2','qc_fist','qc_mark','qc_burst','qc_palm','qc_crater','qc_puff','qc_tinhluan','qc_fistimp','qc_starsweep','qc_cring','qc_cring_rim','qc_cpalm','qc_cburst'];for(const n of QC_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911h',preDecode/* ?v: đổi số khi thay ảnh cùng tên, để máy người chơi không dùng ảnh cũ trong bộ nhớ đệm */);
-const MS_VFX=['ms_ward2','ms_sword','ms_tal','ms_burst','ms_bagua','ms_colossal','ms_mist','ms_mark','ms_crater','ms_crater_rim'];for(const n of MS_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911',preDecode);/* 29/11 Mao Sơn tầm xa */
+const MS_VFX=['ms_c_bagua','ms_c_lei1','ms_c_lei2','ms_q_vortex','ms_ward2','ms_sword','ms_tal','ms_burst','ms_bagua','ms_colossal','ms_mist','ms_mark','ms_crater','ms_crater_rim'];for(const n of MS_VFX)lazyImg(VFX,n,new Image(),'assets/vfx/'+n+'.webp?v=2911',preDecode);/* 29/11 Mao Sơn tầm xa */
 /* điểm va chạm đồng bộ với kiếm (24/11): MỘT chớp chém xanh-tím xoay theo hướng lưỡi, thay bộ swhit (mảnh băng) */
 /* va chạm Vạn Kiếm: biến thể xem thử (window.__vkv) 1=kiếm cắm lại, 2=kiếm khí xuyên, 3=chữ X */
 function vkLift(){const dt=G.t-P._vkp;if(dt>2.4||P.deadAt){P._vkp=null;return 0}const E=u=>u*u*(3-2*u);return Math.round(-9*(dt<0.5?E(dt/0.5):dt<1.9?1:1-E((dt-1.9)/0.5)))}/* 25/11 Vạn Kiếm: nhân vật nhấc lên bắt ấn */
@@ -3122,6 +3122,44 @@ function detonateChuSa(e){const n=chuSaOf(e);if(!n||e.dead)return 0;e.chuSa=0;e.
  hit(e,qcP(35*n)*pw()*(P.bhDetT>G.t?1.25:1),H({nofx:1}),e.x,e.y);for(let i=0;i<2*n;i++)addCombo();if(n>=3)wardCdCut(1);if(P.pf.tc_pas3_phamacuong){P.ckN=Math.min(5,(P.ckT>G.t?P.ckN||0:0)+n);P.ckT=G.t+8}return 4*n}
 function qcMpBack(v){if(v>0)P.mp=Math.min(S.mp,P.mp+Math.min(12,v))}
 
+/* 29/11 Mao Sơn Q/C mới (gói goi-cap-nhat-skill-q-va-c-mao-son, nguon/master_amgioi/mao_son_q_c_29-11/) */
+const MS_SOCK=[[20,135],[72,60],[190,30],[309,59],[360,135],[308,209],[190,239],[72,210]];/* 8 ổ cắm kiếm đo trên ms_c_bagua 380x260, tâm (190,135) */
+function msArt(){return (HERO&&HERO.wg?heroWeaponArt(HERO.wg):null)||'thanhphong_nu'}
+function msHeld(c,x,y,ang,scl,al,tip){const art=msArt(),w=WPN[art];if(!w||al<=0.01)return;c.save();c.globalAlpha=Math.min(1,al);c.translate(x,y);c.rotate(ang);c.scale(scl,scl);c.translate(tip?-(w[0]-w[2]):-(w[0]/2-w[2]),0);drawWeaponArt(c,art,0,0,1);c.restore()}
+function msScl(m){const n=ZOOM*DPR;return Math.max(1,Math.round(m*n))/n}
+function bez(a,c1,b,u){const v=1-u;return [v*v*a[0]+2*v*u*c1[0]+u*u*b[0],v*v*a[1]+2*v*u*c1[1]+u*u*b[1]]}
+function inEl(e,x,y,rx,ry){const dx=(e.x-x)/rx,dy=(e.y-y)/ry;return dx*dx+dy*dy<=1.15}
+function msQCast(tg,l,sk){const a=angTo(tg),d=Math.min(275,Math.max(120,Math.hypot(tg.x-P.x,tg.y-P.y))),tx=clamp(P.x+Math.cos(a)*d,40,AW-40),ty=clamp(P.y+Math.sin(a)*d,40,AH-40),k=lv(l)*pw();P.avAnim='attack';swing(a,1);P.av=P.avTotal=0.24;if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;sfx('sword_wave',0.45,0.1);
+ addZone({kind:'msq',T:0.82,src:'h',x0:P.x,y0:P.y-40,tx,ty,a,d1:qcP(80)*k,d2:qcP(45)*k,d3:qcP(75)*k,h1:new Set(),h3:new Set(),hit:0,sk,tr:[]})}
+function msQTp(){const z=G.zones.find(q=>q.kind==='msq');if(!z||z.t<0.24||z.t>=0.56||z.tp)return false;z.tp=1;const x0=P.x,y0=P.y;P.x=z.tx;P.y=z.ty+6;P.inv=Math.max(P.inv,0.25);fx({k:'ring',x:x0,y:y0,r0:8,r1:44,c:'#ffe08a',T:0.2,sy:0.45,lw:2});spawnGhostMist(x0,y0-20,{n:1,sz:60,ma:0.35,T:0.5});fx({k:'ring',x:P.x,y:P.y,r0:8,r1:60,c:'#ffe08a',T:0.25,sy:0.45,lw:2});sfx('suodi_cast',0.4,0.1);return true}
+function msQPos(z){const t=z.t,px=-Math.sin(z.a),py=Math.cos(z.a);if(t<0.24){const u=t/0.24,e=1-(1-u)*(1-u),m=[(z.x0+z.tx)/2-px*130,(z.y0+z.ty-40)/2-py*130];return bez([z.x0,z.y0],m,[z.tx,z.ty-40],e)}
+ if(t<0.56)return [z.tx,z.ty-40];const u=Math.min(1,(t-0.56)/0.24),e=u*u,hx=P.x,hy=P.y-40,m=[(z.tx+hx)/2+px*130,(z.ty-40+hy)/2+py*130];return bez([z.tx,z.ty-40],m,[hx,hy],e)}
+function msQTick(z){const t=z.t,p=msQPos(z);z.tr.push([p[0],p[1]]);if(z.tr.length>16)z.tr.shift();
+ if(t<0.24||(t>=0.56&&t<0.8)){const S1=t<0.24?z.h1:z.h3,dm=t<0.24?z.d1:z.d3;for(const e of enemiesIn(p[0],p[1]+40,46))if(!S1.has(e)&&!e.dead){S1.add(e);z.hit++;hit(e,dm,H({kb:20,nofx:1,noflash:1}),p[0],p[1]+40)}}
+ for(const tt of[0.30,0.48])if(!z['k'+tt]&&t>=tt){z['k'+tt]=1;for(const e of enemiesIn(z.tx,z.ty,105)){if(e.dead)continue;z.hit++;const dx=z.tx-e.x,dy=z.ty-e.y,dd=Math.hypot(dx,dy)||1;if(!e.boss){e.kx+=dx/dd*Math.min(30,dd)*7;e.ky+=dy/dd*Math.min(30,dd)*7}hit(e,z.d2,H({mark:1,chuSa:tt<0.4?1:0,nofx:1,noflash:1}),z.tx,z.ty)}sfx('sword_hit',0.3,0.1)}
+ if(!z.done&&t>=0.8){z.done=1;if(z.hit>0&&z.sk)z.sk.cd=Math.max(0,z.sk.cd-1)}}
+function msQDraw(c,z){const t=z.t,p=msQPos(z);c.save();
+ if(z.tr.length>2&&!LOWFX){c.globalCompositeOperation='lighter';for(let i=1;i<z.tr.length;i++){const q=i/z.tr.length;c.strokeStyle=i%2?'rgba(255,214,120,'+(0.45*q)+')':'rgba(120,220,230,'+(0.35*q)+')';c.lineWidth=2+7*q;c.lineCap='round';c.beginPath();c.moveTo(z.tr[i-1][0],z.tr[i-1][1]);c.lineTo(z.tr[i][0],z.tr[i][1]);c.stroke()}c.globalCompositeOperation='source-over'}
+ if(t>=0.22&&t<0.6&&vok('ms_q_vortex')){const im=VFX.ms_q_vortex,u=(t-0.22)/0.38,al=Math.min(1,u*6)*Math.min(1,(0.6-t)/0.06),W2=210,H2=W2*im.naturalHeight/im.naturalWidth;c.save();c.translate(z.tx,z.ty-6);c.scale(1,H2/W2);c.rotate(-(t-0.24)/0.32*TAU*2);c.globalAlpha=al;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(im,-W2/2,-W2/2,W2,W2);c.restore()/* xoay trong không gian tròn rồi ép dẹt theo tỉ lệ ảnh, để vòng xoáy luôn nằm trên mặt đất */}
+ const sc=msScl(1.5);let ang;if(t<0.24||t>=0.56){const q=z.tr.length>1?z.tr[z.tr.length-2]:[z.x0,z.y0];ang=Math.atan2(p[1]-q[1],p[0]-q[0])}else ang=(t-0.24)*28;
+ msHeld(c,p[0],p[1],ang,sc,1,0);if(vok('bua_vang')){c.save();c.translate(p[0]+Math.cos(ang)*26*sc,p[1]+Math.sin(ang)*26*sc);c.rotate(ang+Math.PI/2);c.imageSmoothingEnabled=false;c.drawImage(VFX.bua_vang,-5,-12,10,24);c.restore()}c.restore()}
+function msCCast(tg,l,def){const t0=densest(P.x,P.y,340)||tg,gx=clamp(t0.x,80,AW-80),gy=clamp(t0.y,80,AH-80),k=lv(l)*pw(),f=gx<P.x?-1:1;if(Math.abs(gx-P.x)>8)P.facing=f;P.avAnim='attack';swing(Math.atan2(gy-P.y,gx-P.x),1);P.av=P.avTotal=0.4;sfx('wanjian_launch',0.5,0.12);notice('Thái Thượng Ngũ Lôi Kiếm Trận');
+ const SC=340/380,sk=MS_SOCK.map(([x,y],i)=>({x:gx+(x-190)*SC,y:gy+(y-135)*SC,d:0.04*i}));
+ addZone({kind:'msc',T:2.2,src:'h',gx,gy,sx:P.x-f*20,sy:P.y-60,sk,rx:155,ry:96});
+ const inT=()=>enemiesIn(gx,gy,175).filter(e=>!e.dead&&inEl(e,gx,gy,155,96));
+ later(0.42,()=>{for(const e of inT())hit(e,qcP(60)*k,H({mark:1,nofx:1,noflash:1}),gx,gy);G.shake=Math.max(G.shake||0,3);sfx('sword_hit',0.5,0.1)},'h');
+ for(const tt of[0.55,0.80,1.25,1.55])later(tt,()=>{for(const e of inT()){hit(e,qcP(50)*k,H({nofx:1,noflash:1}),gx,gy);stunE(e,0.2)}sfx('sword_hit',0.25,0.15)},'h');
+ later(0.95,()=>{let mp=0;const cb={n:3};for(const e of inT()){const mk=e.swordMarkUntil>G.t;hit(e,def.power*k,H({cb,nofx:1,noflash:1}),gx,gy);if(mk&&!e.dead){e.swordMarkUntil=0;msBuaNo(e)}mp+=detonateChuSa(e)}qcMpBack(mp);G.hs2=Math.max(G.hs2||0,0.033);G.shake=Math.max(G.shake||0,6);G.flash=Math.max(G.flash||0,0.08);sfx('rulai_impact',0.6,0.1)},'h')}
+function mscDraw(c,z,top){const t=z.t,A=Math.min(1,Math.max(0,(2.2-t)/0.35));c.save();c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
+ if(!top&&t>=0.35&&vok('ms_c_bagua')){const im=VFX.ms_c_bagua,u=Math.min(1,(t-0.35)/0.13),s=0.6+0.4*(1-Math.pow(1-u,3)),W2=340*s,H2=W2*im.naturalHeight/im.naturalWidth;c.globalAlpha=u*A;c.drawImage(im,z.gx-W2/2,z.gy-H2/2,W2,H2);
+  if(t>0.9&&t<1.2&&!LOWFX){c.globalCompositeOperation='lighter';c.globalAlpha=(1-Math.abs(t-0.97)/0.23)*0.7*A;const g=c.createRadialGradient(z.gx,z.gy,2,z.gx,z.gy,70);g.addColorStop(0,'rgba(255,250,220,1)');g.addColorStop(1,'rgba(160,220,255,0)');c.fillStyle=g;c.beginPath();c.ellipse(z.gx,z.gy,70,44,0,0,TAU);c.fill();c.globalCompositeOperation='source-over'}}
+ if(top&&t>=0.42&&t<1.85){const n=Math.floor(t/0.08),im=VFX[n%2?'ms_c_lei2':'ms_c_lei1'];if(im&&im.complete&&im.naturalWidth){const W2=330,H2=W2*im.naturalHeight/im.naturalWidth;c.save();c.globalCompositeOperation='lighter';c.globalAlpha=0.85*Math.min(1,(t-0.42)/0.06)*Math.min(1,(1.85-t)/0.15);c.translate(z.gx,z.gy);if(n%3===1)c.scale(-1,1);c.rotate(((n*37)%7-3)*0.012);c.drawImage(im,-W2/2,-H2/2,W2,H2);c.restore()}
+  if(!LOWFX&&n%2===0){c.save();c.globalCompositeOperation='lighter';c.strokeStyle='rgba(170,230,255,.85)';c.lineWidth=1.6;for(const e of enemiesIn(z.gx,z.gy,175)){if(e.dead||!inEl(e,z.gx,z.gy,155,96))continue;let b=null,bd=1e9;for(const q of z.sk){const dd=(q.x-e.x)**2+(q.y-e.y)**2;if(dd<bd){bd=dd;b=q}}c.beginPath();c.moveTo(b.x,b.y-6);for(let i=1;i<=5;i++){const u=i/5;c.lineTo(b.x+(e.x-b.x)*u+(i<5?rnd(-7,7):0),b.y-6+(e.y-20-b.y+6)*u+(i<5?rnd(-7,7):0))}c.stroke()}c.restore()}}
+ const sc=msScl(1.5);for(const q of z.sk){const u=Math.min(1,Math.max(0,(t-q.d)/0.38));if(u<=0)continue;const back=q.y<=z.gy;if(u>=1&&(top===back))continue;if(u<1&&!top)continue;
+  let x,y,ang;if(u<1){const e=u*u,m=[(z.sx+q.x)/2,Math.min(z.sy,q.y)-170],p=bez([z.sx,z.sy],m,[q.x,q.y],e),p2=bez([z.sx,z.sy],m,[q.x,q.y],Math.max(0,e-0.03));x=p[0];y=p[1];ang=Math.atan2(y-p2[1],x-p2[0])}else{x=q.x;y=q.y;ang=Math.PI/2}
+  msHeld(c,x,y+(u>=1?4:0),ang,sc,A,1);if(vok('bua_vang')){const w=WPN[msArt()],L=(w?w[0]:60)*sc;c.save();c.globalAlpha=A;c.translate(x-Math.cos(ang)*L*0.92,y-Math.sin(ang)*L*0.92);c.rotate(Math.sin(t*4+q.d*30)*0.15);c.imageSmoothingEnabled=false;c.drawImage(VFX.bua_vang,-4,0,8,19);c.restore()}}
+ c.restore()}
+
 /* 29/11 HỘ THỂ + NỘI TẠI (gói chủ game passive-va-ho-the, nguon/master_amgioi/passive_ho_the_29-11/): ô bấm hàng dưới HUD (cờ low), bấm được cả khi bị khống chế (cờ cc), tự bật khi Máu < 35%. Số TẠM theo json. */
 function wardSk(){return P&&P.kit&&P.kit.act.find(s=>s.def.low)}
 function wardCdCut(v){const s=wardSk();if(s)s.cd=Math.max(0,s.cd-v)}
@@ -3344,10 +3382,9 @@ const WEAPONS={
   {id:'k0',name:'Ngự Kiếm Linh Phù Quyết',g:'劍',kind:'basic',cd:0.05,range:270,tl:'Tự động bắn tầm xa khi quái trong tầm 270 (Vũ khí +6 mở đòn C)',desc:'Từ xa chỉ kiếm quyết phóng phi kiếm lục ngọc (A, 52% ATK, xuyên 1 quái) và hai lá hoàng phù (B, 64% ATK). Chưa +6: mỗi 2 chu kỳ A–B khắc 1 tầng Linh Phù Ấn. Vũ khí +6 mở Tam Tài Phân Kiếm Phù (C, 135% ATK): ba phi kiếm xòe quạt 36° xuyên mọi quái, khắc Linh Phù Ấn lên tất cả.',
    qi(){return ['Tự bắn khi quái trong tầm 270',hudNumber(qcP(52)*pw())+' (A) · '+hudNumber(qcP(64)*pw())+' (B) · '+hudNumber(qcP(135)*pw())+' mỗi kiếm (C, +6)','A xuyên 1 quái. B nổ tia lửa chu sa. C ba kiếm xuyên mọi quái, khắc Linh Phù Ấn.']},
    cast(tg,s){msBasic(tg,s)}},
-  {id:'k1',ic:'ms_q',hotkey:'Q',power:33,name:'Đồng Tiền Dẫn Kiếm Phù',g:'錢',kind:'active',cd:5,mp:15,range:330,tl:'Chủ động tầm xa · bấm để dùng',desc:'Từ xa phóng kiếm đồng tiền kéo theo ba lá hoàng phù xuyên hàng quái, nổ đẩy lùi giữ khoảng cách và khắc Linh Phù Ấn.',up:'+25% sát thương, -6% hồi chiêu',
-   qi(l){return ['Bay thẳng 330, xuyên mọi quái trên đường',hudNumber(this.power*lv(l)*pw())+' / mục tiêu','Đẩy quái ra xa 50, khựng 0,3 giây, khắc 1 tầng Linh Phù Ấn. +1 Liên kích mỗi quái.']},
-   cast(tg,l){const a=angTo(tg),dmg=this.power*lv(l)*pw();P.avAnim='attack';swing(a,1);P.av=P.avTotal=0.3;if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;sfx('sword_wave',0.45,0.1);
-    later(0.15,()=>{shoot(P.x+Math.cos(a)*24,P.y+Math.sin(a)*24,a,820,{dmg,pierce:99,r:30,life:330/820,kind:'mssword',w:140,tails:3,o:H({kb:117,stun:0.3,chuSa:1,comboX:1,nofx:1,noflash:1,mark:1})});G.shake=Math.max(G.shake||0,2)},'h')}},
+  {id:'k1',ic:'ms_ic_q',hotkey:'Q',power:16,name:'Du Long Ngự Kiếm Phù',g:'龍',kind:'active',cd:5.5,mp:16,range:275,tl:'Chủ động tầm trung · bấm để dùng · bấm Q lần 2 khi kiếm đang xoáy để dịch chuyển theo kiếm',desc:'Phóng chính thanh kiếm đang cầm lượn cung chữ S tới trước 275, xoáy chém tại đích, dán Ấn Bùa rồi lượn cong bay về tay. Bấm Q lần nữa khi kiếm đang xoáy để hóa chớp vàng dịch chuyển tới tâm xoáy.',up:'+25% sát thương, -6% hồi chiêu',
+   qi(l){const k=lv(l)*pw();return ['Bay tới 275, xoáy bán kính 105 tại đích, bay về tay',hudNumber(qcP(80)*k)+' lượt đi · '+hudNumber(qcP(45)*k)+' × 2 xoáy · '+hudNumber(qcP(75)*k)+' lượt về','Xoáy gom quái 30 vào tâm và dán Ấn Bùa. Kiếm về tay mà đã trúng quái thì hoàn 1 giây hồi chiêu. Bấm Q lần 2 trong lúc xoáy (0,24–0,56 giây) để dịch chuyển tới tâm xoáy.']},
+   cast(tg,l,sk){msQCast(tg,l,sk)}},
   {id:'k2',ic:'ms_f',hotkey:'F',power:28,name:'Bát Quái Tỏa Ma Trận',g:'陣',kind:'active',cd:9.5,mp:20,range:320,tl:'Trận pháp tầm xa · bấm để dùng',desc:'Ném phù khai mở trận đồ Bát Quái Âm Dương từ xa, cầm chân âm binh trong trận và giáng phi kiếm trấn tà liên tục.',up:'+25% sát thương, -6% hồi chiêu',
    qi(l){return ['Khai trận cách người tới 155, bán kính '+hudNumber(130),hudNumber(this.power*lv(l)*pw())+' lúc khai trận · '+hudNumber(qcP(45)*lv(l)*pw())+' mỗi phi kiếm giáng','Trận giữ 3,5 giây, làm chậm 60% quái trong trận; mỗi 0,65 giây 2–3 phi kiếm cắm xuống quái trong trận.']},
    cast(tg,l){const a=angTo(tg),d=Math.min(155,Math.hypot(tg.x-P.x,tg.y-P.y)||155),cx=clamp(P.x+Math.cos(a)*d,40,AW-40),cy=clamp(P.y+Math.sin(a)*d,40,AH-40),base=this.power*lv(l)*pw(),st=qcP(45)*lv(l)*pw(),R=130,T0=0.18,DUR=3.5;
@@ -3363,7 +3400,7 @@ const WEAPONS={
   {id:'ms_pas2_chusaphu',start:1,name:'Chu Sa Phù Ấn',g:'符',kind:'passive',desc:'Q, F, C và đòn C đánh thường dán Ấn Bùa Vàng lên đầu quái (4 giây). Đánh thường hoặc Phi Kiếm kích nổ Ấn Bùa: nổ Bát Quái nhỏ 75% ATK lan bán kính 85, làm chậm 25% trong 1,5 giây và hồi 3 Nội lực.'},
   {id:'ms_pas3_nguloi',name:'Ngũ Lôi Dẫn Pháp',g:'雷',kind:'passive',desc:'Mỗi 4 lần kích nổ Ấn Bùa (hoặc ngay khi tung Bát Quái Vạn Kiếm Quy Tông) tự giáng 1 tia sấm vàng xuống kẻ địch nhiều Máu nhất trong 280: 135% ATK, xuyên 25% giáp, tê liệt 0,4 giây.'},
   {id:'ms_pas4_nguphong',name:'Ngự Phong Đạo Thể',g:'風',kind:'passive',desc:'Không nhận sát thương trong 3 giây: +12% tốc chạy và +10% Chí mạng. Khi đủ 3 Phi Kiếm hộ thể bay quanh người: thêm +15% sát thương và giảm 15% Nội lực tiêu hao của mọi chiêu.'},
-  {id:'linhphu',start:1,name:'Tam Thanh Linh Phù Ấn',g:'印',kind:'passive',desc:'Đánh thường (mỗi 2 chu kỳ A–B; ở +6 đòn C khắc lên mọi quái trúng) và Đồng Tiền Dẫn Kiếm Phù khắc Linh Phù Ấn lên quái (tối đa 3 tầng, giữ 6 giây). Thái Thanh Phù Kiếm Vũ và Bát Quái Vạn Kiếm Quy Tông kích nổ ấn: nổ lan bán kính 95, thêm 32% ATK mỗi tầng, hồi 4 Nội lực mỗi tầng (tối đa 12), +2 Liên kích mỗi tầng.'},
+  {id:'linhphu',start:1,name:'Tam Thanh Linh Phù Ấn',g:'印',kind:'passive',desc:'Đánh thường (mỗi 2 chu kỳ A–B; ở +6 đòn C khắc lên mọi quái trúng) và nhịp xoáy đầu của Du Long Ngự Kiếm Phù khắc Linh Phù Ấn lên quái (tối đa 3 tầng, giữ 6 giây). Thái Thượng Ngũ Lôi Kiếm Trận và Bát Quái Vạn Kiếm Quy Tông kích nổ ấn: nổ lan bán kính 95, thêm 32% ATK mỗi tầng, hồi 4 Nội lực mỗi tầng (tối đa 12), +2 Liên kích mỗi tầng.'},
   {id:'k6',ic:'ms_x',hotkey:'X',power:8,name:'Bát Quái Vạn Kiếm Quy Tông',g:'萬',kind:'ult',cd:24,mp:35,range:560,ground:true,aim:'lane',tl:'Đại chiêu tầm xa · bấm để dùng',desc:'Dựng pháp luân Bát Quái sau lưng bắn xối xả hai mươi tư thanh phi kiếm xuyên màn hình, rồi hợp nhất thành Cự Kiếm Trấn Yêu hủy diệt mọi tà ma. Ngắm: di chuột hoặc chạm để chọn hướng.',up:'+25% sát thương',
    qi(l){return ['Làn kiếm dài 700 theo hướng ngắm',hudNumber(this.power*lv(l)*pw())+' × 6 đợt + '+hudNumber(qcP(320)*lv(l)*pw())+' cự kiếm','Đợt kiếm đẩy quái dồn về phía trước. 1,55 giây cự kiếm lao xuyên làn, kích nổ Linh Phù Ấn.']},
    cast(tg,l){const dd=Math.hypot(tg.x-P.x,tg.y-P.y),a=dd>24?Math.atan2(tg.y-P.y,tg.x-P.x):(P.facing===-1?Math.PI:0),f=Math.cos(a)<0?-1:1,ca=Math.cos(a),sa=Math.sin(a),x0=P.x,y0=P.y,wv=this.power*lv(l)*pw(),big=qcP(320)*lv(l)*pw(),LEN=700;
@@ -3372,18 +3409,9 @@ const WEAPONS={
     const lane=(D,dmg,o,dl0)=>{const ax=x0,ay=y0,bx=x0+ca*D,by=y0+sa*D;let mp=0;for(const e of enemiesIn((ax+bx)/2,(ay+by)/2,D/2+110)){if(e.dead||segDist(e.x,e.y,ax,ay,bx,by)>e.r+60)continue;const k=clamp(((e.x-ax)*ca+(e.y-ay)*sa)/D,0,1);later(dl0*k,()=>{if(e.dead)return;hit(e,dmg,o(),ax,ay);if(o.det){qcMpBack(detonateChuSa(e))}},'h')}};
     for(let i=0;i<6;i++)later(0.15+i*0.18,()=>lane(LEN,wv,()=>H({kb:40,nofx:1,noflash:1}),0.3),'h');
     later(1.55,()=>{const o=()=>H({kb:150,stun:0.3,nofx:1,noflash:1,cb:{n:1}});o.det=1;lane(LEN,big,o,0.3);G.hs2=Math.max(G.hs2||0,0.05);G.shake=Math.max(G.shake||0,5);G.flash=Math.max(G.flash||0,0.08);sfx('wanjian_launch',0.55,0.1);if(!vkPoseOn())swing(a,1)},'h')}},
-  {id:'k7',ic:'ms_c',hotkey:'C',power:32,name:'Thái Thanh Phù Kiếm Vũ',g:'天',kind:'active',cd:12,mp:22,range:300,tl:'Dồn sát thương tầm xa · bấm để dùng',desc:'Triệu hồi mưa phi kiếm và hoàng phù bắn dồn dập vào vùng mục tiêu từ xa, kết thúc bằng cự kiếm giáng trời kích nổ Linh Phù Ấn.',up:'+25% sát thương, -6% hồi chiêu',
-   qi(l){return ['Vùng bán kính 120 cách người tới 175',hudNumber(qcP(28)*lv(l)*pw())+' × 8 phi kiếm + '+hudNumber(this.power*lv(l)*pw())+' cự kiếm','0,95 giây cự kiếm cắm xuống tâm hố, choáng 0,4 giây, kích nổ Linh Phù Ấn (hồi Nội lực).']},
-   cast(tg,l){const t0=densest(P.x,P.y,320)||tg,a=Math.atan2(t0.y-P.y,t0.x-P.x),d=Math.min(175,Math.hypot(t0.x-P.x,t0.y-P.y)),tx=clamp(P.x+Math.cos(a)*d,40,AW-40),ty=clamp(P.y+Math.sin(a)*d,40,AH-40),rn=qcP(28)*lv(l)*pw(),fin=this.power*lv(l)*pw(),R=120,f=Math.cos(a)<0?-1:1;
-    if(Math.abs(Math.cos(a))>0.15)P.facing=f;P.avAnim='attack';swing(a,1);P.av=P.avTotal=0.4;sfx('wanjian_launch',0.5,0.12);notice('Thái Thanh Phù Kiếm Vũ');
-    for(let i=0;i<8;i++)later(0.04+i*0.09,()=>{const an=rnd(0,TAU),rr=rnd(0,R*0.75),ex=tx+Math.cos(an)*rr,ey=ty+Math.sin(an)*rr*0.55,sx=P.x-f*rnd(14,36),sy=P.y-rnd(50,80),mx=(sx+ex)/2,my=Math.min(sy,ey)-rnd(170,230),TF=0.3;
-     if(vok('ms_sword'))fx({k:'msfly',n:'ms_sword',x0:sx,y0:sy,mx,my,x1:ex,y1:ey+4,w:84,T:TF+0.3,tf:TF,ez:'in',fo:0.22,tr:1});if(vok('ms_tal'))fx({k:'msfly',n:'ms_tal',x0:sx,y0:sy+8,mx:mx-f*14,my:my+20,x1:ex-f*10,y1:ey-6,w:42,T:TF+0.08,tf:TF+0.04,ez:'in',fo:0.08});
-     later(TF,()=>{for(const e of enemiesIn(ex,ey,44))hit(e,rn,H({stun:0.06,nofx:1,noflash:1,comboX:1,mark:1}),ex,ey-30);if(!LOWFX)for(let k=0;k<4;k++)part(ex+rnd(-6,6),ey,rnd(-50,50),rnd(-80,-30),rnd(0.25,0.45),rnd(2,3),'#9a8470',0)},'h')},'h');
-    later(0.81,()=>{if(vok('ms_colossal'))fx({k:'msfly',n:'ms_colossal',x0:tx,y0:ty-560,x1:tx,y1:ty+14,w:310,T:0.14+0.4+0.35,tf:0.14,ez:'in',fo:0.35,ax:0.97})},'h');
-    later(0.95,()=>{if(vok('ms_crater')&&G.decals.length<40){const w=300;G.decals.push({img:'ms_crater',x:tx,y:ty,w,h:w*VFX.ms_crater.naturalHeight/VFX.ms_crater.naturalWidth,t:0,T:1.6,fo:0.4,pop:1,sm:1})}
-     let mp=0;const cb={n:3};for(const e of enemiesIn(tx,ty,R)){hit(e,fin,H({kb:120,stun:0.4,cb,nofx:1,noflash:1}),tx,ty);mp+=detonateChuSa(e)}qcMpBack(mp);G.hs2=Math.max(G.hs2||0,0.033);G.shake=Math.max(G.shake||0,8);sfx('rulai_impact',0.7,0.1);
-     {const rk=[];for(let i=0;i<10;i++){const an=rnd(0,TAU),v=rnd(90,190);rk.push({x:tx+Math.cos(an)*24,y:ty+Math.sin(an)*12,vx:Math.cos(an)*v,vy:rnd(-150,-70),fl:ty+Math.sin(an)*rnd(24,60),b:0,s:rnd(4,7),r:rnd(0,TAU),vr:rnd(-9,9),n:3+(i%3)})}fx({k:'fdeb',rk,T:0.9,c:'#4A3C33',o:'#1C1512'})}
-     for(let i=0;i<4;i++){const an=i*TAU/4+rnd(-0.4,0.4);spawnGhostMist(tx+Math.cos(an)*55,ty+Math.sin(an)*20,{n:1,sz:rnd(70,95),ma:0.3,T:rnd(0.7,0.95),drift:50})}},'h')}},
+  {id:'k7',ic:'ms_ic_c',hotkey:'C',power:24,name:'Thái Thượng Ngũ Lôi Kiếm Trận',g:'雷',kind:'active',cd:15,mp:32,range:340,tl:'Trận pháp tầm xa · bấm để dùng',desc:'Tám phi kiếm kèm bùa bay vồng cắm vào tám đỉnh Trận Bát Quái tại chỗ đông quái nhất; lưới lôi điện giật liên hoàn quái trong trận, giây 0,95 tâm Thái Cực bừng sáng kích nổ toàn bộ Ấn Bùa.',up:'+25% sát thương, -6% hồi chiêu',
+   qi(l){const k=lv(l)*pw();return ['Trận elip 155 × 96 tại chỗ đông quái nhất trong 340',hudNumber(qcP(60)*k)+' lúc cắm kiếm · '+hudNumber(qcP(50)*k)+' × 4 lôi điện · '+hudNumber(this.power*k)+' bừng sáng','Cắm kiếm dán Ấn Bùa; mỗi nhịp điện tê liệt 0,2 giây; giây 0,95 kích nổ Ấn Bùa và Linh Phù Ấn (hồi Nội lực).']},
+   cast(tg,l){msCCast(tg,l,this)}},
   {id:'k_ward',ic:'ms_ic_ward2',hotkey:'V',low:1,cc:1,name:'Huyền Thiên Kim Quang Chú',g:'護',kind:'active',cd:15,mp:18,range:0,tl:'Hộ thể · bấm được cả khi bị khống chế · tự bật khi Máu dưới 35%',desc:'Xóa khống chế, dựng Lồng Bát Quái Kim Quang và 4 đạo phù xoay hộ thể trong 3,5 giây: Giáp Kim Quang 20% Máu tối đa, +25% tốc chạy, +20% né tránh, lập tức gọi đủ 3 Linh Kiếm Hộ Pháp và tăng 35% tốc chém của chúng. Khiên vỡ thì 4 đạo phù nổ sấm vàng đẩy lùi quái và dán Ấn Bùa lên tất cả.',up:'-6% hồi chiêu',
    qi(l){return ['Quanh người, 3,5 giây','Khiên '+hudNumber(S.hp*0.2)+' Máu · vỡ khiên: '+hudNumber(qcP(60)*pw())+' bán kính 160','Xóa khống chế. +25% tốc chạy, +20% né tránh, gọi đủ 3 Phi Kiếm (+35% tốc chém). Tự bật khi Máu dưới 35% nếu đã hồi xong.']},
    cast(){msWard()}},
@@ -4120,6 +4148,7 @@ function canRequestHumanSkill(){
 function requestHumanSkill(key){
  if(key[0]==='g'){requestGodSkill(key);return}
  const sk=hudSkill(key);
+ if(sk&&sk.def.id==='k1'&&msOn()&&canRequestHumanSkill()&&msQTp())return;
  if(!canRequestHumanSkill(sk&&sk.def.cc))return;
  if(!sk?.def.hotkey)return;
  if(P.skillAim?.key===key){cancelSkillAim();return}
@@ -4390,7 +4419,7 @@ function updProj(dt){
 }
 function updZones(dt){
  for(const z of G.zones){
-  z.t+=dt;if(z.follow){z.x=P.x;z.y=P.y}
+  z.t+=dt;if(z.follow){z.x=P.x;z.y=P.y}if(z.kind==='msq')msQTick(z);
   if(z.kind==='blades'&&!z.sw){z.rot+=dt*5;for(let i=0;i<z.n;i++){const a=z.rot+i*TAU/z.n,bx=z.x+Math.cos(a)*z.r,by=z.y-10+Math.sin(a)*z.r*0.8;for(const e of enemiesIn(bx,by,16)){if((z.hm.get(e)||0)>G.t)continue;z.hm.set(e,G.t+0.35);hit(e,z.dmg,z.o,z.x,z.y)}}}
   else if(z.kind==='blades'){/* Linh Kiếm Hộ Pháp: phi kiếm bay vòng (chu kỳ 3,2s như bản gốc), thấy quái gần thì lao tới chém rồi quay về */
    z.rot+=dt*TAU/3.2;const RX=92*Ar(),RY=55*Ar();
@@ -4639,6 +4668,8 @@ function drawHaz(h){
 function drawZone(z){
  const c=X,k=z.t/z.T,a=Math.min(1,(1-k)*4,z.t*8);c.save();c.globalAlpha=a;
  if(z.kind==='whirl'){c.globalCompositeOperation='lighter';for(let i=0;i<3;i++){const s=G.t*14+i*TAU/3;c.strokeStyle=z.c;c.globalAlpha=a*0.55;c.lineWidth=10;c.beginPath();c.ellipse(z.x,z.y-12,z.r,z.r*0.75,0,s,s+1.4);c.stroke();c.strokeStyle='#fff';c.globalAlpha=a*0.8;c.lineWidth=2;c.beginPath();c.ellipse(z.x,z.y-12,z.r*0.95,z.r*0.72,0,s,s+1.2);c.stroke()}}
+ else if(z.kind==='msc')mscDraw(c,z,1);
+ else if(z.kind==='msq')msQDraw(c,z);
  else if(z.kind==='ward'){/* hộ thể: Đại Hồng Chung (Quyền) hoặc Lồng Bát Quái Kim Quang (Mao Sơn) bám quanh người */const w=P.ward;if(w&&!P.deadAt){const t=G.t-w.t0,al=Math.min(1,t/0.15)*Math.min(1,Math.max(0,(w.until-G.t)/0.25)),n=w.k==='bell'?'tc_bell2':'ms_ward2';if(vok(n)){const im=VFX[n],Hh=w.k==='bell'?170:190,Ww=Hh*im.naturalWidth/im.naturalHeight,sc=w.k==='bell'?1+0.02*Math.sin(t*9):1,by=w.k==='bell'?0:Math.sin(t*3)*3;c.save();c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.translate(P.x,P.y-52+by);if(w.k!=='bell')c.rotate(t*0.9);c.scale(sc,sc);c.globalAlpha=al*(w.k==='bell'?0.92:0.8);c.drawImage(im,-Ww/2,-Hh/2,Ww,Hh);if(!LOWFX&&(w.k==='bell'?G.t-w.lp<0.18:t<0.2)){c.globalCompositeOperation='lighter';c.globalAlpha=al*0.35;c.drawImage(im,-Ww/2,-Hh/2,Ww,Hh)}c.restore()}}}
  else if(z.kind==='msg'){/* 2 phi kiếm hộ thể lơ lửng hai bên vai đạo sĩ (chỉ hình) */if(msOn()&&!P.deadAt&&vok('ms_sword'))for(const s of[-1,1]){const bx=P.x+s*28,by=P.y-64+Math.sin(G.t*2.4+s)*4;msImgD(c,VFX.ms_sword,bx,by,50,-Math.PI/2+s*0.22,0.5,0.92);if(!LOWFX){c.save();c.globalCompositeOperation='lighter';msImgD(c,VFX.ms_sword,bx,by,50,-Math.PI/2+s*0.22,0.5,0.16+0.06*Math.sin(G.t*4+s));c.restore()}}}
  else if(z.kind==='msx'){/* X: nhịp 1 (0-1,25 s) pháp luân Bát Quái đứng nghiêng sau lưng, 24 phi kiếm + bùa bay xuyên làn; nhịp 2 cự kiếm tụ khí ngang người 1,25-1,55 s rồi lao xuyên làn với sương mỏng */const t=z.t;
@@ -5173,7 +5204,7 @@ function render(){
  if(G){
   for(const s of G.spawnQ){const k=1-s.t/(s.big?1.6:0.7);c.strokeStyle=`rgba(255,60,30,${0.4+k*0.5})`;c.lineWidth=2;const r=s.big?40:14;c.beginPath();c.arc(s.x,s.y,r,0,TAU);c.stroke();c.beginPath();c.moveTo(s.x-r*.6,s.y-r*.6);c.lineTo(s.x+r*.6,s.y+r*.6);c.moveTo(s.x+r*.6,s.y-r*.6);c.lineTo(s.x-r*.6,s.y+r*.6);c.stroke()}
   for(const h of G.haz)drawHaz(h);
-  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones){if(z.kind==='txk')txkGround(ctx,z);else if(z.kind==='vkx'){z._gp=1;drawZone(z);z._gp=0}else if(z.kind==='qcfire')qcFireDraw(ctx,z);
+  for(const z of G.zones)if(z.kind==='mud'||z.kind==='array'||z.kind==='seal'||z.kind==='fire')drawZone(z);for(const z of G.zones){if(z.kind==='msc')mscDraw(ctx,z,0);else if(z.kind==='txk')txkGround(ctx,z);else if(z.kind==='vkx'){z._gp=1;drawZone(z);z._gp=0}else if(z.kind==='qcfire')qcFireDraw(ctx,z);
   else if(z.kind==='qcult'){const t=z.t,al=0.35*(t<0.2?t/0.2:t<1.15?1:Math.max(0,(1.55-t)/0.4));ctx.save();ctx.globalAlpha=al;ctx.fillStyle='rgb(10,4,8)';ctx.fillRect(z.x-1600,z.y-1200,3200,2400);ctx.restore()}
   else if(z.kind==='vkx2'){/* đại chiêu: nền tối đi để kiếm và quái nổi lên */const t=z.t,al=0.32*(t<0.25?t/0.25:t<z.T-0.5?1:Math.max(0,(z.T-t)/0.5));ctx.save();ctx.globalAlpha=al;ctx.fillStyle='#04050c';ctx.fillRect(z.x-1600,z.y-1200,3200,2400);ctx.restore();if(z.m===3&&t>2.8)vkCrater(ctx,z)}}
   drawHeal(c);drawPhase2(c);drawChest(c);drawAmPortal(c);drawSkillAim(c);
@@ -5191,7 +5222,7 @@ function render(){
   if(G.lowTag&&G.state==='play'){const y=P.y-122+Math.sin(G.t*6)*2;c.font='800 13px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=4;c.strokeStyle='rgba(0,0,0,.85)';c.strokeText('Máu thấp',P.x,y);c.fillStyle='#ff6a5a';c.fillText('Máu thấp',P.x,y)}
   for(const t of G.enemies)if(t.nm&&!t.dead){const y=t.y-t.r*3.4-8;c.font='700 12px "Be Vietnam Pro"';c.textAlign='center';c.lineWidth=3;c.strokeStyle='#000';c.strokeText(t.nm,t.x,y);c.fillStyle='#ff8a70';c.fillText(t.nm,t.x,y);const w=60;c.fillStyle='#1a0806';c.fillRect(t.x-w/2-1,y+4,w+2,6);c.fillStyle='#d8382a';c.fillRect(t.x-w/2,y+5,w*Math.max(0,t.hp/t.mhp),4)}
   for(const t of G.enemies)if(!t.dead&&t.swordMarkUntil>G.t){const left=(t.swordMarkUntil-G.t)/3,x=t.x,y=t.y-t.r*3.4-(t.nm?26:10);c.save();c.fillStyle='#f2c562';c.strokeStyle='#5a3a12';c.lineWidth=1.5;c.beginPath();c.moveTo(x,y-7);c.lineTo(x+5.5,y);c.lineTo(x,y+7);c.lineTo(x-5.5,y);c.closePath();c.fill();c.stroke();c.strokeStyle='#ffe3a0';c.lineWidth=2;c.beginPath();c.arc(x,y,10,-Math.PI/2,-Math.PI/2+TAU*left);c.stroke();c.restore()}
-  for(const z of G.zones)if(z.kind==='whirl'||z.kind==='blades'||z.kind==='staff'||z.kind==='staffx'||z.kind==='vkx'||z.kind==='vkx2'||z.kind==='vkbig'||z.kind==='txk'||z.kind==='qypalm'||z.kind==='qcult'||z.kind==='msg'||z.kind==='msx'||z.kind==='ward')drawZone(z);
+  for(const z of G.zones)if(z.kind==='whirl'||z.kind==='blades'||z.kind==='staff'||z.kind==='staffx'||z.kind==='vkx'||z.kind==='vkx2'||z.kind==='vkbig'||z.kind==='txk'||z.kind==='qypalm'||z.kind==='qcult'||z.kind==='msg'||z.kind==='msx'||z.kind==='ward'||z.kind==='msc'||z.kind==='msq')drawZone(z);
   for(const p of G.pproj)drawProj(p);
   for(const p of G.eproj){if(p.pt&&vok('petal')){c.save();c.translate(p.x,p.y);c.rotate(G.t*9+p.x*0.01);c.drawImage(VFX.petal,-14,-14,28,28);c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,140,180,.25)';circle(0,0,12);c.restore();continue}c.save();c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,90,20,.45)';circle(p.x,p.y,p.r+5);c.fillStyle='#ffd07a';circle(p.x,p.y,p.r*0.6);c.restore()}
   pm('nhãn/đạn/zone');for(const f of G.fx)if(!f.gr)drawFx(f);pm('hiệu ứng (fx)');
@@ -5986,7 +6017,7 @@ function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d'
  }}
 function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=sectOpen(cr.sect),W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
- $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/crestpx_${k}.png" width="34" height="34" alt=""></span><b>${S0.n}</b>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
+ $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/crest2_${k}.webp?v=2911kh" width="34" height="34" alt=""></span><b>${S0.n}</b>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
  $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này chưa mở khóa, chưa chơi được</em>'}`;
  {const oc=OUTC.find(o=>o.k===(cr.outC||'goc'))||OUTC[0];$('#crHairN').textContent='Nhuộm sắc y phục\n'+outName(oc,cr.gender)}$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crOutC').innerHTML=OUTC.filter(o=>!o.g||o.g===cr.gender).map(o=>`<button class="cxc${(cr.outC||'goc')===o.k?' on':''}" data-oc="${o.k}" title="${outName(o,cr.gender)}" aria-label="${outName(o,cr.gender)}"><i style="background:${outSw(o,cr.gender)}"></i></button>`).join('');

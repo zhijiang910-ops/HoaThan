@@ -1,0 +1,11 @@
+BỘ 6 KÝ HIỆU MÔN PHÁI — KHỬ TÀ DIỆT MA (ẤN KÝ GIA HUY KIẾM HIỆP U TỐI)
+- Phong cách: Đồng cổ, thép đen, chu sa khô — thiết kế dạng ấn ký/gia huy môn phái, không phải icon vũ khí.
+- 6 phái chính thức:
+  1. maoson_c.png     : Mao Sơn Phái (Bát Quái Âm Dương Ngũ Lôi Ấn)
+  2. thiencuong_c.png : Thiên Cương Môn (Thuẫn Ấn Bắc Đẩu Thất Tinh & Kim Cang Chùy)
+  3. doanhon_c.png    : Đoạn Hồn Cốc (Huyết Nguyệt Rỉ Máu & Xích Sắt Đoạn Hồn)
+  4. phasat_c.png     : Phá Sát Môn (Gia Huy Hình Thoi Bạch Hổ Chu Sa)
+  5. cuuu_c.png       : Cửu U Tông (Quỷ Môn Quan & U Minh Tam Hỏa Đài Sen)
+  6. truynguyet_c.png : Truy Nguyệt Các (Nhật Nguyệt Giao Huy & Tinh Bàn 4 Cánh)
+- Kèm đủ cỡ 24px, 36px, 48px, 72px, 128px + alias cũ (tramyeu, phucma, huyenlinh, truyhon) cho game/assets/ui/phai/.
+- Nhớ tăng ?v=2911kh (cache-busting) khi chép đè vào game/index.html.
