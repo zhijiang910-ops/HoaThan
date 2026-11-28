@@ -2156,6 +2156,11 @@ html body #pause .pzo{min-height:0;overflow-y:auto;overscroll-behavior:contain}
 html body #pause .pzs>*{min-width:0;overflow:hidden}html body #pause .pzs>* *{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (max-height:330px){html body #pause .pzr small{display:none}html body #pause .pz{padding:6px 12px!important}html body #pause .pzh{margin-bottom:2px!important}html body #pause .pzh h2{font-size:15px!important}html body #pause .pzr{min-height:25px!important}html body #pause .pzc{margin-top:4px!important}html body #pause .pzc .btn{padding-top:4px!important;padding-bottom:4px!important}}
 @media (max-width:720px){html body #hud #top{left:204px!important;right:auto!important;transform:none!important;width:min(360px,calc(100vw - 280px))!important}}
+/* 29/11 huy hiệu môn phái mới (crest_*.png 128px, thu mịn): khóa = tối nhẹ vẫn thấy chi tiết; đang chọn = sáng + bóng */
+#create .cxsb .sic.big{height:auto!important;width:auto!important;margin:0 0 1px!important}
+#create .cxsb .sic.big img{image-rendering:auto!important;filter:none!important;width:clamp(18px,6.2vh,46px)!important;height:clamp(18px,6.2vh,46px)!important}
+#create .cxsb.lock .sic.big img{filter:brightness(.55) saturate(.75)!important}
+#create .cxsb.on .sic.big img{filter:brightness(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.65))!important}
 </style>
 <style id="crFrame">/* 27/11 MÀN TẠO NHÂN VẬT: khung dọc xích-bùa (PNG chủ game) cho 2 bảng + nút Khởi hành vải đỏ (PNG chủ game). Chia 30/40/30. */
 html body #create .cx{grid-template-columns:30fr 40fr 30fr!important}
@@ -3638,12 +3643,12 @@ const AM_ENC={3:{tier:'boss',types:['nguudau','madien'],pair:1},4:{tier:'mini',t
 /* ===== 6 MÔN PHÁI (chủ game chốt 24/11): chỉ là dữ liệu, CHƯA nối vào game (chưa có màn chọn phái, chưa có bộ chiêu ngoài Kiếm) =====
    avatar = chân dung đại diện nam/nữ (ảnh ChatGPT do chủ game đưa, cắt từ tấm tổng hợp). Chỉ Mao Sơn Phái (Kiếm) đã có trong game. */
 const SECTS={
- maoson:{n:'Mao Sơn Phái',zh:'茅山派',weapon:'Kiếm',role:'Đạo thuật, phù chú, trấn tà',color:'Xanh đậm, vàng'},
- tramyeu:{n:'Trảm Yêu Môn',zh:'斬妖門',weapon:'Đao',role:'Bạo kích, sát thương diện rộng',color:'Đỏ, đen, vàng đồng'},
- phucma:{n:'Phục Ma Tự',zh:'伏魔寺',weapon:'Trượng',role:'Phòng ngự, hộ thể, trấn ma',color:'Nâu, vàng đồng'},
- thiencuong:{n:'Thiên Cương Môn',zh:'天罡門',weapon:'Quyền',role:'Cận chiến, liên kích, cương khí',color:'Trắng, đỏ sẫm'},
- huyenlinh:{n:'Huyền Linh Các',zh:'玄靈閣',weapon:'Quạt',role:'Pháp thuật, khống chế, hỗ trợ',color:'Tím, bạc'},
- truyhon:{n:'Truy Hồn Cốc',zh:'追魂谷',weapon:'Cung',role:'Tầm xa, xuyên thấu, truy hồn',color:'Xanh rêu, đen'}
+ maoson:{n:'Mao Sơn Phái',zh:'茅山派',weapon:'Kiếm & Phù chú',role:'Tầm xa, đạo thuật, phù chú, trấn tà',color:'Xanh đậm, vàng'},
+ tramyeu:{n:'Đoạn Hồn Cốc',zh:'斷魂谷',weapon:'Trọng Đao',role:'Cận chiến, bạo kích, sát thương diện rộng',color:'Đỏ, đen, vàng đồng'},
+ phucma:{n:'Phá Sát Môn',zh:'破煞門',weapon:'Trường Thương',role:'Cận chiến, xuyên phá, trấn sát',color:'Đỏ sẫm, đồng'},
+ thiencuong:{n:'Thiên Cương Môn',zh:'天罡門',weapon:'Quyền Cước',role:'Cận chiến, liên kích, cương khí',color:'Trắng, đỏ sẫm'},
+ huyenlinh:{n:'Cửu U Tông',zh:'九幽宗',weapon:'Hồn Phiên',role:'Tầm xa, pháp thuật, khống chế',color:'Lục u, đen'},
+ truyhon:{n:'Truy Nguyệt Các',zh:'追月閣',weapon:'Cung Tiễn',role:'Tầm xa, xuyên thấu, truy kích',color:'Bạc nguyệt, xanh lam'}
 };
 for(const k in SECTS)SECTS[k].avatar={nam:'assets/portraits/phai-'+k+'-nam.webp',nu:'assets/portraits/phai-'+k+'-nu.webp'};
 function amFloor(n){const z=AM_ZONES.find(z=>n>=z.f[0]&&n<=z.f[1]);if(!z)return null;const e=AM_ENC[n]||null;return{n,zone:z.id,map:z.map,pool:z.pool.slice(),elites:z.elite[n-z.f[0]],boss:e&&{tier:e.tier,types:e.types.slice(),pair:!!e.pair}}}
@@ -5762,7 +5767,7 @@ function profWeapon(){const P0=prof();return P0&&P0.sect&&SECT_WEAPON[P0.sect]||
 /* 25/11 (chủ game: lấy lại hình avatar cũ + giữ 6 chân dung hiện tại): avatar 1-8 = tấm ảnh nhỏ cũ (avatar-nam/nu.webp, 4x2 ô), 9-14 = chân dung 6 phái */
 const PLAYER_AVATAR_SHEETS={};
 for(const gender of ['nam','nu']){const img=new Image();PLAYER_AVATAR_SHEETS[gender]=img;img.onload=()=>{const profile=prof();if(profile?.gender===gender&&!$('#lobby').hidden)paintLobbyAvatar(profile);if(G?.cfg.gender===gender)paintAva()};img.src='assets/portraits/avatar-'+gender+'.webp'}
-const SECT_KEYS=['maoson','tramyeu','phucma','thiencuong','huyenlinh','truyhon'];
+const SECT_KEYS=['maoson','thiencuong','tramyeu','phucma','huyenlinh','truyhon'];/* 29/11 thứ tự hiển thị theo chủ game; khóa giữ tên cũ (tramyeu=Đoạn Hồn Cốc, phucma=Phá Sát Môn, huyenlinh=Cửu U Tông, truyhon=Truy Nguyệt Các) */
 /* 25/11 (chủ game): chỉ MỞ Kiếm (Mao Sơn) + Quyền (Thiên Cương) khi tạo nhân vật; 4 phái còn lại khóa, hiện hình ổ khóa (assets/ui/khoa.png). Bộ chiêu Đao/Trượng/Quạt/Cung vẫn nằm trong code; hồ sơ ĐÃ có phái bị khóa vẫn chơi được (sectOpen). Mở lại: thêm khóa phái vào SECT_OPEN. */
 const SECT_OPEN=['maoson','thiencuong'];const sectOpen=k=>!!SECT_WEAPON[k]&&(SECT_OPEN.includes(k)||(()=>{try{const p=prof();return !!p&&p.sect===k}catch(e){return false}})());
 const LOCK_IMG='<img class="lkimg" src="assets/ui/khoa.png" alt="khóa" width="16" height="16">';
@@ -5843,7 +5848,7 @@ function crHero(t){const cn=$('#crPic');if(!cn)return;const g=cn.getContext('2d'
  }}
 function renderCreate(){const SC=SECTS[cr.sect]||SECTS.maoson,open=sectOpen(cr.sect),W=open?WEAPONS[SECT_WEAPON[cr.sect]]:null,H0=HAIR[cr.gender][cr.hairI];
  $('#crGender').innerHTML=[['nam','Nam'],['nu','Nữ']].map(([k,n])=>`<button class="cxb${cr.gender===k?' on':''}" data-cg="${k}">${n}</button>`).join('');
- $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/${k}_c.png" width="34" height="34" alt=""></span><b>${S0.n}</b>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
+ $('#crSect').innerHTML=SECT_KEYS.map(k=>{const S0=SECTS[k],on=cr.sect===k;return `<button type="button" class="cxwb cxsb${on?' on':''}${sectOpen(k)?'':' lock'}" data-sect="${k}" aria-pressed="${on}" title="${S0.n} · ${S0.weapon}${sectOpen(k)?'':' · chưa mở khóa'}"><span class="sic big" role="img" aria-label="${S0.weapon}"><img src="assets/ui/phai/crest_${k}.png?v=2911" width="34" height="34" alt=""></span><b>${S0.n}</b>${sectOpen(k)?'':LOCK_IMG}</button>`}).join('');
  $('#crWInfo').innerHTML=`<span><b>${SC.n}</b> ${SC.zh}</span>${open?'':'<em>Phái này chưa mở khóa, chưa chơi được</em>'}`;
  {const oc=OUTC.find(o=>o.k===(cr.outC||'goc'))||OUTC[0];$('#crHairN').textContent='Nhuộm sắc y phục\n'+outName(oc,cr.gender)}$('#crLock').hidden=!!H0.on;$('#crPic').classList.toggle('dim',!H0.on);
  $('#crOutC').innerHTML=OUTC.filter(o=>!o.g||o.g===cr.gender).map(o=>`<button class="cxc${(cr.outC||'goc')===o.k?' on':''}" data-oc="${o.k}" title="${outName(o,cr.gender)}" aria-label="${outName(o,cr.gender)}"><i style="background:${outSw(o,cr.gender)}"></i></button>`).join('');
