@@ -1,0 +1,149 @@
+{
+  "sect_id": "mao_son",
+  "sect_name": "Mao Sơn Đạo Pháp (Kiếm & Phù Chú Tầm Xa)",
+  "combat_archetype": "Ranged Flying-Sword & Exorcist Talisman Mage",
+  "auto_attack_trigger_range_px": 270,
+  "palette": {
+    "primary_accent": "#2D7A68",
+    "secondary_accent": "#A62622",
+    "antique_bronze": "#C89B4A",
+    "aged_talisman": "#C99A45"
+  },
+  "passive": {
+    "id": "tam_thanh_linh_phu_an",
+    "name": "Tam Thanh Linh Phù Ấn",
+    "max_stacks": 3,
+    "duration_sec": 6.0,
+    "detonate_aoe_radius_px": 95,
+    "detonate_bonus_atk_pct_per_stack": 32,
+    "detonate_mana_restore_per_stack": 4,
+    "detonate_mana_restore_cap": 12,
+    "vfx_mark": "assets/vfx_mao_son/vfx_ms_passive_mark.png",
+    "vfx_detonate": "assets/vfx_mao_son/vfx_ms_talisman_burst.png"
+  },
+  "skills": [
+    {
+      "id": "ms_basic",
+      "slot": "basic_attack",
+      "name": "Ngự Kiếm Linh Phù Quyết",
+      "type_label": "Tự động bắn tầm xa khi quái trong tầm 270px (Vũ khí +6 mở đòn C)",
+      "tooltip": "Từ xa chỉ kiếm quyết phóng phi kiếm lục ngọc và hoàng phù; vũ khí +6 mở khóa Tam Tài Phân Kiếm bắn ba phi kiếm xuyên thấu.",
+      "combo_stages": {
+        "A_flying_sword": {
+          "duration_sec": 0.22,
+          "damage_pct": 52,
+          "range_px": 280,
+          "vfx": "assets/vfx_mao_son/vfx_ms_flying_sword.png"
+        },
+        "B_twin_talismans": {
+          "duration_sec": 0.22,
+          "damage_pct": 64,
+          "range_px": 280,
+          "projectiles": 2,
+          "vfx": "assets/vfx_mao_son/vfx_ms_talisman_proj.png"
+        },
+        "C_plus6_tri_sword_fan": {
+          "requires_weapon_plus": 6,
+          "duration_sec": 0.34,
+          "damage_pct": 135,
+          "fan_count": 3,
+          "fan_spread_deg": 36,
+          "pierce_all": true,
+          "applies_linh_phu_all_targets": 1,
+          "vfx": "assets/vfx_mao_son/vfx_ms_flying_sword.png"
+        }
+      }
+    },
+    {
+      "id": "ms_dash",
+      "slot": "dash",
+      "name": "Thế Thân Độn Phù",
+      "tooltip": "Hóa sương lùi thoát khỏi vòng vây, để lại hình nhân giấy phát nổ làm chậm và đẩy lùi quái truy đuổi.",
+      "type_label": "Thân pháp tầm xa · bấm để dùng",
+      "cooldown_sec": 2.5,
+      "mana_cost": 0,
+      "hotkey": "Space",
+      "damage_pct": 95,
+      "knockback_px": 45,
+      "slow_pct": 40,
+      "icon": "assets/icons_mao_son/icon_ms_dash.png"
+    },
+    {
+      "id": "ms_skill_q",
+      "slot": "skill_1",
+      "name": "Đồng Tiền Dẫn Kiếm Phù",
+      "replaces": "Chu Sa Phá Tà Trảm (cận chiến cũ)",
+      "tooltip": "Từ xa phóng kiếm đồng tiền kéo theo ba lá hoàng phù xuyên hàng quái, nổ đẩy lùi giữ khoảng cách và khắc Linh Phù Ấn.",
+      "type_label": "Chủ động tầm xa · bấm để dùng",
+      "cooldown_sec": 5.0,
+      "mana_cost": 15,
+      "hotkey": "Q",
+      "range_px": 330,
+      "damage_pct": 165,
+      "knockback_away_from_player_px": 50,
+      "applies_linh_phu": 1,
+      "icon": "assets/icons_mao_son/icon_ms_q.png",
+      "vfx_sword": "assets/vfx_mao_son/vfx_ms_flying_sword.png",
+      "vfx_talisman": "assets/vfx_mao_son/vfx_ms_talisman_proj.png"
+    },
+    {
+      "id": "ms_skill_f",
+      "slot": "skill_2",
+      "name": "Bát Quái Tỏa Ma Trận",
+      "replaces": "Thiên Cương Trấn Ma Trận (tên cũ bị trùng Thiên Cương)",
+      "tooltip": "Ném phù khai mở trận đồ Bát Quái Âm Dương từ xa, cầm chân âm binh trong trận và giáng phi kiếm trấn tà liên tục.",
+      "type_label": "Trận pháp tầm xa · bấm để dùng",
+      "cooldown_sec": 9.5,
+      "mana_cost": 20,
+      "hotkey": "F",
+      "cast_distance_px": 155,
+      "duration_sec": 3.5,
+      "initial_damage_pct": 140,
+      "sword_strike_interval_sec": 0.65,
+      "sword_strike_damage_pct": 45,
+      "slow_inside_pct": 60,
+      "icon": "assets/icons_mao_son/icon_ms_f.png",
+      "vfx_crater": "assets/vfx_mao_son/vfx_ms_crater_ring.png",
+      "vfx_bagua": "assets/vfx_mao_son/vfx_ms_bagua_seal.png"
+    },
+    {
+      "id": "ms_skill_c",
+      "slot": "skill_3",
+      "name": "Thái Thanh Phù Kiếm Vũ",
+      "replaces": "Thái Thượng Trảm Ma",
+      "tooltip": "Triệu hồi mưa phi kiếm và hoàng phù bắn dồn dập vào vùng mục tiêu từ xa, kết thúc bằng cự kiếm giáng trời kích nổ Linh Phù Ấn.",
+      "type_label": "Dồn sát thương tầm xa · bấm để dùng",
+      "cooldown_sec": 12.0,
+      "mana_cost": 22,
+      "hotkey": "C",
+      "cast_distance_px": 175,
+      "rain_sword_count": 8,
+      "rain_hit_pct": 28,
+      "finisher_giant_sword_pct": 160,
+      "detonates_linh_phu": true,
+      "icon": "assets/icons_mao_son/icon_ms_c.png",
+      "vfx_rain_sword": "assets/vfx_mao_son/vfx_ms_flying_sword.png",
+      "vfx_finisher_sword": "assets/vfx_mao_son/vfx_ms_colossal_sword.png"
+    },
+    {
+      "id": "ms_skill_x",
+      "slot": "ultimate",
+      "name": "Bát Quái Vạn Kiếm Quy Tông",
+      "replaces": "Vạn Kiếm Tru Ma",
+      "tooltip": "Dựng pháp luân Bát Quái sau lưng bắn xối xả hai mươi tư thanh phi kiếm xuyên màn hình, rồi hợp nhất thành Cự Kiếm Trấn Yêu hủy diệt mọi tà ma.",
+      "type_label": "Đại chiêu tầm xa · bấm để dùng",
+      "cooldown_sec": 24.0,
+      "mana_cost": 35,
+      "hotkey": "X",
+      "barrage_sword_count": 24,
+      "barrage_total_pct": 240,
+      "colossal_sword_pct": 320,
+      "detonates_linh_phu": true,
+      "hit_stop_frames_60fps": 3,
+      "icon": "assets/icons_mao_son/icon_ms_x_ult.png",
+      "vfx_bagua_wheel": "assets/vfx_mao_son/vfx_ms_bagua_seal.png",
+      "vfx_barrage_sword": "assets/vfx_mao_son/vfx_ms_flying_sword.png",
+      "vfx_colossal_sword": "assets/vfx_mao_son/vfx_ms_colossal_sword.png"
+    }
+  ]
+}
