@@ -3199,7 +3199,7 @@ function msOn(){return P&&P.kit&&P.kit.w==='kiem'&&P.form!=='god'}
 function msImgD(c,im,x,y,w,ang,ax,al){if(!im||!im.complete||!im.naturalWidth||al<=0)return;const h=w*im.naturalHeight/im.naturalWidth;c.save();c.globalAlpha=al;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.translate(x,y);c.rotate(ang||0);if(Math.cos(ang||0)<-0.01)c.scale(1,-1);c.drawImage(im,-w*(ax==null?0.95:ax),-h/2,w,h);c.restore()}
 function msBasic(tg,basic){/* đánh thường tầm xa: A 1 phi kiếm (52%, xuyên 1 quái rồi găm), B 2 lá bùa (64% tổng), +6 mở C 3 phi kiếm quạt 36° xuyên mọi quái (135%/kiếm). Không chạy lại gần quái */
  const a=angTo(tg),plus6=weaponForge()>=6,L=plus6?3:2;if(P.t-(basic.lastT||-9)>1.2)basic.step=0;basic.lastT=P.t;const step=(basic.step||0)%L;basic.step=(step+1)%L;
- const DUR=[0.22,0.22,0.34][step];if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;swing(a,step===1?-1:1);P.avAnim=step===1?'attack2':'attack';P.av=P.avTotal=DUR;P.runSwing=true;
+ const DUR=[0.5,0.48,0.7][step];if(Math.abs(Math.cos(a))>0.15)P.facing=Math.cos(a)>=0?1:-1;swing(a,step===1?-1:1);P.avAnim=step===1?'attack2':'attack';P.av=P.avTotal=DUR;P.runSwing=true;
  later(DUR*0.4,()=>{if(P.deadAt||G.state!=='play')return;const ca=Math.cos(a),sa=Math.sin(a),x=P.x+ca*48,y=P.y+sa*48;
   if(step===0)shoot(x,y,a,900,{dmg:qcP(52)*pw(),pierce:2,r:24,life:300/900,kind:'mssword',w:95,stick:1,o:H({kb:20,nofx:1,swordBasic:true})});
   else if(step===1){for(const s of[-1,1])later(s<0?0:0.06,()=>shoot(P.x+ca*48,P.y+sa*48,a,820,{dmg:qcP(32)*pw(),pierce:1,r:22,life:300/820,kind:'mstal',w:72,wob:s,o:H({kb:12,nofx:1,noflash:1,swordBasic:true})}),'h');
