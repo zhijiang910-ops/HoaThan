@@ -2328,7 +2328,9 @@ html body #lobby #lbDoor .lbtag.lbtag{--bh:.0486;top:57.4%!important}
 @media (max-width:720px){html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{top:-4%!important}}
 html body #lobby .lbgrid.lbgrid.g7>.lbt.off>.lbofft{white-space:nowrap!important;width:max-content!important;height:auto!important;line-height:1.1!important}
 </style>
-<style id="sanhMenu">
+<style id="lbVh">/* 29/11 iPhone Safari ngang: khi thanh công cụ thu lại, position:fixed;inset:0 chỉ cao bằng khung NHỎ (thiếu ~63px dưới đáy) nên sảnh hở dải đen dưới và mất phần trên. Dùng chiều cao khung ĐỘNG. */
+html body #lobby:not([hidden]){top:0!important;bottom:auto!important;height:100%!important;height:100dvh!important;min-height:100%!important}
+</style><style id="sanhMenu">
 /* 28/11 thanh 6 ô: vị trí theo ô (data-s), icon chủ game (cong_cu/claude/sanh_menu_build.py), ô 6 trống */
 html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s]{top:38.095%!important;height:51.587%!important}
 html body #lobby .lbgrid.lbgrid.g7>.lbt[data-s="1"]{left:9.576%!important;width:11.510%!important}
@@ -5898,7 +5900,7 @@ function lbStageFit(){const L=$('#lobby'),st=$('#lbStage');if(!L||!st||L.hidden|
  /* chân nhân vật (72% cao ảnh) phải nằm trên thanh chức năng, chừa 8% chiều cao màn */
  const target=vh-barH-Math.max(12,vh*0.08);let off=H*0.72-target;off=Math.max(0,Math.min(off,H-vh));
  st.style.width=W+'px';st.style.height=H+'px';st.style.left=((vw-W)/2)+'px';st.style.top=(-off)+'px';st.style.setProperty('--sh',H+'px')}
-if(window.ResizeObserver)new ResizeObserver(lbStageFit).observe($('#lobby'));addEventListener('resize',lbStageFit);setInterval(lbStageFit,1000);
+if(window.ResizeObserver)new ResizeObserver(lbStageFit).observe($('#lobby'));addEventListener('resize',lbStageFit);if(window.visualViewport)visualViewport.addEventListener('resize',lbStageFit);setInterval(lbStageFit,1000);
 /* hiệu ứng canvas #lbFx: sóng chuông + tia vàng (cầu), khói đen tràn từ cửa (cổng) */
 const LBFX={p:[],on:0,t:0,spr:{}};
 /* 27/11: khói vẽ bằng sprite tròn mềm dựng sẵn theo màu (trước: tạo radialGradient cho từng hạt mỗi khung, rơi <10 FPS trên Chrome máy tính) */
