@@ -1,0 +1,32 @@
+# BÀN GIAO NÂNG CẤP ĐOẠN HỒN CỐC CHUẨN QUỶ THIẾT (ONIKIRI): CHIÊU Q LIGHT VANQUISHER 2 TẦNG, CHIÊU F CÁNH TAY QUỶ CHAU CHUỐT, ICON MỚI & KHÔI PHỤC V CŨ
+
+Đọc kỹ `CLAUDE.md` trước khi sửa `game/index.html`. Chủ game chốt nâng cấp **Đoạn Hồn Cốc** lấy cảm hứng trực tiếp từ **Quỷ Thiết (Onikiri)** (**0 LƯỢT PIXELLAB**, gắn `?v=2911dhonikiri` chống cache):
+
+## 1. CẬP NHẬT 2 ICON HUD MỚI (`256×256` chuẩn Master viền đồng mảnh, `crop 8%` mép ngoài, `imageSmoothingEnabled = false`)
+- `assets/ui/doanhon/icon_dh_q.png?v=2911dhonikiri`: **Tam Đao Quỷ Trảm** (3 tia đao khí đỏ-trắng hình quạt chuẩn *Light Vanquisher*).
+- `assets/ui/doanhon/icon_dh_f.png?v=2911dhonikiri`: **Huyết Quỷ Song Thủ** (Cánh tay giáp sắt quấn xích máu + bùa vàng cầm Trọng Đao Huyết Ma).
+
+## 2. CHIÊU Q (`Tam Đao Quỷ Trảm` — CHUẨN *LIGHT VANQUISHER* 2 TẦNG CỦA QUỶ THIẾT, CD `7,0s`, `16 NL`)
+- **Tầng 1 — Bấm Q lần 1 (`Q1` · Quét 3 Tia Đao Khí Hình Quạt)**:
+  * Phóng **`assets/vfx/vfx_dh_q_tri_slash.png?v=2911dhonikiri`** (`w = 240, h = 215`, bay lướt nhanh `260px` về trước theo hướng mặt trong `0,26s`, vẽ `source-over`, `alpha: 0.98 -> 0.0`).
+  * Gây `115%` ATK (địch dính nhiều tia từ tia thứ 2 giảm còn `40%` ST), **hất tung nhẹ `0,25s` + làm chậm `50%` trong `1,2s`**, mở cửa sổ **`4,0s`** để bấm tái kích hoạt `Q2`!
+- **Tầng 2 — Bấm Q lần 2 trong `4,0s` (`Q2` · Chém Khóa + Tụ Lực Bổ Nổ % Máu)**:
+  * Chém ngang nhanh 1 nhát cắt trước mặt (`60%` ATK), lập tức nhân vật vào trạng thái **tụ huyết khí `0,75s`** (bật Bá Thể `-30%` ST nhận, vẽ vòng tụ huyết khí xoáy đỏ + vạch báo đường bổ phía trước; vẫn cho bấm Space lướt giữ tụ lực).
+  * Hết `0,75s`, tung cú bổ sấm sét phóng sóng đao huyết hỏa **`assets/vfx/vfx_dh_q_charge_wave.png?v=2911dhonikiri`** (`w = 250, h = 132`, giữ đúng tỷ lệ ngang, bay xuyên `340px` trong `0,36s`) gây **`240%` ATK + `5%` Máu tối đa mục tiêu**, đẩy lùi nhẹ, in vệt cháy đỏ mờ sát đất (`drawDecals`) + rung camera `4.5px` + `2 frame` hit-stop!
+
+## 3. CHIÊU F (`Huyết Quỷ Song Thủ` — CHAU CHUỐT 2 CÁNH TAY QUỶ CẦM ĐAO CHỦ ĐỘNG ĐÁNH PHỤ, CD `10,0s`, `14 NL`, `5,0s`)
+- Xóa bỏ `vfx_dh_f_phantom_blade.png` cũ. Dùng bộ đôi sprite mới chuẩn Carbon:
+  * **`assets/vfx/vfx_dh_f_demon_arm_blade.png?v=2911dhonikiri`** (`400×192`, Cánh tay quỷ giáp sắt quấn xích máu + bùa vàng cầm Trọng Đao).
+  * **`assets/vfx/vfx_dh_f_demon_slash.png?v=2911dhonikiri`** (`340×310`, Nhát chém quỷ khí đỏ-đen kèm sét máu riêng cho 2 cánh tay quỷ!).
+- **Chau chuốt hiệu ứng & diễn hoạt (lấy chất cánh tay quỷ Onikiri)**:
+  1. Tự hiến `12%` Máu hiện tại (sàn `15%` HP) → bung vòng khói đen + bùa vàng triệu hồi **2 Cánh Tay Huyết Quỷ (`w = 175, h = 84`)** lơ lửng 2 bên vai nhân vật (`offset (-48, -74)` lật ngang và `(+48, -74)`), có **dải khói đen-đỏ mờ nối từ gốc cẳng tay về sau lưng nhân vật** + nhấp nhô sống động theo nhịp `Math.sin(G.t * 4.5 + phase)`.
+  2. **Chủ động khóa mục tiêu & vung chém liên tục**: cứ mỗi **`0,50s`**, 1 cánh tay (luân phiên Trái → Phải) tự khóa quái gần nhất trong bán kính `230px` (và **mỗi khi nhân vật đánh thường hoặc bấm Q/C thì cánh tay rảnh lập tức chém bồi thêm!**).
+  3. **Hoạt ảnh chém có lực & rõ ràng**: mỗi cú chém (`0,24s`), cánh tay quỷ **vung ngược lấy đà (`-55°`) rồi bổ mạnh tới trước (`+75°`)** kết hợp **lao dịch về phía quái `42px`** và quét nhát **`vfx_dh_f_demon_slash.png`** (`165px`, xoay theo hướng mục tiêu) ngay điểm chạm! Gây **`55%` ATK**, gắn Dấu Đoạn Mạch và **hút `15%` ST thành Máu** (vẽ tia huyết khí mảnh bay từ quái về người chơi).
+  4. **Kết thúc `5,0s`**: cả 2 cánh tay đồng loạt chém chéo chữ X bằng 2 nhát `vfx_dh_f_demon_slash.png` (`135%` ATK, đẩy lùi) rồi tan thành khói đen!
+
+## 4. CHIÊU BUFF V — KHÔI PHỤC NGUYÊN BẢN VÒNG TRÒN ĐỎ CŨ CỦA ĐOẠN HỒN
+- Khôi phục nguyên bản skill `V` cũ tạo **vòng tròn đỏ** dưới chân nhân vật (bỏ hoàn toàn tấm `vfx_dh_blood_shield_aura.png` xám mờ).
+
+## 5. Nghiệm thu bắt buộc
+- Gắn `?v=2911dhonikiri`, chạy `pack_check.sh` đảm bảo `PACKS.vfx.dao <= 3.5 MB`.
+- Soi đủ **8 cỡ màn ngang** (`550×278` → `1280×720`) và quay clip `doanhon_Q_F_V` kiểm chứng: Icon mới, Q 2 tầng (*Light Vanquisher*), F 2 cánh tay quỷ vung chém phụ, và V vòng tròn đỏ cũ!
