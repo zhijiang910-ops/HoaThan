@@ -1,0 +1,92 @@
+# PROMPT CHUẨN HÓA ĐỒNG BỘ PHONG CÁCH "KIẾM HIỆP U TỐI — TRỪ TÀ" CHO CHIÊU F & CHIÊU C
+
+Bản test vừa rồi của Chiêu F bị 2 lỗi mỹ thuật nghiêm trọng:
+1. Tấm vụ nổ ngang (`vfx_f_earth_eruption.png`) là góc nhìn ngang bị cắt đáy phẳng lì, đặt lên mặt sàn 2.5D nhìn lệch phối cảnh hoàn toàn.
+2. Tấm vết nứt đỏ (`vfx_f_earth_fissures.png`) có màu lòe loẹt đè xuyên lên giữa mặt con Hổ làm bẩn và lệch phong cách với chiếc ấn.
+
+Để toàn bộ bộ kỹ năng giữ đúng một chuẩn đồ họa **Kiếm hiệp u tối — Trừ tà (Đồng cổ xỉn, Chu sa máu trầm, Đá nâu xám tối tiệp màu mặt đất, tuyệt đối không dùng màu vàng chanh hoạt hình chói gắt)** đồng bộ 100% với Đại Chiêu X, tôi gửi bộ 3 sprite mới đã căn khít tỷ lệ và bảng màu trong `assets/vfx/`:
+- `assets/vfx/vfx_f_crater_ring.png`: Vành hố đá nâu xám nứt tia vàng đồng rỗng tâm 2.5D (cùng nét vẽ pixel với hố đá Đại Chiêu X, ở giữa là lòng hố đá tối phẳng không làm bẩn ấn).
+- `assets/vfx/vfx_f_thien_cuong_tinh_luan.png`: Chiếc ấn Hổ Phù Bắc Đẩu đã chuyển sang chất liệu **Đồng Cổ Ám Khói & Chu Sa Máu Trầm** để ăn nhập tuyệt đối với lòng hố đá.
+- `assets/vfx/vfx_c_single_palm.png` & `assets/vfx/vfx_c_dark_talisman_burst.png`: Bàn tay chưởng ảnh giáp đồng đỏ chu sa khắc ấn Kim Cang Tinh Mang kéo theo tàn khói đen và lá bùa cổ ố vàng (đồng bộ 100% nét vẽ với bàn tay Đại Chiêu X!).
+
+Hãy **XÓA BỎ HOÀN TOÀN** `vfx_f_earth_eruption.png` và `vfx_f_earth_fissures.png` khỏi code, sau đó cập nhật lại Chiêu F và Chiêu C chính xác như sau:
+
+---
+
+## 1. CHIÊU F ("THIÊN CƯƠNG ĐẠP TINH CƯỚC") — HỐ ĐÁ NỨT 2.5D ÔM KHÍT ẤN ĐỒNG CỔ XOAY TRONG LÒNG HỐ
+Tâm đặt tại trước mặt nhân vật: `cx = player.x + facingDir * 72`, `cy = player.y - 8`. Toàn bộ vẽ ở `Ground Decal Layer` (trên nền đất map, DƯỚI chân quái và nhân vật):
+
+- **Tỷ lệ khóa cứng để 2 lớp khớp thành 1 khối duy nhất (RẤT QUAN TRỌNG):**
+  * Vành hố đá `vfx_f_crater_ring.png` (đã có sẵn phối cảnh 2.5D nên **KHÔNG ép `scaleY` và KHÔNG xoay**): chiều rộng chuẩn `craterW = 390`, `craterH = craterW * (craterImg.naturalHeight / craterImg.naturalWidth)`.
+  * Ấn đồng cổ `vfx_f_thien_cuong_tinh_luan.png` (nằm **GỌN BÊN TRONG lòng hố đá tối**, không đè lấp lên vành đá vỡ bên ngoài!): đường kính ngang chuẩn **`sealDiam = craterW * 0.53` (`~206px`)**, ép phối cảnh mặt đất `ctx.scale(1, 0.62)` rồi mới `ctx.rotate(angle)`! Với tỷ lệ `0.53` này, 12 mũi răng cưa đồng cổ vừa khít mép trong của vành đá vỡ 2.5D nhìn như một khối chạm khắc dưới lòng đất!
+- **Diễn hoạt 3 giai đoạn đồng bộ (tổng `3.0s`, KHÔNG dùng ảnh nổ ngang cắt đáy):**
+  1. **Dậm Cước Sập Hố (`0.0s -> 0.18s`):**
+     - Rung camera nhẹ `4px` trong `0.12s` + hit-stop `2 frame`.
+     - Cả vành hố đá `crater_ring` lẫn ấn `tinh_luan` cùng bung nhanh từ `scale = 0.25 -> 1.04 -> 1.00` theo `Cubic Ease-Out` (`alpha = 0.96`).
+     - Thay cho ảnh nổ ngang cũ: tại khoảnh khắc `t = 0`, chỉ bắn **10 mảnh đá phiến nhỏ màu nâu tối (`#4A3C33` viền đen `#1C1512`, kích thước `4px - 7px`)** nảy văng thấp ra xung quanh trên mặt đất 2.5D + 4 hạt khói bụi xám nâu mờ (`vfx_soft_ghost_smoke_puff.png` nhuộm nâu xám, `alpha <= 0.30`) tản ngang sát mặt đất.
+  2. **Ấn Đồng Cổ Xoay Trong Lòng Hố (`0.18s -> 2.60s`):**
+     - Vành hố đá `crater_ring` đứng yên cố định trên mặt sàn (`scale = 1.0`, `alpha = 0.95`).
+     - Chiếc ấn `tinh_luan` bên trong lòng hố xoay tròn trầm ổn (`angle += dt * 0.95`, `alpha = 0.95`), gây sát thương đốt âm khí theo giây.
+  3. **Khép Hố Thu Ấn (`2.60s -> 3.00s`):**
+     - Ấn `tinh_luan` bên trong xoáy thu nhỏ dần từ `scale = 1.0 -> 0.15` (`alpha -> 0`), đồng thời vành hố đá `crater_ring` mờ dần `alpha` từ `0.95 -> 0.0` trả lại nền đất sạch.
+
+```js
+function renderSkillFGround(ctx, craterImg, sealImg, cx, cy, elapsedSec, angleRad) {
+  const totalDur = 3.0;
+  if (elapsedSec < 0 || elapsedSec > totalDur) return;
+
+  const craterBaseW = 390;
+  const craterBaseH = (craterBaseW * craterImg.naturalHeight) / craterImg.naturalWidth;
+  const sealBaseRadius = (craterBaseW * 0.53) * 0.5; // Lọt khít lòng hố đá!
+
+  let craterScale = 1.0, sealScale = 1.0, craterAlpha = 0.95, sealAlpha = 0.95;
+  if (elapsedSec < 0.18) {
+    const p = elapsedSec / 0.18;
+    const ease = 1 - Math.pow(1 - p, 3);
+    const pop = p < 0.75 ? (0.25 + 0.79 * (p / 0.75)) : (1.04 - 0.04 * ((p - 0.75) / 0.25));
+    craterScale = pop;
+    sealScale = pop;
+  } else if (elapsedSec > 2.60) {
+    const p = (elapsedSec - 2.60) / 0.40;
+    craterAlpha = 0.95 * (1 - p);
+    sealAlpha = 0.95 * (1 - p);
+    sealScale = 1.0 - 0.85 * (p * p);
+  }
+
+  // 1. Vẽ Vành Hố Đá Nứt 2.5D đứng cố định
+  const cw = craterBaseW * craterScale;
+  const ch = craterBaseH * craterScale;
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, craterAlpha);
+  ctx.drawImage(craterImg, cx - cw * 0.5, cy - ch * 0.5, cw, ch);
+  ctx.restore();
+
+  // 2. Vẽ Ấn Đồng Cổ Hổ Phù Bắc Đẩu xoay tròn gọn trong lòng hố đá
+  const sr = sealBaseRadius * sealScale;
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, sealAlpha);
+  ctx.translate(cx, cy);
+  ctx.scale(1, 0.62); // Khớp chuẩn độ dẹt 0.625 của lòng hố đá!
+  ctx.rotate(angleRad);
+  ctx.drawImage(sealImg, -sr, -sr, sr * 2, sr * 2);
+  ctx.restore();
+}
+```
+
+---
+
+## 2. CHIÊU C ("TOÁI PHÁCH BÁT CỰC CHƯỞNG") — CHƯỞNG ẢNH ĐỒNG CỔ CHU SA U TỐI ĐỒNG BỘ ĐẠI CHIÊU X
+- **Khóa cứng hướng mặt `lockedDir`** ngay khi bấm phím C suốt `1.0s` tung chiêu (tuyệt đối không cho auto-attack xoay lưng nhân vật sang trái-phải giữa chừng!).
+- Xóa tia lửa nhọn đòn đấm thường trong chiêu C. Dùng duy nhất tấm `assets/vfx/vfx_c_single_palm.png` (bàn tay giáp đồng đỏ chu sa kéo khói đen & bùa cổ):
+  * Trong 6 nhịp liên hoàn (`0.0s -> 0.70s`, mỗi `0.11s` 1 đợt): mỗi đợt phóng **2 bàn tay `vfx_c_single_palm.png`** (`width = 135px - 150px`, lệch độ cao `offsetY` xen kẽ `-28px` và `+14px`) từ trước ngực nhân vật lao thẳng tới trước `90px` theo hướng `lockedDir` trong `0.20s`, giữ `alpha = 0.95` trong `70%` đầu để nhìn rõ từng ngón tay giáp đồng và ấn sao Kim Cang trên lòng bàn tay!
+  * Ở cú Đại Chưởng kết thúc thứ 7 (`t = 0.72s`): Phóng **1 bàn tay `vfx_c_single_palm.png` đại tướng kích thước lớn (`width = 215px`)** tông thẳng tới tâm đám quái trước mặt (`lockedDir * 95px`) kèm `hit-stop 2 frame`, rồi bung `assets/vfx/vfx_c_dark_talisman_burst.png` (`200px x 200px`) kích nổ Chưởng Ấn!
+
+
+---
+
+## 3. CHÉP ĐÈ ĐỒNG BỘ MÀU U TỐI CHO ĐẠN PHÍM Q, ICON CHIÊU C & VỆT ĐÁNH THƯỜNG A-B-C (KHÔNG CẦN SỬA LOGIC CODE)
+Tôi cũng đã hạ độ chói và chuyển sang chất liệu **Giáp Đồng Cổ — Chu Sa Máu Trầm — Khói Đen** cho các file ảnh còn hơi sáng vàng của đợt đầu để tiệp 100% với map đất nâu `#453528` và sprite nhân vật/âm binh:
+- `assets/vfx/vfx_q_fist_projectile.png`: Đạn nắm đấm phím Q nay là nắm đấm giáp đồng cổ quấn dây máu trầm kéo khói đen & bùa ố vàng (chỉ cần thay file ảnh, giữ nguyên logic bay & dải Hồng Tuyến; chỉnh màu lõi Hồng Tuyến từ vàng tươi xuống vàng đồng trầm `rgba(215, 165, 85, ...)`).
+- `assets/icons/icon_e_toai_phach_bat_cuc_chuong.png` & `icon_q_phuoc_hon_cuong_quyen.png`: Icon chiêu C và Q đã chuyển sang bàn tay/nắm đấm giáp đồng chu sa trầm đồng bộ tuyệt đối với hiệu ứng thực chiến.
+- `assets/vfx/vfx_ab_fist_impact.png` & `vfx_c_star_sweep_arc.png`: Đã hạ bớt độ chói vàng tươi sang tông lửa đồng hổ phách trầm.
+Hãy chép đè toàn bộ các file `.png` trong gói này vào `assets/icons/` và `assets/vfx/` rồi áp dụng bản cập nhật Chiêu F & Chiêu C ở trên!
